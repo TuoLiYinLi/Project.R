@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Chara.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AISystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Gene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilitySystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Facility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UISystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameToolkit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaSlime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtWall.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationUnit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtBG.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtStairL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtStairR.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtStairB.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TTFUnit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TTFParticle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimParticle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleGoldust.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtCracked.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityStatic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDynamic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilitySlimeGlue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Counting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImmediateProj.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PenetrableProj.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjChop.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjSlimeBall.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityWaterFull.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityWaterUpper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityLadderL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityLadderR.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtClimbL_t1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityDirtClimbR_t1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chara.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AISystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilitySystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Facility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UISystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameToolkit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BreathType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaSlime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Defined.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockingType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtWall.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationUnit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtBG.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtStairL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtStairR.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtStairB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TTFUnit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TTFParticle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimParticle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AllyType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleGoldust.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtCracked.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityStatic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDynamic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StateType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilitySlimeGlue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Counting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CountingType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImmediateProj.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PenetrableProj.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjChop.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjSlimeBall.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityWaterFull.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityWaterUpper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityLadderL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityLadderR.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtClimbL_t1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityDirtClimbR_t1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
