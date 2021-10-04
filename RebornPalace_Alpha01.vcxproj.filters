@@ -153,6 +153,30 @@
     <ClCompile Include="FacilityDirtClimbR_t1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="FacilityRopeHeadR.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRopeHeadL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRope1R.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRope1L.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRope2R.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRope2L.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRopeTailR.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityRopeTailL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chara.h">
@@ -321,6 +345,30 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="FacilityDirtClimbR_t1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRopeHeadR.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRopeHeadL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRope1R.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRope1L.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRope2R.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRope2L.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRopeTailR.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityRopeTailL.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

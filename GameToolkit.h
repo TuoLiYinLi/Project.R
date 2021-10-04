@@ -26,6 +26,16 @@
 #include "FacilityDirtClimbL_t1.h"
 #include "FacilityDirtClimbR_t1.h"
 
+#include "FacilityRopeHeadL.h"
+#include "FacilityRope1L.h"
+#include "FacilityRope2L.h"
+#include "FacilityRopeTailL.h"
+
+#include "FacilityRopeHeadR.h"
+#include "FacilityRope1R.h"
+#include "FacilityRope2R.h"
+#include "FacilityRopeTailR.h"
+
 #include "ParticleGoldust.h"
 
 struct Vec2;
@@ -47,7 +57,7 @@ namespace gameToolkit {
     void summonMap(unsigned int seed);
 
     //生成全部地图2.0a
-    void summonMap_2_0_a(unsigned int seed);
+    void summonMap_2_0_b(unsigned int seed);
 
     //离散曲线平滑度评估
     double summonMap_curveSmoothAssess(std::list<Vec2>* curve, int i_start, int i_end);
@@ -60,6 +70,10 @@ namespace gameToolkit {
 
     //简易十字挖去
     void summonMap_crossDig(bool** boolMap, std::list<Vec2>* curve, int i_start, int i_end);
+
+    void summonMap_summonRope(bool** boolMap, std::list<Vec2>* path);
+
+    void summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up, bool atRight);
 
     void summonMap_summonLadder(bool** boolMap, std::list<Vec2>* path);
 

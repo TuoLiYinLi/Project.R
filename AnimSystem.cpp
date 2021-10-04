@@ -463,6 +463,22 @@ void AnimSystem::loadAnim(AnimType antp) {
             file = "./Resource/texture/Ladder_L";
             num = 1;
             break;
+        case AnimType::ropeHead:
+            file = "./Resource/texture/RopeHeadR";
+            num = 1;
+            break;
+        case AnimType::rope1:
+            file = "./Resource/texture/Rope1R";
+            num = 1;
+            break;
+        case AnimType::rope2:
+            file = "./Resource/texture/Rope2R";
+            num = 1;
+            break;
+        case AnimType::ropeTail:
+            file = "./Resource/texture/RopeTailR";
+            num = 1;
+            break;
         case AnimType::faciSlimeGlue_L1:
             file = "./Resource/texture/SlimeGlue_L1";
             num = 1;

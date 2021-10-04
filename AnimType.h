@@ -21,6 +21,10 @@ enum class AnimType
 	gridWater_1full,//网格水/填满
 	gridWater_1upper,//网格水/未填满
 	ladder,//梯子/默认在左侧
+	ropeHead,//降绳头部/默认在右侧
+	rope1,//降绳部分1/默认在右侧
+	rope2,//降绳部分2/默认在右侧
+	ropeTail,//降绳尾部/默认在右侧
 	faciSlimeGlue_L1,//史莱姆粘液/1
 	chopDown,//投射物/砍击/爆炸性
 	slimeBall,//史莱姆粘液球

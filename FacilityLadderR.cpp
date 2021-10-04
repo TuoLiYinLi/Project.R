@@ -19,6 +19,7 @@ AnimType FacilityLadderR::getAnimType()
 FacilityLadderR::FacilityLadderR()
 {
 	animUnit->flip = SDL_FLIP_HORIZONTAL;
+	animUnit->type = AnimType::ladder;
 }
 
 FacilityLadderR::~FacilityLadderR()

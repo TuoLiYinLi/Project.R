@@ -19,7 +19,7 @@
 #define VIEW_ACCELERATE_SPEED_Y 100 //窗口竖直速度的减速度
 #define VIEW_ACCELERATE_SPEED_SCALE 32 //窗口缩放速度的减速度
 
-#define SHOW_FPS //将每秒帧数输出到窗口
+//#define SHOW_FPS //将每秒帧数输出到窗口
 //#define SHOW_KEY //将键盘鼠标等输入信息输出到窗口
 
 #define WORLD_WIDTH 128 //单个的世界的宽度

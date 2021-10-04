@@ -690,7 +690,7 @@ void gameToolkit::summonMap(unsigned int seed)
 	updateDistToKing();
 }
 
-void gameToolkit::summonMap_2_0_a(unsigned int seed)
+void gameToolkit::summonMap_2_0_b(unsigned int seed)
 {
 	//设置随机数
 	srand(seed);
@@ -1283,6 +1283,9 @@ void gameToolkit::summonMap_2_0_a(unsigned int seed)
 		//放梯子
 		summonMap_summonLadder(boolMap_1, path);
 
+		//放绳子
+		summonMap_summonRope(boolMap_1, path);
+
 		//生成攀爬物
 		summonMap_Climbing(boolMap_1, path);
 	}
@@ -1494,6 +1497,121 @@ void gameToolkit::summonMap_crossDig(bool** boolMap, std::list<Vec2>* curve, int
 	}
 }
 
+void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
+{
+
+	int rope_x;
+	int y_down, y_up;
+
+	bool summon = false;
+	bool atLeft = false;
+
+	auto it = path->end();
+	it--;
+	while (true)
+	{
+		int currrent_x = it->x;
+		int currrent_y = it->y;
+		it--;
+		int next_x = it->x;
+		int next_y = it->y;
+
+		if (!summon && next_y < currrent_y) {
+			rope_x = currrent_x;
+			y_down = currrent_y;
+			summon = true;
+		}
+		if (summon) {
+			if (next_x > currrent_x) {
+				y_up = currrent_y + 1;
+				summonMap_RopeSide(boolMap, rope_x, y_down, y_up, true);
+				summon = false;
+			}
+			else if (next_x < currrent_x) {
+				y_up = currrent_y + 1;
+				summonMap_RopeSide(boolMap, rope_x, y_down, y_up, false);
+				summon = false;
+			}
+		}
+		if (it == path->begin()) {
+			break;
+		}
+	}
+}
+
+void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up, bool atRight)
+{
+	if (atRight) {
+		bool ifRope = false;
+		for (int i = y_up; i <= y_down; i++)
+		{
+			if (!boolMap[x + 1][i]) {
+				ifRope = true;
+				break;
+			}
+		}
+		if (!ifRope) {
+			return;
+		}
+		for (int i = y_up; i <= y_down; i++)
+		{
+			Facility* f;
+			{
+				if (i == y_up)
+					f = FacilityRopeHeadR::createNew();
+				else if(i ==y_down)
+					f = FacilityRopeTailR::createNew();
+				else
+				{
+					int r = rand()%2;
+					if (r == 0)
+						f = FacilityRope1R::createNew();
+					else
+						f = FacilityRope2R::createNew();
+				}
+			}
+			f->x = x;
+			f->y = i;
+			f->renewPosition();
+		}
+	}
+	else
+	{
+		bool ifLadder = false;
+		for (int i = y_up; i <= y_down; i++)
+		{
+			if (!boolMap[x - 1][i]) {
+				ifLadder = true;
+				break;
+			}
+		}
+		if (!ifLadder) {
+			return;
+		}
+		for (int i = y_up; i <= y_down; i++)
+		{
+			Facility* f;
+			{
+				if (i == y_up)
+					f = FacilityRopeHeadL::createNew();
+				else if (i == y_down)
+					f = FacilityRopeTailL::createNew();
+				else
+				{
+					int r = rand() % 2;
+					if (r == 0)
+						f = FacilityRope1L::createNew();
+					else
+						f = FacilityRope2L::createNew();
+				}
+			}
+			f->x = x;
+			f->y = i;
+			f->renewPosition();
+		}
+	}
+}
+
 void gameToolkit::summonMap_summonLadder(bool** boolMap, std::list<Vec2>* path)
 {
 	int ladder_x;
@@ -1513,7 +1631,7 @@ void gameToolkit::summonMap_summonLadder(bool** boolMap, std::list<Vec2>* path)
 		int next_x = it->x;
 		int next_y = it->y;
 
-		if (!summon&&next_y < currrent_y) {
+		if (!summon && next_y < currrent_y) {
 			ladder_x = currrent_x;
 			y_down = currrent_y;
 			summon = true;
