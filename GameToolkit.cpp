@@ -1532,6 +1532,11 @@ void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 				summonMap_RopeSide(boolMap, rope_x, y_down, y_up, false);
 				summon = false;
 			}
+			else if (next_y == 0) {
+				y_up = currrent_y - 1;
+				summonMap_RopeSide(boolMap, rope_x, y_down, y_up, false);
+				summon = false;
+			}
 		}
 		if (it == path->begin()) {
 			break;
@@ -1653,7 +1658,7 @@ void gameToolkit::summonMap_summonLadder(bool** boolMap, std::list<Vec2>* path)
 
 void gameToolkit::summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_up, bool atRight)
 {
-	//if (y_up == y_down)return;
+
 	if (atRight) {
 		bool ifLadder = false;
 		for (int i = y_up; i <=y_down ; i++)

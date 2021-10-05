@@ -87,18 +87,18 @@ int main(int argc, char** argv) {
     
     InputSystem* inputSystem = InputSystem::getInstance();
     
-    gameToolkit::summonMap_2_0_b(20220925);
+    gameToolkit::summonMap_2_0_b(20211004);
 
     //auto t = worldSystem->animSys->addTTFUnit("1234\n12sadasdda dadsd asw34\n \t\t\ts sad1234\n12453123456\n\n", {255,255,255,255});
     auto t = TTFParticle::createNew();
-    t->fontUnit = TTFUnit::createNew("20210925", {255,0,0,255});
+    t->fontUnit = TTFUnit::createNew("20211004", {255,0,0,255});
     t->livingTime = 200;
 
+    /*
     auto f = FacilityRopeTailL::createNew();
     f->x = 27;
     f->y = 11;
     f->renewPosition();
-    /*
 
     auto f1 = FacilityDirtCracked::createNew();
     f1->x = 39;
