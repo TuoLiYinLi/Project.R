@@ -132,6 +132,8 @@ Chara::Chara() {
 	
 	currentCharaNum++;
 
+	tag = Tag::Defaule;
+
 	name = "new Chara";
 	animUnit = nullptr;
 	form = Form();

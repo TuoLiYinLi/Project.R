@@ -86,6 +86,12 @@ void InputSystem::handleEvent()
             if (evt.key.keysym.scancode == SDL_SCANCODE_C) {
                 keydown_c = false;
             }
+            if (evt.key.keysym.scancode == SDL_SCANCODE_R) {
+                auto a = CharaWarriorMiner::createNew();
+                a->x = floor(mouse_world_x);
+                a->y = floor(mouse_world_y);
+                a->renewPosition();
+            }
         }
         else if (evt.type == SDL_MOUSEBUTTONDOWN) {
             //鼠标按钮按下事件，可以查看 SDL_MouseButtonEvent 结构体内容
@@ -93,24 +99,39 @@ void InputSystem::handleEvent()
             std::cout << "mouse down:"<< int(evt.button.button) << ',' << evt.button.x << ',' << evt.button.y << std::endl;
 #endif
             //测试生成近战投射物
+
             /*
-            auto a = CharaSlime::createNew();
+            auto a = CharaWarriorMiner::createNew();
             a->x = floor(mouse_world_x);
             a->y = floor(mouse_world_y);
             a->renewPosition();
 
             a->ally = AllyType::ally;
             */
+            
+            //网格内debug
+            {
+                auto tar_grid = MapSystem::getInstance()->map->at(floor(mouse_world_x))->at(floor(mouse_world_y));
+                std::cout <<"Debug at Grid (" << tar_grid->x << "," << tar_grid->y << ")\n";
+                std::cout <<"\tdistToKing:" << tar_grid->distToKing<< '\n';
+                std::cout << "\tifWalkable:" << gameToolkit::ifWalkable(floor(mouse_world_x),floor(mouse_world_y)) << '\n';
+                int count = 0;
+                for (auto i = tar_grid->charaList->begin(); i != tar_grid->charaList->end(); i++)
+                {
+                    std::cout << "\tchara@"<<count<<" tag:" << int((*i)->tag) << '\n';
+                    count += 1;
+                }
+                count = 0;
+                for (auto i = tar_grid->facilityList->begin(); i != tar_grid->facilityList->end(); i++)
+                {
+                    std::cout << "\tfacility@" << count << " tag:" << int((*i)->tag) << '\n';
+                    count += 1;
+                }
+            }
+            
+            
 
-            //auto p = ProjSlimeBall::createNew();
-
-            //p->x = mouse_world_x - 0.5;
-            //p->y = mouse_world_y - 0.5;
-            //p->allyType = AllyType::hostile;
-
-            std::cout <<"distToKing:" << MapSystem::getInstance()->map->at(floor(mouse_world_x))->at(floor(mouse_world_y))->distToKing<< '\n';
-            std::cout << "ifWalkable:" << gameToolkit::ifWalkable(floor(mouse_world_x),floor(mouse_world_y)) << '\n';
-            std::cout << mouse_world_x<<"," << mouse_world_y << "\n";
+            std::cout << "\n";
             if (evt.button.button == SDL_BUTTON_LEFT) {
                 mousedown_left = true;
             }

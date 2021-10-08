@@ -5,6 +5,7 @@
 #include "AnimSystem.h"
 #include "WorldSystem.h"
 #include "CharaSlime.h"
+#include "CharaWarriorMiner.h"
 #include "ProjChop.h"
 #include "ProjSlimeBall.h"
 

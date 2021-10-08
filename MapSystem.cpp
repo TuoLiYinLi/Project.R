@@ -105,9 +105,9 @@ MapSystem::~MapSystem() {
 void MapSystem::occupyGrid(Chara* chara)
 {
 	int x_start = round(chara->x-0.001);
-	int y_start = round(chara->y-0.001);
-	int x_end = round(chara->x+chara->bodyWidth-0.999);
-	int y_end = round(chara->y+chara->bodyHeight-0.999);
+	int y_start = round(chara->y - chara->bodyHeight + 1 - 0.001);
+	int x_end = round(chara->x + chara->bodyWidth - 1 + 0.001);
+	int y_end = round(chara->y + 0.001);
 
 	for (int i = x_start; i <= x_end; i++)
 	{

@@ -36,6 +36,9 @@ CharaSlime::CharaSlime() {
 #ifdef CHARA_DEBUG
 	std::cout << "\tCharaSlime::CharaSlime()\n";
 #endif // CHARA_DEBUG
+
+	tag = Tag::Slime;
+
 	name = "Slime";
 
 	form.setBasicPart(4,4,0.01,8,8,0.01,0);
@@ -176,8 +179,6 @@ void CharaSlime::onBasicSkill()
 #ifdef CHARA_ACTION_DEBUG
 	std::cout << "\t\tCharaSlime::onBasicSkill()\n";
 #endif // CHARA_ACTION_DEBUG
-
-	auto p = Projectile::createNew();
 	
 }
 

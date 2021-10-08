@@ -7,11 +7,14 @@
 #include "Counting.h"
 #include "AllyType.h"
 #include "FacilitySystem.h"
+#include "Tag.h"
 class FacilitySystem;
 
 class Facility
 {
 public:
+	Tag tag;//标签
+
 	BlockingType blockingType;//表现出的阻挡类型
 	StateType stateType;//运行状态
 	AnimationUnit* animUnit;//持有的动画元件

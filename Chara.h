@@ -15,11 +15,14 @@
 #include "AnimSystem.h"
 
 #include "CharaSystem.h"
+#include "Tag.h"
 class CharaSystem;
 
 class Chara
 {
 public:
+	Tag tag;//标签
+
 	std::string name;//角色名字
 	AnimationUnit* animUnit;//角色动画单元
 	Form form;//角色数值表单

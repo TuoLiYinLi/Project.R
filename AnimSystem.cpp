@@ -411,6 +411,22 @@ void AnimSystem::loadAnim(AnimType antp) {
             file = "./Resource/texture/SlimeDeath";
             num = 9;
             break;
+        case AnimType::charaWarriorMiner1_idle:
+            file = "./Resource/texture/miner1-idle";
+            num = 4;
+            break;
+        case AnimType::charaWarriorMiner1_walk:
+            file = "./Resource/texture/miner1-walk";
+            num = 8;
+            break;
+        case AnimType::charaWarriorMiner1_dig:
+            file = "./Resource/texture/miner1-dig";
+            num = 4;
+            break;
+        case AnimType::charaWarriorMiner1_death:
+            file = "./Resource/texture/miner1-death";
+            num = 9;
+            break;
         case AnimType::gridDirt_1a:
             file = "./Resource/texture/Dirt_a_t1";
             num = 1;

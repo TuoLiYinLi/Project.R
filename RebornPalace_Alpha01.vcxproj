@@ -152,6 +152,7 @@
     <ClCompile Include="Chara.cpp" />
     <ClCompile Include="CharaSlime.cpp" />
     <ClCompile Include="CharaSystem.cpp" />
+    <ClCompile Include="CharaWarriorMiner.cpp" />
     <ClCompile Include="Counting.cpp" />
     <ClCompile Include="Facility.cpp" />
     <ClCompile Include="FacilityDirtBG.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="ActionType.h" />
     <ClInclude Include="CharaSlime.h" />
     <ClInclude Include="CharaSystem.h" />
+    <ClInclude Include="CharaWarriorMiner.h" />
     <ClInclude Include="Counting.h" />
     <ClInclude Include="CountingType.h" />
     <ClInclude Include="Defined.h" />
@@ -258,6 +260,7 @@
     <ClInclude Include="ProjChop.h" />
     <ClInclude Include="ProjSlimeBall.h" />
     <ClInclude Include="StateType.h" />
+    <ClInclude Include="Tag.h" />
     <ClInclude Include="TTFParticle.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileSystem.h" />

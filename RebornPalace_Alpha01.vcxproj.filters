@@ -177,6 +177,9 @@
     <ClCompile Include="FacilityRopeTailL.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CharaWarriorMiner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chara.h">
@@ -369,6 +372,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="FacilityRopeTailL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaWarriorMiner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tag.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

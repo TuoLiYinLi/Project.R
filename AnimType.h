@@ -8,6 +8,10 @@ enum class AnimType
 	charaSlimeBasic,//史莱姆_普通能力
 	charaSlimeSpecial,//史莱姆_特殊能力
 	charaSlimeDeath,//史莱姆_死亡
+	charaWarriorMiner1_idle,//矿工1_闲置
+	charaWarriorMiner1_walk,//矿工1_行走
+	charaWarriorMiner1_dig,//矿工1_挖掘
+	charaWarriorMiner1_death,//矿工1_死亡
 	gridDirt_1a,//网格泥土/阻挡/种类1
 	gridDirt_1n,//网格泥土/无阻挡/种类1
 	gridDirdCracked,//网格泥土/支撑/可破坏

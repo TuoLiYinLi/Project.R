@@ -53,9 +53,6 @@ namespace gameToolkit {
     void applyForm(Chara* chara, Form* form);
     void applyForm(Form* form_tar,Form* form);
 
-    //生成全部地图
-    void summonMap(unsigned int seed);
-
     //生成全部地图2.0a
     void summonMap_2_0_b(unsigned int seed);
 
@@ -86,6 +83,7 @@ namespace gameToolkit {
 
     //产生一个提示性的文字
     void createText(double _x,double _y,const char* msg,SDL_Color color);
+    
     //判断是否是投射物攻击的目标
     bool ifTarget(AllyType proj,AllyType tar);
     //判断目标处对移动的影响
@@ -108,7 +106,7 @@ namespace gameToolkit {
     //判断一个区域是否是坠落区
     bool ifFalling(double x, double y);
 
-
+    
 }
 
 
