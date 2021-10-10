@@ -114,6 +114,7 @@ void InputSystem::handleEvent()
                 auto tar_grid = MapSystem::getInstance()->map->at(floor(mouse_world_x))->at(floor(mouse_world_y));
                 std::cout <<"Debug at Grid (" << tar_grid->x << "," << tar_grid->y << ")\n";
                 std::cout <<"\tdistToKing:" << tar_grid->distToKing<< '\n';
+                std::cout << "\tdistToKing_walk:" << tar_grid->distToKing_walk << '\n';
                 std::cout << "\tifWalkable:" << gameToolkit::ifWalkable(floor(mouse_world_x),floor(mouse_world_y)) << '\n';
                 int count = 0;
                 for (auto i = tar_grid->charaList->begin(); i != tar_grid->charaList->end(); i++)

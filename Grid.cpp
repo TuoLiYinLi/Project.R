@@ -19,6 +19,7 @@ Grid::Grid(int _x, int _y) {
 	y = _y;
 
 	distToKing = -1;
+	distToKing_walk = -1;
 }
 
 Grid::~Grid(){

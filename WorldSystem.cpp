@@ -66,19 +66,19 @@ void WorldSystem::charaLogicGo()
 		auto chara = *it;
 		//刷新计算角色的位置
 		{
-
 			//人物行走位移
+			//角色的横向运动
 			if (chara->movingX > 0) {
 				//chara->flip = false;
 				//向右移动
-				double moveDist = double(1) / chara->form.moveTime;
+				double moveDist = double(1) / chara->form.moveTime;//在这一帧实际移动的短小距离
 				chara->x += moveDist;
 				chara->movingX -= moveDist;
 				if (abs(chara->movingX) < moveDist) {
 					chara->x += chara->movingX;
 					chara->movingX = 0;
 				}
-				chara->renewPosition();
+				chara->renewPosition();//刷新角色的占用位置
 			}
 			else if (chara->movingX < 0)
 			{
@@ -93,6 +93,7 @@ void WorldSystem::charaLogicGo()
 				}
 				chara->renewPosition();
 			}
+			//角色的垂直方向运动
 			if (chara->movingY > 0) {
 				//向下移动
 				double moveDist = double(1) / chara->form.moveTime;
@@ -116,7 +117,7 @@ void WorldSystem::charaLogicGo()
 				}
 				chara->renewPosition();
 			}
-
+			//角色坠落的位置更新
 			if (chara->fallingY > 0) {
 				double moveDist = FALLING_SPEED;
 				chara->y += moveDist;
@@ -128,10 +129,10 @@ void WorldSystem::charaLogicGo()
 				chara->renewPosition();
 			}
 		}
-		//角色坠落
+		//发动角色坠落,条件是角色不能飞行且停滞于一个坠落区域
 		if (chara->actionType == ActionType::idle &&
 			chara->movingType != MovingType::fly &&
-			gameToolkit::ifFalling(round(chara->x), round(chara->y)))
+			gameToolkit::ifFalling(round(chara->x), round(chara->y), chara->bodyWidth, chara->bodyHeight))
 		{
 			//std::cout << "角色从闲置变为坠落\n";
 			chara->animProgress = 0;
@@ -139,10 +140,10 @@ void WorldSystem::charaLogicGo()
 			chara->fallingY += 1;
 			chara->fallingDist += 1;
 		}
-
+		//在角色掉落完成一个各位后判断角色是否会继续坠落
 		if (chara->actionType == ActionType::falling &&
 			chara->fallingY == 0) {
-			if (gameToolkit::ifFalling(round(chara->x), round(chara->y))) {
+			if (gameToolkit::ifFalling(round(chara->x), round(chara->y), chara->bodyWidth, chara->bodyHeight)) {
 				chara->fallingY += 1;
 				chara->fallingDist += 1;
 			}
@@ -151,7 +152,6 @@ void WorldSystem::charaLogicGo()
 				chara->actionType = ActionType::idle;
 				chara->onImpact();
 				chara->fallingY = 0;
-
 			}
 		}
 		
@@ -160,7 +160,6 @@ void WorldSystem::charaLogicGo()
 			if (chara->animProgress>=chara->deathSpeed) {
 				//触发死亡,移除角色,结束循环
 				chara->onDeath();
-				
 				it = charaSys->removeChara(it);
 				std::cout << "\t\t一个角色由于生命值归零已经死亡并移除\n";
 				continue;
@@ -220,6 +219,9 @@ void WorldSystem::charaLogicGo()
 						chara->form.health = 0;
 					}
 				}
+				//淹没效果(未完成)
+				{}
+
 				//死亡判断
 				if (chara->form.health <= 0 && chara->actionType != ActionType::death) {
 					chara->animProgress = 0;
@@ -543,81 +545,6 @@ void WorldSystem::particleLogicGo()
 		}
 	}
 }
-
-/*
-bool WorldSystem::ifBlocked(int grid_x, int grid_y)
-{
-#ifdef WORLD_SYSTEM_DEBUG
-	if (grid_x < 0 || grid_x >= WORLD_WIDTH || grid_y<0 || grid_y>WORLD_WIDTH) {
-		std::cout << "\t\tERROR:WorldSystem::ifBlocked(int grid_x, int grid_y)超出范围\n";
-		return true;
-	}
-#endif // WORLD_SYSTEM_DEBUG
-
-	Grid* grid = mapSys->map->at(grid_x)->at(grid_y);
-	for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
-	{
-		if ((*it)->blockingType==BlockingType::absolute) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool WorldSystem::ifSubmersed(int grid_x, int grid_y)
-{
-#ifdef WORLD_SYSTEM_DEBUG
-	if (grid_x < 0 || grid_x >= WORLD_WIDTH || grid_y<0 || grid_y>WORLD_WIDTH) {
-		std::cout << "\t\tERROR:WorldSystem::ifSubmersed(int grid_x, int grid_y)超出范围\n";
-		return false;
-	}
-#endif // WORLD_SYSTEM_DEBUG
-	Grid* grid = mapSys->map->at(grid_x)->at(grid_y);
-	if (grid == nullptr) {
-		return false;
-	}
-	for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
-	{
-		if ((*it)->blockingType == BlockingType::liquid) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool WorldSystem::ifSubmersed(int grid_x, int grid_y, int x_end, int y_end)
-{
-	for (int i = grid_x; i <= x_end; i++)
-	{
-		for (int j = grid_y; j <= y_end;i++) {
-			if (!ifSubmersed(i, j)) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-bool WorldSystem::ifWalkable(int grid_x, int grid_y)
-{
-	if (ifBlocked(grid_x, grid_y)) {
-		return false;
-	}
-	int tar_y = grid_y + 1;
-	if (tar_y>=WORLD_HEIGHT) {
-		return false;
-	}
-	Grid* grid = mapSys->map->at(grid_x)->at(tar_y);
-	for (auto it = grid->facilityList->begin(); it !=grid->facilityList->begin(); it++)
-	{
-		if ((*it)->blockingType == BlockingType::supportive ||
-			(*it)->blockingType == BlockingType::absolute) {
-			return true;
-		}
-	}
-	return false;
-}
-*/
 
 WorldSystem::WorldSystem()
 {

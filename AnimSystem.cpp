@@ -9,8 +9,6 @@ AnimSystem* AnimSystem::getInstance()
             std::cout << "\t\tERROR:AnimSystem::new AnimSystem()ÉêÇëÄÚ´æÊ§°Ü£¬ÖµÎªnullptr\n";
 #endif // _DEBUG
         }
-
-        
         instance = a;
     }
     return instance;

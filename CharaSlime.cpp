@@ -194,7 +194,9 @@ void CharaSlime::onIdle()
 #ifdef CHARA_ACTION_DEBUG
 	std::cout << "\t\tCharaSlime::onIdle()\n";
 #endif // CHARA_ACTION_DEBUG
+	/*
 	//决定是否要移动
+	
 	if (form.stamina >= form.staminaMax - 2) {
 		//AI徘徊
 
@@ -240,7 +242,7 @@ void CharaSlime::onIdle()
 			count++;
 		}
 	}
-
+	*/
 }
 
 void CharaSlime::onImpact()

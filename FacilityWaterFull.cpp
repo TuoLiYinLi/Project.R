@@ -18,6 +18,8 @@ AnimType FacilityWaterFull::getAnimType()
 
 FacilityWaterFull::FacilityWaterFull()
 {
+	tag = Tag::Water;
+
 	blockingType = BlockingType::liquid;
 	ally = AllyType::peace;
 	idleLength = 0;
@@ -31,7 +33,7 @@ FacilityWaterFull::FacilityWaterFull()
 
 	animUnit = AnimationUnit::createNew();
 	animUnit->type = AnimType::gridWater_1full;
-	animUnit->depth = 2;
+	animUnit->depth = 200;
 	animUnit->deltaX = 0;
 	animUnit->deltaY = 0;
 	animUnit->x = this->x;

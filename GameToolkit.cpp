@@ -211,7 +211,7 @@ void gameToolkit::applyForm(Form* form_tar, Form* form)
     form_tar->stunnedTime += form->stunnedTime;
 }
 
-void gameToolkit::summonMap_2_0_b(unsigned int seed)
+void gameToolkit::summonMap_2_0(unsigned int seed)
 {
 	//设置随机数
 	srand(seed);
@@ -419,7 +419,7 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 
 		//调整最后一个房间(出口),与最下方相接
 		rb = &(roomBodyList->at(roomBodyList->size()-1));
-		rb->h = WORLD_HEIGHT - rb->y-1;
+		rb->h = WORLD_HEIGHT - rb->y - 1 - 1;
 		if (rb->w<8) {
 			rb->x = (2 * rb->x + rb->w) / 2 - 4;
 			rb->w = 8;
@@ -447,7 +447,7 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 		//设置王的位置
 		RoomBody* kingRoom = &(roomBodyList->at(roomBodyList->size() - 1));
 		GlobalData::KingX = kingRoom->x + kingRoom->w / 2;
-		GlobalData::KingY = WORLD_HEIGHT - 1;
+		GlobalData::KingY = WORLD_HEIGHT - 2;
 
 	}
 	
@@ -591,7 +591,6 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 				}
 			}
 		}
-
 	}
 	//清除P1 P2数据
 	delete roomPois;
@@ -652,8 +651,17 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 			if ((*it).x == 0 || (*it).x == WORLD_WIDTH - 1 || (*it).y == 0 || (*it).y == WORLD_HEIGHT - 1) {
 				continue;
 			}
-			double smoothness = summonMap_curveSmoothAssess(marginList, index - range - 1, index + range);
-			std::cout << "gameToolkit::summonMap_2_0_a:平滑度" << (*it).x << "," << (*it).y << " " << smoothness << "\n";
+
+			int dx = (it->x - GlobalData::KingX);
+			int dy = (it->y - GlobalData::KingY);
+			int dist = dx * dx + dy * dy;
+			double smoothness;
+			if (dist >= 64)
+				smoothness = summonMap_curveSmoothAssess(marginList, index - range - 1, index + range);
+			else
+				smoothness = 0;
+
+			std::cout << "gameToolkit::summonMap_2_0:平滑度" << (*it).x << "," << (*it).y << " " << smoothness << "\n";
 			
 			//进行平滑
 			if (smoothness < 3 && smoothness>1.5) {
@@ -667,7 +675,7 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 		}
 
 		//简易修补地图空隙
-		for (int i = 1; i < WORLD_WIDTH-1; i++)
+		for (int i = 1; i < WORLD_WIDTH - 1; i++)
 		{
 			for (int j = 1; j < WORLD_HEIGHT-1; j++)
 			{
@@ -721,7 +729,7 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 		}
 
 		//扫描法获取水区
-		for (int i = WORLD_HEIGHT - 2; i >= 1; i--)
+		for (int i = WORLD_HEIGHT - 3; i >= 1; i--)
 		{
 			int current_searching_y = i;
 			int start_x = 0;
@@ -742,8 +750,6 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 				start_x = wp.x_end + 1;
 			}
 		}
-
-
 	}
 
 	//开始生成水
@@ -803,16 +809,17 @@ void gameToolkit::summonMap_2_0_b(unsigned int seed)
 			animUnit->width = 32;
 		}
 		*/
+		//生成王的位置
 
 		//放梯子
 		summonMap_summonLadder(boolMap_1, path);
-
 		//放绳子
 		summonMap_summonRope(boolMap_1, path);
-
 		//生成攀爬物
-		summonMap_Climbing(boolMap_1, path);
+		summonMap_climbing(boolMap_1, path);
 	}
+
+	updateDistWalkToKing();
 
 	delete path;
 
@@ -1023,13 +1030,12 @@ void gameToolkit::summonMap_crossDig(bool** boolMap, std::list<Vec2>* curve, int
 
 void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 {
-
 	int rope_x;
 	int y_down, y_up;
 
 	bool summon = false;
 	bool atLeft = false;
-
+	
 	auto it = path->end();
 	it--;
 	while (true)
@@ -1039,7 +1045,8 @@ void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 		it--;
 		int next_x = it->x;
 		int next_y = it->y;
-
+		std::cout << next_x << " " << next_y << "\n";
+		
 		if (!summon && next_y < currrent_y) {
 			rope_x = currrent_x;
 			y_down = currrent_y;
@@ -1066,6 +1073,7 @@ void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 			break;
 		}
 	}
+	return;
 }
 
 void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up, bool atRight)
@@ -1226,7 +1234,7 @@ void gameToolkit::summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_
 	}
 }
 
-void gameToolkit::summonMap_Climbing(bool** boolMap, std::list<Vec2>* path)
+void gameToolkit::summonMap_climbing(bool** boolMap, std::list<Vec2>* path)
 {
 	for (int x = 1; x < WORLD_WIDTH - 1; x++)
 	{
@@ -1366,6 +1374,73 @@ void gameToolkit::updateDistToKing()
 	delete cur_list;
 }
 
+void gameToolkit::updateDistWalkToKing()
+{
+	auto map = MapSystem::getInstance()->map;
+
+	//刷掉所有原来的数值
+	for (auto i = 0; i < WORLD_WIDTH; i++)
+	{
+		for (auto j = 0; j < WORLD_HEIGHT; j++)
+		{
+			map->at(i)->at(j)->distToKing_walk = -1;
+		}
+	}
+
+
+	//用两个列表交替循环
+	auto cur_list = new std::list<Grid*>();
+	auto next_list = new std::list<Grid*>();
+	//启动点
+	next_list->push_back(map->at(GlobalData::KingX)->at(GlobalData::KingY));
+	int cur_dist = 0;
+	while (true)
+	{
+		if (next_list->size() == 0)break;
+		else
+		{
+			//交换列表
+			auto list = cur_list;
+			cur_list = next_list;
+			next_list = list;
+			//赋值和加入列表
+			for (auto it = cur_list->begin(); it != cur_list->end(); it++)
+			{
+				if ((*it)->distToKing_walk != -1)continue;
+				(*it)->distToKing_walk = cur_dist;
+
+				int cur_x = (*it)->x;
+				int cur_y = (*it)->y;
+				//std::cout << "刷新distToKing" << cur_x << "," << cur_y <<" dist " <<cur_dist << "\n";
+				int x, y;
+
+				x = cur_x + 1; y = cur_y;
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+					next_list->push_back(map->at(x)->at(y));
+				}
+				x = cur_x; y = cur_y + 1;
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+					next_list->push_back(map->at(x)->at(y));
+				}
+				x = cur_x - 1; y = cur_y;
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+					next_list->push_back(map->at(x)->at(y));
+				}
+				x = cur_x; y = cur_y - 1;
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+					next_list->push_back(map->at(x)->at(y));
+				}
+
+			}
+			cur_dist += 1;
+			cur_list->clear();
+		}
+	}
+
+	delete next_list;
+	delete cur_list;
+}
+
 void gameToolkit::createText(double _x, double _y, const char* msg, SDL_Color color)
 {
 	TTFParticle* t = TTFParticle::createNew();
@@ -1395,6 +1470,9 @@ bool gameToolkit::ifTarget(AllyType proj, AllyType tar)
 
 bool gameToolkit::ifAbsoluteBlocked(double _x, double _y)
 {
+	/*
+	当一个格子里有完全阻挡的设施就认为是绝对阻挡区域
+	*/
 	int x = round(_x);
 	int y = round(_y);
 	Grid* grid = MapSystem::getInstance()->map->at(x)->at(y);
@@ -1410,11 +1488,15 @@ bool gameToolkit::ifAbsoluteBlocked(double _x, double _y)
 
 bool gameToolkit::ifWalkable(double _x, double _y)
 {
+	/*
+	当一个格位不是完全阻挡区域
+	且下方有支撑性的设施或者完全阻挡设施
+	那么就是可行走空间
+	*/
 	int x = round(_x);
 	int y = round(_y);
 
-
-	if (y >= WORLD_HEIGHT || ifAbsoluteBlocked(x, y))return false;
+	if (y < 0 || y >= WORLD_HEIGHT - 1 || ifAbsoluteBlocked(x, y))return false;
 
 	Grid* grid = MapSystem::getInstance()->map->at(x)->at(y);
 	for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
@@ -1439,6 +1521,9 @@ bool gameToolkit::ifWalkable(double _x, double _y)
 
 bool gameToolkit::ifLiquid(double _x, double _y)
 {
+	/*
+	有液体就是液体区
+	*/
 	int x = round(_x);
 	int y = round(_y);
 	Grid* grid = MapSystem::getInstance()->map->at(x)->at(y);
@@ -1457,6 +1542,9 @@ bool gameToolkit::ifLiquid(double _x, double _y)
 
 bool gameToolkit::ifSubmersed(double _x, double _y)
 {
+	/*
+	上方和下方都被液体淹没就是淹没区
+	*/
 	int x = round(_x);
 	int y = round(_y);
 	if (ifAbsoluteBlocked(x, y) || y == 0)return false;
@@ -1476,17 +1564,19 @@ bool gameToolkit::ifSwimable(double _x, double _y)
 	return false;
 }
 
-bool gameToolkit::ifFalling(double _x, double _y)
+bool gameToolkit::ifFalling(double _x, double _y, int bodyWidth, int bodyHeight)
 {
 	int x = round(_x);
 	int y = round(_y);
-	if (ifAbsoluteBlocked(x, y) || ifLiquid(x, y) || ifWalkable(x, y)) {
-		return false;
-	}
-	else
+	//检测所有身体体积最下方一排的格子
+	for (auto i = x; i < x+bodyWidth; i++)
 	{
-		return true;
+		if (ifAbsoluteBlocked(x, y) || ifLiquid(x, y - bodyHeight + 1) || ifWalkable(x, y)) {
+			return false;
+		}
 	}
+	return true;
+	
 }
 
 Vec2::Vec2(int _x, int _y)
@@ -1925,18 +2015,17 @@ DirectionType PathProbe_2::getShortestDirection()
 	int d_center = MapSystem::getInstance()->map->at(x)->at(y)->distToKing;
 	int d_left = MapSystem::getInstance()->map->at(x - 1)->at(y)->distToKing;
 
-	DirectionType d;
 	if (d_center > d_up && d_up > 0) {
-		d = DirectionType::up;
+		return DirectionType::up;
 	}
 	else if (d_center > d_down && d_down > 0) {
-		d = DirectionType::down;
+		return DirectionType::down;
 	}
 	else if (d_center > d_left && d_left > 0) {
-		d = DirectionType::left;
+		return DirectionType::left;
 	}
 	else if (d_center > d_right && d_right > 0) {
-		d = DirectionType::right;
+		return DirectionType::right;
 	}
-	return d;
+	return DirectionType::down;
 }

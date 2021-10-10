@@ -30,6 +30,7 @@ AnimType Chara::getAnimType()
 
 void Chara::move(DirectionType d)
 {
+	//只要目标处没有完全阻挡,都是可以移动的
 	std::cout << "角色开始移动\n";
 	
 	if (form.stamina < form.moveST)return;

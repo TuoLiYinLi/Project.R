@@ -1,4 +1,6 @@
 #include "CharaWarriorMiner.h"
+#include "Defined.h"
+#include "GameToolkit.h"
 
 CharaWarriorMiner* CharaWarriorMiner::createNew()
 {
@@ -32,7 +34,15 @@ void CharaWarriorMiner::onMove()
 
 void CharaWarriorMiner::onIdle()
 {
+
+	//寻找路径
+	//更新目标最小
 	
+	if (gameToolkit::ifWalkable(x + 1, y))
+	{
+
+	}
+
 }
 
 void CharaWarriorMiner::onImpact()
@@ -130,6 +140,8 @@ CharaWarriorMiner::CharaWarriorMiner()
 	animUnit->width = 2 * 32;
 	animUnit->x = x;
 	animUnit->y = y;
+
+	dtk = WORLD_HEIGHT * WORLD_HEIGHT;
 }
 
 CharaWarriorMiner::~CharaWarriorMiner()

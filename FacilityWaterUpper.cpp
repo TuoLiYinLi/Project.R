@@ -18,6 +18,8 @@ AnimType FacilityWaterUpper::getAnimType()
 
 FacilityWaterUpper::FacilityWaterUpper()
 {
+	tag = Tag::Water;
+
 	blockingType = BlockingType::liquid;
 	ally = AllyType::peace;
 	idleLength = 0;
@@ -31,7 +33,7 @@ FacilityWaterUpper::FacilityWaterUpper()
 
 	animUnit = AnimationUnit::createNew();
 	animUnit->type = AnimType::gridWater_1upper;
-	animUnit->depth = 2;
+	animUnit->depth = 200;
 	animUnit->deltaX = 0;
 	animUnit->deltaY = 0;
 	animUnit->x = this->x;

@@ -53,8 +53,8 @@ namespace gameToolkit {
     void applyForm(Chara* chara, Form* form);
     void applyForm(Form* form_tar,Form* form);
 
-    //生成全部地图2.0a
-    void summonMap_2_0_b(unsigned int seed);
+    //生成全部地图2.0b
+    void summonMap_2_0(unsigned int seed);
 
     //离散曲线平滑度评估
     double summonMap_curveSmoothAssess(std::list<Vec2>* curve, int i_start, int i_end);
@@ -76,10 +76,13 @@ namespace gameToolkit {
 
     void summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_up, bool atRight);
 
-    void summonMap_Climbing(bool** boolMap, std::list<Vec2>* path);
+    void summonMap_climbing(bool** boolMap, std::list<Vec2>* path);
 
     //刷新每个格子到魔王的距离
     void updateDistToKing();
+
+    //刷新每个格子到魔王走动的距离
+    void updateDistWalkToKing();
 
     //产生一个提示性的文字
     void createText(double _x,double _y,const char* msg,SDL_Color color);
@@ -104,7 +107,7 @@ namespace gameToolkit {
     bool ifSwimable(double x, double y);
 
     //判断一个区域是否是坠落区
-    bool ifFalling(double x, double y);
+    bool ifFalling(double x, double y, int bodyWidth, int bodyHeight);
 
     
 }

@@ -16,7 +16,8 @@ public:
 	unsigned int x;//自身X
 	unsigned int y;//自身Y
 
-	int distToKing;//与魔王的移动距离
+	int distToKing;//在移动上与魔王的距离格数
+	int distToKing_walk;//在行走的距离上与魔王的格数
 
 	//创建new Grid
 	static Grid* createNew(int _x,int _y);

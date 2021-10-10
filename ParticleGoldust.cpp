@@ -20,7 +20,7 @@ ParticleGoldust::ParticleGoldust()
 {
     animUnit = AnimationUnit::createNew();
     animUnit->type = AnimType::particle_goldust;
-    animUnit->depth = 150;
+    animUnit->depth = 300;
 
     w = 16;
     h = 16;

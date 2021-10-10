@@ -87,15 +87,14 @@ int main(int argc, char** argv) {
     
     InputSystem* inputSystem = InputSystem::getInstance();
     
-    gameToolkit::summonMap_2_0_b(20211008);
-
-    //auto t = worldSystem->animSys->addTTFUnit("1234\n12sadasdda dadsd asw34\n \t\t\ts sad1234\n12453123456\n\n", {255,255,255,255});
+    gameToolkit::summonMap_2_0(20211011);
+    //SDL_Delay(100);
     auto t = TTFParticle::createNew();
-    t->fontUnit = TTFUnit::createNew("20211008", {255,0,0,255});
-    t->livingTime = 200;
+    t->fontUnit = TTFUnit::createNew("20211011", {255,0,0,255});
+    t->livingTime = 500;
 
     /*
-    auto f = FacilityRopeTailL::createNew();
+    auto f = FacilityRopeHeadL::createNew();
     f->x = 27;
     f->y = 11;
     f->renewPosition();
@@ -137,7 +136,7 @@ int main(int argc, char** argv) {
 
         //输入系统出力所有事件
         inputSystem->handleEvent();
-
+        
         //控制窗口运动
         if (inputSystem->keydown_a) {
             worldSystem-> animSys->vx = -MAX_VIEW_SPEED_X;
