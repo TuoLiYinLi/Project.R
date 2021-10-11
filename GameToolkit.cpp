@@ -262,7 +262,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 				//随机生成扭曲的方向
 				int d = rand() % 2;
 				//取得两个房间位置坐标
-				Vec2 V1 = roomPois->at(r - 1);
+				Vec2 V1 = roomPois->at(static_cast<__int64>(r) - 1);
 				Vec2 V2 = roomPois->at(r);
 				//开始扭曲
 				if (V1.x == V2.x) {
@@ -369,6 +369,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		}
 	}
 	//P2-生成房间列表
+	std::cout << "gameToolkit::summonMap_2_0:P2-生成房间列表\n";
 	std::vector<RoomBody>* roomBodyList;//房间列表
 	{
 		//房间列表初始化
@@ -435,7 +436,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 				if ((*it).x < x_min)x_min = (*it).x;
 				if ((*it).x > x_max)x_max = (*it).x;
 			}
-			double rooms_width = x_max - x_min;
+			double rooms_width = static_cast<__int64>(x_max) - x_min;
 			int rooms_dtx = double(WORLD_WIDTH) / 2 - rooms_width / 2 - x_min;
 
 			for (auto it = roomBodyList->begin(); it != roomBodyList->end(); it++)
@@ -484,9 +485,9 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		{
 			//取得相邻房间的位置关系和形状数据
 			Vec2 v1 = roomPois->at(i);
-			Vec2 v2 = roomPois->at(i + 1);
+			Vec2 v2 = roomPois->at(static_cast<__int64>(i) + 1);
 			RoomBody* rb1 = &(roomBodyList->at(i));
-			RoomBody* rb2 = &(roomBodyList->at(i + 1));
+			RoomBody* rb2 = &(roomBodyList->at(static_cast<__int64>(i) + 1));
 			int dt1x = 0; int dt1y = 0;//前一个房间的通道起点
 			int dt2x = 0; int dt2y = 0;//后一个房间的通道起点
 
@@ -597,6 +598,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 	delete roomBodyList;
 	
 	//P4-扫描边缘并平滑
+	std::cout << "gameToolkit::summonMap_2_0:P4-扫描边缘并平滑\n";
 	std::list<Vec2>* marginList;//边缘列表
 	{
 		//申请内存
@@ -632,7 +634,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 			//探针返回坐标值
 			mp.go(boolMap_1, &out_x, &out_y);
 			if (out_x == current_x && out_y == 0) {
-				std::cout <<"gameToolkit::summonMap_2_0_a:P4 边缘总长度:"<<marginLength<< "\n";
+				//std::cout <<"gameToolkit::summonMap_2_0_a:P4 边缘总长度:"<<marginLength<< "\n";
 				break;
 			}
 			else
@@ -661,7 +663,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 			else
 				smoothness = 0;
 
-			std::cout << "gameToolkit::summonMap_2_0:平滑度" << (*it).x << "," << (*it).y << " " << smoothness << "\n";
+			//std::cout << "gameToolkit::summonMap_2_0:平滑度" << (*it).x << "," << (*it).y << " " << smoothness << "\n";
 			
 			//进行平滑
 			if (smoothness < 3 && smoothness>1.5) {
@@ -712,6 +714,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 	updateDistToKing();
 	
 	//P5-生成水体
+	std::cout << "gameToolkit::summonMap_2_0:P5-生成水体\n";
 	bool** waterMap = new bool* [WORLD_WIDTH];//水体bool图
 	{
 		//bool图内存初始化
@@ -836,6 +839,8 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		delete[] waterMap[i];
 	}
 	delete[] waterMap;
+
+	std::cout << "gameToolkit::summonMap_2_0:生成完成\n";
 }
 
 //离散曲线平滑度评估算法
@@ -878,7 +883,7 @@ double gameToolkit::summonMap_curveSmoothAssess(std::list<Vec2>* curve, int i_st
 
 	for (size_t i = 0; i <= dList->size()-2; i++)
 	{
-		double dd = dList->at(i + 1) - dList->at(i);
+		double dd = static_cast<__int64>(dList->at(i + 1)) - dList->at(i);
 		if (dd < 0)dd += 8;
 		ddList->push_back(dd);
 	}
@@ -912,7 +917,7 @@ double gameToolkit::summonMap_curveSmoothAssess(std::list<Vec2>* curve, int i_st
 	auto p2 = (*it);
 
 	it = curve->begin();
-	std::advance(it, round(double(end + start) / 2));
+	std::advance(it, round(double(static_cast<__int64>(end) + start) / 2));
 	auto p3 = (*it);
 
 	Vec2 vd = Vec2(p1.y - p2.y, p2.x - p1.x);
@@ -1045,7 +1050,7 @@ void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 		it--;
 		int next_x = it->x;
 		int next_y = it->y;
-		std::cout << next_x << " " << next_y << "\n";
+		//std::cout << next_x << " " << next_y << "\n";
 		
 		if (!summon && next_y < currrent_y) {
 			rope_x = currrent_x;
@@ -1507,7 +1512,7 @@ bool gameToolkit::ifWalkable(double _x, double _y)
 			return true;
 		}
 	}
-	Grid* grid_under = MapSystem::getInstance()->map->at(x)->at(y + 1);
+	Grid* grid_under = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) + 1);
 	for (auto it = grid_under->facilityList->begin(); it != grid_under->facilityList->end(); it++)
 	{
 		auto f = *it;
@@ -1548,7 +1553,7 @@ bool gameToolkit::ifSubmersed(double _x, double _y)
 	int x = round(_x);
 	int y = round(_y);
 	if (ifAbsoluteBlocked(x, y) || y == 0)return false;
-	if (ifLiquid(x, y) && ifLiquid(x, y - 1)) {
+	if (ifLiquid(x, y) && ifLiquid(x, static_cast<__int64>(y) - 1)) {
 		return true;
 	}
 	return false;
@@ -1571,7 +1576,7 @@ bool gameToolkit::ifFalling(double _x, double _y, int bodyWidth, int bodyHeight)
 	//检测所有身体体积最下方一排的格子
 	for (auto i = x; i < x+bodyWidth; i++)
 	{
-		if (ifAbsoluteBlocked(x, y) || ifLiquid(x, y - bodyHeight + 1) || ifWalkable(x, y)) {
+		if (ifAbsoluteBlocked(x, y) || ifLiquid(x, static_cast<__int64>(y) - bodyHeight + 1) || ifWalkable(x, y)) {
 			return false;
 		}
 	}
@@ -1648,8 +1653,8 @@ void MarginProbe::go(bool** boolmap, int* out_X, int* out_Y)
 		}
 	}
 
-	int tar_x;
-	int tar_y;
+	int tar_x = 0;
+	int tar_y = 0;
 	switch (direction)
 	{
 	case 0:
@@ -1700,8 +1705,8 @@ void MarginProbe::go(bool** boolmap, int* out_X, int* out_Y)
 
 bool MarginProbe::checkIfSolid(bool** boolmap)
 {
-	int tar_x;
-	int tar_y;
+	int tar_x = 0;
+	int tar_y = 0;
 	switch (direction)
 	{
 	case 0:
@@ -2006,14 +2011,14 @@ DirectionType PathProbe_2::getShortestDirection()
 	int d_up = -1;
 
 	if (y != 0)
-		d_up = MapSystem::getInstance()->map->at(x)->at(y - 1)->distToKing;
+		d_up = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) - 1)->distToKing;
 
 	if (y != WORLD_HEIGHT - 1)
-		d_down = MapSystem::getInstance()->map->at(x)->at(y + 1)->distToKing;
+		d_down = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) + 1)->distToKing;
 
-	int d_right = MapSystem::getInstance()->map->at(x + 1)->at(y)->distToKing;
+	int d_right = MapSystem::getInstance()->map->at(static_cast<__int64>(x) + 1)->at(y)->distToKing;
 	int d_center = MapSystem::getInstance()->map->at(x)->at(y)->distToKing;
-	int d_left = MapSystem::getInstance()->map->at(x - 1)->at(y)->distToKing;
+	int d_left = MapSystem::getInstance()->map->at(static_cast<__int64>(x) - 1)->at(y)->distToKing;
 
 	if (d_center > d_up && d_up > 0) {
 		return DirectionType::up;

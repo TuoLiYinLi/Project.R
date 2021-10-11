@@ -67,7 +67,7 @@ TTFUnit::TTFUnit(const char* _message, SDL_Color _color)
 	}
 	//s.erase(s.size() - 1, 1);
 	
-	std::cout <<"\t\tÄÚÈÝ[" << s.c_str() << "]\n";
+	//std::cout <<"\t\tÄÚÈÝ[" << s.c_str() << "]\n";
 
 	w *= FONT_PRECISION;
 	h *= FONT_PRECISION;

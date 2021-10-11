@@ -89,11 +89,11 @@ int main(int argc, char** argv) {
     
     gameToolkit::summonMap_2_0(20211011);
     //SDL_Delay(100);
+    /*
     auto t = TTFParticle::createNew();
     t->fontUnit = TTFUnit::createNew("20211011", {255,0,0,255});
     t->livingTime = 500;
 
-    /*
     auto f = FacilityRopeHeadL::createNew();
     f->x = 27;
     f->y = 11;
@@ -115,7 +115,7 @@ int main(int argc, char** argv) {
 
     */
     
-    
+    std::cout << "初始化完成,游戏运行\n";
     //消息循环
     while (!GlobalData::quitFlag)
     {
