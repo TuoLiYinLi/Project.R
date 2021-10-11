@@ -71,7 +71,7 @@ AnimSystem::AnimSystem()
     vs = 0;
     
     //渲染资源列表
-    animList = new std::vector<std::vector<SDL_Texture*>*>(int(AnimType::size));
+    animList = new std::vector<std::vector<SDL_Texture*>*>();
     if (animList == nullptr) {
 #ifdef _DEBUG
         std::cout << "\t\tERROR:new std::vector<SDL_Texture*>()申请内存失败，值为nullptr\n";
@@ -341,11 +341,12 @@ void AnimSystem::renderAll() {
 }
 
 void AnimSystem::loadAllAnim() {
+#ifdef ANIMATION_SYSTEM_DEBUG
+    std::cout << "AnimSystem::loadAllAnim()\n";
+#endif // ANIMATION_SYSTEM_DEBUG
     for (auto i = 0; i<int(AnimType::size); i++)
     {
-        if (animList->at(i) == nullptr) {
-            loadAnim(AnimType(i));
-        }
+        loadAnim(AnimType(i));
     }
 }
 
@@ -362,6 +363,10 @@ SDL_Texture* AnimSystem::getTextureFromAU(AnimationUnit* au) {
 #ifdef ANIMATION_RENDER_DEBUG
     //std::cout << "AnimSystem::getTextureFromAU(AnimationUnit* au)\n";
 #endif // ANIMATION_RENDER_DEBUG
+    if (au->animProgress >= animList->at(int(au->type))->size()) {
+        std::cout << "\t\tERROR:AnimSystem::getTextureFromAU 超出范围\n";
+    }
+
     return animList->at(int(au->type))->at(au->animProgress);
 }
 
@@ -369,15 +374,15 @@ void AnimSystem::loadAnim(AnimType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
     std::cout << "AnimSystem::loadAnim(AnimType antp)\n";
 #endif // ANIMATION_SYSTEM_DEBUG
-    if (int(antp) >= animList->size()) {
+    if (int(antp) >= int(AnimType::size)) {
 #ifdef _DEBUG
-        std::cout << "\t\tERROR:int(AnimType)超出animList范围\n";
+        std::cout << "\t\tERROR:int(AnimType)超出AnimType范围\n";
 #endif // _DEBUG
         return;
     }
 
 
-    if (animList->at(int(antp)) == nullptr) {
+    if (animList->size()==int(antp)) {
 #ifdef ANIMATION_SYSTEM_DEBUG
         std::cout << "\t\t加载动画:" << int(antp) << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
@@ -519,7 +524,14 @@ void AnimSystem::loadAnim(AnimType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
         std::cout << "\t\t材质数量:"<<num<<"\n";
 #endif // ANIMATION_SYSTEM_DEBUG
-        animList->at(int(antp)) = new std::vector<SDL_Texture*>();
+        auto innerList = new std::vector<SDL_Texture*>();
+        if (innerList == nullptr) {
+            std::cout << "\t\tERROR:加载材质内存不足\n";
+            return;
+        }
+        animList->push_back(innerList);
+
+        
 
         for (auto i = 1; i <= num; i++)
         {
@@ -545,7 +557,7 @@ void AnimSystem::loadAnim(AnimType antp) {
 #endif // ANIMATION_SYSTEM_DEBUG
             }
 
-            animList->at(int(antp))->push_back(texture);
+            innerList->push_back(texture);
         }
     }
     else
