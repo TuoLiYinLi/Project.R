@@ -102,6 +102,20 @@ MapSystem::~MapSystem() {
 	reportMemory();
 }
 
+Grid* MapSystem::getGridAt(int x, int y)
+{
+	if (x < 0 || x > WORLD_WIDTH - 1 ) 
+	{
+		throw x;
+	}
+	if (y < 0 || y > WORLD_HEIGHT - 1) 
+	{
+		throw y;
+	}
+
+	return map->at(x)->at(y);
+}
+
 void MapSystem::occupyGrid(Chara* chara)
 {
 	int x_start = round(chara->x-0.001);
