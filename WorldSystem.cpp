@@ -286,6 +286,7 @@ void WorldSystem::charaLogicGo()
 	#ifdef _DEBUG
 				std::cout << "\t\tERROR:switch (chara->actionType)ÀàÐÍ´íÎó\n";
 	#endif // _DEBUG
+				throw chara->actionType;
 				break;
 			}
 			if (tarAnimTime > 0) {

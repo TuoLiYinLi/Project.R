@@ -1617,6 +1617,7 @@ void MarginProbe::go(bool** boolmap, int* out_X, int* out_Y)
 		break;
 	default:
 		std::cout << "ERROR::MarginProbe direction out of range\n";
+		throw direction;
 		break;
 	}
 
@@ -1668,6 +1669,7 @@ bool MarginProbe::checkIfSolid(bool** boolmap)
 		break;
 	default:
 		std::cout << "ERROR::MarginProbe direction out of range\n";
+		throw direction;
 		break;
 	}
 	if (tar_x < 0 || tar_x >= WORLD_WIDTH || tar_y < 0 || tar_y >= WORLD_HEIGHT) {
@@ -1715,6 +1717,7 @@ Vec2 MarginProbe::getFront()
 		v.y = y + 1;
 		break;
 	default:
+		throw direction;
 		break;
 	}
 	return v;
@@ -1948,6 +1951,7 @@ void PathProbe_2::move(DirectionType d)
 		this->y++;
 		break;
 	default:
+		throw d;
 		break;
 	}
 }
@@ -1983,6 +1987,7 @@ DirectionType PathProbe_2::getShortestDirection()
 	else
 	{
 		std::cout << "Warnning:DirectionType d ³õÊ¼»¯´íÎó!\n";
+		throw d;
 		/*
 		std::cout << "up:" << d_up << "\n";
 		std::cout << "left:" << d_left << "\n";

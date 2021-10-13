@@ -515,7 +515,7 @@ void AnimSystem::loadAnim(AnimType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
             std::cout << "\t\tERROR:¼ÓÔØAnimType´íÎó\n";
 #endif // ANIMATION_SYSTEM_DEBUG
-            return;
+            throw antp;
             break;
         }
 #ifdef ANIMATION_SYSTEM_DEBUG

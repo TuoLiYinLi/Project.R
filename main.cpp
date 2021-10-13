@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
     t->livingTime = 200;
 
 
-    MapSystem::getInstance()->getGridAt(-1, -1);
+    //MapSystem::getInstance()->getGridAt(-1, -1);
     /*
     auto f = FacilityRopeTailL::createNew();
     f->x = 27;

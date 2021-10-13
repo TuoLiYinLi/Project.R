@@ -80,6 +80,7 @@ AnimType CharaWarriorMiner::getAnimType()
 		return AnimType::charaWarriorMiner1_idle;
 		break;
 	default:
+		throw actionType;
 		break;
 	}
 
