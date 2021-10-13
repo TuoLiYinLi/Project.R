@@ -1444,19 +1444,19 @@ void gameToolkit::updateDistWalkToKing()
 				int x, y;
 
 				x = cur_x + 1; y = cur_y;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x; y = cur_y + 1;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x - 1; y = cur_y;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x; y = cur_y - 1;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && ifWalkable(x, y) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 
