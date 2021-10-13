@@ -88,13 +88,16 @@ int main(int argc, char** argv) {
     InputSystem* inputSystem = InputSystem::getInstance();
     
     gameToolkit::summonMap_2_0(20211011);
-    //SDL_Delay(100);
-    /*
+
+    //auto t = worldSystem->animSys->addTTFUnit("1234\n12sadasdda dadsd asw34\n \t\t\ts sad1234\n12453123456\n\n", {255,255,255,255});
     auto t = TTFParticle::createNew();
     t->fontUnit = TTFUnit::createNew("20211011", {255,0,0,255});
     t->livingTime = 500;
 
-    auto f = FacilityRopeHeadL::createNew();
+
+    //MapSystem::getInstance()->getGridAt(-1, -1);
+    /*
+    auto f = FacilityRopeTailL::createNew();
     f->x = 27;
     f->y = 11;
     f->renewPosition();
@@ -183,15 +186,17 @@ int main(int argc, char** argv) {
     std::cout << "\n--\t--\t--\t--结束清理--\t--\t--\t--\n\n";
 
     //释放创建的所有SDL stuff
-    if (GlobalData::win) {
-        SDL_DestroyWindow(GlobalData::win);
-    }
+    inputSystem->destroyInstance();
+    worldSystem->destroyInstance();
+
     if (GlobalData::renderer) {
         SDL_DestroyRenderer(GlobalData::renderer);
     }
 
-    inputSystem->destroyInstance();
-    worldSystem->destroyInstance();
+    if (GlobalData::win) {
+        SDL_DestroyWindow(GlobalData::win);
+    }
+    
     TTF_Quit();
     SDL_Quit();
     return 0;

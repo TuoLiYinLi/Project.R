@@ -115,6 +115,7 @@ AnimType CharaSlime::getAnimType() {
 		return AnimType::charaSlimeIdle;
 		break;
 	default:
+		throw actionType;
 		break;
 	}
 
@@ -236,6 +237,7 @@ void CharaSlime::onIdle()
 				}
 				break;
 			default:
+				throw myDirection;
 				break;
 			}
 			clockwise(true);

@@ -67,6 +67,7 @@ void Chara::move(DirectionType d)
 		actionType = ActionType::move;
 		break;
 	default:
+		throw d;
 		break;
 
 	}

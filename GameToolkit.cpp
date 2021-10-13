@@ -732,6 +732,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		}
 
 		//扫描法获取水区
+		std::cout << "检测可能的水区\n";
 		for (int i = WORLD_HEIGHT - 3; i >= 1; i--)
 		{
 			int current_searching_y = i;
@@ -753,6 +754,8 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 				start_x = wp.x_end + 1;
 			}
 		}
+
+
 	}
 
 	//开始生成水
@@ -777,6 +780,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 	}
 	
 	//P6-生成攀附层
+	std::cout << "P6生成攀附层\n";
 	std::list<Vec2>* path;
 	{
 		//使用寻路探针
@@ -791,6 +795,8 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		}
 		auto pp = PathProbe_2(boolMap_1, start_x, 0);
 		path = pp.solve();
+
+		std::cout <<"path length:"<< path->size() << "\n";
 	}
 
 	//生成path-测试
@@ -814,13 +820,22 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		*/
 		//生成王的位置
 
+		//生成攀爬物
+
+		std::cout << "生成攀爬物\n";
+		summonMap_Climbing(boolMap_1, path);
+
 		//放梯子
+
+		std::cout << "放梯子\n";
 		summonMap_summonLadder(boolMap_1, path);
 		//放绳子
+
+		std::cout << "放绳子\n";
 		summonMap_summonRope(boolMap_1, path);
-		//生成攀爬物
-		summonMap_climbing(boolMap_1, path);
 	}
+
+	std::cout << "成功生成地图\n";
 
 	updateDistWalkToKing();
 
@@ -1040,14 +1055,18 @@ void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 
 	bool summon = false;
 	bool atLeft = false;
-	
-	auto it = path->end();
-	it--;
+
+	path->reverse();
+	//std::cout << path->size() << "\n";
+	auto it = path->begin();
 	while (true)
 	{
 		int currrent_x = it->x;
 		int currrent_y = it->y;
-		it--;
+		it++;
+		if (it == path->end()) {
+			break;
+		}
 		int next_x = it->x;
 		int next_y = it->y;
 		//std::cout << next_x << " " << next_y << "\n";
@@ -1074,15 +1093,12 @@ void gameToolkit::summonMap_summonRope(bool** boolMap, std::list<Vec2>* path)
 				summon = false;
 			}
 		}
-		if (it == path->begin()) {
-			break;
-		}
 	}
-	return;
 }
 
 void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up, bool atRight)
 {
+	//std::cout << "生成绳子\n";
 	if (atRight) {
 		bool ifRope = false;
 		for (int i = y_up; i <= y_down; i++)
@@ -1093,6 +1109,7 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 			}
 		}
 		if (!ifRope) {
+			//std::cout << "不需要生成绳子\n";
 			return;
 		}
 		for (int i = y_up; i <= y_down; i++)
@@ -1128,6 +1145,7 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 			}
 		}
 		if (!ifLadder) {
+			//std::cout << "不需要生成绳子\n";
 			return;
 		}
 		for (int i = y_up; i <= y_down; i++)
@@ -1152,6 +1170,8 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 			f->renewPosition();
 		}
 	}
+
+	std::cout << "完成生成绳子\n";
 }
 
 void gameToolkit::summonMap_summonLadder(bool** boolMap, std::list<Vec2>* path)
@@ -1161,9 +1181,13 @@ void gameToolkit::summonMap_summonLadder(bool** boolMap, std::list<Vec2>* path)
 
 	bool summon = false;
 
+	//std::cout << path->size() << "\n";
+	//int count = 0;
 	auto it = path->begin();
 	while (true)
 	{
+		//count++;
+		//std::cout << count << "\n";
 		int currrent_x = it->x;
 		int currrent_y = it->y;
 		it++;
@@ -1239,7 +1263,7 @@ void gameToolkit::summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_
 	}
 }
 
-void gameToolkit::summonMap_climbing(bool** boolMap, std::list<Vec2>* path)
+void gameToolkit::summonMap_Climbing(bool** boolMap, std::list<Vec2>* path)
 {
 	for (int x = 1; x < WORLD_WIDTH - 1; x++)
 	{
@@ -1692,6 +1716,7 @@ void MarginProbe::go(bool** boolmap, int* out_X, int* out_Y)
 		break;
 	default:
 		std::cout << "ERROR::MarginProbe direction out of range\n";
+		throw direction;
 		break;
 	}
 
@@ -1743,6 +1768,7 @@ bool MarginProbe::checkIfSolid(bool** boolmap)
 		break;
 	default:
 		std::cout << "ERROR::MarginProbe direction out of range\n";
+		throw direction;
 		break;
 	}
 	if (tar_x < 0 || tar_x >= WORLD_WIDTH || tar_y < 0 || tar_y >= WORLD_HEIGHT) {
@@ -1790,6 +1816,7 @@ Vec2 MarginProbe::getFront()
 		v.y = y + 1;
 		break;
 	default:
+		throw direction;
 		break;
 	}
 	return v;
@@ -1877,7 +1904,9 @@ PathProbe_2::PathProbe_2(bool** _boolMap, int _x, int _y)
 std::list<Vec2>* PathProbe_2::solve()
 {
 	auto shortest = solve_shortest();
+	std::cout << "short path length:" << shortest->size() << "\n";
 	auto low = solve_low(shortest);
+	std::cout << "low path length:" << low->size() << "\n";
 	return solve_connect(low);
 }
 
@@ -1886,7 +1915,7 @@ std::list<Vec2>* PathProbe_2::solve_shortest()
 	std::list<Vec2>* out = new std::list<Vec2>();
 
 	out->push_back(Vec2(x, y));
-	while (y!=WORLD_HEIGHT-1)
+	while (y < WORLD_HEIGHT - 2 && y >= 0 && x <= WORLD_WIDTH - 1 && x >= 0)
 	{
 		move(getShortestDirection());
 		out->push_back(Vec2(x, y));
@@ -1919,7 +1948,7 @@ std::list<Vec2>* PathProbe_2::solve_low(std::list<Vec2>* ori_path)
 					}
 				}
 
-				if (!findCommon)
+				if (!findCommon && my_y < WORLD_HEIGHT - 1)
 					out->push_back(Vec2(my_x, my_y));
 				break;
 			}
@@ -1930,6 +1959,16 @@ std::list<Vec2>* PathProbe_2::solve_low(std::list<Vec2>* ori_path)
 		}
 	}
 	delete ori_path;
+
+	/*
+	int count = 0;
+	for (auto i = out->begin(); i != out->end(); i++)
+	{
+		count++;
+		std::cout << count << "@ " << i->x << " " << i->y << "\n";
+	}
+	*/
+
 	return out;
 }
 
@@ -1977,6 +2016,16 @@ std::list<Vec2>* PathProbe_2::solve_connect(std::list<Vec2>* ori_path)
 		}
 	}
 	delete ori_path;
+
+	/*
+	int count = 0;
+	for (auto i = out->begin(); i !=out->end(); i++)
+	{
+		count++;
+		std::cout << count << " " << i->x << " " << i->y << "\n";
+	}
+	*/
+
 	return out;
 }
 
@@ -2001,6 +2050,7 @@ void PathProbe_2::move(DirectionType d)
 		this->y++;
 		break;
 	default:
+		throw d;
 		break;
 	}
 }
@@ -2020,17 +2070,33 @@ DirectionType PathProbe_2::getShortestDirection()
 	int d_center = MapSystem::getInstance()->map->at(x)->at(y)->distToKing;
 	int d_left = MapSystem::getInstance()->map->at(static_cast<__int64>(x) - 1)->at(y)->distToKing;
 
-	if (d_center > d_up && d_up > 0) {
-		return DirectionType::up;
+	DirectionType d = DirectionType::down;
+	if (d_center > d_up && d_up >= 0) {
+		d = DirectionType::up;
+		return d;
 	}
-	else if (d_center > d_down && d_down > 0) {
-		return DirectionType::down;
+	else if (d_center > d_down && d_down >= 0) {
+		d = DirectionType::down;
+		return d;
 	}
-	else if (d_center > d_left && d_left > 0) {
-		return DirectionType::left;
+	else if (d_center > d_left && d_left >= 0) {
+		d = DirectionType::left;
+		return d;
 	}
-	else if (d_center > d_right && d_right > 0) {
-		return DirectionType::right;
+	else if (d_center > d_right && d_right >= 0) {
+		d = DirectionType::right;
+		return d;
 	}
-	return DirectionType::down;
+	else
+	{
+		std::cout << "Warnning:DirectionType d 初始化错误!\n";
+		std::cout << "up:" << d_up << "\n";
+		std::cout << "left:" << d_left << "\n";
+		std::cout << "right:" << d_right << "\n";
+		std::cout << "down:" << d_down << "\n";
+		/*
+		*/
+		throw d;
+	}
 }
+

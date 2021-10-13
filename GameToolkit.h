@@ -76,7 +76,7 @@ namespace gameToolkit {
 
     void summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_up, bool atRight);
 
-    void summonMap_climbing(bool** boolMap, std::list<Vec2>* path);
+    void summonMap_Climbing(bool** boolMap, std::list<Vec2>* path);
 
     //刷新每个格子到魔王的距离
     void updateDistToKing();

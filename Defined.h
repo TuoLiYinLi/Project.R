@@ -46,7 +46,7 @@
 #define ANIMATION_SYSTEM_DEBUG //动画系统查错
 //#define ANIM_UNIT_DEBUG //动画单元生成查错
 //#define TTF_UNIT_DEBUG //字体单元生成查错
-#define ANIMATION_RENDER_DEBUG //动画渲染查错
+//#define ANIMATION_RENDER_DEBUG //动画渲染查错
 
 #define PARTICLE_SYSTEM_DEBUG //粒子系统查错
 
