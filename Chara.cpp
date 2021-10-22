@@ -31,37 +31,55 @@ AnimType Chara::getAnimType()
 void Chara::move(DirectionType d)
 {
 	//只要目标处没有完全阻挡,都是可以移动的
-	std::cout << "角色开始移动\n";
+	//std::cout << "角色开始移动\n";
 	
 	if (form.stamina < form.moveST)return;
 
 	switch (d)
 	{
 	case DirectionType::right:
-		if (gameToolkit::ifAbsoluteBlocked(x + 1, y))return;
+		std::cout << "角色向右移动\n";
+		for (auto i = getHeadSpot(); i <= getStandSpot(); i++)
+		{
+			if (gameToolkit::ifAbsoluteBlocked(getRightSpot() + 1, i))return;
+		}
 		this->flip = false;
 		movingX = 1;
 		animProgress = 0;
 		actionType = ActionType::move;
 		break;
 	case DirectionType::up:
-		if (gameToolkit::ifAbsoluteBlocked(x, y - 1))return;
-
-		if (!gameToolkit::ifWalkable(x, y - 1) &&
-			( !gameToolkit::ifSwimable(x, y - 1) || movingType != MovingType::fly))return;
+		std::cout << "角色向上移动\n";
+		for (auto i = getLeftSpot(); i <= getRightSpot(); i++)
+		{
+			//如果上方有阻挡当然不能向上
+			if (gameToolkit::ifAbsoluteBlocked(i, getHeadSpot() - 1))return;
+			//如果往上走需要检测那一格状态或者自己能否飞行
+			if (!gameToolkit::ifWalkable(i, getStandSpot() - 1) &&
+				( !gameToolkit::ifSwimable(i, getStandSpot() - 1) || movingType != MovingType::fly))return;
+		}
 		movingY = -1;
 		animProgress = 0;
 		actionType = ActionType::move;
 		break;
 	case DirectionType::left:
-		if (gameToolkit::ifAbsoluteBlocked(x - 1, y))return;
+		std::cout << "角色向左移动\n";
+		for (auto i = getHeadSpot(); i <= getStandSpot(); i++)
+		{
+			if (gameToolkit::ifAbsoluteBlocked(getLeftSpot() - 1, i))return;
+		}
 		this->flip = true;
 		movingX = -1;
 		animProgress = 0;
 		actionType = ActionType::move;
 		break;
 	case DirectionType::down:
-		if (gameToolkit::ifAbsoluteBlocked(x, y + 1))return;
+		std::cout << "角色向下移动\n";
+		for (auto i = getLeftSpot(); i <= getRightSpot(); i++)
+		{
+			//如果下方有阻挡当然不能向上
+			if (gameToolkit::ifAbsoluteBlocked(i, getStandSpot() + 1))return;
+		}
 		movingY = +1;
 		animProgress = 0;
 		actionType = ActionType::move;
@@ -123,6 +141,26 @@ Chara* Chara::createNew() {
 
 void Chara::destroy() {
 	delete this;
+}
+
+double Chara::getHeadSpot()
+{
+	return y;
+}
+
+double Chara::getStandSpot()
+{
+	return y + bodyHeight - 1;
+}
+
+double Chara::getLeftSpot()
+{
+	return x;
+}
+
+double Chara::getRightSpot()
+{
+	return x + bodyWidth - 1;
 }
 
 Chara::Chara() {

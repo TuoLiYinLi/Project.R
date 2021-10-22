@@ -106,8 +106,8 @@ namespace gameToolkit {
     //判断一个区域是否是游泳区
     bool ifSwimable(double x, double y);
 
-    //判断一个区域是否是坠落区
-    bool ifFalling(double x, double y, int bodyWidth, int bodyHeight);
+    //判断一个角色是否是坠落
+    bool ifFalling(Chara* chara);
 
     
 }

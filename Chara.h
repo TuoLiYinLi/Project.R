@@ -68,6 +68,15 @@ public:
 	 //手动释放内存
 	virtual void destroy();
 
+	//获取头部点高度
+	double getHeadSpot();
+	//获取站立点高度
+	double getStandSpot();
+	//获取左侧位置
+	double getLeftSpot();
+	//获取右侧位置
+	double getRightSpot();
+	
 	//死亡时(动画结束)触发
 	virtual void onDeath();
 	//不断触发(任何情况每帧)触发

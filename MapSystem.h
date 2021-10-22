@@ -15,7 +15,11 @@ public:
 
 	std::vector<std::vector<Grid*>*>* map;//储存的所有Grid
 	//获取特定位置的网格
-	Grid* getGridAt(int x, int y);
+	Grid* getGridAt(double x, double y);
+	//获取特定位置网格的到王距离
+	int getDTK(double x, double y);
+	//获取特定位置网格的到王距离(走和游)
+	int getDWTK(double x, double y);
 	//角色覆盖到网格
 	void occupyGrid(Chara* chara);
 	//设施覆盖到网格

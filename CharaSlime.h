@@ -33,6 +33,8 @@ public:
     //获取当前动作对应的动画种类
     virtual AnimType getAnimType();
 protected:
+	int heightMark;
+
 	//史莱姆特有特性,按照方向一直前进
 	DirectionType myDirection;
 	//史莱姆逆时针转向

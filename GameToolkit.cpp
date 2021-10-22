@@ -1593,14 +1593,14 @@ bool gameToolkit::ifSwimable(double _x, double _y)
 	return false;
 }
 
-bool gameToolkit::ifFalling(double _x, double _y, int bodyWidth, int bodyHeight)
+bool gameToolkit::ifFalling(Chara* c)
 {
-	int x = round(_x);
-	int y = round(_y);
+	int left = round(c->getLeftSpot());
+	int right = round(c->getRightSpot());
 	//检测所有身体体积最下方一排的格子
-	for (auto i = x; i < x+bodyWidth; i++)
+	for (auto i = left; i <= right; i++)
 	{
-		if (ifAbsoluteBlocked(x, y) || ifLiquid(x, static_cast<__int64>(y) - bodyHeight + 1) || ifWalkable(x, y)) {
+		if (ifSwimable(i, c->getHeadSpot()) || ifWalkable(i, c->getStandSpot())) {
 			return false;
 		}
 	}

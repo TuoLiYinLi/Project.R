@@ -36,13 +36,36 @@ void CharaWarriorMiner::onIdle()
 {
 
 	//寻找路径
-	//更新目标最小
-	
-	if (gameToolkit::ifWalkable(x + 1, y))
 	{
+		//获取周围走到王的距离
+		auto mapSys = MapSystem::getInstance();
+		auto d_up = mapSys->getDWTK(x, getStandSpot() - 1);
+		auto d_down = mapSys->getDWTK(x, getStandSpot() + 1);
+		auto d_current = mapSys->getDWTK(x, getStandSpot());
+		auto d_left = mapSys->getDWTK(x - 1, getStandSpot());
+		auto d_right = mapSys->getDWTK(x + 1, getStandSpot());
 
+		//if(!gameToolkit::ifLiquid(x,getHeadSpot()))
+		{
+			//在地面进行移动
+			if (d_left > 0 && d_left < d_current) {
+				move(DirectionType::left);
+				return;
+			}
+			else if (d_right > 0 && d_right < d_current) {
+				move(DirectionType::right);
+				return;
+			}
+			else if (d_up > 0 && d_up < d_current) {
+				move(DirectionType::up);
+				return;
+			}
+			else if (d_down > 0 && d_down < d_current) {
+				move(DirectionType::down);
+				return;
+			}
+		}
 	}
-
 }
 
 void CharaWarriorMiner::onImpact()
@@ -106,7 +129,7 @@ CharaWarriorMiner::CharaWarriorMiner()
 
 	name = "Miner";
 
-	form.setBasicPart(10, 10, 0, 8, 8, 0.01, 0);
+	form.setBasicPart(10, 10, 0, 8, 8, 0.02, 0);
 	form.setActionPart(40, 2, 40, 4, 60, 7, 60);
 	form.setEffectPart(0.2, 0.2, 0, 0.002, 0.030);
 
@@ -136,7 +159,7 @@ CharaWarriorMiner::CharaWarriorMiner()
 	animUnit->angle = 0;
 	animUnit->depth = 100;
 	animUnit->deltaX = -9;
-	animUnit->deltaY = -12;
+	animUnit->deltaY = 4;
 	animUnit->height = 2 * 32;
 	animUnit->width = 2 * 32;
 	animUnit->x = x;

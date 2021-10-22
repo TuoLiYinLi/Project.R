@@ -102,18 +102,41 @@ MapSystem::~MapSystem() {
 	reportMemory();
 }
 
-Grid* MapSystem::getGridAt(int x, int y)
+Grid* MapSystem::getGridAt(double _x, double _y)
 {
-	if (x < 0 || x > WORLD_WIDTH - 1 ) 
+	int x = round(_x);
+	int y = round(_y);
+	if (x < 0 || x > WORLD_WIDTH - 1 || y < 0 || y > WORLD_HEIGHT - 1) 
 	{
-		throw x;
-	}
-	if (y < 0 || y > WORLD_HEIGHT - 1) 
-	{
-		throw y;
+		std::cout <<"Warning:读取map位置超出范围,参数" << x << "," << y << "\n";
+		return nullptr;
 	}
 
 	return map->at(x)->at(y);
+}
+
+int MapSystem::getDTK(double _x, double _y)
+{
+	auto grid = getGridAt(_x, _y);
+	if (grid) {
+		return grid->distToKing;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int MapSystem::getDWTK(double _x, double _y)
+{
+	auto grid = getGridAt(_x, _y);
+	if (grid) {
+		return grid->distToKing_walk;
+	}
+	else
+	{
+		return -1;
+	}
 }
 
 void MapSystem::occupyGrid(Chara* chara)

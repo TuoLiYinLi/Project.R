@@ -132,7 +132,7 @@ void WorldSystem::charaLogicGo()
 		//发动角色坠落,条件是角色不能飞行且停滞于一个坠落区域
 		if (chara->actionType == ActionType::idle &&
 			chara->movingType != MovingType::fly &&
-			gameToolkit::ifFalling(round(chara->x), round(chara->y), chara->bodyWidth, chara->bodyHeight))
+			gameToolkit::ifFalling(chara))
 		{
 			//std::cout << "角色从闲置变为坠落\n";
 			chara->animProgress = 0;
@@ -143,7 +143,7 @@ void WorldSystem::charaLogicGo()
 		//在角色掉落完成一个各位后判断角色是否会继续坠落
 		if (chara->actionType == ActionType::falling &&
 			chara->fallingY == 0) {
-			if (gameToolkit::ifFalling(round(chara->x), round(chara->y), chara->bodyWidth, chara->bodyHeight)) {
+			if (gameToolkit::ifFalling(chara)) {
 				chara->fallingY += 1;
 				chara->fallingDist += 1;
 			}

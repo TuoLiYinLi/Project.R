@@ -86,8 +86,14 @@ void InputSystem::handleEvent()
             if (evt.key.keysym.scancode == SDL_SCANCODE_C) {
                 keydown_c = false;
             }
-            if (evt.key.keysym.scancode == SDL_SCANCODE_R) {
+            if (evt.key.keysym.scancode == SDL_SCANCODE_1) {
                 auto a = CharaWarriorMiner::createNew();
+                a->x = floor(mouse_world_x);
+                a->y = floor(mouse_world_y);
+                a->renewPosition();
+            }
+            if (evt.key.keysym.scancode == SDL_SCANCODE_2) {
+                auto a = CharaSlime::createNew();
                 a->x = floor(mouse_world_x);
                 a->y = floor(mouse_world_y);
                 a->renewPosition();

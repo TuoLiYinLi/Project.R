@@ -77,6 +77,8 @@ CharaSlime::CharaSlime() {
 	animUnit->width = bodyWidth * 32;
 	animUnit->x = x;
 	animUnit->y = y;
+
+	heightMark = 0;
 }
 
 
@@ -195,9 +197,9 @@ void CharaSlime::onIdle()
 #ifdef CHARA_ACTION_DEBUG
 	std::cout << "\t\tCharaSlime::onIdle()\n";
 #endif // CHARA_ACTION_DEBUG
-	/*
-	//决定是否要移动
 	
+	//决定是否要移动
+	/*
 	if (form.stamina >= form.staminaMax - 2) {
 		//AI徘徊
 
@@ -213,26 +215,40 @@ void CharaSlime::onIdle()
 			switch (myDirection)
 			{
 			case DirectionType::right:
-				if (gameToolkit::ifWalkable(x + 1, y)) {
+				if (gameToolkit::ifWalkable(getRightSpot() + 1, getStandSpot())) {
 					move(DirectionType::right);
 					return;
 				}
 				break;
 			case DirectionType::up:
-				if (gameToolkit::ifWalkable(x, y - 1)) {
+				if (gameToolkit::ifWalkable(x, getStandSpot() - 1)) {
+					if (heightMark>=2)
+					{
+						clockwise(false);
+						clockwise(false);
+						break;
+					}
 					move(DirectionType::up);
+					heightMark++;
 					return;
 				}
 				break;
 			case DirectionType::left:
-				if (gameToolkit::ifWalkable(x - 1, y)) {
+				if (gameToolkit::ifWalkable(getRightSpot() - 1, getStandSpot())) {
 					move(DirectionType::left);
 					return;
 				}
 				break;
 			case DirectionType::down:
-				if (gameToolkit::ifWalkable(x, y + 1)) {
+				if (gameToolkit::ifWalkable(x, getStandSpot() + 1)) {
+					if (heightMark <= -2)
+					{
+						clockwise(false);
+						clockwise(false);
+						break;
+					}
 					move(DirectionType::down);
+					heightMark--;
 					return;
 				}
 				break;
@@ -245,6 +261,51 @@ void CharaSlime::onIdle()
 		}
 	}
 	*/
+	
+	auto mapSys = MapSystem::getInstance();
+	//寻路特性:愚钝,只横向移动
+	if (form.stamina >= form.moveST)
+	{
+		if (!gameToolkit::ifWalkable(getLeftSpot() - 1, getStandSpot()) && !gameToolkit::ifWalkable(getRightSpot() + 1, getStandSpot()))
+		{
+			if (gameToolkit::ifWalkable(x, getStandSpot() - 1))
+			{
+				move(DirectionType::up);
+			}
+			else if(gameToolkit::ifWalkable(x, getStandSpot() - 1))
+			{
+				move(DirectionType::down);
+			}
+		}
+
+		if (!flip) 
+		{
+			//向右运动
+			if (gameToolkit::ifWalkable(getRightSpot() + 1, getStandSpot()))
+			{
+				move(DirectionType::right);
+			}
+			else
+			{
+				flip = true;
+			}
+		}
+		else
+		{
+			//向左运动
+			if (gameToolkit::ifWalkable(getLeftSpot() - 1, getStandSpot()))
+			{
+				move(DirectionType::left);
+			}
+			else
+			{
+				flip = false;
+			}
+		}
+	}
+	
+
+
 }
 
 void CharaSlime::onImpact()
