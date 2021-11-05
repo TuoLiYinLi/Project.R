@@ -182,7 +182,7 @@ void gameToolkit::applyForm(Form* form_tar, Form* form)
     form_tar->healthMax += form->healthMax;
     form_tar->health += form->health;
     form_tar->recovery += form->recovery;
-    form_tar->corruption += form->corruption;
+    //form_tar->corruption += form->corruption;
     form_tar->stamina += form->stamina;
     form_tar->staminaMax += form->staminaMax;
     form_tar->staminaRecover += form->staminaRecover;

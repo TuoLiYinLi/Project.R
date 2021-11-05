@@ -230,12 +230,6 @@
     <ClInclude Include="ActionType.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BreathType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MovingType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CharaSlime.h">
       <Filter>头文件</Filter>
     </ClInclude>

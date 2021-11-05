@@ -22,6 +22,7 @@ void AnimSystem::destroyInstance()
     }
     return;
 }
+
 /*
 AnimationUnit* AnimSystem::addAnimUnit()
 {
@@ -608,3 +609,4 @@ void AnimSystem::unloadAnim(AnimType antp) {
 }
 
 AnimSystem* AnimSystem::instance = nullptr;
+

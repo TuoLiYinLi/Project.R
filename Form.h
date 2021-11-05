@@ -11,8 +11,6 @@ public:
 	int health;//生命值
 	double recovery;//生命恢复量,每帧计算
 	
-	int corruption;//腐化程度,达到100时直接死亡
-	
 	int stamina;//耐力值
 	int staminaMax;//最大耐力值
 	double staminaRecover;//耐力恢复量,每帧计算
@@ -56,8 +54,7 @@ public:
 		double _recovery = 0,
 		int _staminaMax = 0,
 		int _stamina = 0,
-		double _staminaRecover = 0,
-		int _corruption = 0);
+		double _staminaRecover = 0);
 	//设置行动数值
 	void setActionPart(
 		int _moveTime = 0,

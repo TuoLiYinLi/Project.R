@@ -7,8 +7,6 @@
 
 #include "ActionType.h"
 #include "AllyType.h"
-#include "BreathType.h"
-#include "MovingType.h"
 #include "DirectionType.h"
 
 #include "MapSystem.h"
@@ -16,6 +14,8 @@
 
 #include "CharaSystem.h"
 #include "Tag.h"
+#include "Counting.h"
+
 class CharaSystem;
 
 class Chara
@@ -33,8 +33,11 @@ public:
 	int idleSpeed;//停滞动画时长
 	int breath;//剩下多少氧气
 
-	BreathType breathType;//角色的呼吸类型
-	MovingType movingType;//角色的移动类型
+	//角色的移动能力和水中能力
+	bool ifFly;//是否能够飞行
+	bool ifSwim;//是否在水中可以游泳
+	bool ifBreathInWater;//是否在水中可以呼吸
+
 	ActionType actionType;//正在进行的行动类型
 	int animProgress;//动画播放的进度
 
@@ -62,6 +65,8 @@ public:
 	int fallingDist;//从空中总共的坠落距离
 
 	std::list<Grid*>* occupiedGrids;//占用的格位
+
+	Counting* counting;
 
 	//创建新的角色
 	static Chara* createNew();
@@ -103,14 +108,8 @@ public:
 
 	//使用移动能力
 	void move(DirectionType d);
-	//使用基础能力
-	void useBasicSkill(bool flip);
-	//使用特殊能力
-	void useSpecialSkill(bool flip);
-	//使用繁殖能力
-	void breed();
 
-	//刷新位置
+	//刷新网格占用位置
 	void renewPosition();
 	//获取当前有多少个Chara
 	static int getCurrentCharaNum();

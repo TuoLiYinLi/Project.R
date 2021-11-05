@@ -50,7 +50,7 @@
 #include "GameToolkit.h"
 
 int main(int argc, char** argv) {
-	std::cout << "int main(int argc, char** argv)" << std::endl;
+	std::cout << "Reborn Palace Alpha 1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
     
 
     //检查SDL加载是否成功，报错
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
     
     InputSystem* inputSystem = InputSystem::getInstance();
     
-    gameToolkit::summonMap_2_0(20211020);
+    gameToolkit::summonMap_2_0(20211104);
 
     //auto t = worldSystem->animSys->addTTFUnit("1234\n12sadasdda dadsd asw34\n \t\t\ts sad1234\n12453123456\n\n", {255,255,255,255});
     auto t = TTFParticle::createNew();
@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
 
     */
     
-    std::cout << "初始化完成,游戏运行\n";
+    std::cout << "\n--\t--\t--\t--初始化完成,游戏运行\n--\t--\t--\t--\n";
     //消息循环
     while (!GlobalData::quitFlag)
     {
@@ -185,7 +185,7 @@ int main(int argc, char** argv) {
     
     std::cout << "\n--\t--\t--\t--结束清理--\t--\t--\t--\n\n";
 
-    //释放创建的所有SDL stuff
+    //释放创建的所有SDL内容
     inputSystem->destroyInstance();
     worldSystem->destroyInstance();
 

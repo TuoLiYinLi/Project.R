@@ -41,14 +41,17 @@ CharaSlime::CharaSlime() {
 
 	name = "Slime";
 
-	form.setBasicPart(4,4,0.01,8,8,0.01,0);
+	form.setBasicPart(4,4,0.01,8,8,0.01);
 	form.setActionPart(40,2,40,4,60,7,60);
 	form.setEffectPart(0.2, 0.2, 0, 0.002, 0.030);
 
 	deathSpeed = 135;
 	idleSpeed = 120;
-	breathType = BreathType::both;
-	actionType = ActionType::idle;
+	
+	ifFly = false;
+	ifSwim = false;
+	ifBreathInWater = false;
+
 	animProgress = 0;
 
 	x = 10;

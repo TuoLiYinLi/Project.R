@@ -38,7 +38,7 @@ void Chara::move(DirectionType d)
 	switch (d)
 	{
 	case DirectionType::right:
-		std::cout << "角色向右移动\n";
+		//std::cout << "角色向右移动\n";
 		for (auto i = getHeadSpot(); i <= getStandSpot(); i++)
 		{
 			if (gameToolkit::ifAbsoluteBlocked(getRightSpot() + 1, i))return;
@@ -49,21 +49,22 @@ void Chara::move(DirectionType d)
 		actionType = ActionType::move;
 		break;
 	case DirectionType::up:
-		std::cout << "角色向上移动\n";
+		//std::cout << "角色向上移动\n";
+		//仅上方有支撑的情况可以向上运动;
 		for (auto i = getLeftSpot(); i <= getRightSpot(); i++)
 		{
 			//如果上方有阻挡当然不能向上
 			if (gameToolkit::ifAbsoluteBlocked(i, getHeadSpot() - 1))return;
 			//如果往上走需要检测那一格状态或者自己能否飞行
 			if (!gameToolkit::ifWalkable(i, getStandSpot() - 1) &&
-				( !gameToolkit::ifSwimable(i, getStandSpot() - 1) || movingType != MovingType::fly))return;
+				( !gameToolkit::ifSwimable(i, getStandSpot() - 1) ||!ifFly))return;
 		}
 		movingY = -1;
 		animProgress = 0;
 		actionType = ActionType::move;
 		break;
 	case DirectionType::left:
-		std::cout << "角色向左移动\n";
+		//std::cout << "角色向左移动\n";
 		for (auto i = getHeadSpot(); i <= getStandSpot(); i++)
 		{
 			if (gameToolkit::ifAbsoluteBlocked(getLeftSpot() - 1, i))return;
@@ -91,40 +92,6 @@ void Chara::move(DirectionType d)
 	}
 	form.stamina -= form.moveST;
 	std::cout << "剩余ST"<<form.stamina<<"\n";
-}
-
-void Chara::useBasicSkill(bool _flip)
-{
-	
-	if (form.stamina < form.basicSkillST)return;
-
-	flip = _flip;
-	
-	animProgress = 0;
-	actionType = ActionType::basicSkill;
-
-	form.stamina -= form.basicSkillST;
-	
-}
-
-void Chara::useSpecialSkill(bool _flip)
-{
-	
-	if (form.stamina < form.specialSkillST)return;
-
-	flip = _flip;
-
-	animProgress = 0;
-	actionType = ActionType::specialSkill;
-
-	form.stamina -= form.specialSkillST;
-	
-}
-
-void Chara::breed()
-{
-	
-	if (form.breedTime == 0)return;
 }
 
 Chara* Chara::createNew() {
@@ -182,12 +149,15 @@ Chara::Chara() {
 
 	deathSpeed = 0;
 	idleSpeed = 0;
-	breathType = BreathType::both;
-	movingType = MovingType::walk;
+	
+	
 	actionType = ActionType::idle;
 	animProgress = 0;
 
-	//geneList = nullptr;
+	ifFly = false;
+	ifSwim = true;
+	ifBreathInWater = false;
+
 	x = 0;
 	y = 0;
 	movingX = 0;

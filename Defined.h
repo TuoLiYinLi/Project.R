@@ -50,7 +50,7 @@
 
 #define PARTICLE_SYSTEM_DEBUG //粒子系统查错
 
-#define COUNTING_DEBUG//计数物查错
+//#define COUNTING_DEBUG//计数物查错
 
 
 

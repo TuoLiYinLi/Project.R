@@ -67,7 +67,7 @@ Facility::Facility() {
 
 	ally = AllyType::ally;
 
-	counting = nullptr;
+	counting = Counting::createNew();
 
 	idleLength = 0;
 	activateLength = 0;
@@ -99,6 +99,9 @@ Facility::~Facility() {
 #ifdef FACILITY_DEBUG
 	std::cout << "\tFacility::~Facility()\n";
 #endif // FACILITY_DEBUG
+
+	counting->destroy();
+
 	if (animUnit != nullptr) {
 		AnimSystem::getInstance()->removeAnimUnit(animUnit);
 		animUnit = nullptr;

@@ -129,14 +129,17 @@ CharaWarriorMiner::CharaWarriorMiner()
 
 	name = "Miner";
 
-	form.setBasicPart(10, 10, 0, 8, 8, 0.02, 0);
+	form.setBasicPart(10, 10, 0, 8, 8, 0.02);
 	form.setActionPart(40, 2, 40, 4, 60, 7, 60);
 	form.setEffectPart(0.2, 0.2, 0, 0.002, 0.030);
 
 	deathSpeed = 135;
 	idleSpeed = 120;
-	breathType = BreathType::both;
-	actionType = ActionType::idle;
+	
+	ifFly = false;
+	ifSwim = true;
+	ifBreathInWater = false;
+
 	animProgress = 0;
 
 	x = 10;

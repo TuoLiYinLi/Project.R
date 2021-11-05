@@ -215,7 +215,6 @@
     <ClInclude Include="AnimParticle.h" />
     <ClInclude Include="AnimSystem.h" />
     <ClInclude Include="AnimType.h" />
-    <ClInclude Include="BreathType.h" />
     <ClInclude Include="Chara.h" />
     <ClInclude Include="ActionType.h" />
     <ClInclude Include="CharaSlime.h" />
@@ -260,7 +259,6 @@
     <ClInclude Include="ImmediateProj.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MapSystem.h" />
-    <ClInclude Include="MovingType.h" />
     <ClInclude Include="ParticleGoldust.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PenetrableProj.h" />

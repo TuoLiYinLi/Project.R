@@ -5,7 +5,6 @@ Form::Form() {
 		healthMax = 0;
 		health = 0;
 		recovery = 0;
-		corruption = 0;
 		stamina = 0;
 		staminaMax = 0;
 		staminaRecover = 0;
@@ -44,12 +43,10 @@ void Form::setBasicPart(
 	double _recovery,
 	int _staminaMax,
 	int _stamina,
-	double _staminaRecover,
-	int _corruption) {
+	double _staminaRecover) {
 	healthMax = _healthMax;
 	health = _health;
 	recovery = _recovery;
-	corruption = _corruption;
 	stamina = _stamina;
 	staminaMax = _staminaMax;
 	staminaRecover = _staminaRecover;
