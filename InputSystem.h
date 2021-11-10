@@ -4,10 +4,10 @@
 #include "GlobalData.h"
 #include "AnimSystem.h"
 #include "WorldSystem.h"
-#include "CharaSlime.h"
-#include "CharaWarriorMiner.h"
-#include "ProjChop.h"
-#include "ProjSlimeBall.h"
+#include "idea_chara_slime.h"
+#include "idea_chara_warrior_miner.h"
+#include "idea_projectile_chop.h"
+#include "idea_projectile_slime_ball.h"
 
 class InputSystem
 {

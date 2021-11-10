@@ -699,10 +699,10 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 		{
 			Facility* fac;
 			if (boolMap_tar[i][j]) {
-				fac = FacilityDirtWall::createNew();
+				fac = idea_facility_dirt_wall::createNew();
 			}
 			else {
-				fac = FacilityDirtBG::createNew();
+				fac = idea_facility_dirt_background::createNew();
 			}
 			fac->x = i;
 			fac->y = j;
@@ -766,11 +766,11 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 			Facility* fac;
 			if (waterMap[i][j]) {
 				if (!boolMap_1[i][j-1]&& !waterMap[i][j - 1]) {
-					fac = FacilityWaterUpper::createNew();
+					fac = idea_facility_water_upper::createNew();
 				}
 				else
 				{
-					fac = FacilityWaterFull::createNew();
+					fac = idea_facility_water_full::createNew();
 				}
 				fac->x = i;
 				fac->y = j;
@@ -1117,16 +1117,16 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 			Facility* f;
 			{
 				if (i == y_up)
-					f = FacilityRopeHeadR::createNew();
+					f = idea_facility_rope_head_right::createNew();
 				else if(i ==y_down)
-					f = FacilityRopeTailR::createNew();
+					f = idea_facility_rope_tail_right::createNew();
 				else
 				{
 					int r = rand()%2;
 					if (r == 0)
-						f = FacilityRope1R::createNew();
+						f = idea_facility_rope_type1_right::createNew();
 					else
-						f = FacilityRope2R::createNew();
+						f = idea_facility_rope_type2_right::createNew();
 				}
 			}
 			f->x = x;
@@ -1153,16 +1153,16 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 			Facility* f;
 			{
 				if (i == y_up)
-					f = FacilityRopeHeadL::createNew();
+					f = idea_facility_rope_head_left::createNew();
 				else if (i == y_down)
-					f = FacilityRopeTailL::createNew();
+					f = idea_facility_rope_tail_left::createNew();
 				else
 				{
 					int r = rand() % 2;
 					if (r == 0)
-						f = FacilityRope1L::createNew();
+						f = idea_facility_rope_type1_left::createNew();
 					else
-						f = FacilityRope2L::createNew();
+						f = idea_facility_rope_type2_left::createNew();
 				}
 			}
 			f->x = x;
@@ -1234,7 +1234,7 @@ void gameToolkit::summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_
 		}
 		for (int i = y_up; i <= y_down; i++)
 		{
-			auto f = FacilityLadderR::createNew();
+			auto f = idea_facility_ladder_right::createNew();
 			f->x = x;
 			f->y = i;
 			f->renewPosition();
@@ -1255,7 +1255,7 @@ void gameToolkit::summonMap_LadderSide(bool** boolMap, int x, int y_down, int y_
 		}
 		for (int i = y_up; i <= y_down; i++)
 		{
-			auto f = FacilityLadderL::createNew();
+			auto f = idea_facility_ladder_left::createNew();
 			f->x = x;
 			f->y = i;
 			f->renewPosition();
@@ -1274,7 +1274,7 @@ void gameToolkit::summonMap_Climbing(bool** boolMap, std::list<Vec2>* path)
 				{
 					if (boolMap[x - 1][y]&& boolMap[x + 1][y])
 					{
-						auto f = FacilityDirtStairB::createNew();
+						auto f = idea_facility_dirt_stair_both::createNew();
 						f->x = x;
 						f->y = y;
 						f->renewPosition();
@@ -1282,14 +1282,14 @@ void gameToolkit::summonMap_Climbing(bool** boolMap, std::list<Vec2>* path)
 					}
 
 					if (boolMap[x-1][y]) {
-						auto f = FacilityDirtStairL::createNew();
+						auto f = idea_facility_dirt_stair_left::createNew();
 						f->x = x;
 						f->y = y;
 						f->renewPosition();
 						continue;
 					}
 					else if (boolMap[x+1][y]) {
-						auto f = FacilityDirtStairR::createNew();
+						auto f = idea_facility_dirt_stair_right::createNew();
 						f->x = x;
 						f->y = y;
 						f->renewPosition();
@@ -1320,14 +1320,14 @@ void gameToolkit::summonMap_Climbing(bool** boolMap, std::list<Vec2>* path)
 		{
 			if (left)
 			{
-				auto f = FacilityDirtClimbL_t1::createNew();
+				auto f = idea_facility_dirt_climb_type1_left::createNew();
 				f->x = it->x;
 				f->y = it->y;
 				f->renewPosition();
 			}
 			else if (right)
 			{
-				auto f = FacilityDirtClimbR_t1::createNew();
+				auto f = idea_facility_dirt_climb_type1_right::createNew();
 				f->x = it->x;
 				f->y = it->y;
 				f->renewPosition();

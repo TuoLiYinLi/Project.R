@@ -17,33 +17,33 @@
 #include "ParticleSystem.h"
 
 #include "FacilityStatic.h"
-#include "FacilityDirtWall.h"
-#include "FacilityDirtBG.h"
-#include "FacilityDirtStairL.h"
-#include "FacilityDirtStairR.h"
-#include "FacilityDirtStairB.h"
+#include "idea_facility_dirt_wall.h"
+#include "idea_facility_dirt_background.h"
+#include "idea_facility_dirt_stair_left.h"
+#include "idea_facility_dirt_stair_right.h"
+#include "idea_facility_dirt_stair_both.h"
 
 #include "FacilityDynamic.h"
-#include "FacilityDirtCracked.h"
-#include "FacilitySlimeGlue.h"
-#include "FacilityRopeHeadR.h"
-#include "FacilityRopeHeadL.h"
-#include "FacilityRope1R.h"
-#include "FacilityRope1L.h"
-#include "FacilityRope2R.h"
-#include "FacilityRope2L.h"
-#include "FacilityRopeTailR.h"
-#include "FacilityRopeTailL.h"
+#include "idea_facility_dirt_cracked.h"
+#include "idea_facility_slime_glue.h"
+#include "idea_facility_rope_head_right.h"
+#include "idea_facility_rope_head_left.h"
+#include "idea_facility_rope_type1_right.h"
+#include "idea_facility_rope_type1_left.h"
+#include "idea_facility_rope_type2_right.h"
+#include "idea_facility_rope_type2_left.h"
+#include "idea_facility_rope_tail_right.h"
+#include "idea_facility_rope_tail_left.h"
 
 #include "PenetrableProj.h"
-#include "ProjChop.h"
+#include "idea_projectile_chop.h"
 
 #include "ImmediateProj.h"
-#include "ProjSlimeBall.h"
+#include "idea_projectile_slime_ball.h"
 
 #include "WorldSystem.h"
 
-#include "CharaSlime.h"
+#include "idea_chara_slime.h"
 
 
 #include "InputSystem.h"
@@ -97,19 +97,19 @@ int main(int argc, char** argv) {
 
     //MapSystem::getInstance()->getGridAt(-1, -1);
     /*
-    auto f = FacilityRopeTailL::createNew();
+    auto f = idea_facility_rope_tail_left::createNew();
     f->x = 27;
     f->y = 11;
     f->renewPosition();
 
-    auto f1 = FacilityDirtCracked::createNew();
+    auto f1 = idea_facility_dirt_cracked::createNew();
     f1->x = 39;
     f1->y = 10;
     f1->renewPosition();
     */
 
     /*
-    auto a = CharaSlime::createNew();
+    auto a = idea_chara_slime::createNew();
     a->x = 37;
     a->y = 5;
     a->renewPosition();

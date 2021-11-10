@@ -1,6 +1,6 @@
 #include "CharaSystem.h"
 #include "Defined.h"
-#include "CharaSlime.h"
+#include "idea_chara_slime.h"
 
 CharaSystem* CharaSystem::instance = nullptr;
 
@@ -58,7 +58,7 @@ void CharaSystem::addDefaultSlime() {
 #ifdef CHARA_SYSTEM_DEBUG
 	std::cout << "CharaSystem::addDefaultSlime()\n";
 #endif // CHARA_SYSTEM_DEBUG
-	charaList->push_back(CharaSlime::createNew());
+	charaList->push_back(idea_chara_slime::createNew());
 	reportMemory();
 }
 Chara* CharaSystem::addChara(Chara* chara)
