@@ -125,9 +125,9 @@ AnimType idea_chara_warrior_miner::getAnimType()
 
 idea_chara_warrior_miner::idea_chara_warrior_miner()
 {
-	tag = Tag::Miner;
+	tag = Tag::miner;
 
-	name = "Miner";
+	name = "miner";
 
 	form.setBasicPart(10, 10, 0, 8, 8, 0.02);
 	form.setActionPart(40, 2, 40, 4, 60, 7, 60);

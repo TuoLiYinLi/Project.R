@@ -18,7 +18,7 @@ AnimType idea_facility_water_upper::getAnimType()
 
 idea_facility_water_upper::idea_facility_water_upper()
 {
-	tag = Tag::Water;
+	tag = Tag::water;
 
 	blockingType = BlockingType::liquid;
 	ally = AllyType::peace;

@@ -105,7 +105,6 @@ Chara* Chara::createNew() {
 	
 }
 
-
 void Chara::destroy() {
 	delete this;
 }
@@ -139,7 +138,7 @@ Chara::Chara() {
 	
 	currentCharaNum++;
 
-	tag = Tag::Defaule;
+	tag = Tag::default_tag;
 
 	name = "new Chara";
 	animUnit = nullptr;
@@ -180,8 +179,12 @@ Chara::Chara() {
 
 	occupiedGrids = new std::list<Grid*>();
 	this->renewPosition();
-}
 
+	if (patrolArea==nullptr)
+	{
+		patrolArea = new std::vector<Grid*>();
+	}
+}
 
 Chara::~Chara() {
 #ifdef CHARA_DEBUG
@@ -205,6 +208,10 @@ Chara::~Chara() {
 		occupiedGrids = nullptr;
 	}
 
+	if (patrolArea != nullptr)
+	{
+		delete patrolArea;
+	}
 }
 
 void Chara::onDeath()

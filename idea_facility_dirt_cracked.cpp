@@ -54,6 +54,4 @@ idea_facility_dirt_cracked::idea_facility_dirt_cracked()
 	animUnit->width = height * 32;
 }
 
-idea_facility_dirt_cracked::~idea_facility_dirt_cracked()
-{
-}
+idea_facility_dirt_cracked::~idea_facility_dirt_cracked() = default;

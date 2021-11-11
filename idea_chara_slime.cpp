@@ -37,9 +37,9 @@ idea_chara_slime::idea_chara_slime() {
 	std::cout << "\tCharaSlime::idea_chara_slime()\n";
 #endif // CHARA_DEBUG
 
-	tag = Tag::Slime;
+	tag = Tag::slime;
 
-	name = "Slime";
+	name = "slime";
 
 	form.setBasicPart(4,4,0.01,8,8,0.01);
 	form.setActionPart(40,2,40,4,60,7,60);
@@ -174,7 +174,7 @@ void idea_chara_slime::onMove()
 	case DirectionType::down:
 		movingY++;
 		break;
-	default:
+	default_tag:
 		break;
 	}
 	*/
@@ -255,7 +255,7 @@ void idea_chara_slime::onIdle()
 					return;
 				}
 				break;
-			default:
+			default_tag:
 				throw myDirection;
 				break;
 			}

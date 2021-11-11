@@ -68,6 +68,9 @@ public:
 
 	Counting* counting;
 
+	//自定义巡逻范围
+	std::vector<Grid*>* patrolArea;
+
 	//创建新的角色
 	static Chara* createNew();
 	 //手动释放内存
