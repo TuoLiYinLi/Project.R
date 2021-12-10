@@ -39,7 +39,7 @@ AnimationUnit::AnimationUnit() {
 	std::cout << "AnimationUnit::AnimationUnit()\n";
 #endif // ANIM_UNIT_DEBUG
 
-	AnimSystem::getInstance()->animUnitList->push_back(this);
+	AnimationSystem::getInstance()->animUnitList->push_back(this);
 
 	currentNum++;
 

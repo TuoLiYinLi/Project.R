@@ -28,7 +28,7 @@ CharaSystem::CharaSystem() {
 #ifdef CHARA_SYSTEM_DEBUG
 	std::cout << "CharaSystem::CharaSystem()\n";
 #endif // CHARA_SYSTEM_DEBUG
-	charaList = new std::list<Chara*>();
+	charaList = new std::list<Chara_old*>();
 }
 
 CharaSystem::~CharaSystem() {
@@ -61,10 +61,10 @@ void CharaSystem::addDefaultSlime() {
 	charaList->push_back(idea_chara_slime::createNew());
 	reportMemory();
 }
-Chara* CharaSystem::addChara(Chara* chara)
+Chara_old* CharaSystem::addChara(Chara_old* chara)
 {
 #ifdef CHARA_SYSTEM_DEBUG
-	std::cout << "CharaSystem::addChara(Chara* chara)\n";
+	std::cout << "CharaSystem::addChara(Chara_old* chara)\n";
 #endif // CHARA_SYSTEM_DEBUG
 	if (chara != nullptr && std::find(charaList->begin(), charaList->end(), chara) == charaList->end()) 
 	{
@@ -75,9 +75,9 @@ Chara* CharaSystem::addChara(Chara* chara)
 }
 */
 
-void CharaSystem::removeChara(Chara* chara) {
+void CharaSystem::removeChara(Chara_old* chara) {
 #ifdef CHARA_SYSTEM_DEBUG
-	std::cout << "CharaSystem::removeChara(Chara* chara)\n";
+	std::cout << "CharaSystem::removeChara(Chara_old* chara)\n";
 #endif // CHARA_SYSTEM_DEBUG
 	charaList->remove(chara);
 	chara->destroy();
@@ -92,7 +92,7 @@ void CharaSystem::removeChara(int index) {
 	removeChara(chara);
 }
 
-std::list<Chara*>::iterator CharaSystem::removeChara(std::list<Chara*>::iterator it)
+std::list<Chara_old*>::iterator CharaSystem::removeChara(std::list<Chara_old*>::iterator it)
 {
 	(*it)->destroy();
 	auto new_it= charaList->erase(it);
@@ -100,7 +100,7 @@ std::list<Chara*>::iterator CharaSystem::removeChara(std::list<Chara*>::iterator
 	return new_it;
 }
 
-Chara* CharaSystem::charaAt(int index) {
+Chara_old* CharaSystem::charaAt(int index) {
 #ifdef CHARA_SYSTEM_DEBUG
 	if(index>=charaList->size())
 	std::cout << "CharaSystem::charaAt(int index)\n\t\tERROR index³¬³öcharaList·¶Î§";
@@ -117,12 +117,12 @@ void CharaSystem::reportMemory() {
 #endif // CHARA_SYSTEM_DEBUG
 }
 
-bool CharaSystem::ifSubmersed(Chara* chara)
+bool CharaSystem::ifSubmersed(Chara_old* chara)
 {
 	return false;
 }
 
-bool CharaSystem::ifFalling(Chara* chara)
+bool CharaSystem::ifFalling(Chara_old* chara)
 {
 	if (chara->form.beatback==0 && chara->movingX == 0 && chara->movingY==0) {
 		

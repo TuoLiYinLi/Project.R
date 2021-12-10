@@ -21,7 +21,7 @@ void ParticleSystem::removeParticle(TTFParticle* ttfParticle)
 {
 	ttfParticleList->remove(ttfParticle);
 	if (ttfParticle->fontUnit != nullptr) {
-		AnimSystem::getInstance()->removeTTFUnit(ttfParticle->fontUnit);
+		AnimationSystem::getInstance()->removeTTFUnit(ttfParticle->fontUnit);
 		ttfParticle->fontUnit = nullptr;
 	}
 	ttfParticle->destroy();
@@ -31,7 +31,7 @@ void ParticleSystem::removeParticle(AnimParticle* animParticle)
 {
 	animParticleList->remove(animParticle);
 	if (animParticle->animUnit != nullptr) {
-		AnimSystem::getInstance()->removeAnimUnit(animParticle->animUnit);
+		AnimationSystem::getInstance()->removeAnimUnit(animParticle->animUnit);
 		animParticle->animUnit = nullptr;
 	}
 	animParticle->destroy();
@@ -40,7 +40,7 @@ void ParticleSystem::removeParticle(AnimParticle* animParticle)
 std::list<TTFParticle*>::iterator ParticleSystem::removeParticleIt(std::list<TTFParticle*>::iterator it)
 {
 	if ((*it)->fontUnit != nullptr) {
-		AnimSystem::getInstance()->removeTTFUnit((*it)->fontUnit);
+		AnimationSystem::getInstance()->removeTTFUnit((*it)->fontUnit);
 		(*it)->fontUnit = nullptr;
 	}
 	(*it)->destroy();
@@ -51,7 +51,7 @@ std::list<TTFParticle*>::iterator ParticleSystem::removeParticleIt(std::list<TTF
 std::list<AnimParticle*>::iterator ParticleSystem::removeParticleIt(std::list<AnimParticle*>::iterator it)
 {
 	if ((*it)->animUnit != nullptr) {
-		AnimSystem::getInstance()->removeAnimUnit((*it)->animUnit);
+		AnimationSystem::getInstance()->removeAnimUnit((*it)->animUnit);
 		(*it)->animUnit = nullptr;
 	}
 	auto r = animParticleList->erase(it);

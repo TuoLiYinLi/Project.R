@@ -2,12 +2,12 @@
 
 Form::Form() {
 	{
-		healthMax = 0;
+		health_max = 0;
 		health = 0;
-		recovery = 0;
+		health_recovery = 0;
 		stamina = 0;
-		staminaMax = 0;
-		staminaRecover = 0;
+		stamina_max = 0;
+		stamina_recover = 0;
 
 		moveTime = 0;
 		moveST = 0;
@@ -44,12 +44,12 @@ void Form::setBasicPart(
 	int _staminaMax,
 	int _stamina,
 	double _staminaRecover) {
-	healthMax = _healthMax;
+	health_max = _healthMax;
 	health = _health;
-	recovery = _recovery;
+	health_recovery = _recovery;
 	stamina = _stamina;
-	staminaMax = _staminaMax;
-	staminaRecover = _staminaRecover;
+	stamina_max = _staminaMax;
+	stamina_recover = _staminaRecover;
 }
 void Form::setActionPart(
 	int _moveTime ,

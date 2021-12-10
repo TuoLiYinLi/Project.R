@@ -7,11 +7,11 @@ public:
     static idea_projectile_slime_ball* createNew();
     virtual void destroy();
 
-    //Åöµ½Ä¿±ê½ÇÉ«»á´¥·¢
-    virtual void onHit(Chara* c);
-    //Åöµ½Ä¿±ê½¨Öþ»á´¥·¢
-    virtual void onHit(Facility* f);
-    //Ê±¼ä½áÊø´¥·¢
+    //ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½É«ï¿½á´¥ï¿½ï¿½
+    virtual void onHit(Chara_old* c);
+    //ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ê½¨ï¿½ï¿½ï¿½á´¥ï¿½ï¿½
+    virtual void onHit(Facility_old* f);
+    //Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     virtual void onEnd();
 
 protected:

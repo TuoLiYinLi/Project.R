@@ -1,21 +1,15 @@
 #pragma once
-#include "SDL.h"
-#include <iostream>
-#include "GlobalData.h"
-#include "AnimSystem.h"
-#include "WorldSystem.h"
-#include "idea_chara_slime.h"
-#include "idea_chara_warrior_miner.h"
-#include "idea_projectile_chop.h"
-#include "idea_projectile_slime_ball.h"
 
 class InputSystem
 {
 public:
-	int mouse_window_x;
-	int mouse_window_y;
-	double mouse_world_x;
-	double mouse_world_y;
+	static InputSystem* getInstance();
+	static void destroyInstance();
+
+	int mouseX_window;	//计划重构为只读
+	int mouseY_window;
+	double mouseX_world;
+	double mouseY_world;
 
 	bool mousedown_left;
 	bool mousedown_right;
@@ -28,13 +22,13 @@ public:
 	bool keydown_x;
 	bool keydown_c;
 
-	static InputSystem* getInstance();
-	void destroyInstance();
-	void handleEvent();
-	void renewMouse();
+	bool keydown_esc;	//退出键
+
+	void handleEvent();	//处理输入事件
+	void renewMouse();	//尚未完成
+
 protected:
 	static InputSystem* instance;
-	SDL_Event evt;
 	InputSystem();
 	~InputSystem();
 };

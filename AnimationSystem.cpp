@@ -1,12 +1,13 @@
-#include "AnimSystem.h"
+#include "AnimationSystem.h"
 #include "Defined.h"
-AnimSystem* AnimSystem::getInstance()
+#include "GlobalData.h"
+AnimationSystem* AnimationSystem::getInstance()
 {
     if (instance == nullptr) {
-        auto a = new AnimSystem();
+        auto a = new AnimationSystem();
         if (a==nullptr) {
 #ifdef _DEBUG
-            std::cout << "\t\tERROR:AnimSystem::new AnimSystem()申请内存失败，值为nullptr\n";
+            std::cout << "\t\tERROR:AnimationSystem::new AnimationSystem()申请内存失败，值为nullptr\n";
 #endif // _DEBUG
         }
         instance = a;
@@ -14,7 +15,7 @@ AnimSystem* AnimSystem::getInstance()
     return instance;
 }
 
-void AnimSystem::destroyInstance()
+void AnimationSystem::destroyInstance()
 {
     if (instance != nullptr) {
         delete instance;
@@ -24,7 +25,7 @@ void AnimSystem::destroyInstance()
 }
 
 /*
-AnimationUnit* AnimSystem::addAnimUnit()
+AnimationUnit* AnimationSystem::addAnimUnit()
 {
     AnimationUnit* au = AnimationUnit::createNew();
     animUnitList->push_back(au);
@@ -33,14 +34,14 @@ AnimationUnit* AnimSystem::addAnimUnit()
 }
 */
 
-void AnimSystem::removeAnimUnit(AnimationUnit* _animUnit)
+void AnimationSystem::removeAnimUnit(AnimationUnit* _animUnit)
 {
     animUnitList->remove(_animUnit);
     _animUnit->destroy();
 }
 
 /*
-TTFUnit* AnimSystem::addTTFUnit(const char* msg, SDL_Color color)
+TTFUnit* AnimationSystem::addTTFUnit(const char* msg, SDL_Color color)
 {
     TTFUnit* tu = TTFUnit::createNew(msg, color);
     fontUnitList->push_back(tu);
@@ -48,16 +49,16 @@ TTFUnit* AnimSystem::addTTFUnit(const char* msg, SDL_Color color)
 }
 */
 
-void AnimSystem::removeTTFUnit(TTFUnit* _TTFUnit)
+void AnimationSystem::removeTTFUnit(TTFUnit* _TTFUnit)
 {
     fontUnitList->remove(_TTFUnit);
     _TTFUnit->destroy();
 }
 
-AnimSystem::AnimSystem()
+AnimationSystem::AnimationSystem()
 {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "AnimSystem::AnimSystem()\n";
+    std::cout << "AnimationSystem::AnimationSystem()\n";
 #endif // ANIMATION_SYSTEM_DEBUG
 
     windowHeight = WINDOW_HEIGHT;
@@ -89,13 +90,13 @@ AnimSystem::AnimSystem()
     }
     //字体单元列表
     fontUnitList = new std::list<TTFUnit*>();
-    GlobalData::font = TTF_OpenFont("./Resource/ttf/Zpix.ttf",FONT_PRECISION);
+    //GlobalData::font = TTF_OpenFont("./Resource/ttf/Zpix.ttf",FONT_PRECISION);
 }
 
-AnimSystem::~AnimSystem()
+AnimationSystem::~AnimationSystem()
 {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "AnimSystem::~AnimSystem()\n";
+    std::cout << "AnimationSystem::~AnimationSystem()\n";
 #endif // ANIMATION_SYSTEM_DEBUG
 
 #ifdef ANIMATION_SYSTEM_DEBUG
@@ -136,24 +137,24 @@ AnimSystem::~AnimSystem()
     delete animList;
     animList = nullptr;
     
-    TTF_CloseFont(GlobalData::font);
+    //TTF_CloseFont(GlobalData::font);
 }
 
-void AnimSystem::updateWindow()
+void AnimationSystem::updateWindow()
 {
     //std::cout << vx << "," << vy << "\n";
     
     double s1 = 1 / viewScale;
-    viewX += GlobalData::deltaTime * vx / 1000 * s1;
-    viewY += GlobalData::deltaTime * vy / 1000 * s1;
-    viewScale += GlobalData::deltaTime * vs / 1000;
+    viewX += GlobalData::delta_time * vx / 1000 * s1;
+    viewY += GlobalData::delta_time * vy / 1000 * s1;
+    viewScale += GlobalData::delta_time * vs / 1000;
     
     if (viewScale > MAX_VIEW_SCALE) viewScale = MAX_VIEW_SCALE;
     if (viewScale < MIN_VIEW_SCALE)viewScale = MIN_VIEW_SCALE;
 
-    double axt = GlobalData::deltaTime * double(VIEW_ACCELERATE_SPEED_X) / 1000;
-    double ayt = GlobalData::deltaTime * double(VIEW_ACCELERATE_SPEED_Y) / 1000;
-    double ast = GlobalData::deltaTime * double(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
+    double axt = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_X) / 1000;
+    double ayt = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_Y) / 1000;
+    double ast = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
     
     if (vx>0) {
         vx -= axt;
@@ -188,7 +189,7 @@ void AnimSystem::updateWindow()
 
 }
 
-void AnimSystem::renderOneUnit(AnimationUnit* au) {
+void AnimationSystem::renderOneUnit(AnimationUnit* au) {
     SDL_Texture* texture= getTextureFromAU(au);
 
     SDL_Rect rect;
@@ -207,10 +208,10 @@ void AnimSystem::renderOneUnit(AnimationUnit* au) {
         return;
     }
 
-    SDL_RenderCopyEx(GlobalData::renderer, texture, NULL, &rect, au->angle, NULL, au->flip);
+    SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, NULL, &rect, au->angle, NULL, au->flip);
 }
 
-void AnimSystem::renderOneUnit(TTFUnit* tu)
+void AnimationSystem::renderOneUnit(TTFUnit* tu)
 {
     SDL_Rect rect;
     rect.x = round((tu->world_x - viewX) * 32  * viewScale - (viewScale - 1) * windowWidth * 0.5);
@@ -218,12 +219,12 @@ void AnimSystem::renderOneUnit(TTFUnit* tu)
     rect.w = ceil(double(tu->w) / FONT_PRECISION * FONT_SIZE * viewScale * tu->scale);
     rect.h = ceil(double(tu->h) / FONT_PRECISION * FONT_SIZE * viewScale * tu->scale);
     //std::cout <<"Text Size " << tu->w<< "," << tu->h << "\n";
-    SDL_RenderCopy(GlobalData::renderer, tu->texture, NULL, &rect);
+    SDL_RenderCopy(GlobalData::sdl_renderer, tu->texture, NULL, &rect);
 }
 
-void AnimSystem::renderAll() {
+void AnimationSystem::renderAll() {
 #ifdef ANIMATION_RENDER_DEBUG
-    std::cout << "AnimSystem::renderAll()\n";
+    std::cout << "AnimationSystem::renderAll()\n";
 #endif // ANIMATION_SYSTEM_DEBUG
     unsigned short currentDeepth = 0;
     unsigned short maxDeepth = 0;
@@ -341,9 +342,9 @@ void AnimSystem::renderAll() {
     }
 }
 
-void AnimSystem::loadAllAnim() {
+void AnimationSystem::loadAllAnim() {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "AnimSystem::loadAllAnim()\n";
+    std::cout << "AnimationSystem::loadAllAnim()\n";
 #endif // ANIMATION_SYSTEM_DEBUG
     for (auto i = 0; i<int(AnimType::size); i++)
     {
@@ -351,7 +352,7 @@ void AnimSystem::loadAllAnim() {
     }
 }
 
-void AnimSystem::unloadAllAnim() {
+void AnimationSystem::unloadAllAnim() {
     for (auto i = 0; i<int(AnimType::size); i++)
     {
         if (animList->at(i)!=nullptr) {
@@ -360,20 +361,20 @@ void AnimSystem::unloadAllAnim() {
     }
 }
 
-SDL_Texture* AnimSystem::getTextureFromAU(AnimationUnit* au) {
+SDL_Texture* AnimationSystem::getTextureFromAU(AnimationUnit* au) {
 #ifdef ANIMATION_RENDER_DEBUG
-    //std::cout << "AnimSystem::getTextureFromAU(AnimationUnit* au)\n";
+    //std::cout << "AnimationSystem::getTextureFromAU(AnimationUnit* au)\n";
 #endif // ANIMATION_RENDER_DEBUG
     if (au->animProgress >= animList->at(int(au->type))->size()) {
-        std::cout << "\t\tERROR:AnimSystem::getTextureFromAU 超出范围\n";
+        std::cout << "\t\tERROR:AnimationSystem::getTextureFromAU 超出范围\n";
     }
 
     return animList->at(int(au->type))->at(au->animProgress);
 }
 
-void AnimSystem::loadAnim(AnimType antp) {
+void AnimationSystem::loadAnim(AnimType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "AnimSystem::loadAnim(AnimType antp)\n";
+    std::cout << "AnimationSystem::loadAnim(AnimType antp)\n";
 #endif // ANIMATION_SYSTEM_DEBUG
     if (int(antp) >= int(AnimType::size)) {
 #ifdef _DEBUG
@@ -545,7 +546,7 @@ void AnimSystem::loadAnim(AnimType antp) {
                 fullFile = file + std::string(".png");
             }
             auto c_fullFile = fullFile.c_str();
-            SDL_Texture* texture= IMG_LoadTexture(GlobalData::renderer, c_fullFile);
+            SDL_Texture* texture= IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
             if (texture != nullptr) {
 #ifdef ANIMATION_SYSTEM_DEBUG
                 std::cout << "\t\t成功加载"<<c_fullFile<<"\n";
@@ -570,7 +571,7 @@ void AnimSystem::loadAnim(AnimType antp) {
     }
 }
 
-void AnimSystem::unloadAnim(AnimType antp) {
+void AnimationSystem::unloadAnim(AnimType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
     std::cout << "unloadAnim(AnimType antp)\n";
     std::cout << "\t\t卸载动画:" << int(antp) << "\n";
@@ -608,5 +609,5 @@ void AnimSystem::unloadAnim(AnimType antp) {
     }
 }
 
-AnimSystem* AnimSystem::instance = nullptr;
+AnimationSystem* AnimationSystem::instance = nullptr;
 

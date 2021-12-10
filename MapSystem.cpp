@@ -30,10 +30,10 @@ MapSystem::MapSystem(){
 	std::cout << "MapSystem::MapSystem()" << std::endl;
 	int verticalGridCount = 0;
 #endif // MAP_SYSTEM_DEBUG
-	map = new std::vector<std::vector<Grid*>*>(WORLD_WIDTH);
+	map = new std::vector<std::vector<Grid_old*>*>(WORLD_WIDTH);
 	for (auto it = map->begin(); it != map->end(); it++)
 	{
-		(*it) = new std::vector <Grid*>(WORLD_HEIGHT);
+		(*it) = new std::vector <Grid_old*>(WORLD_HEIGHT);
 #ifdef MAP_SYSTEM_DEBUG
 		verticalGridCount += 1;
 #endif // MAP_SYSTEM_DEBUG
@@ -49,7 +49,7 @@ MapSystem::MapSystem(){
 		gridY = 0;
 		for (auto ir = (*it)->begin(); ir != (*it)->end(); ir++)
 		{
-			(*ir) = Grid::createNew(gridX, gridY);
+			(*ir) = Grid_old::createNew(gridX, gridY);
 #ifdef MAP_SYSTEM_DEBUG
 			gridCount += 1;
 #endif // MAP_SYSTEM_DEBUG
@@ -102,7 +102,7 @@ MapSystem::~MapSystem() {
 	reportMemory();
 }
 
-Grid* MapSystem::getGridAt(double _x, double _y)
+Grid_old* MapSystem::getGridAt(double _x, double _y)
 {
 	int x = round(_x);
 	int y = round(_y);
@@ -119,7 +119,7 @@ int MapSystem::getDTK(double _x, double _y)
 {
 	auto grid = getGridAt(_x, _y);
 	if (grid) {
-		return grid->distToKing;
+		return grid->dist_to_king_shortest;
 	}
 	else
 	{
@@ -131,7 +131,7 @@ int MapSystem::getDWTK(double _x, double _y)
 {
 	auto grid = getGridAt(_x, _y);
 	if (grid) {
-		return grid->distToKing_walk;
+		return grid->dist_to_king_walk;
 	}
 	else
 	{
@@ -139,7 +139,7 @@ int MapSystem::getDWTK(double _x, double _y)
 	}
 }
 
-void MapSystem::occupyGrid(Chara* chara)
+void MapSystem::occupyGrid(Chara_old* chara)
 {
 	int x_start = round(chara->x-0.001);
 	int y_start = round(chara->y - chara->bodyHeight + 1 - 0.001);
@@ -150,14 +150,14 @@ void MapSystem::occupyGrid(Chara* chara)
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = map->at(i)->at(j);
+			Grid_old* grid = map->at(i)->at(j);
 			grid->charaList->push_back(chara);
 			chara->occupiedGrids->push_back(grid);
 		}
 	}
 }
 
-void MapSystem::occupyGrid(Facility* facility)
+void MapSystem::occupyGrid(Facility_old* facility)
 {
 	int x_start = round(facility->x - 0.001);
 	int y_start = round(facility->y - 0.001);
@@ -168,7 +168,7 @@ void MapSystem::occupyGrid(Facility* facility)
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = map->at(i)->at(j);
+			Grid_old* grid = map->at(i)->at(j);
 			grid->facilityList->push_back(facility);
 			facility->occupiedGrids->push_back(grid);
 		}
@@ -178,7 +178,7 @@ void MapSystem::occupyGrid(Facility* facility)
 void MapSystem::reportMemory() {
 #ifdef MAP_SYSTEM_DEBUG
 	std::cout << "MapSystem::reportMemory()" << std::endl;
-	std::cout << "\t\t现在有"<<Grid::getCurrentGridNum()<<"个Grid占用内存" << std::endl;
+	std::cout << "\t\t现在有"<<Grid_old::getCurrentGridNum()<<"个Grid占用内存" << std::endl;
 
 #endif // MAP_SYSTEM_DEBUG
 	return;

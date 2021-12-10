@@ -5,7 +5,7 @@
 class TTFParticle;
 #include "AnimParticle.h"
 class AnimParticle;
-#include "AnimSystem.h"
+#include "AnimationSystem.h"
 class ParticleSystem
 {
 public:

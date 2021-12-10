@@ -11,11 +11,11 @@ void PenetrableProj::destroy()
 	delete this;
 }
 
-void PenetrableProj::onHit(Chara* c)
+void PenetrableProj::onHit(Chara_old* c)
 {
 }
 
-void PenetrableProj::onHit(Facility* f)
+void PenetrableProj::onHit(Facility_old* f)
 {
 }
 
@@ -36,7 +36,7 @@ void PenetrableProj::onFlying()
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = MapSystem::getInstance()->map->at(i)->at(j);
+			Grid_old* grid = MapSystem::getInstance()->map->at(i)->at(j);
 			//获取碰到的角色
 			for (auto it = grid->charaList->begin(); it != grid->charaList->end(); it++)
 			{

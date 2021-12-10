@@ -7,8 +7,8 @@
 
 #include "AnimType.h"
 
-#include "AnimSystem.h"
-class AnimSystem;
+#include "AnimationSystem.h"
+class AnimationSystem;
 
 class AnimationUnit
 {

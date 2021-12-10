@@ -1,6 +1,6 @@
 #pragma once
 #include "AnimParticle.h"
-#include "AnimSystem.h"
+#include "AnimationSystem.h"
 class idea_particle_goldust :
     public AnimParticle
 {

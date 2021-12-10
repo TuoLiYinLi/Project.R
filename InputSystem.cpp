@@ -1,6 +1,7 @@
 #include "InputSystem.h"
+#include <iostream>
+#include "GlobalData.h"
 #include "Defined.h"
-#include "GameToolkit.h"
 
 InputSystem* InputSystem::getInstance()
 {
@@ -18,32 +19,38 @@ InputSystem* InputSystem::getInstance()
 
 void InputSystem::destroyInstance()
 {
-	delete this;
+	if (instance != nullptr) {
+		delete instance;
+		instance = nullptr;
+	}
 }
 
 void InputSystem::handleEvent()
 {
+	SDL_Event evt;
 	while (SDL_PollEvent(&evt))
 	{
 		//刷新鼠标坐标
 		if (evt.type == SDL_MOUSEMOTION || evt.type == SDL_MOUSEBUTTONDOWN)
 		{
-			mouse_window_x = evt.button.x;
-			mouse_window_y = evt.button.y;
-			AnimSystem* animSys = AnimSystem::getInstance();
+			mouseX_window = evt.button.x;
+			mouseY_window = evt.button.y;
+			/*
+			AnimationSystem* animSys = AnimationSystem::getInstance();
 			double k = (1 / animSys->viewScale) * 0.03125;
-			mouse_world_x = animSys->viewX + double(WINDOW_WIDTH) * 0.015625 + k * (mouse_window_x - double(0.5) *
+			mouseX_world = animSys->viewX + double(WINDOW_WIDTH) * 0.015625 + k * (mouseX_window - double(0.5) *
 				WINDOW_WIDTH);
-			mouse_world_y = animSys->viewY + double(WINDOW_HEIGHT) * 0.015625 + k * (mouse_window_y - double(0.5) *
+			mouseY_world = animSys->viewY + double(WINDOW_HEIGHT) * 0.015625 + k * (mouseY_window - double(0.5) *
 				WINDOW_HEIGHT);
+			 */
 #ifdef SHOW_KEY
-            std::cout << "mouse_world:" << mouse_world_x << ',' << mouse_world_y << std::endl;
+            std::cout << "mouse_world:" << mouseX_world << ',' << mouseY_world << std::endl;
 #endif
 		}
 
 		if (evt.type == SDL_QUIT)
 		{
-			GlobalData::quitFlag = true;
+			GlobalData::flag_quit = true;
 		}
 		else if (evt.type == SDL_KEYDOWN)
 		{
@@ -74,6 +81,11 @@ void InputSystem::handleEvent()
 			if (evt.key.keysym.scancode == SDL_SCANCODE_C)
 			{
 				keydown_c = true;
+			}
+			if (evt.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+			{
+				keydown_esc = true;
+				GlobalData::flag_quit = true;
 			}
 		}
 		else if (evt.type == SDL_KEYUP)
@@ -106,20 +118,27 @@ void InputSystem::handleEvent()
 			{
 				keydown_c = false;
 			}
+			if (evt.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+			{
+				keydown_esc = false;
+			}
+			/*
+			 
 			if (evt.key.keysym.scancode == SDL_SCANCODE_1)
 			{
 				auto a = idea_chara_warrior_miner::createNew();
-				a->x = floor(mouse_world_x);
-				a->y = floor(mouse_world_y);
+				a->x = floor(mouseX_world);
+				a->y = floor(mouseY_world);
 				a->renewPosition();
 			}
 			if (evt.key.keysym.scancode == SDL_SCANCODE_2)
 			{
 				auto a = idea_chara_slime::createNew();
-				a->x = floor(mouse_world_x);
-				a->y = floor(mouse_world_y);
+				a->x = floor(mouseX_world);
+				a->y = floor(mouseY_world);
 				a->renewPosition();
 			}
+			 */
 		}
 		else if (evt.type == SDL_MOUSEBUTTONDOWN)
 		{
@@ -127,41 +146,7 @@ void InputSystem::handleEvent()
 #ifdef SHOW_KEY
             std::cout << "mouse down:"<< int(evt.button.button) << ',' << evt.button.x << ',' << evt.button.y << std::endl;
 #endif
-			//测试生成近战投射物
 
-			/*
-			auto a = idea_chara_warrior_miner::createNew();
-			a->x = floor(mouse_world_x);
-			a->y = floor(mouse_world_y);
-			a->renewPosition();
-
-			a->ally = AllyType::ally;
-			*/
-
-			//网格内debug
-			{
-				auto tar_grid = MapSystem::getInstance()->map->at(floor(mouse_world_x))->at(floor(mouse_world_y));
-				std::cout << "Debug at Grid (" << tar_grid->x << "," << tar_grid->y << ")\n";
-				std::cout << "\tdistToKing:" << tar_grid->distToKing << '\n';
-				std::cout << "\tdistToKing_walk:" << tar_grid->distToKing_walk << '\n';
-				std::cout << "\tifWalkable:" << gameToolkit::ifWalkable(floor(mouse_world_x), floor(mouse_world_y)) <<
-					'\n';
-				int count = 0;
-				for (auto i = tar_grid->charaList->begin(); i != tar_grid->charaList->end(); i++)
-				{
-					std::cout << "\tchara@" << count << " tag:" << int((*i)->tag) << '\n';
-					count += 1;
-				}
-				count = 0;
-				for (auto i = tar_grid->facilityList->begin(); i != tar_grid->facilityList->end(); i++)
-				{
-					std::cout << "\tfacility@" << count << " tag:" << int((*i)->tag) << '\n';
-					count += 1;
-				}
-			}
-
-
-			std::cout << "\n";
 			if (evt.button.button == SDL_BUTTON_LEFT)
 			{
 				mousedown_left = true;
@@ -189,15 +174,8 @@ void InputSystem::handleEvent()
 		else if (evt.type == SDL_MOUSEMOTION)
 		{
 #ifdef SHOW_KEY
-			//std::cout << "mouse motion:" << int(evt.motion.xrel) << ',' << int(evt.motion.yrel) << std::endl;
+			std::cout << "mouse motion:" << int(evt.motion.xrel) << ',' << int(evt.motion.yrel) << std::endl;
 #endif
-			auto ap = idea_particle_goldust::createNew();
-			ap->x = mouse_world_x;
-			ap->y = mouse_world_y;
-			ap->animUnit->x = ap->x;
-			ap->animUnit->y = ap->y;
-			ap->animUnit->width = ap->w * ap->scale;
-			ap->animUnit->height = ap->h * ap->scale;
 		}
 	}
 }
@@ -206,26 +184,31 @@ InputSystem* InputSystem::instance = nullptr;
 
 InputSystem::InputSystem()
 {
-    mouse_window_x = 0;
-    mouse_window_y = 0;
-    mouse_world_x = 0;
-    mouse_world_y = 0;
+	SDL_Log("InputSystem construct");
 
+    mouseX_window = 0;
+    mouseY_window = 0;
+    mouseX_world = 0;
+    mouseY_world = 0;
+
+	mousedown_left = false;
+    mousedown_right = false;
+	
     keydown_a = false;
     keydown_w = false;
     keydown_d = false;
     keydown_s = false;
     keydown_c = false;
     keydown_x = false;
-    mousedown_left = false;
-    mousedown_right = false;
+	keydown_esc = false;
 }
 
 InputSystem::~InputSystem()
 {
+	SDL_Log("InputSystem destruct");
 }
 
 void InputSystem::renewMouse()
 {
-
+	
 }

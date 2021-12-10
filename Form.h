@@ -1,19 +1,17 @@
 #pragma once
 
-#include <list>
-
 //数值表单
 class Form
 {
 public:
 	//数值部分
-	int healthMax;//最大生命值
+	int health_max;//最大生命值
 	int health;//生命值
-	double recovery;//生命恢复量,每帧计算
+	double health_recovery;//生命恢复量,每帧计算
 	
 	int stamina;//耐力值
-	int staminaMax;//最大耐力值
-	double staminaRecover;//耐力恢复量,每帧计算
+	int stamina_max;//最大耐力值
+	double stamina_recover;//耐力恢复量,每帧计算
 	
 	//行动的数值
 	int moveTime;//移动动画的播放时间

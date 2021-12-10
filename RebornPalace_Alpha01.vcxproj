@@ -18,6 +18,36 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chara.h" />
+    <ClInclude Include="Defined.h" />
+    <ClInclude Include="Facility.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GlobalData.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="PhysicsChara.h" />
+    <ClInclude Include="PhysicsFacility.h" />
+    <ClInclude Include="PhysicsObject.h" />
+    <ClInclude Include="PhysicsProjectile.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="WorldSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Chara.cpp" />
+    <ClCompile Include="Facility.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GlobalData.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhysicsChara.cpp" />
+    <ClCompile Include="PhysicsFacility.cpp" />
+    <ClCompile Include="PhysicsObject.cpp" />
+    <ClCompile Include="PhysicsProjectile.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="WorldSystem.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -151,127 +181,6 @@
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;Setupapi.lib;Winmm.lib;Imm32.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="AnimationUnit.cpp" />
-    <ClCompile Include="AnimParticle.cpp" />
-    <ClCompile Include="AnimSystem.cpp" />
-    <ClCompile Include="Chara.cpp" />
-    <ClCompile Include="idea_chara_slime.cpp" />
-    <ClCompile Include="CharaSystem.cpp" />
-    <ClCompile Include="idea_chara_warrior_miner.cpp" />
-    <ClCompile Include="Counting.cpp" />
-    <ClCompile Include="Facility.cpp" />
-    <ClCompile Include="idea_facility_dirt_background.cpp" />
-    <ClCompile Include="idea_facility_dirt_climb_type1_left.cpp" />
-    <ClCompile Include="idea_facility_dirt_climb_type1_right.cpp" />
-    <ClCompile Include="idea_facility_dirt_cracked.cpp" />
-    <ClCompile Include="idea_facility_dirt_stair_both.cpp" />
-    <ClCompile Include="idea_facility_dirt_stair_left.cpp" />
-    <ClCompile Include="idea_facility_dirt_stair_right.cpp" />
-    <ClCompile Include="idea_facility_dirt_wall.cpp" />
-    <ClCompile Include="FacilityDynamic.cpp" />
-    <ClCompile Include="idea_facility_ladder_left.cpp" />
-    <ClCompile Include="idea_facility_ladder_right.cpp" />
-    <ClCompile Include="idea_facility_rope_type1_left.cpp" />
-    <ClCompile Include="idea_facility_rope_type1_right.cpp" />
-    <ClCompile Include="idea_facility_rope_type2_left.cpp" />
-    <ClCompile Include="idea_facility_rope_type2_right.cpp" />
-    <ClCompile Include="idea_facility_rope_head_left.cpp" />
-    <ClCompile Include="idea_facility_rope_head_right.cpp" />
-    <ClCompile Include="idea_facility_rope_tail_left.cpp" />
-    <ClCompile Include="idea_facility_rope_tail_right.cpp" />
-    <ClCompile Include="idea_facility_slime_glue.cpp" />
-    <ClCompile Include="FacilityStatic.cpp" />
-    <ClCompile Include="FacilitySystem.cpp" />
-    <ClCompile Include="idea_facility_water_full.cpp" />
-    <ClCompile Include="idea_facility_water_upper.cpp" />
-    <ClCompile Include="Form.cpp" />
-    <ClCompile Include="GameToolkit.cpp" />
-    <ClCompile Include="Gene.cpp" />
-    <ClCompile Include="GeneSystem.cpp" />
-    <ClCompile Include="GlobalData.cpp" />
-    <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="ImmediateProj.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MapSystem.cpp" />
-    <ClCompile Include="idea_particle_goldust.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="PenetrableProj.cpp" />
-    <ClCompile Include="idea_projectile_chop.cpp" />
-    <ClCompile Include="idea_projectile_slime_ball.cpp" />
-    <ClCompile Include="TTFParticle.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="ProjectileSystem.cpp" />
-    <ClCompile Include="TTFUnit.cpp" />
-    <ClCompile Include="UISystem.cpp" />
-    <ClCompile Include="WorldSystem.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AllyType.h" />
-    <ClInclude Include="AnimationUnit.h" />
-    <ClInclude Include="AnimParticle.h" />
-    <ClInclude Include="AnimSystem.h" />
-    <ClInclude Include="AnimType.h" />
-    <ClInclude Include="Chara.h" />
-    <ClInclude Include="ActionType.h" />
-    <ClInclude Include="idea_chara_slime.h" />
-    <ClInclude Include="CharaSystem.h" />
-    <ClInclude Include="idea_chara_warrior_miner.h" />
-    <ClInclude Include="Counting.h" />
-    <ClInclude Include="CountingType.h" />
-    <ClInclude Include="Defined.h" />
-    <ClInclude Include="DirectionType.h" />
-    <ClInclude Include="Facility.h" />
-    <ClInclude Include="BlockingType.h" />
-    <ClInclude Include="idea_facility_dirt_background.h" />
-    <ClInclude Include="idea_facility_dirt_climb_type1_left.h" />
-    <ClInclude Include="idea_facility_dirt_climb_type1_right.h" />
-    <ClInclude Include="idea_facility_dirt_cracked.h" />
-    <ClInclude Include="idea_facility_dirt_stair_both.h" />
-    <ClInclude Include="idea_facility_dirt_stair_left.h" />
-    <ClInclude Include="idea_facility_dirt_stair_right.h" />
-    <ClInclude Include="idea_facility_dirt_wall.h" />
-    <ClInclude Include="FacilityDynamic.h" />
-    <ClInclude Include="idea_facility_ladder_left.h" />
-    <ClInclude Include="idea_facility_ladder_right.h" />
-    <ClInclude Include="idea_facility_rope_type1_left.h" />
-    <ClInclude Include="idea_facility_rope_type1_right.h" />
-    <ClInclude Include="idea_facility_rope_type2_left.h" />
-    <ClInclude Include="idea_facility_rope_type2_right.h" />
-    <ClInclude Include="idea_facility_rope_head_left.h" />
-    <ClInclude Include="idea_facility_rope_head_right.h" />
-    <ClInclude Include="idea_facility_rope_tail_left.h" />
-    <ClInclude Include="idea_facility_rope_tail_right.h" />
-    <ClInclude Include="idea_facility_slime_glue.h" />
-    <ClInclude Include="FacilityStatic.h" />
-    <ClInclude Include="FacilitySystem.h" />
-    <ClInclude Include="idea_facility_water_full.h" />
-    <ClInclude Include="idea_facility_water_upper.h" />
-    <ClInclude Include="Form.h" />
-    <ClInclude Include="GameToolkit.h" />
-    <ClInclude Include="Gene.h" />
-    <ClInclude Include="GeneSystem.h" />
-    <ClInclude Include="GlobalData.h" />
-    <ClInclude Include="Grid.h" />
-    <ClInclude Include="ImmediateProj.h" />
-    <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="MapSystem.h" />
-    <ClInclude Include="idea_particle_goldust.h" />
-    <ClInclude Include="ParticleSystem.h" />
-    <ClInclude Include="PenetrableProj.h" />
-    <ClInclude Include="idea_projectile_chop.h" />
-    <ClInclude Include="idea_projectile_slime_ball.h" />
-    <ClInclude Include="StateType.h" />
-    <ClInclude Include="Tag.h" />
-    <ClInclude Include="TTFParticle.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="ProjectileSystem.h" />
-    <ClInclude Include="ProjectileType.h" />
-    <ClInclude Include="TTFUnit.h" />
-    <ClInclude Include="UISystem.h" />
-    <ClInclude Include="WorldSystem.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

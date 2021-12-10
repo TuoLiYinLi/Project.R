@@ -1,7 +1,7 @@
 #pragma once
-#include "Facility.h"
+#include "Facility_old.h"
 class FacilityDynamic :
-    public Facility
+    public Facility_old
 {
 protected:
     FacilityDynamic();

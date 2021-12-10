@@ -169,7 +169,7 @@ double gameToolkit::rectCollisionVolume(double x1, double y1, double w1, double 
     return s;
 }
 
-void gameToolkit::applyForm(Chara* chara, Form* form)
+void gameToolkit::applyForm(Chara_old* chara, Form* form)
 {
     applyForm(&(chara->form), form);
 	createText(chara->x, chara->y, std::to_string(form->health).c_str(), { 255,0,0,255 });
@@ -697,7 +697,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 	{
 		for (int j = 0; j < WORLD_HEIGHT; j++)
 		{
-			Facility* fac;
+			Facility_old* fac;
 			if (boolMap_tar[i][j]) {
 				fac = idea_facility_dirt_wall::createNew();
 			}
@@ -763,7 +763,7 @@ void gameToolkit::summonMap_2_0(unsigned int seed)
 	{
 		for (int j = 0; j < WORLD_HEIGHT; j++)
 		{
-			Facility* fac;
+			Facility_old* fac;
 			if (waterMap[i][j]) {
 				if (!boolMap_1[i][j-1]&& !waterMap[i][j - 1]) {
 					fac = idea_facility_water_upper::createNew();
@@ -1114,7 +1114,7 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 		}
 		for (int i = y_up; i <= y_down; i++)
 		{
-			Facility* f;
+			Facility_old* f;
 			{
 				if (i == y_up)
 					f = idea_facility_rope_head_right::createNew();
@@ -1150,7 +1150,7 @@ void gameToolkit::summonMap_RopeSide(bool** boolMap, int x, int y_down, int y_up
 		}
 		for (int i = y_up; i <= y_down; i++)
 		{
-			Facility* f;
+			Facility_old* f;
 			{
 				if (i == y_up)
 					f = idea_facility_rope_head_left::createNew();
@@ -1345,14 +1345,14 @@ void gameToolkit::updateDistToKing()
 	{
 		for (auto j = 0; j < WORLD_HEIGHT; j++)
 		{
-			map->at(i)->at(j)->distToKing=-1;
+			map->at(i)->at(j)->dist_to_king_shortest=-1;
 		}
 	}
 
 
 	//用两个列表交替循环
-	auto cur_list = new std::list<Grid*>();
-	auto next_list = new std::list<Grid*>();
+	auto cur_list = new std::list<Grid_old*>();
+	auto next_list = new std::list<Grid_old*>();
 	//启动点
 	next_list->push_back(map->at(GlobalData::KingX)->at(GlobalData::KingY));
 	int cur_dist = 0;
@@ -1368,8 +1368,8 @@ void gameToolkit::updateDistToKing()
 			//赋值和加入列表
 			for (auto it = cur_list->begin(); it != cur_list->end(); it++)
 			{
-				if ((*it)->distToKing != -1)continue;
-				(*it)->distToKing = cur_dist;
+				if ((*it)->dist_to_king_shortest != -1)continue;
+				(*it)->dist_to_king_shortest = cur_dist;
 
 				int cur_x = (*it)->x;
 				int cur_y = (*it)->y;
@@ -1377,19 +1377,19 @@ void gameToolkit::updateDistToKing()
 				int x, y;
 
 				x = cur_x + 1; y = cur_y;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->distToKing == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->dist_to_king_shortest == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x; y = cur_y + 1;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->distToKing == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->dist_to_king_shortest == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x - 1; y = cur_y;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->distToKing == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->dist_to_king_shortest == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x; y = cur_y - 1;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->distToKing == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && !ifAbsoluteBlocked(x, y) && map->at(x)->at(y)->dist_to_king_shortest == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 
@@ -1412,14 +1412,14 @@ void gameToolkit::updateDistWalkToKing()
 	{
 		for (auto j = 0; j < WORLD_HEIGHT; j++)
 		{
-			map->at(i)->at(j)->distToKing_walk = -1;
+			map->at(i)->at(j)->dist_to_king_walk = -1;
 		}
 	}
 
 
 	//用两个列表交替循环
-	auto cur_list = new std::list<Grid*>();
-	auto next_list = new std::list<Grid*>();
+	auto cur_list = new std::list<Grid_old*>();
+	auto next_list = new std::list<Grid_old*>();
 	//启动点
 	next_list->push_back(map->at(GlobalData::KingX)->at(GlobalData::KingY));
 	int cur_dist = 0;
@@ -1435,8 +1435,8 @@ void gameToolkit::updateDistWalkToKing()
 			//赋值和加入列表
 			for (auto it = cur_list->begin(); it != cur_list->end(); it++)
 			{
-				if ((*it)->distToKing_walk != -1)continue;
-				(*it)->distToKing_walk = cur_dist;
+				if ((*it)->dist_to_king_walk != -1)continue;
+				(*it)->dist_to_king_walk = cur_dist;
 
 				int cur_x = (*it)->x;
 				int cur_y = (*it)->y;
@@ -1444,19 +1444,19 @@ void gameToolkit::updateDistWalkToKing()
 				int x, y;
 
 				x = cur_x + 1; y = cur_y;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->dist_to_king_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x; y = cur_y + 1;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->dist_to_king_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x - 1; y = cur_y;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->dist_to_king_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 				x = cur_x; y = cur_y - 1;
-				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->distToKing_walk == -1) {
+				if (x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT && (ifWalkable(x, y) || ifSwimable(x, y)) && map->at(x)->at(y)->dist_to_king_walk == -1) {
 					next_list->push_back(map->at(x)->at(y));
 				}
 
@@ -1504,7 +1504,7 @@ bool gameToolkit::ifAbsoluteBlocked(double _x, double _y)
 	*/
 	int x = round(_x);
 	int y = round(_y);
-	Grid* grid = MapSystem::getInstance()->map->at(x)->at(y);
+	Grid_old* grid = MapSystem::getInstance()->map->at(x)->at(y);
 	for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
 	{
 		auto f = *it;
@@ -1527,7 +1527,7 @@ bool gameToolkit::ifWalkable(double _x, double _y)
 
 	if (y < 0 || y >= WORLD_HEIGHT - 1 || ifAbsoluteBlocked(x, y))return false;
 
-	Grid* grid = MapSystem::getInstance()->map->at(x)->at(y);
+	Grid_old* grid = MapSystem::getInstance()->map->at(x)->at(y);
 	for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
 	{
 		auto f = *it;
@@ -1536,7 +1536,7 @@ bool gameToolkit::ifWalkable(double _x, double _y)
 			return true;
 		}
 	}
-	Grid* grid_under = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) + 1);
+	Grid_old* grid_under = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) + 1);
 	for (auto it = grid_under->facilityList->begin(); it != grid_under->facilityList->end(); it++)
 	{
 		auto f = *it;
@@ -1555,7 +1555,7 @@ bool gameToolkit::ifLiquid(double _x, double _y)
 	*/
 	int x = round(_x);
 	int y = round(_y);
-	Grid* grid = MapSystem::getInstance()->map->at(x)->at(y);
+	Grid_old* grid = MapSystem::getInstance()->map->at(x)->at(y);
 
 	bool liquid = false;
 	for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
@@ -1593,7 +1593,7 @@ bool gameToolkit::ifSwimable(double _x, double _y)
 	return false;
 }
 
-bool gameToolkit::ifFalling(Chara* c)
+bool gameToolkit::ifFalling(Chara_old* c)
 {
 	int left = round(c->getLeftSpot());
 	int right = round(c->getRightSpot());
@@ -2061,14 +2061,14 @@ DirectionType PathProbe_2::getShortestDirection()
 	int d_up = -1;
 
 	if (y != 0)
-		d_up = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) - 1)->distToKing;
+		d_up = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) - 1)->dist_to_king_shortest;
 
 	if (y != WORLD_HEIGHT - 1)
-		d_down = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) + 1)->distToKing;
+		d_down = MapSystem::getInstance()->map->at(x)->at(static_cast<__int64>(y) + 1)->dist_to_king_shortest;
 
-	int d_right = MapSystem::getInstance()->map->at(static_cast<__int64>(x) + 1)->at(y)->distToKing;
-	int d_center = MapSystem::getInstance()->map->at(x)->at(y)->distToKing;
-	int d_left = MapSystem::getInstance()->map->at(static_cast<__int64>(x) - 1)->at(y)->distToKing;
+	int d_right = MapSystem::getInstance()->map->at(static_cast<__int64>(x) + 1)->at(y)->dist_to_king_shortest;
+	int d_center = MapSystem::getInstance()->map->at(x)->at(y)->dist_to_king_shortest;
+	int d_left = MapSystem::getInstance()->map->at(static_cast<__int64>(x) - 1)->at(y)->dist_to_king_shortest;
 
 	DirectionType d = DirectionType::down;
 	if (d_center > d_up && d_up >= 0) {

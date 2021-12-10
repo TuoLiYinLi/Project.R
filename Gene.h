@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "Chara.h"
+#include "Chara_old.h"
 #include "Form.h"
 
 #include "GeneSystem.h"

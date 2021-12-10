@@ -10,7 +10,6 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
-#include "GlobalData.h"
 
 #include "AnimType.h"
 #include "AnimationUnit.h"
@@ -18,7 +17,7 @@ class AnimationUnit;
 #include "TTFUnit.h"
 class TTFUnit;
 
-class AnimSystem
+class AnimationSystem
 {
 public:
 	std::vector<std::vector<SDL_Texture*>*>* animList;//一个二维的材质列表,用于加载所有的动画资源
@@ -26,7 +25,7 @@ public:
 	std::list<TTFUnit*>* fontUnitList;//字体单元列表
 
 	//获取单例实例
-	static AnimSystem* getInstance();
+	static AnimationSystem* getInstance();
 	//销毁和析构
 	void destroyInstance();
 
@@ -68,9 +67,9 @@ protected:
 	//获取动画单元的动画种类所对应的材质资源
 	SDL_Texture* getTextureFromAU(AnimationUnit* au);
 	//单例实例
-	static AnimSystem* instance;
-	AnimSystem();
-	~AnimSystem();
+	static AnimationSystem* instance;
+	AnimationSystem();
+	~AnimationSystem();
 
 	double windowWidth;//窗口宽度
 	double windowHeight;//窗口高度

@@ -20,16 +20,16 @@ FacilitySystem::FacilitySystem() {
 #ifdef FACILITY_SYSTEM_DEBUG
 	std::cout << "FacilitySystem::FacilitySystem()\n";
 #endif // FACILITY_SYSTEM_DEBUG
-	facilityList_static = new std::list<Facility*>();
-	facilityList_dynamic = new std::list<Facility*>();
+	facilityList_static = new std::list<Facility_old*>();
+	facilityList_dynamic = new std::list<Facility_old*>();
 #ifdef _DEBUG
 	if (facilityList_static==nullptr)
 	{
-		std::cout << "\t\tERROR:new std::list<Facility*>()-static申请内存失败,值为nullptr\n";
+		std::cout << "\t\tERROR:new std::list<Facility_old*>()-static申请内存失败,值为nullptr\n";
 	}
 	if (facilityList_dynamic == nullptr)
 	{
-		std::cout << "\t\tERROR:new std::list<Facility*>()-dynamic申请内存失败,值为nullptr\n";
+		std::cout << "\t\tERROR:new std::list<Facility_old*>()-dynamic申请内存失败,值为nullptr\n";
 	}
 #endif // _DEBUG
 }
@@ -85,33 +85,33 @@ FacilitySystem::~FacilitySystem() {
 void FacilitySystem::reportMemory() {
 #ifdef FACILITY_SYSTEM_DEBUG
 	std::cout << "FacilitySystem::reportMemory()\n";
-	std::cout << "\t\t现在有"<< Facility::getCurrentFacilityNum() <<"个Facility占用内存\n";
+	std::cout << "\t\t现在有"<< Facility_old::getCurrentFacilityNum() <<"个Facility占用内存\n";
 	std::cout << "\t\t静态设施列表长度"<< facilityList_static->size() <<"\n";
 	std::cout << "\t\t动态设施列表长度" << facilityList_dynamic->size() << "\n";
 #endif // FACILITY_SYSTEM_DEBUG
 
 }
 
-void FacilitySystem::removeFacility_static(Facility* facility)
+void FacilitySystem::removeFacility_static(Facility_old* facility)
 {
 	facility->destroy();
 	facilityList_static->remove(facility);
 }
 
-std::list<Facility*>::iterator FacilitySystem::removeFacility_static(std::list<Facility*>::iterator it)
+std::list<Facility_old*>::iterator FacilitySystem::removeFacility_static(std::list<Facility_old*>::iterator it)
 {
 	(*it)->destroy();
 	auto new_it = facilityList_static->erase(it);
 	return new_it;
 }
 
-void FacilitySystem::removeFacility_dynamic(Facility* facility)
+void FacilitySystem::removeFacility_dynamic(Facility_old* facility)
 {
 	facility->destroy();
 	facilityList_dynamic->remove(facility);
 }
 
-std::list<Facility*>::iterator FacilitySystem::removeFacility_dynamic(std::list<Facility*>::iterator it)
+std::list<Facility_old*>::iterator FacilitySystem::removeFacility_dynamic(std::list<Facility_old*>::iterator it)
 {
 	(*it)->destroy();
 	auto new_it = facilityList_dynamic->erase(it);

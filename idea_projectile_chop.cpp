@@ -11,7 +11,7 @@ void idea_projectile_chop::destroy()
 	delete this;
 }
 
-void idea_projectile_chop::onHit(Chara* c)
+void idea_projectile_chop::onHit(Chara_old* c)
 {
 	auto f = std::find(hitCharaList->begin(), hitCharaList->end(), c);
 	if (f == hitCharaList->end()) {
@@ -21,7 +21,7 @@ void idea_projectile_chop::onHit(Chara* c)
 	}
 }
 
-void idea_projectile_chop::onHit(Facility* f)
+void idea_projectile_chop::onHit(Facility_old* f)
 {
 	auto find = std::find(hitFaciList->begin(), hitFaciList->end(), f);
 	if (find == hitFaciList->end()) {
@@ -35,8 +35,8 @@ void idea_projectile_chop::onHit(Facility* f)
 
 idea_projectile_chop::idea_projectile_chop()
 {
-	hitCharaList = new std::list<Chara*>();
-	hitFaciList = new std::list<Facility*>();
+	hitCharaList = new std::list<Chara_old*>();
+	hitFaciList = new std::list<Facility_old*>();
 
 	this->animCycle = 20;
 	this->animUnit = AnimationUnit::createNew();

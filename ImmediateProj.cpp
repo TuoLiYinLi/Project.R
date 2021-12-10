@@ -12,11 +12,11 @@ void ImmediateProj::destroy()
 	delete this;
 }
 
-void ImmediateProj::onHit(Chara* c)
+void ImmediateProj::onHit(Chara_old* c)
 {
 }
 
-void ImmediateProj::onHit(Facility* f)
+void ImmediateProj::onHit(Facility_old* f)
 {
 }
 
@@ -31,8 +31,8 @@ void ImmediateProj::onFlying()
 	int x_end = round(x + bodyWidth - 0.999);
 	int y_end = round(y + bodyHeight - 0.999);
 
-	std::list<Chara*>* charaList=new std::list<Chara*>();
-	std::list<Facility*>* faciList = new std::list<Facility*>();
+	std::list<Chara_old*>* charaList=new std::list<Chara_old*>();
+	std::list<Facility_old*>* faciList = new std::list<Facility_old*>();
 
 	bool ifEnd = false;
 
@@ -40,12 +40,12 @@ void ImmediateProj::onFlying()
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = MapSystem::getInstance()->map->at(i)->at(j);
+			Grid_old* grid = MapSystem::getInstance()->map->at(i)->at(j);
 			//获取碰到的角色
 			for (auto it = grid->charaList->begin(); it != grid->charaList->end(); it++)
 			{
 				if ((*it)->actionType != ActionType::death && gameToolkit::ifTarget(allyType, (*it)->ally)) {
-					Chara* c = *it;
+					Chara_old* c = *it;
 					charaList->push_back(c);
 					ifEnd = true;
 				}
@@ -54,7 +54,7 @@ void ImmediateProj::onFlying()
 			for (auto it = grid->facilityList->begin(); it != grid->facilityList->end(); it++)
 			{
 				if ((*it)->stateType != StateType::death && gameToolkit::ifTarget(allyType, (*it)->ally)) {
-					Facility* f = *it;
+					Facility_old* f = *it;
 					faciList->push_back(f);
 					ifEnd = true;
 				}
@@ -69,20 +69,20 @@ void ImmediateProj::onFlying()
 	}
 
 	double minimal = this->bodyHeight * this->bodyHeight;
-	Chara* tar_chara = nullptr;
+	Chara_old* tar_chara = nullptr;
 	for (auto it = charaList->begin(); it != charaList->end(); it++)
 	{
-		Chara* c = *it;
+		Chara_old* c = *it;
 		double current_dist = gameToolkit::rectCollisionVolume(x, y, bodyWidth, bodyHeight, c->x, c->y, c->bodyWidth, c->bodyHeight);
 		if (minimal > current_dist) {
 			minimal = current_dist;
 			tar_chara = c;
 		}
 	}
-	Facility* tar_faci = nullptr;
+	Facility_old* tar_faci = nullptr;
 	for (auto it = faciList->begin(); it != faciList->end(); it++)
 	{
-		Facility* f = *it;
+		Facility_old* f = *it;
 		double current_dist = gameToolkit::rectCollisionVolume(x, y, bodyWidth, bodyHeight, f->x, f->y, f->width, f->height);
 		if (minimal > current_dist) {
 			minimal = current_dist;

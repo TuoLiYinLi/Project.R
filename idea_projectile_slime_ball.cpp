@@ -11,12 +11,12 @@ void idea_projectile_slime_ball::destroy()
 	delete this;
 }
 
-void idea_projectile_slime_ball::onHit(Chara* c)
+void idea_projectile_slime_ball::onHit(Chara_old* c)
 {
 	c->onHit(&form);
 }
 
-void idea_projectile_slime_ball::onHit(Facility* f)
+void idea_projectile_slime_ball::onHit(Facility_old* f)
 {
 	f->onHit(&form);
 }

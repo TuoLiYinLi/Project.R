@@ -2,9 +2,9 @@
 #include <iostream>
 
 #include <vector>
-#include "Grid.h"
-#include "Chara.h"
-#include "Facility.h"
+#include "Grid_old.h"
+#include "Chara_old.h"
+#include "Facility_old.h"
 class MapSystem
 {
 public:
@@ -13,17 +13,17 @@ public:
 	//销毁单例实例
 	void destroyInstance();
 
-	std::vector<std::vector<Grid*>*>* map;//储存的所有Grid
+	std::vector<std::vector<Grid_old*>*>* map;//储存的所有Grid
 	//获取特定位置的网格
-	Grid* getGridAt(double x, double y);
+	Grid_old* getGridAt(double x, double y);
 	//获取特定位置网格的到王距离
 	int getDTK(double x, double y);
 	//获取特定位置网格的到王距离(走和游)
 	int getDWTK(double x, double y);
 	//角色覆盖到网格
-	void occupyGrid(Chara* chara);
+	void occupyGrid(Chara_old* chara);
 	//设施覆盖到网格
-	void occupyGrid(Facility* facility);
+	void occupyGrid(Facility_old* facility);
 	//报告内存使用情况
 	void reportMemory();
 	

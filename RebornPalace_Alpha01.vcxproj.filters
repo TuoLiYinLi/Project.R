@@ -15,7 +15,75 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PhysicsChara.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsFacility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsProjectile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Defined.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Facility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Chara.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsChara.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFacility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsProjectile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Facility.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Chara.cpp">
@@ -24,349 +92,8 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WorldSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MapSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Gene.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FacilitySystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Facility.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="UISystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GameToolkit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Form.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CharaSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_chara_slime.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectileSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_wall.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationUnit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalData.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_background.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_stair_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_stair_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_stair_both.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TTFUnit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TTFParticle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimParticle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_particle_goldust.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_cracked.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FacilityStatic.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FacilityDynamic.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_slime_glue.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Counting.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ImmediateProj.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PenetrableProj.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_projectile_chop.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_projectile_slime_ball.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_water_full.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_water_upper.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_ladder_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_ladder_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_climb_type1_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_dirt_climb_type1_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_head_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_head_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_type1_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_type1_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_type2_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_type2_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_tail_right.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_facility_rope_tail_left.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="idea_chara_warrior_miner.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Chara.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MapSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Gene.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FacilitySystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Facility.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="UISystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GameToolkit.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Form.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CharaSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_chara_slime.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Defined.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectileSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectileType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockingType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_wall.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationUnit.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalData.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_background.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_stair_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_stair_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_stair_both.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TTFUnit.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="TTFParticle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimParticle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AllyType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_particle_goldust.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_cracked.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FacilityStatic.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FacilityDynamic.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="StateType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_slime_glue.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Counting.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CountingType.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ImmediateProj.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PenetrableProj.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_projectile_chop.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_projectile_slime_ball.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_water_full.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_water_upper.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_ladder_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_ladder_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_climb_type1_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_dirt_climb_type1_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_head_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_head_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_type1_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_type1_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_type2_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_type2_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_tail_right.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_facility_rope_tail_left.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="idea_chara_warrior_miner.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Tag.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

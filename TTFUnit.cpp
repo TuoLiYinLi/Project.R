@@ -29,7 +29,7 @@ TTFUnit::TTFUnit(const char* _message, SDL_Color _color)
 	std::cout << "\t\tTTFUnit::TTFUnit(const char* _message, SDL_Color _color)\n";
 #endif // TTF_UNIT_DEBUG
 
-	AnimSystem::getInstance()->fontUnitList->push_back(this);
+	AnimationSystem::getInstance()->fontUnitList->push_back(this);
 
 	currentNum++;
 
@@ -76,7 +76,7 @@ TTFUnit::TTFUnit(const char* _message, SDL_Color _color)
 	color = _color;
 	depth = 300;
 	SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(GlobalData::font, s.c_str(), color, w );
-	texture = SDL_CreateTextureFromSurface(GlobalData::renderer, surface);
+	texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
 	SDL_FreeSurface(surface);
 	if (h > FONT_PRECISION) {
 		w *=1.635;

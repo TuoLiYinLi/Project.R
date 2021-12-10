@@ -8,13 +8,13 @@ public:
     static idea_projectile_chop* createNew();
     virtual void destroy();
 
-    //Åöµ½Ä¿±ê½ÇÉ«»á´¥·¢
-    virtual void onHit(Chara* c);
-    //Åöµ½Ä¿±ê½¨Öþ»á´¥·¢
-    virtual void onHit(Facility* f);
+    //ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½É«ï¿½á´¥ï¿½ï¿½
+    virtual void onHit(Chara_old* c);
+    //ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ê½¨ï¿½ï¿½ï¿½á´¥ï¿½ï¿½
+    virtual void onHit(Facility_old* f);
 protected:
-    std::list<Chara*>* hitCharaList;//ÒÑ¾­»÷ÖÐ¹ýµÄ½ÇÉ«
-    std::list<Facility*>* hitFaciList;//ÒÑ¾­»÷ÖÐ¹ýµÄÉèÊ©
+    std::list<Chara_old*>* hitCharaList;//ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½Ä½ï¿½É«
+    std::list<Facility_old*>* hitFaciList;//ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½ï¿½Ê©
     idea_projectile_chop();
     ~idea_projectile_chop();
 };

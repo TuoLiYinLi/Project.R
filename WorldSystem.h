@@ -1,63 +1,39 @@
 #pragma once
+#include <list>
+#include <vector>
 
-#include <iostream>
+#include "Grid.h"
 
-#include "GlobalData.h"
-
-#include "AnimSystem.h"
-#include "MapSystem.h"
-#include "GeneSystem.h"
-#include "CharaSystem.h"
-#include "FacilitySystem.h"
-#include "ProjectileSystem.h"
-#include "ParticleSystem.h"
-
-
+class GameObject;
+class PhysicsProjectile;
+class PhysicsFacility;
+class PhysicsChara;
 
 class WorldSystem
 {
 public:
-	static WorldSystem* getInstance();
-	void destroyInstance();
+	static WorldSystem* getInstance();	//获取实例
+	static  void destroyInstance();	//销毁和析构
 
-	AnimSystem* animSys;
-	CharaSystem* charaSys;
-	FacilitySystem* faciSys;
-	GeneSystem* geneSys;
-	MapSystem* mapSys;
-	ProjectileSystem* projSys;
-	ParticleSystem* particleSys;
-	
-	//销毁角色
-	void removeChara(Chara* chara);
+	void logicGo() const;	//逻辑更新
 
-	//添加设施
-	Facility* addFacility_static(Facility* facility);
-	//销毁设施
-	void removeFacility_static(Facility* facility);
+	std::vector<std::vector<Grid*>*>* map;//全部的网格
 
-	//执行整个逻辑帧
-	void logicGo();
+	std::list<PhysicsChara*>* list_physics_chara;	//角色物理全集
+	std::list<PhysicsFacility*>* list_physics_facility;	//设施物理全集
+	std::list<PhysicsProjectile*>* list_physics_projectile;	//投射物物理全集
 
-	
-
-	//执行所有角色逻辑帧
-	void charaLogicGo();
-
-	//执行所有设施逻辑帧
-	void faciLogicGo();
-
-	//执行所有投射物逻辑帧
-	void projLogicGo();
-
-	//执行粒子逻辑
-	void particleLogicGo();
+	std::list<GameObject*>* list_game_objects;	//游戏物件全集
 
 protected:
+	//单例实例
+	static WorldSystem* instance;	//唯一实例
 	WorldSystem();
 	~WorldSystem();
 
-	static WorldSystem* instance;
+	void logicGo_physics() const;	//物理更新
+	void logicGo_game_objects()	const;	//物件更新
+
 
 };
 

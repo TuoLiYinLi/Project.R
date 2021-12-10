@@ -5,52 +5,17 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
-
+ 
 #include "GlobalData.h"
 
-#include "AnimSystem.h"
-#include "MapSystem.h"
-#include "GeneSystem.h"
-#include "CharaSystem.h"
-#include "FacilitySystem.h"
-#include "ProjectileSystem.h"
-#include "ParticleSystem.h"
-
-#include "FacilityStatic.h"
-#include "idea_facility_dirt_wall.h"
-#include "idea_facility_dirt_background.h"
-#include "idea_facility_dirt_stair_left.h"
-#include "idea_facility_dirt_stair_right.h"
-#include "idea_facility_dirt_stair_both.h"
-
-#include "FacilityDynamic.h"
-#include "idea_facility_dirt_cracked.h"
-#include "idea_facility_slime_glue.h"
-#include "idea_facility_rope_head_right.h"
-#include "idea_facility_rope_head_left.h"
-#include "idea_facility_rope_type1_right.h"
-#include "idea_facility_rope_type1_left.h"
-#include "idea_facility_rope_type2_right.h"
-#include "idea_facility_rope_type2_left.h"
-#include "idea_facility_rope_tail_right.h"
-#include "idea_facility_rope_tail_left.h"
-
-#include "PenetrableProj.h"
-#include "idea_projectile_chop.h"
-
-#include "ImmediateProj.h"
-#include "idea_projectile_slime_ball.h"
-
+#include "InputSystem.h"
 #include "WorldSystem.h"
 
-#include "idea_chara_slime.h"
-
-
-#include "InputSystem.h"
-#include "GameToolkit.h"
+#include "PhysicsChara.h"
+#include "Facility.h"
 
 int main(int argc, char** argv) {
-	std::cout << "Reborn Palace Alpha 1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
+	std::cout << "Palace Alpha 2 by TheCarmineDepth\ninitiation now start\n" << std::endl;
     
 
     //检查SDL加载是否成功，报错
@@ -58,16 +23,16 @@ int main(int argc, char** argv) {
         std::cout << SDL_GetError() << std::endl;
         return 1;
     }
-
+     
     //检查窗口加载是否成功，报错
-    GlobalData::win = SDL_CreateWindow("Reborn Palace Alpha 1 by TheCarmineDepth ", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-    if (GlobalData::win == nullptr) {
+    GlobalData::sdl_window = SDL_CreateWindow("Palace Alpha 2 by TheCarmineDepth ", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    if (GlobalData::sdl_window == nullptr) {
         std::cout << SDL_GetError() << std::endl;
         return 1;
     }
     //检查渲染器加载是否成功，报错
-    GlobalData::renderer = SDL_CreateRenderer(GlobalData::win, -1, SDL_RENDERER_ACCELERATED);
-    if (GlobalData::renderer == nullptr) {
+    GlobalData::sdl_renderer = SDL_CreateRenderer(GlobalData::sdl_window, -1, SDL_RENDERER_ACCELERATED);
+    if (GlobalData::sdl_renderer == nullptr) {
         std::cout << SDL_GetError() << std::endl;
         return 1;
     }
@@ -77,124 +42,75 @@ int main(int argc, char** argv) {
         std::cout << TTF_GetError() << std::endl;
         return 1;
     }
-    
     //设置窗口图标
 
 
-
     //系统初始化
-    WorldSystem* worldSystem = WorldSystem::getInstance();
-    
-    InputSystem* inputSystem = InputSystem::getInstance();
-    
-    gameToolkit::summonMap_2_0(20211111);
+    WorldSystem::getInstance();
+    InputSystem::getInstance();
 
-    //auto t = worldSystem->animSys->addTTFUnit("1234\n12sadasdda dadsd asw34\n \t\t\ts sad1234\n12453123456\n\n", {255,255,255,255});
-    auto t = TTFParticle::createNew();
-    t->fontUnit = TTFUnit::createNew("20211111", {255,0,0,255});
-    t->livingTime = 500;
+    Facility::createNew();
 
 
-    //MapSystem::getInstance()->getGridAt(-1, -1);
-    /*
-    auto f = idea_facility_rope_tail_left::createNew();
-    f->x = 27;
-    f->y = 11;
-    f->renewPosition();
+    SDL_Log(u8"--\t--\t--\t--初始化完成,游戏运行--\t--\t--\t--");
 
-    auto f1 = idea_facility_dirt_cracked::createNew();
-    f1->x = 39;
-    f1->y = 10;
-    f1->renewPosition();
-    */
 
-    /*
-    auto a = idea_chara_slime::createNew();
-    a->x = 37;
-    a->y = 5;
-    a->renewPosition();
-
-    a->ally = AllyType::ally;
-
-    */
-    
-    std::cout << "\n--\t--\t--\t--初始化完成,游戏运行\n--\t--\t--\t--\n";
     //消息循环
-    while (!GlobalData::quitFlag)
+    while (!GlobalData::flag_quit)
     {
+
         //时间系统
-        GlobalData::deltaTime = SDL_GetTicks() - GlobalData::lastTicks;
-        GlobalData::lastTicks = SDL_GetTicks();
+        GlobalData::delta_time = SDL_GetTicks() - GlobalData::last_recorded_ticks;
+        GlobalData::last_recorded_ticks = SDL_GetTicks();
         GlobalData::FPS += 1;
-        GlobalData::perSecondCountDown += GlobalData::deltaTime;
-        if (GlobalData::perSecondCountDown >= 1000) {
+        GlobalData::per_second_CD += GlobalData::delta_time;
+        if (GlobalData::per_second_CD >= 1000) {
 #ifdef SHOW_FPS
             std::cout << "FPS:" << GlobalData::FPS << std::endl;
 #endif // SHOW_FPS
-            GlobalData::perSecondCountDown -= 1000;
+            GlobalData::per_second_CD -= 1000;
             GlobalData::FPS = 0;
         }
         //物理帧时间累积
-        GlobalData::logicFrameCD += GlobalData::deltaTime;
+        GlobalData::logic_frame_CD += GlobalData::delta_time;
 
-        //输入系统出力所有事件
-        inputSystem->handleEvent();
-        
-        //控制窗口运动
-        if (inputSystem->keydown_a) {
-            worldSystem-> animSys->vx = -MAX_VIEW_SPEED_X;
-        }
-        if (inputSystem->keydown_d) {
-            worldSystem-> animSys->vx = MAX_VIEW_SPEED_X;
-        }
-        if (inputSystem->keydown_w) {
-            worldSystem-> animSys->vy = -MAX_VIEW_SPEED_Y;
-        }
-        if (inputSystem->keydown_s) {
-            worldSystem-> animSys->vy = +MAX_VIEW_SPEED_Y;
-        }
-        if (inputSystem->keydown_x) {
-            worldSystem-> animSys->vs = -MAX_VIEW_SPEED_SCALE;
-        }
-        if (inputSystem->keydown_c) {
-            worldSystem-> animSys->vs = MAX_VIEW_SPEED_SCALE;
-        }
-        worldSystem-> animSys->updateWindow();
+        //处理输入事件
+        InputSystem::getInstance()->handleEvent();
 
         //每16ms运行一次逻辑帧
-        while (GlobalData::logicFrameCD > 16)
+        while (GlobalData::logic_frame_CD > 16)
         {
-            GlobalData::logicFrameCD -= 16;
+            GlobalData::logic_frame_CD -= 16;
             
-            worldSystem->logicGo();
-            //std::cout << a->form.health << "\n";
+            WorldSystem::getInstance()->logicGo();
         }
         //渲染系统
         //渲染背景颜色
-        SDL_SetRenderDrawColor(GlobalData::renderer, 14, 80, 81, 255);
-        SDL_RenderClear(GlobalData::renderer);
+        SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 14, 80, 81, 255);
+        SDL_RenderClear(GlobalData::sdl_renderer);
 
         //渲染内容
-        worldSystem-> animSys->renderAll();
+        //worldSystem-> animSys->renderAll();
 
         //交换双缓冲
-        SDL_RenderPresent(GlobalData::renderer);
+        SDL_RenderPresent(GlobalData::sdl_renderer);
     }
 
     //结束清理
     
-    std::cout << "\n--\t--\t--\t--结束清理--\t--\t--\t--\n\n";
+    SDL_Log(u8"--\t--\t--\t--结束清理,停止运行--\t--\t--\t--");
 
     //释放创建的所有SDL内容
-    inputSystem->destroyInstance();
-    worldSystem->destroyInstance();
+    //inputSystem->destroyInstance();
+    WorldSystem::destroyInstance();
+    InputSystem::destroyInstance();
 
-    if (GlobalData::renderer) {
-        SDL_DestroyRenderer(GlobalData::renderer);
+    if (GlobalData::sdl_renderer) {
+        SDL_DestroyRenderer(GlobalData::sdl_renderer);
     }
 
-    if (GlobalData::win) {
-        SDL_DestroyWindow(GlobalData::win);
+    if (GlobalData::sdl_window) {
+        SDL_DestroyWindow(GlobalData::sdl_window);
     }
     
     TTF_Quit();

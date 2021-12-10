@@ -1,7 +1,7 @@
 #pragma once
-#include "Chara.h"
+#include "Chara_old.h"
 class idea_chara_warrior_miner :
-    public Chara
+    public Chara_old
 {
 public:
 

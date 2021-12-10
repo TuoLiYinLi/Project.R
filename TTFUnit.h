@@ -4,10 +4,10 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include "GlobalData.h"
+//#include "GlobalData.h"
 
-#include "AnimSystem.h"
-class AnimSystem;
+#include "AnimationSystem.h"
+class AnimationSystem;
 
 class TTFUnit
 {

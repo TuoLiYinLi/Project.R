@@ -4,14 +4,14 @@
 #include <codecvt>
 #include <windows.h>
 
-#include "AnimSystem.h"
+#include "AnimationSystem.h"
 #include "GeneSystem.h"
 #include "CharaSystem.h"
 #include "FacilitySystem.h"
 #include "MapSystem.h"
 #include "ProjectileSystem.h"
 #include "ParticleSystem.h"
-#include "GlobalData.h"
+//#include "GlobalData.h"
 
 #include "FacilityStatic.h"
 #include "idea_facility_dirt_wall.h"
@@ -50,7 +50,7 @@ namespace gameToolkit {
         double x2, double y2, double w2, double h2);
 
     //对角色数值施加影响
-    void applyForm(Chara* chara, Form* form);
+    void applyForm(Chara_old* chara, Form* form);
     void applyForm(Form* form_tar,Form* form);
 
     //生成全部地图2.0b
@@ -107,7 +107,7 @@ namespace gameToolkit {
     bool ifSwimable(double x, double y);
 
     //判断一个角色是否是坠落
-    bool ifFalling(Chara* chara);
+    bool ifFalling(Chara_old* chara);
 
     
 }
