@@ -3,12 +3,14 @@
 #include "PhysicsObject.h"
 #include <string>
 
+#include "AnimationUnit.h"
+
 enum class GameObjectType
 {
-	none,
-	default_chara,
-	default_facility,
-	default_projectile
+	default_object,//默认游戏物件
+	default_chara,//默认的角色物件
+	default_facility,//默认的设施物件
+	default_projectile//默认的投射物物件
 };
 
 class GameObject
@@ -21,8 +23,9 @@ public:
 
 	std::string name;	//名称
 	GameObjectType type_game_object;	//游戏对象类型
-	PhysicsObject* physics_object;	//持有的物理对象
 
+	PhysicsObject* physics_object;	//持有的物理对象
+	AnimationUnit* animation_unit;	//动画单元
 
 protected:
 	GameObject();	//防止外部直接生成实例

@@ -1,9 +1,10 @@
 #pragma once
 #include <list>
+#include "PhysicsObject.h"
 
-class PhysicChara;
-class PhysicFacility;
-class PhysicProjectile;
+class PhysicsChara;
+class PhysicsFacility;
+class PhysicsProjectile;
 
 class Grid
 {
@@ -11,13 +12,22 @@ public:
 	static Grid* createNew(unsigned int x, unsigned int y);
 	void destroy() const;
 
-	std::list<PhysicChara*>* list_physics_chara;
-	std::list<PhysicFacility*>* list_physics_facility;
-	std::list<PhysicProjectile*>* list_physics_projectile;
+	std::list<PhysicsChara*>* list_physics_chara;
+	std::list<PhysicsFacility*>* list_physics_facility;
+	std::list<PhysicsProjectile*>* list_physics_projectile;
+
+	void renewBlockingType(BlockingType blocking_type);
+	bool getBlockingType(BlockingType blocking_type) const;
 
 protected:
 	Grid(unsigned int x, unsigned int y);
 	~Grid();
 	unsigned int X, Y;//自己的位置
+
+
+	bool blocking_air;
+	bool blocking_support;
+	bool blocking_liquid;
+	bool blocking_solid;
 };
 

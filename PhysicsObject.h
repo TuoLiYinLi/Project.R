@@ -9,7 +9,7 @@ enum class PhysicsType
 	projectile,	//投射物物理
 };
 
-enum class FacilityType
+enum class BlockingType
 {
 	air,	//无阻挡,空气
 	support,	//半阻挡,支撑
@@ -41,7 +41,7 @@ public:
 	int getRightGrid() const;	//获取右部占据的网格
 	
 
-	virtual void signPosition();	//对地图签入自己的位置
+	virtual void renewSignedGrids();	//对地图签入自己的位置
 
 protected:
 	PhysicsObject();	//不允许外部实例化

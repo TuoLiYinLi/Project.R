@@ -15,9 +15,12 @@ public:
 
 	static Uint32 delta_time;	//上一帧到这一帧变化的时间
 
-	static Uint32 logic_frame_CD;	//逻辑帧倒计时
+	static Uint32 logical_interval_time;	//上一物理帧到这一物理帧的时间间隔
 
 	static Uint32 per_second_CD;//进行一秒钟一轮的倒数
 
+	static bool time_stop;//时间流逝的速度
+
+	static Uint32 logic_frame_CD;	//逻辑帧倒计时
 };
 

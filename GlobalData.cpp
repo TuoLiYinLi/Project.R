@@ -14,3 +14,7 @@ Uint32 GlobalData::delta_time = 0;
 Uint32 GlobalData::logic_frame_CD = 0;
 
 Uint32 GlobalData::per_second_CD = 0;
+
+bool GlobalData::time_stop = false;
+
+Uint32 GlobalData::logical_interval_time = 16;

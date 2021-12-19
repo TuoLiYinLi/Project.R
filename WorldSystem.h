@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Grid.h"
+//#include "PhysicsFacility.h"
 
 class GameObject;
 class PhysicsProjectile;
@@ -24,6 +25,8 @@ public:
 	std::list<PhysicsProjectile*>* list_physics_projectile;	//投射物物理全集
 
 	std::list<GameObject*>* list_game_objects;	//游戏物件全集
+
+	//bool getPhysicsBlocking(BlockingType type);
 
 protected:
 	//单例实例

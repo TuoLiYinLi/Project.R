@@ -19,33 +19,46 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RenderingSystem.h" />
+    <ClInclude Include="AnimationUnit.h" />
     <ClInclude Include="Chara.h" />
     <ClInclude Include="Defined.h" />
+    <ClInclude Include="EnumAnimationType.h" />
     <ClInclude Include="Facility.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalData.h" />
     <ClInclude Include="Grid.h" />
-    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="RenderingUnit.h" />
+    <ClInclude Include="UISystem.h" />
     <ClInclude Include="PhysicsChara.h" />
     <ClInclude Include="PhysicsFacility.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="PhysicsProjectile.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="ProjectileFlying.h" />
+    <ClInclude Include="ProjectilePoint.h" />
+    <ClInclude Include="ProjectileTarget.h" />
     <ClInclude Include="WorldSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="RenderingSystem.cpp" />
+    <ClCompile Include="AnimationUnit.cpp" />
     <ClCompile Include="Chara.cpp" />
     <ClCompile Include="Facility.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="RenderingUnit.cpp" />
+    <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsChara.cpp" />
     <ClCompile Include="PhysicsFacility.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="PhysicsProjectile.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileFlying.cpp" />
+    <ClCompile Include="ProjectilePoint.cpp" />
+    <ClCompile Include="ProjectileTarget.cpp" />
     <ClCompile Include="WorldSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

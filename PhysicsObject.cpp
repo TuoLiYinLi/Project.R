@@ -14,8 +14,8 @@ PhysicsObject::PhysicsObject()
 	type_physics = PhysicsType::none;
 	X = 0;
 	Y = 0;
-	bodyX = 0;
-	bodyY = 0;
+	bodyX = 1;
+	bodyY = 1;
 }
 
 PhysicsObject::~PhysicsObject()
@@ -34,7 +34,7 @@ void PhysicsObject::update()
 
 }
 
-void PhysicsObject::signPosition()
+void PhysicsObject::renewSignedGrids()
 {
 	
 }

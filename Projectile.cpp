@@ -6,7 +6,7 @@ Projectile* Projectile::createNew()
 Projectile* p = new Projectile();
 if (p == nullptr) {
 #ifdef PROJECTILE_DEBUG
-	std::cout << "\t\tERROR::new Projectile()ÉêÇëÄÚ´æÊ§°Ü£¬ÖµÎªnullptr\n";
+	std::cout << " ERROR::new Projectile()ÉêÇëÄÚ´æÊ§°Ü£¬ÖµÎªnullptr\n";
 #endif // PROJECTILE_DEBUG
 
 }

@@ -13,7 +13,7 @@ void GameObject::destroy()
 GameObject::GameObject()
 {
 	name = u8"default_game_object";
-	type_game_object = GameObjectType::none;
+	type_game_object = GameObjectType::default_object;
 	physics_object = nullptr;
 
 	//将自己添加到设施物理列表

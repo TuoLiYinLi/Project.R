@@ -1,4 +1,6 @@
 #include "Chara.h"
+
+#include "PhysicsFacility.h"
 #include "SDL.h"
 
 
@@ -10,12 +12,25 @@ Chara* Chara::createNew() {
 	return c;
 }
 
+void Chara::update()
+{
+	
+}
+
+
 Chara::Chara()
 {
 	name = u8"default_chara";
 	action = CharaAction::idle;
 
 	animation_progress = 0;
+
+	//绑定物理设施
+	physics_object = PhysicsFacility::createNew();
+	physics_object->game_object = this;
+
+	physics_object->bodyX = 1;
+	physics_object->bodyY = 1;
 }
 
 Chara::~Chara()

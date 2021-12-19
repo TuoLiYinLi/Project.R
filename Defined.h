@@ -9,12 +9,12 @@ constexpr auto WINDOW_HEIGHT = 900; //窗口的高度;
 constexpr auto FONT_PRECISION = 72;	//字体读取精度;
 constexpr auto FONT_SIZE = 18;	//字体大小比例;
 
-constexpr auto MIN_VIEW_SCALE = 0.5;	 //窗口的最小缩放;
-constexpr auto MAX_VIEW_SCALE = 4; //窗口的最大缩放;
+constexpr auto VIEW_SCALE_MIN = 0.5;	 //窗口的最小缩放;
+constexpr auto VIEW_SCALE_MAX = 4; //窗口的最大缩放;
 
-constexpr auto MAX_VIEW_SPEED_X = 10; //窗口的水平方向最大速度;
-constexpr auto MAX_VIEW_SPEED_Y = 10; //窗口的竖直方向最大速度;
-constexpr auto MAX_VIEW_SPEED_SCALE = 2; //窗口缩放时的最大速度;
+constexpr auto VIEW_SPEED_X_MAX = 10; //窗口的水平方向最大速度;
+constexpr auto VIEW_SPEED_Y_MAX = 10; //窗口的竖直方向最大速度;
+constexpr auto VIEW_SPEED_SCALE_MAX = 2; //窗口缩放时的最大速度;
 
 constexpr auto VIEW_ACCELERATE_SPEED_X = 100; //窗口水平速度的减速度;
 constexpr auto VIEW_ACCELERATE_SPEED_Y = 100; //窗口竖直速度的减速度;
@@ -57,4 +57,4 @@ constexpr auto VIEW_ACCELERATE_SPEED_SCALE = 32; //窗口缩放速度的减速度;
 
 //#define STIFLE_DAMAGE 0.0025 //窒息伤害常量
 
-//#define FALLING_SPEED 0.08//坠落速度
+constexpr auto FALLING_SPEED = 0.08;//坠落速度
