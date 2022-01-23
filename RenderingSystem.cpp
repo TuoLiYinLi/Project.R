@@ -200,74 +200,16 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
     SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, nullptr, &rect, 0, nullptr, au->getFlip());
 }
 
+void RenderingSystem::sortRenderingUnits() const
+{
+    list_rendering_units->sort();
+}
+
+
 void RenderingSystem::renderAll() const {
-#ifdef ANIMATION_RENDER_DEBUG
-    std::cout << "RenderingSystem::renderAll()\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-    float currentDepth = 0;
-    float maxDepth = 0;
-    float nextDepth = FLT_MAX;
-
-    int auNum = 0;
-
     for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); i++)
     {
-        const float targetDepth = (*i)->depth;
-
-        if (abs(targetDepth - currentDepth)<=DEPTH_PRECISION)
-        {
-            renderOneUnit(*i);
-#ifdef ANIMATION_RENDER_DEBUG
-            //std::cout << " äÖÈ¾µÚ"<< auNum <<"¸öanimationUnit\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-        }
-        if (targetDepth > currentDepth)
-        {
-            if (targetDepth > maxDepth)
-            {
-                maxDepth = targetDepth;
-            }
-            if (targetDepth < nextDepth)
-            {
-                nextDepth = targetDepth;
-            }
-        }
-
-        auNum++;
-    }
-
-    while (true)
-    {
-        currentDepth = nextDepth;
-        nextDepth = maxDepth;
-        auNum = 0;
-
-        for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); ++i)
-        {
-            const float targetDepth = (*i)->depth;
-
-            if (abs(targetDepth - currentDepth)<=DEPTH_PRECISION)
-            {
-                renderOneUnit(*i);
-#ifdef ANIMATION_RENDER_DEBUG
-                //std::cout << " animUnit@" << auNum << "\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-            }
-            if (targetDepth > currentDepth)
-            {
-
-                if (targetDepth < nextDepth)
-                {
-                    nextDepth = targetDepth;
-                }
-            }
-            auNum++;
-        }
-
-
-        if (abs(currentDepth - maxDepth)<=DEPTH_PRECISION) {
-            break;
-        }
+        renderOneUnit(*i);
     }
 }
 

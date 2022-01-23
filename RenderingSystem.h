@@ -41,6 +41,11 @@ public:
 
 	//渲染单个的渲染单元
 	void renderOneUnit(const RenderingUnit* au) const;
+	//比较渲染单元的深度
+	bool compareDepth(const RenderingUnit* au_f, const RenderingUnit* au_b) const;
+	//对RenderingUnits重新排序
+	void sortRenderingUnits() const;
+
 	//渲染所有动画单元(跳过不需要渲染的部分)
 	void renderAll() const;
 
@@ -54,7 +59,7 @@ public:
 	//渲染utf8字体，尚有bug，导致其它内容消失
 	void renderText_UTF8( const char* utf8_msg,int x,int y) const;
 
-	static  void getLengthUTF8(char const* str, int* cnt);//计算str中共有多少字符以及含有多少1/2/3位的字符(共4位)
+	static void getLengthUTF8(char const* str, int* cnt);//计算str中共有多少字符以及含有多少1/2/3位的字符(共4位)
 
 	//改变视口位置
 	void renewViewPosition();

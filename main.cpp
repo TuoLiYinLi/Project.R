@@ -171,6 +171,8 @@ int main(int argc, char** argv) {
 
         //渲染内容
         //画面渲染
+
+        RenderingSystem::getInstance()->sortRenderingUnits();
 		RenderingSystem::getInstance()->renderAll();
 
     	//物理debug渲染

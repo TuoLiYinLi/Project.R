@@ -98,3 +98,9 @@ int RenderingUnit::getCurrentNum()
 {
 	return  current_num;
 }
+
+bool RenderingUnit::operator<(RenderingUnit* ru)
+{
+	return this->depth < ru->depth;
+}
+

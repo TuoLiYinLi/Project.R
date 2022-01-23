@@ -36,6 +36,8 @@ public:
 
 	static int getCurrentNum();	//获取正在使用内存的渲染元件数量
 
+	bool operator < (RenderingUnit* ru);//重写小于号运算符的含义，便于使用std的list排序功能
+
 protected:
 	static int current_num;//记录一共有多少的渲染元件占用内存
 
