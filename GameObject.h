@@ -3,7 +3,7 @@
 #include "PhysicsObject.h"
 #include <string>
 
-#include "AnimationUnit.h"
+#include "RenderingAnimation.h"
 
 enum class GameObjectType
 {
@@ -25,7 +25,7 @@ public:
 	GameObjectType type_game_object;	//游戏对象类型
 
 	PhysicsObject* physics_object;	//持有的物理对象
-	AnimationUnit* animation_unit;	//动画单元
+	RenderingAnimation* animation_unit;	//动画单元
 
 protected:
 	GameObject();	//防止外部直接生成实例

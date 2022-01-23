@@ -26,7 +26,6 @@ public:
 
 	std::list<GameObject*>* list_game_objects;	//游戏物件全集
 
-	//bool getPhysicsBlocking(BlockingType type);
 
 protected:
 	//单例实例

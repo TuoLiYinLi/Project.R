@@ -13,7 +13,7 @@ RenderingSystem* RenderingSystem::getInstance()
 {
     if (instance == nullptr) {
         auto a = new RenderingSystem();
-        if (a==nullptr) {
+        if (a == nullptr) {
 #ifdef _DEBUG
             SDL_Log(u8"警告 RenderingSystem::new RenderingSystem()申请内存失败，值为nullptr");
 #endif // _DEBUG
@@ -58,10 +58,10 @@ RenderingSystem::RenderingSystem()
     loadAllAnim();
 
     //渲染单元列表
-    list_animation_units = new std::list<AnimationUnit*>();
-    if (list_animation_units == nullptr) {
+    list_rendering_units = new std::list<RenderingUnit*>();
+    if (list_rendering_units == nullptr) {
 #ifdef _DEBUG
-        SDL_Log(u8"ERROR:new std::vector<AnimationUnit*>()申请内存失败，值为nullptr");
+        SDL_Log(u8"ERROR:new std::vector<RenderingAnimation*>()申请内存失败，值为nullptr");
 #endif // _DEBUG
     }
 
@@ -75,20 +75,20 @@ RenderingSystem::~RenderingSystem()
 #endif // ANIMATION_SYSTEM_DEBUG
 
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << " 活跃的TTFUnit数量:"<< TTFUnit::getCurrentNum() 
-        <<"\n 活跃的AnimationUnit数量:"<< AnimationUnit::getCurrentNum() <<"\n";
+    std::cout << " 活跃的TTFUnit数量:" << TTFUnit::getCurrentNum()
+        << "\n 活跃的AnimationUnit数量:" << RenderingAnimation::getCurrentNum() << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
 
     int count = 0;
 
-    while (!list_animation_units->empty())
+    while (!list_rendering_units->empty())
     {
 
-        list_animation_units->front()->destroy();
+        list_rendering_units->front()->destroy();
         count++;
     }
-    delete list_animation_units;
-    
+    delete list_rendering_units;
+
     unloadAllAnim();
     list_animation_texture = nullptr;
     delete list_animation_texture;
@@ -102,15 +102,15 @@ void RenderingSystem::renewViewPosition()
     viewX += GlobalData::delta_time * vx / 1000 * s1;
     viewY += GlobalData::delta_time * vy / 1000 * s1;
     viewScale += GlobalData::delta_time * vs * viewScale / 1000;
-    
+
     if (viewScale > VIEW_SCALE_MAX) viewScale = VIEW_SCALE_MAX;
     if (viewScale < VIEW_SCALE_MIN)viewScale = VIEW_SCALE_MIN;
 
     const double axt = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_X) / 1000;
     const double ayt = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_Y) / 1000;
     const double ast = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
-    
-    if (vx>0) {
+
+    if (vx > 0) {
         vx -= axt;
         if (vx < 0) vx = 0;
     }
@@ -119,7 +119,7 @@ void RenderingSystem::renewViewPosition()
         vx += axt;
         if (vx > 0) vx = 0;
     }
-    
+
     if (vy > 0) {
         vy -= ayt;
         if (vy < 0) vy = 0;
@@ -129,8 +129,8 @@ void RenderingSystem::renewViewPosition()
         vy += ayt;
         if (vy > 0) vy = 0;
     }
-    
-    if (vs>0) {
+
+    if (vs > 0) {
         vs -= ast;
         if (vs < 0) vs = 0;
     }
@@ -139,7 +139,7 @@ void RenderingSystem::renewViewPosition()
         vs += ast;
         if (vs > 0) vs = 0;
     }
-    
+
 
 }
 
@@ -164,19 +164,32 @@ void RenderingSystem::renderTexture(SDL_Texture* texture, double x, double delta
     SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, nullptr, &rect, 0, nullptr, flip);
 }
 
+void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
+    SDL_Texture* texture = au->getTexture();
 
-void RenderingSystem::renderOneUnit(const AnimationUnit* au) const{
-    SDL_Texture* texture= au->getTexture();
+    if (!texture)return;
 
-    SDL_Rect rect;
+    SDL_Rect rect = { 0,0,0,0 };
 
-    rect.x = (int)round(((au->x - viewX) * 32 + au->deltaX * 2) * viewScale - (viewScale - 1) * window_width * 0.5);
-    rect.y = (int)round(((au->y - viewY) * 32 + au->deltaY * 2) * viewScale - (viewScale - 1) * window_height * 0.5);
-    rect.w = (int)ceil(au->width * viewScale);
-    rect.h = (int)ceil(au->height * viewScale);
+    switch (au->reference)
+    {
+    case RenderingReference::world:
+        rect.x = (int)round(((au->x - viewX) * 32 + au->deltaX * 2) * viewScale - (viewScale - 1) * window_width * 0.5);
+        rect.y = (int)round(((au->y - viewY) * 32 + au->deltaY * 2) * viewScale - (viewScale - 1) * window_height * 0.5);
+        rect.w = (int)ceil(au->width * viewScale);
+        rect.h = (int)ceil(au->height * viewScale);
+
+        break;
+    case RenderingReference::window:
+        rect.x = (int)round(au->x);
+        rect.y = (int)round(au->y);
+        rect.w = (int)round(au->width);
+        rect.h = (int)round(au->height);
+        break;
+    }
 
     if (rect.x<-rect.w || rect.x>WINDOW_WIDTH + rect.w ||
-        rect.y<-rect.h || rect.y>WINDOW_HEIGHT + rect.h ) 
+        rect.y<-rect.h || rect.y>WINDOW_HEIGHT + rect.h)
     {
 #ifdef ANIMATION_RENDER_DEBUG
         //std::cout << " 跳过一个超出范围的渲染目标\n";
@@ -184,37 +197,37 @@ void RenderingSystem::renderOneUnit(const AnimationUnit* au) const{
         return;
     }
 
-    SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, nullptr, &rect, 0, nullptr,au->getFlip());
+    SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, nullptr, &rect, 0, nullptr, au->getFlip());
 }
 
-void RenderingSystem::renderAll() const{
+void RenderingSystem::renderAll() const {
 #ifdef ANIMATION_RENDER_DEBUG
     std::cout << "RenderingSystem::renderAll()\n";
 #endif // ANIMATION_SYSTEM_DEBUG
-    unsigned short currentDepth = 0;
-    unsigned short maxDepth = 0;
-    unsigned short nextDepth = 65535;
-    
+    float currentDepth = 0;
+    float maxDepth = 0;
+    float nextDepth = FLT_MAX;
+
     int auNum = 0;
 
-    for (auto i = list_animation_units->begin(); i !=list_animation_units->end(); i++)
+    for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); i++)
     {
-        const unsigned short targetDepth=(*i)->depth;
+        const float targetDepth = (*i)->depth;
 
-        if (targetDepth == currentDepth) 
+        if (abs(targetDepth - currentDepth)<=DEPTH_PRECISION)
         {
             renderOneUnit(*i);
 #ifdef ANIMATION_RENDER_DEBUG
             //std::cout << " 渲染第"<< auNum <<"个animationUnit\n";
 #endif // ANIMATION_SYSTEM_DEBUG
         }
-        if (targetDepth > currentDepth) 
+        if (targetDepth > currentDepth)
         {
-            if (targetDepth > maxDepth) 
-            { 
-                maxDepth = targetDepth; 
+            if (targetDepth > maxDepth)
+            {
+                maxDepth = targetDepth;
             }
-            if (targetDepth < nextDepth) 
+            if (targetDepth < nextDepth)
             {
                 nextDepth = targetDepth;
             }
@@ -222,18 +235,18 @@ void RenderingSystem::renderAll() const{
 
         auNum++;
     }
-    
+
     while (true)
     {
         currentDepth = nextDepth;
         nextDepth = maxDepth;
         auNum = 0;
 
-        for (auto i = list_animation_units->begin(); i != list_animation_units->end(); ++i)
+        for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); ++i)
         {
-            const unsigned short targetDepth = (*i)->depth;
+            const float targetDepth = (*i)->depth;
 
-            if (targetDepth == currentDepth)
+            if (abs(targetDepth - currentDepth)<=DEPTH_PRECISION)
             {
                 renderOneUnit(*i);
 #ifdef ANIMATION_RENDER_DEBUG
@@ -242,7 +255,7 @@ void RenderingSystem::renderAll() const{
             }
             if (targetDepth > currentDepth)
             {
-                    
+
                 if (targetDepth < nextDepth)
                 {
                     nextDepth = targetDepth;
@@ -250,9 +263,9 @@ void RenderingSystem::renderAll() const{
             }
             auNum++;
         }
-        
 
-        if (currentDepth == maxDepth) {
+
+        if (abs(currentDepth - maxDepth)<=DEPTH_PRECISION) {
             break;
         }
     }
@@ -263,11 +276,11 @@ void RenderingSystem::renderOnePhysicsObject(PhysicsObject* physics_object) cons
     SDL_Rect rect;
 
     rect.x = (int)round((physics_object->X - viewX) * 32 * viewScale - (viewScale - 1) * window_width * 0.5);
-    rect.y = (int)round((physics_object->Y - viewY) * 32  * viewScale - (viewScale - 1) * window_height * 0.5);
+    rect.y = (int)round((physics_object->Y - viewY) * 32 * viewScale - (viewScale - 1) * window_height * 0.5);
     rect.w = (int)ceil(physics_object->bodyX * 32 * viewScale);
     rect.h = (int)ceil(physics_object->bodyY * 32 * viewScale);
 
-    SDL_Color color={255,255,255,255 };
+    SDL_Color color = { 255,255,255,127 };
 
     switch (physics_object->getPhysicsType())
     {
@@ -277,50 +290,50 @@ void RenderingSystem::renderOnePhysicsObject(PhysicsObject* physics_object) cons
         switch (facility_type)
         {
         case BlockingType::support:
-            color = { 180,80,30 ,255};//橙色
+            color = { 180,80,30 ,127 };//橙色
             break;
         case BlockingType::air:
-            color = { 226,176,251 ,25 };//淡紫色
+            color = { 226,176,251 ,23 };//淡紫色
             break;
         case BlockingType::solid:
-            color = { 102,56,49 ,255 };//褐色
+            color = { 102,56,49 ,127 };//褐色
             break;
         case BlockingType::liquid:
-            color = { 99,155,255 ,55 };//蓝色
+            color = { 99,155,255 ,63 };//蓝色
             break;
         }
     }
     break;
     case PhysicsType::projectile:
-        color = { 255,237,80 ,200 };//黄色
-        
+        color = { 255,237,80 ,127 };//黄色
+
         break;
     case PhysicsType::chara:
-        color = { 55,232,55 ,255 };//绿色
+        color = { 55,232,55 ,127 };//绿色
         break;
     case PhysicsType::none:
-        color = { 0,0,0 ,255 };//黑色
+        color = { 0,0,0 ,127 };//黑色
         break;
     }
 
-    SDL_SetRenderDrawColor(GlobalData::sdl_renderer,color.r,color.g,color.b,color.a);
-    SDL_RenderFillRect(GlobalData::sdl_renderer,&rect);
+    SDL_SetRenderDrawColor(GlobalData::sdl_renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(GlobalData::sdl_renderer, &rect);
 }
 
 void RenderingSystem::renderALLPhysicsObjects() const
 {
-	for (auto i = WorldSystem::getInstance()->list_physics_facility->begin();
-        i !=WorldSystem::getInstance()->list_physics_facility->end(); ++i)
-	{
-        if((*i)->getFacilityType() != BlockingType::liquid && (*i)->getFacilityType() != BlockingType::air)
-        renderOnePhysicsObject(*i);
-	}
+    for (auto i = WorldSystem::getInstance()->list_physics_facility->begin();
+        i != WorldSystem::getInstance()->list_physics_facility->end(); ++i)
+    {
+        if ((*i)->getFacilityType() != BlockingType::liquid && (*i)->getFacilityType() != BlockingType::air)
+            renderOnePhysicsObject(*i);
+    }
     for (auto i = WorldSystem::getInstance()->list_physics_chara->begin();
         i != WorldSystem::getInstance()->list_physics_chara->end(); ++i)
     {
         renderOnePhysicsObject(*i);
     }
-	for (auto i = WorldSystem::getInstance()->list_physics_facility->begin();
+    for (auto i = WorldSystem::getInstance()->list_physics_facility->begin();
         i != WorldSystem::getInstance()->list_physics_facility->end(); ++i)
     {
         if ((*i)->getFacilityType() == BlockingType::liquid || (*i)->getFacilityType() == BlockingType::air)
@@ -348,7 +361,7 @@ void RenderingSystem::loadAllAnim() {
 void RenderingSystem::unloadAllAnim() {
     for (auto i = 0; i<int(AnimationType::size); i++)
     {
-        if (list_animation_texture->at(i)!=nullptr) {
+        if (list_animation_texture->at(i) != nullptr) {
             unloadAnim(AnimationType(i));
         }
     }
@@ -366,7 +379,7 @@ void RenderingSystem::loadAnim(AnimationType antp) {
         return;
     }
 
-    if (list_animation_texture->size()==unsigned(antp)) {
+    if (list_animation_texture->size() == unsigned(antp)) {
 #ifdef ANIMATION_SYSTEM_DEBUG
         std::cout << " 加载动画:" << int(antp) << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
@@ -539,7 +552,7 @@ void RenderingSystem::loadAnim(AnimationType antp) {
             break;
         }
 #ifdef ANIMATION_SYSTEM_DEBUG
-        std::cout << " 材质数量:"<<num<<"\n";
+        std::cout << " 材质数量:" << num << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
         auto innerList = new std::vector<SDL_Texture*>();
         if (innerList == nullptr) {
@@ -548,12 +561,12 @@ void RenderingSystem::loadAnim(AnimationType antp) {
         }
         list_animation_texture->push_back(innerList);
 
-        
+
 
         for (auto i = 1; i <= num; i++)
         {
             std::string fullFile;
-            if (num>1) {
+            if (num > 1) {
                 fullFile = file + std::to_string(i) + std::string(".png");
             }
             else
@@ -561,10 +574,10 @@ void RenderingSystem::loadAnim(AnimationType antp) {
                 fullFile = file + std::string(".png");
             }
             auto c_fullFile = fullFile.c_str();
-            SDL_Texture* texture= IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
+            SDL_Texture* texture = IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
 #ifdef ANIMATION_SYSTEM_DEBUG
             if (texture) {
-                SDL_Log(u8" 成功加载%s" , c_fullFile);
+                SDL_Log(u8" 成功加载%s", c_fullFile);
             }
             else
             {
@@ -578,7 +591,7 @@ void RenderingSystem::loadAnim(AnimationType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
     else
     {
-        std::cout << " ERROR:已经加载了动画"<< int(antp) <<"，不能重复加载\n";
+        std::cout << " ERROR:已经加载了动画" << int(antp) << "，不能重复加载\n";
         return;
     }
 #endif // ANIMATION_SYSTEM_DEBUG
@@ -608,7 +621,7 @@ void RenderingSystem::getLengthUTF8(char const* str, int* cnt)
 
 void RenderingSystem::renderText_UTF8(const char* utf8_msg, int x, int y) const
 {
-    int count_str[4]={0,0,0,0};
+    int count_str[4] = { 0,0,0,0 };
     getLengthUTF8(utf8_msg, count_str);
 
     SDL_Surface* surface = TTF_RenderUTF8_Blended(font_zpix, utf8_msg, { 255,255,255,255 });
@@ -631,12 +644,12 @@ void RenderingSystem::renderText_UTF8(const char* utf8_msg, int x, int y) const
 }
 
 
-void RenderingSystem::unloadAnim(AnimationType antp) const{
+void RenderingSystem::unloadAnim(AnimationType antp) const {
 #ifdef ANIMATION_SYSTEM_DEBUG
     std::cout << "unloadAnim(AnimationType antp)\n";
     std::cout << " 卸载动画:" << int(antp) << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
-    std::vector<SDL_Texture*>* ap=list_animation_texture->at(int(antp));
+    std::vector<SDL_Texture*>* ap = list_animation_texture->at(int(antp));
     if (list_animation_texture->at(int(antp)) == nullptr) {
 #ifdef ANIMATION_SYSTEM_DEBUG
         std::cout << " ERROR:动画" << int(antp) << "并没有被加载，不能卸载\n";
@@ -646,20 +659,20 @@ void RenderingSystem::unloadAnim(AnimationType antp) const{
     else
     {
         int textureCount = 0;
-        for (auto it = ap->begin(); it!=ap->end() ; ++it)
+        for (auto it = ap->begin(); it != ap->end(); ++it)
         {
             textureCount++;
             if ((*it) == nullptr) {
 #ifdef ANIMATION_SYSTEM_DEBUG
-                std::cout << " ERROR:这个动画的第"<<textureCount<<"个SDL_Texture*为nullptr,请检查加载过程\n";
+                std::cout << " ERROR:这个动画的第" << textureCount << "个SDL_Texture*为nullptr,请检查加载过程\n";
 #endif // ANIMATION_SYSTEM_DEBUG
             }
-            else 
+            else
             {
                 SDL_DestroyTexture(*it);
                 (*it) = nullptr;
 #ifdef ANIMATION_SYSTEM_DEBUG
-                std::cout << " 完成卸载第"<< textureCount <<"个SDL_Texture\n";
+                std::cout << " 完成卸载第" << textureCount << "个SDL_Texture\n";
 #endif // ANIMATION_SYSTEM_DEBUG
             }
 

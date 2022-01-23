@@ -12,6 +12,7 @@
 #include "UISystem.h"
 #include "WorldSystem.h"
 #include "RenderingSystem.h"
+#include "RenderingText.h"
 
 #include "PhysicsFacility.h"
 #include "PhysicsChara.h"
@@ -24,7 +25,7 @@
 #include "ProjectileFlying.h"
 
 int main(int argc, char** argv) {
-	std::cout << "Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
+	std::cout << u8"Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
     
 
     //检查SDL加载是否成功，报错
@@ -34,7 +35,7 @@ int main(int argc, char** argv) {
     }
      
     //检查窗口加载是否成功，报错
-    GlobalData::sdl_window = SDL_CreateWindow("Palace Alpha+1 by TheCarmineDepth ", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    GlobalData::sdl_window = SDL_CreateWindow(u8"Palace Alpha+1 by TheCarmineDepth ", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if (GlobalData::sdl_window == nullptr) {
         std::cout << SDL_GetError() << std::endl;
         return 1;
@@ -53,13 +54,21 @@ int main(int argc, char** argv) {
     }
     //设置窗口图标
 
-
     //系统初始化
     WorldSystem::getInstance();
     UISystem::getInstance();
     RenderingSystem::getInstance();
     SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_BLEND);
 
+    //测试版水印
+    auto const version_mark = RenderingText::createNew();
+    version_mark->reference = RenderingReference::window;
+	version_mark->setTexture(u8"Palace DEMO Alpha+1 by TheCarmineDepth", { 255,255,255,255 }, 1);
+    version_mark->depth = RENDERING_DEPTH_EXTRA + 1;
+    version_mark->x = WINDOW_WIDTH - version_mark->width;
+    version_mark->y = WINDOW_HEIGHT - version_mark->height;
+
+    /*
     auto range = PhysicsFacility::createNew();
     range->X = 0;
     range->Y = 0;
@@ -67,8 +76,8 @@ int main(int argc, char** argv) {
     range->bodyY = WORLD_HEIGHT;
     range->setFacilityType(BlockingType::air);
     range->renewSignedGrids();
-    /*
      */
+    //临时测试-设置测试模型
 	{
 		auto pf1=PhysicsFacility::createNew();
 		pf1->X = 7;
@@ -161,13 +170,15 @@ int main(int argc, char** argv) {
         SDL_RenderClear(GlobalData::sdl_renderer);
 
         //渲染内容
-        RenderingSystem::getInstance()->renderAll();
+        //画面渲染
+		RenderingSystem::getInstance()->renderAll();
 
-        RenderingSystem::getInstance()->renderALLPhysicsObjects();
-
-        //中文字体
-        //RenderingSystem::getInstance()->renderText_UTF8(u8"中文测试1234(a b c d e f g)",0,0);
-
+    	//物理debug渲染
+        if(GlobalData::debug_physics)
+        {
+			RenderingSystem::getInstance()->renderALLPhysicsObjects();
+        }
+        
 
         //交换双缓冲
         SDL_RenderPresent(GlobalData::sdl_renderer);

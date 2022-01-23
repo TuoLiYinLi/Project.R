@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderingSystem.h" />
-    <ClInclude Include="AnimationUnit.h" />
+    <ClInclude Include="RenderingAnimation.h" />
     <ClInclude Include="Chara.h" />
     <ClInclude Include="Defined.h" />
     <ClInclude Include="EnumAnimationType.h" />
@@ -28,6 +28,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalData.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="RenderingText.h" />
     <ClInclude Include="RenderingUnit.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="PhysicsChara.h" />
@@ -42,12 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderingSystem.cpp" />
-    <ClCompile Include="AnimationUnit.cpp" />
+    <ClCompile Include="RenderingAnimation.cpp" />
     <ClCompile Include="Chara.cpp" />
     <ClCompile Include="Facility.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="RenderingText.cpp" />
     <ClCompile Include="RenderingUnit.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="main.cpp" />

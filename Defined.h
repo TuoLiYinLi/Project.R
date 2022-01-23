@@ -3,22 +3,33 @@
 constexpr unsigned int WORLD_WIDTH = 128; //单个的世界的宽度;
 constexpr unsigned int WORLD_HEIGHT = 128; //单个的世界的高度;
 
-constexpr auto WINDOW_WIDTH = 1600; //窗口的宽度;
-constexpr auto WINDOW_HEIGHT = 900; //窗口的高度;
+constexpr float DEPTH_PRECISION = 0.0001f;//动画单元的深度的精确度
 
-constexpr auto FONT_PRECISION = 72;	//字体读取精度;
-constexpr auto FONT_SIZE = 18;	//字体大小比例;
+constexpr int WINDOW_WIDTH = 1600; //窗口的宽度;
+constexpr int WINDOW_HEIGHT = 900; //窗口的高度;
 
-constexpr auto VIEW_SCALE_MIN = 0.5;	 //窗口的最小缩放;
-constexpr auto VIEW_SCALE_MAX = 4; //窗口的最大缩放;
+constexpr int FONT_PRECISION = 18;	//字体读取精度;
+constexpr int FONT_SIZE = 18;	//字体大小比例;
 
-constexpr auto VIEW_SPEED_X_MAX = 10; //窗口的水平方向最大速度;
-constexpr auto VIEW_SPEED_Y_MAX = 10; //窗口的竖直方向最大速度;
-constexpr auto VIEW_SPEED_SCALE_MAX = 2; //窗口缩放时的最大速度;
+constexpr double VIEW_SCALE_MIN = 0.5;	 //窗口的最小缩放;
+constexpr double VIEW_SCALE_MAX = 4; //窗口的最大缩放;
 
-constexpr auto VIEW_ACCELERATE_SPEED_X = 100; //窗口水平速度的减速度;
-constexpr auto VIEW_ACCELERATE_SPEED_Y = 100; //窗口竖直速度的减速度;
-constexpr auto VIEW_ACCELERATE_SPEED_SCALE = 32; //窗口缩放速度的减速度;
+constexpr double VIEW_SPEED_X_MAX = 10; //窗口的水平方向最大速度;
+constexpr double VIEW_SPEED_Y_MAX = 10; //窗口的竖直方向最大速度;
+constexpr double VIEW_SPEED_SCALE_MAX = 2; //窗口缩放时的最大速度;
+
+constexpr double VIEW_ACCELERATE_SPEED_X = 100; //窗口水平速度的减速度;
+constexpr double VIEW_ACCELERATE_SPEED_Y = 100; //窗口竖直速度的减速度;
+constexpr double VIEW_ACCELERATE_SPEED_SCALE = 8; //窗口缩放速度的减速度;
+
+constexpr float RENDERING_DEPTH_WORLD_FACILITY = 1000;//渲染深度设施
+constexpr float RENDERING_DEPTH_WORLD_CHARA = 2000;//渲染深度角色
+constexpr float RENDERING_DEPTH_WORLD_PARTICLE = 3000;//渲染深度粒子
+
+constexpr float RENDERING_DEPTH_WORLD_UI = 5000;//渲染深度世界UI
+constexpr float RENDERING_DEPTH_UI = 6000;//渲染深度固定UI
+constexpr float RENDERING_DEPTH_EXTRA = 10000;//额外信息
+
 
 //#define SHOW_FPS //将每秒帧数输出到窗口
 //#define SHOW_KEY //将键盘鼠标等输入信息输出到窗口
@@ -50,10 +61,6 @@ constexpr auto VIEW_ACCELERATE_SPEED_SCALE = 32; //窗口缩放速度的减速度;
 //#define PARTICLE_SYSTEM_DEBUG //粒子系统查错
 
 //#define COUNTING_DEBUG//计数物查错
-
-
-
-
 
 //#define STIFLE_DAMAGE 0.0025 //窒息伤害常量
 

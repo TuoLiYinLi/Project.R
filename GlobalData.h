@@ -22,5 +22,7 @@ public:
 	static bool time_stop;//时间流逝的速度
 
 	static Uint32 logic_frame_CD;	//逻辑帧倒计时
+
+	static bool debug_physics;	//是否开启内置debug
 };
 

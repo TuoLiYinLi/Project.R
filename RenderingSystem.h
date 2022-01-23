@@ -8,18 +8,21 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
-#include "AnimationUnit.h"
+#include "RenderingAnimation.h"
+#include "RenderingUnit.h"
 #include "EnumAnimationType.h"
 
 class PhysicsObject;
 
-class AnimationUnit;
+class RenderingAnimation;
 
 class RenderingSystem
 {
 public:
 	std::vector<std::vector<SDL_Texture*>*>* list_animation_texture;//一个二维的材质列表,用于加载所有的动画资源
-	std::list<AnimationUnit*>* list_animation_units;//动画单元列表,储存需要渲染的动画元件
+	std::list<RenderingUnit*>* list_rendering_units;//动画单元列表,储存需要渲染的动画元件
+
+	TTF_Font* font_zpix;//通用的ttf字体
 
 	//获取单例实例
 	static RenderingSystem* getInstance();
@@ -36,8 +39,8 @@ public:
 	//卸载所有种类的动画资源
 	void unloadAllAnim();
 
-	//渲染单个的动画单元
-	void renderOneUnit(const AnimationUnit* au) const;
+	//渲染单个的渲染单元
+	void renderOneUnit(const RenderingUnit* au) const;
 	//渲染所有动画单元(跳过不需要渲染的部分)
 	void renderAll() const;
 
@@ -68,13 +71,11 @@ public:
 	double viewScale;//窗口的缩放水平
 
 protected:
-	
-	//单例实例
-	static RenderingSystem* instance;
+
+	static RenderingSystem* instance;//单例实例
 	RenderingSystem();
 	~RenderingSystem();
 
 
-	TTF_Font* font_zpix;//通用的ttf字体
 };
 

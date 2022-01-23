@@ -34,6 +34,9 @@ public:
 	bool key_space_state;	//按键space状态
 	bool key_space_press;	//按键space按下瞬间
 
+	bool key_f3_state;	//按键f3状态
+	bool key_f3_press;	//按键f3按下瞬间
+
 	bool keydown_esc;	//按键escape状态
 
 	void pullEvent();	//处理输入事件
@@ -45,6 +48,7 @@ protected:
 	bool mouse_right_last;	//鼠标右键上次状态
 	bool mouse_middle_last;	//鼠标中间上次状态
 	bool key_space_last;	//鼠标中间上次状态
+	bool key_f3_last;	//按键f3状态
 
 	static UISystem* instance;
 

@@ -54,7 +54,7 @@
     <ClInclude Include="RenderingSystem.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationUnit.h">
+    <ClInclude Include="RenderingAnimation.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="EnumAnimationType.h">
@@ -73,6 +73,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RenderingUnit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingText.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -119,7 +122,7 @@
     <ClCompile Include="RenderingSystem.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationUnit.cpp">
+    <ClCompile Include="RenderingAnimation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ProjectilePoint.cpp">
@@ -132,6 +135,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RenderingUnit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingText.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

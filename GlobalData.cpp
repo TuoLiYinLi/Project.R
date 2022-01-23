@@ -18,3 +18,5 @@ Uint32 GlobalData::per_second_CD = 0;
 bool GlobalData::time_stop = false;
 
 Uint32 GlobalData::logical_interval_time = 16;
+
+bool GlobalData::debug_physics = true;

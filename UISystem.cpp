@@ -36,6 +36,7 @@ void UISystem::pullEvent()
 	mouse_right_last = mouse_right_state;
 	mouse_middle_last = mouse_middle_state;
 	key_space_last = key_space_state;
+	key_f3_last = key_f3_state;
 
 	SDL_Event evt;
 	while (SDL_PollEvent(&evt))
@@ -46,7 +47,6 @@ void UISystem::pullEvent()
 		{
 			mouseX_window = evt.button.x;
 			mouseY_window = evt.button.y;
-
 		}
 
 		if (evt.type == SDL_QUIT)
@@ -81,6 +81,10 @@ void UISystem::pullEvent()
 			{
 				key_space_state = true;
 			}
+			else if(evt.key.keysym.scancode == SDL_SCANCODE_F3)
+			{
+				key_f3_state = true;
+			}
 		}
 		else if (evt.type == SDL_KEYUP)
 		{
@@ -107,6 +111,10 @@ void UISystem::pullEvent()
 			else if(evt.key.keysym.scancode==SDL_SCANCODE_SPACE)
 			{
 				key_space_state = false;
+			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_F3)
+			{
+				key_f3_state = false;
 			}
 		}
 		else if (evt.type == SDL_MOUSEBUTTONDOWN)
@@ -220,6 +228,16 @@ void UISystem::pullEvent()
 		key_space_press = false;
 	}
 
+	//处理f3按键
+	if (key_f3_state && !key_f3_last)
+	{
+		key_f3_press = true;
+	}
+	else
+	{
+		key_f3_press = false;
+	}
+
 	renewMouseWorldPosition();
 }
 
@@ -259,6 +277,10 @@ UISystem::UISystem()
 	key_space_state = false;
 	key_space_press = false;
 	key_space_last = false;
+
+	key_f3_state = false;
+	key_f3_press = false;
+	key_f3_last = false;
 
 	keydown_esc = false;
 }
@@ -312,13 +334,18 @@ void UISystem::controlGame() const
 		GlobalData::time_stop = !GlobalData::time_stop;
 	}
 
+	//切换内置debug显示
+	if(key_f3_press)
+	{
+		GlobalData::debug_physics = !GlobalData::debug_physics;
+	}
+
 	//退出游戏
 	if(keydown_esc)
 	{
 		GlobalData::flag_quit = true;
 		SDL_Log(u8"now quit by keydown_esc");
 	}
-
 
 
 }
