@@ -39,7 +39,8 @@ public:
 	int getBottomGrid() const;	//获取底部占据的网格
 	int getLeftGrid() const;	//获取左部占据的网格
 	int getRightGrid() const;	//获取右部占据的网格
-	
+
+	virtual void setPosition(int x, int y);//设置(传送)位置
 
 	virtual void renewSignedGrids();	//对地图签入自己的位置
 

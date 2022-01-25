@@ -85,19 +85,22 @@ void WorldSystem::logicGo_physics() const
 	{
 		(*i)->update();
 	}
-	/*
-	for (auto i = list_physics_facility->begin(); i != list_physics_facility->end(); ++i)
-	{
-		(*i)->update();
-	}
-	 */
 }
 
 void WorldSystem::logicGo_game_objects() const
 {
-	for (auto i = list_game_objects->begin(); i != list_game_objects->end(); ++i)
+	auto i = list_game_objects->begin();
+	while (i != list_game_objects->end())
 	{
 		(*i)->update();
+		if((*i)->getIfDestroy())
+		{
+			(*i)->destroy();
+			i = list_game_objects->erase(i);
+		}else
+		{
+			++i;
+		}
 	}
 }
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SDL.h"
 #include "EnumAnimationType.h"
 #include "RenderingUnit.h"
 

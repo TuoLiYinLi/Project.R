@@ -35,11 +35,11 @@ void RenderingAnimation::setTexture(AnimationType type, int time_length, int cur
 	}
 
 	const auto texture_num = (double)RenderingSystem::getInstance()->list_animation_texture->at((int)type)->size();
-	const int animation_progress = (int)floor(texture_num * time_length / current);
+	const int animation_progress = (int)floor(texture_num * current / time_length);
 
 
 	if (animation_progress >= texture_num) {
-		SDL_Log(u8"ERROR:RenderingSystem::getTextureFromAU ³¬³ö·¶Î§");
+		SDL_Log(u8"ERROR:RenderingSystem::getTextureFromAU ³¬³ö·¶Î§ progress:%d num:%d",animation_progress,texture_num);
 	}
 
 	texture = RenderingSystem::getInstance()->list_animation_texture->at(int(type))->at(animation_progress);

@@ -42,6 +42,7 @@ PhysicsProjectile::~PhysicsProjectile()
 	delete hit_charas;
 	delete hit_facilities;
 	delete hit_projectiles;
+
 }
 
 void PhysicsProjectile::update()

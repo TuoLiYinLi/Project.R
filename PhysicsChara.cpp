@@ -24,6 +24,8 @@ PhysicsChara::PhysicsChara()
 	impact = 0;
 
 	moving = false;
+	hitback = false;
+
 	steady = false;
 
 	moving_speed = 0;
@@ -46,6 +48,79 @@ PhysicsChara::~PhysicsChara()
 	WorldSystem::getInstance()->list_physics_chara->remove(this);
 	//移除网格列表
 	delete list_grid_signed;
+}
+
+void PhysicsChara::renewSignedGrids()
+{
+	//重置
+	for (auto it = list_grid_signed->begin(); it != list_grid_signed->end(); ++it)
+	{
+		const Grid* grid = *it;
+		grid->list_physics_chara->remove(this);
+	}
+	list_grid_signed->clear();
+
+	//重新签入
+
+	const int x_start = getLeftGrid();
+	const int x_end = getRightGrid();
+	const int y_start = getTopGrid();
+	const int y_end = getBottomGrid();
+
+	for (int i = x_start; i <= x_end; i++)
+	{
+		for (int j = y_start; j <= y_end; j++)
+		{
+			Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
+			grid->list_physics_chara->push_back(this);
+			list_grid_signed->push_back(grid);
+		}
+	}
+}
+
+
+void PhysicsChara::update()
+{
+	//刷新冲击数据
+	impact = 0;
+
+	//发生自然下坠
+	if (!moving && moving_inertia <= 0)
+	{
+		if(detectFalling())
+		{
+			if(detectForward(CharaDirection::down,BlockingType::liquid))
+			{
+				setMotion(CharaDirection::down, LOW_SPEED, 1, false);
+			}else
+			{
+				setMotion(CharaDirection::down, FALLING_SPEED, 1, false);
+			}
+		}
+	}
+
+	//整点检查
+	if (moving_inertia <= (int)floor(moving_inertia))
+	{
+		//坠落检查
+		if (detectFalling())
+		{
+			falling_count++;
+		}
+		else
+		{
+			impact = falling_count;
+			falling_count = 0;
+		}
+
+		//击退终止检查
+		if(hitback&&!moving)
+		{
+			hitback = false;
+		}
+	}
+
+	stepForward();
 }
 
 void PhysicsChara::stepForward()
@@ -111,43 +186,6 @@ void PhysicsChara::stepForward()
 	renewSignedGrids();
 }
 
-int PhysicsChara::getImpact() const
-{
-	return impact;
-}
-
-
-void PhysicsChara::update()
-{
-	//刷新冲击数据
-	impact = 0;
-
-	//发生自然下坠
-	if (!moving && moving_inertia <= 0)
-	{
-		if(detectFalling())
-		{
-			setMotion(CharaDirection::down, FALLING_SPEED, 1, false);
-		}
-	}
-
-	//整点检查
-	if (moving_inertia <= (int)floor(moving_inertia))
-	{
-		//坠落检查
-		if (detectFalling())
-		{
-			falling_count++;
-		}
-		else
-		{
-			impact = falling_count;
-			falling_count = 0;
-		}
-	}
-
-	stepForward();
-}
 
 bool PhysicsChara::detectSubmersed() const
 {
@@ -169,7 +207,6 @@ bool PhysicsChara::detectSubmersed() const
 	}
 	return true;
 }
-
 
 bool PhysicsChara::detectFalling() const
 {
@@ -201,9 +238,6 @@ bool PhysicsChara::detectFalling() const
 		}
 	}
 }
-
-
-
 
 bool PhysicsChara::detectForward(CharaDirection direction, BlockingType blocking) const
 {
@@ -273,7 +307,6 @@ bool PhysicsChara::detectBorder(CharaDirection direction) const
 	return false;
 }
 
-
 bool PhysicsChara::detectLocal(BlockingType blocking) const
 {
 	for (auto i = list_grid_signed->begin(); i != list_grid_signed->end(); ++i)
@@ -322,14 +355,14 @@ bool PhysicsChara::detectMoving(CharaDirection direction) const
 }
 
 
-void PhysicsChara::setMotion(CharaDirection direction, double speed, double inertia, bool hit_back)
+void PhysicsChara::setMotion(CharaDirection direction, double speed, double inertia, bool _hit_back)
 {
 	if(inertia<0)
 	{
 		SDL_Log(u8"警告 设置运动量小于0");
 	}
 
-	if(!hit_back)
+	if(!_hit_back)
 	{
 		//不是击退效果
 		if (moving)
@@ -354,6 +387,7 @@ void PhysicsChara::setMotion(CharaDirection direction, double speed, double iner
 		}else
 		{
 			//可击退
+			hitback = true;
 			if (!moving)
 			{
 				//没有在运动
@@ -424,43 +458,63 @@ void PhysicsChara::setMotion(CharaDirection direction, double speed, double iner
 	}
 }
 
-
-
-
-void PhysicsChara::renewSignedGrids()
+void PhysicsChara::setPosition(int x, int y)
 {
-	//重置
-	for (auto it = list_grid_signed->begin(); it != list_grid_signed->end(); ++it)
+	X = x;
+	Y = y;
+
+	moving = false;
+	hitback = false;
+
+	moving_speed = 0;
+	moving_inertia = 0;
+	moving_direction = CharaDirection::right;
+
+	impact = 0;
+	falling_count = 0;
+
+	renewSignedGrids();
+}
+
+
+bool PhysicsChara::setDirection(CharaDirection direction)
+{
+	if (moving)return false;
+	else
 	{
-		const Grid* grid = *it;
-		grid->list_physics_chara->remove(this);
-	}
-	list_grid_signed->clear();
-
-	//重新签入
-
-	const int x_start = getLeftGrid();
-	const int x_end = getRightGrid();
-	const int y_start = getTopGrid();
-	const int y_end = getBottomGrid();
-
-	for (int i = x_start; i <= x_end; i++)
-	{
-		for (int j = y_start; j <= y_end; j++)
-		{
-			Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
-			grid->list_physics_chara->push_back(this);
-			list_grid_signed->push_back(grid);
-		}
+		this->moving_direction = direction;
+		return true;
 	}
 }
 
-bool PhysicsChara::getSteady() const
+
+CharaDirection PhysicsChara::getDirection()const
 {
-	return steady;
+	return moving_direction;
 }
 
-bool PhysicsChara::getMoving() const
+bool PhysicsChara::getIfMoving() const
 {
 	return moving;
 }
+
+bool PhysicsChara::getIfFalling() const
+{
+	return falling_count > 0;
+}
+
+bool PhysicsChara::getIfHitBack() const
+{
+	return hitback;
+}
+
+int PhysicsChara::getImpact() const
+{
+	return impact;
+}
+
+double PhysicsChara::getSpeed() const
+{
+	return moving_speed;
+}
+

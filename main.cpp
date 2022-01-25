@@ -11,17 +11,19 @@
 
 #include "UISystem.h"
 #include "WorldSystem.h"
+
 #include "RenderingSystem.h"
 #include "RenderingText.h"
 
 #include "PhysicsFacility.h"
 #include "PhysicsChara.h"
 #include "PhysicsProjectile.h"
-#include "ProjectilePoint.h"
 
 #include "Facility.h"
 #include "Chara.h"
 #include "Projectile.h"
+
+#include "ProjectilePoint.h"
 #include "ProjectileFlying.h"
 
 int main(int argc, char** argv) {
@@ -78,10 +80,11 @@ int main(int argc, char** argv) {
     range->renewSignedGrids();
      */
     //临时测试-设置测试模型
-	{
+	
 		auto pf1=PhysicsFacility::createNew();
 		pf1->X = 7;
 		pf1->Y = 12;
+        pf1->bodyX = 50;
 		pf1->setFacilityType(BlockingType::solid);
 		pf1->renewSignedGrids();
 
@@ -93,21 +96,10 @@ int main(int argc, char** argv) {
 		pf1->setFacilityType(BlockingType::support);
 		pf1->renewSignedGrids();
 
-		auto pf2 = PhysicsChara::createNew();
-		pf2->X = 6;
-		pf2->Y = 0;
-		pf2->bodyX = 3;
-		pf2->bodyY = 2;
-		pf2->renewSignedGrids();
+        auto pf2 = Chara::createNew();
+        pf2->getPhysicsChara()->setPosition(7, 2);
 
-		auto pf3 = PhysicsChara::createNew();
-		pf3->X = 6;
-		pf3->Y = 0;
-		pf3->bodyX = 1;
-		pf3->bodyY = 3;
-		pf3->can_swim = true;
-		pf3->renewSignedGrids();
-
+        /*
 		auto pf4 = ProjectileFlying::createNew();
 		pf4->X = 0;
 		pf4->Y = 0;
@@ -115,6 +107,7 @@ int main(int argc, char** argv) {
 		pf4->y_v = 0;
 		pf4->y_a = 0.005;
 		pf4->renewSignedGrids();
+         */
 
 		auto pf5 = PhysicsFacility::createNew();
 		pf5->X = 9;
@@ -123,7 +116,7 @@ int main(int argc, char** argv) {
 		pf5->bodyX = 5;
 		pf5->setFacilityType(BlockingType::air);
 		pf5->renewSignedGrids();
-	}
+	
 
     SDL_Log(u8"--\t--\t--\t--初始化完成,游戏运行--\t--\t--\t--");
 
@@ -159,6 +152,7 @@ int main(int argc, char** argv) {
             GlobalData::logic_frame_CD -= GlobalData::logical_interval_time;
             
             WorldSystem::getInstance()->logicGo();
+            //SDL_Log(u8"%d", pf2->animation_progress);
         }
 
         //渲染系统
@@ -191,9 +185,9 @@ int main(int argc, char** argv) {
     SDL_Log(u8"--\t--\t--\t--结束清理,停止运行--\t--\t--\t--");
 
     //释放创建的所有SDL内容
-    WorldSystem::destroyInstance();
-    UISystem::destroyInstance();
     RenderingSystem::destroyInstance();
+    UISystem::destroyInstance();
+    WorldSystem::destroyInstance();
 
     if (GlobalData::sdl_renderer) {
         SDL_DestroyRenderer(GlobalData::sdl_renderer);

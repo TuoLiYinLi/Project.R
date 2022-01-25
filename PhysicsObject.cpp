@@ -1,5 +1,4 @@
 #include "PhysicsObject.h"
-#include "SDL.h"
 
 #include "GameObject.h"
 
@@ -33,6 +32,14 @@ void PhysicsObject::update()
 {
 
 }
+
+void PhysicsObject::setPosition(int x, int y)
+{
+	X = x;
+	Y = y;
+	renewSignedGrids();
+}
+
 
 void PhysicsObject::renewSignedGrids()
 {

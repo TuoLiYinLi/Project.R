@@ -11,6 +11,8 @@ constexpr int WINDOW_HEIGHT = 900; //窗口的高度;
 constexpr int FONT_PRECISION = 18;	//字体读取精度;
 constexpr int FONT_SIZE = 18;	//字体大小比例;
 
+constexpr double PIXEL_RATE = 32;//渲染中像素长度与物理中单元格长度的比例
+
 constexpr double VIEW_SCALE_MIN = 0.5;	 //窗口的最小缩放;
 constexpr double VIEW_SCALE_MAX = 4; //窗口的最大缩放;
 
@@ -64,4 +66,12 @@ constexpr float RENDERING_DEPTH_EXTRA = 10000;//额外信息
 
 //#define STIFLE_DAMAGE 0.0025 //窒息伤害常量
 
-constexpr auto FALLING_SPEED = 0.08;//坠落速度
+constexpr double LOW_SPEED = 1.0/60;//低速
+constexpr double FALLING_SPEED = 5.0/60;//坠落速度
+constexpr double HIGH_SPEED = 6/60;//高速,一般不可超过这个速度
+constexpr double MAX_SPEED = 1;//最大速度
+
+constexpr int OXYGEN_MAX = 600;//氧气最大值
+constexpr double OXYGEN_DAMAGE = 0.2 / 60;//氧气造成的伤害
+constexpr double BURNING_SPEED = 1.0 / 60;//燃烧速度
+constexpr double POISONED_SPEED = 1.0 / 600;//中毒速度

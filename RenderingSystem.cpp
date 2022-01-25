@@ -561,30 +561,6 @@ void RenderingSystem::getLengthUTF8(char const* str, int* cnt)
     }
 }
 
-void RenderingSystem::renderText_UTF8(const char* utf8_msg, int x, int y) const
-{
-    int count_str[4] = { 0,0,0,0 };
-    getLengthUTF8(utf8_msg, count_str);
-
-    SDL_Surface* surface = TTF_RenderUTF8_Blended(font_zpix, utf8_msg, { 255,255,255,255 });
-
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
-
-
-    SDL_Rect rect;
-
-    rect.x = x;
-    rect.y = y;
-
-    TTF_SizeUTF8(font_zpix, utf8_msg, &rect.w, &rect.h);
-
-    SDL_RenderCopy(GlobalData::sdl_renderer, texture, nullptr, &rect);
-
-    //别忘了清理
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
-}
-
 
 void RenderingSystem::unloadAnim(AnimationType antp) const {
 #ifdef ANIMATION_SYSTEM_DEBUG

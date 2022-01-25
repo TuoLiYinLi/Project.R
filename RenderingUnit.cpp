@@ -49,13 +49,6 @@ RenderingUnit::~RenderingUnit() {
 	RenderingSystem::getInstance()->list_rendering_units->remove(this);
 
 	current_num--;
-
-	if(this->texture)
-	{
-		SDL_DestroyTexture(texture);
-		texture = nullptr;
-	}
-
 }
 
 void RenderingUnit::setFlip(bool _val)
@@ -80,9 +73,8 @@ void RenderingUnit::setTexture(SDL_Texture* _texture)
 {
 	if (texture)
 	{
-		SDL_DestroyTexture(texture);
 		texture = nullptr;
-		SDL_Log(u8"警告 在设置新的材质时销毁原有材质");
+		SDL_Log(u8"警告 设置新的材质时没有销毁原有材质");
 	}
 	texture = _texture;
 }

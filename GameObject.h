@@ -21,13 +21,16 @@ public:
 
 	virtual void update();	//受遍历的更新
 
+	bool getIfDestroy()const;//询问是否可以销毁
 	std::string name;	//名称
 	GameObjectType type_game_object;	//游戏对象类型
 
 	PhysicsObject* physics_object;	//持有的物理对象
 	RenderingAnimation* animation_unit;	//动画单元
 
+
 protected:
+	bool flag_destroy;//是否已经可以销毁
 	GameObject();	//防止外部直接生成实例
 	virtual ~GameObject();	//为了继承自我销毁并且保证释放内存,必须虚析构函数
 

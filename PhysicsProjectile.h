@@ -22,7 +22,6 @@ public:
 
     ProjectileType type_projectile; //投射物类型
 
-
     void renewHitCharas() const; //获取碰撞到的人物
     void renewHitFacilities() const;//获取碰撞到的设施
     void renewHitProjectiles() const;//获取碰撞到的投射物
