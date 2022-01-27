@@ -27,6 +27,7 @@
 #include "ProjectileFlying.h"
 
 #include "idea_physics_debugger.h"
+#include "idea_game_info_debugger.h"
 
 int main(int argc, char** argv) {
 	std::cout << u8"Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
@@ -68,12 +69,13 @@ int main(int argc, char** argv) {
     auto const version_mark = RenderingText::createNew();
     version_mark->reference = RenderingReference::window;
 	version_mark->setTexture(u8"Palace DEMO +1 by TheCarmineDepth", { 255,255,255,255 }, 1);
-    version_mark->depth = RENDERING_DEPTH_EXTRA + 2;
+    version_mark->depth = RENDERING_DEPTH_EXTRA + 5;
     version_mark->x = WINDOW_WIDTH - version_mark->width;
     version_mark->y = WINDOW_HEIGHT - version_mark->height;
 
     //物理层调试器
     auto physics_debugger = idea_physics_debugger::createNew();
+    auto game_info_debugger = idea_game_info_debugger::createNew();
 
     /*
      */
@@ -151,13 +153,11 @@ int main(int argc, char** argv) {
         //渲染系统
         {
     		//物理debug渲染
-	        if(GlobalData::flag_debug_physics)
-	        {
-	            physics_debugger->update();
-	        }
+	        physics_debugger->update();
+	        
 
             //正常渲染
-	        SDL_SetRenderTarget(GlobalData::sdl_renderer, nullptr);
+            SDL_SetRenderTarget(GlobalData::sdl_renderer, nullptr);
 
 	        RenderingSystem::getInstance()->renewViewPosition();
 	        

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameToolkit.h" />
+    <ClInclude Include="idea_game_info_debugger.h" />
     <ClInclude Include="idea_physics_debugger.h" />
     <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="RenderingAnimation.h" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameToolkit.cpp" />
+    <ClCompile Include="idea_game_info_debugger.cpp" />
     <ClCompile Include="idea_physics_debugger.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="RenderingAnimation.cpp" />

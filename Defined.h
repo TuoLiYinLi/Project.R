@@ -8,8 +8,8 @@ constexpr float DEPTH_PRECISION = 0.0001f;//动画单元的深度的精确度
 constexpr int WINDOW_WIDTH = 1600; //窗口的宽度;
 constexpr int WINDOW_HEIGHT = 900; //窗口的高度;
 
-constexpr int FONT_PRECISION = 18;	//字体读取精度;
-constexpr int FONT_SIZE = 18;	//字体大小比例;
+constexpr int FONT_PRECISION = 24;	//字体读取精度;
+constexpr int FONT_SIZE = 24;	//字体大小比例;
 
 constexpr double PIXEL_RATE = 32;//渲染中像素长度与物理中单元格长度的比例
 
@@ -68,7 +68,7 @@ constexpr float RENDERING_DEPTH_EXTRA = 10000;//额外信息
 
 constexpr double LOW_SPEED = 1.0/60;//低速
 constexpr double FALLING_SPEED = 5.0/60;//坠落速度
-constexpr double HIGH_SPEED = 6/60;//高速,一般不可超过这个速度
+constexpr double HIGH_SPEED = 6.0/60;//高速,一般不可超过这个速度
 constexpr double MAX_SPEED = 1;//最大速度
 
 constexpr int OXYGEN_MAX = 600;//氧气最大值

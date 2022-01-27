@@ -145,6 +145,8 @@ void idea_physics_debugger::render_all_grids()const
 
 idea_physics_debugger::idea_physics_debugger()
 {
+    name = "physics_debugger";
+
 	animation_unit = RenderingUnit::createNew();
     animation_unit->deltaX = 0;
     animation_unit->deltaY = 0;

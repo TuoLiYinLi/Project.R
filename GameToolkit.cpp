@@ -1,6 +1,7 @@
 #include "GameToolkit.h"
 
 #include "Defined.h"
+#include "GlobalData.h"
 #include "RenderingSystem.h"
 
 void GameToolkit::transPositionWorldToWindow(double x_world, double y_world, double* x_window, double* y_window)
@@ -42,3 +43,21 @@ void GameToolkit::getLengthUTF8(char const* str, int* cnt)
         continue;
     }
 }
+
+SDL_Texture* GameToolkit::getRenderedText(char const* str, SDL_Color color, int* width, int* height)
+{
+	int count_str[4] = { 0,0,0,0 };
+	GameToolkit::getLengthUTF8(str, count_str);
+
+	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_zpix, str, color);
+
+	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
+
+	SDL_FreeSurface(surface);
+
+	TTF_SizeUTF8(RenderingSystem::getInstance()->font_zpix, str, width, height);
+
+	return _texture;
+}
+
+

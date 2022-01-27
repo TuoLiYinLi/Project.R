@@ -338,6 +338,9 @@ void Chara::update_animation() {
 	getRenderingAnimation()->width = getPhysicsChara()->bodyX * PIXEL_RATE;
 	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
+	//Ë¢ĞÂÉî¶È
+	animation_unit->depth = RENDERING_DEPTH_WORLD_CHARA + (float)physics_object->Y;
+
 }
 
 int Chara::chara_num = 0;

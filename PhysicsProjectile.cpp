@@ -69,7 +69,7 @@ void PhysicsProjectile::renewSignedGrids()
 
 	if (x_start < 0 || x_end >= (int)WORLD_WIDTH || y_start < 0 || y_start >= (int)WORLD_HEIGHT)
 	{
-		SDL_Log(u8"³¬³ö·¶Î§");
+		SDL_Log(u8"projectile³¬³ö·¶Î§");
 		return;
 	}
 

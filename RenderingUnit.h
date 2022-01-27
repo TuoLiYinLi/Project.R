@@ -36,9 +36,6 @@ public:
 	void setTexture(SDL_Texture* _texture);
 	SDL_Texture* getTexture() const; //取得对应材质
 
-
-	bool operator < (RenderingUnit* ru);//重写小于号运算符的含义，便于使用std的list排序功能
-
 	static int getRenderingUnitNum();	//获取正在使用内存的渲染元件数量
 
 protected:

@@ -1,5 +1,4 @@
 #include "RenderingUnit.h"
-#include "Defined.h"
 #include "RenderingSystem.h"
 
 
@@ -91,10 +90,5 @@ int RenderingUnit::rendering_unit_num = 0;
 int RenderingUnit::getRenderingUnitNum()
 {
 	return  rendering_unit_num;
-}
-
-bool RenderingUnit::operator<(RenderingUnit* ru)
-{
-	return this->depth < ru->depth;
 }
 

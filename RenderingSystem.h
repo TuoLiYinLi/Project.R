@@ -53,8 +53,8 @@ public:
 
 	void renderTexture(SDL_Texture* texture, double x,double deltaX, double y, double deltaY, double w, double h,SDL_RendererFlip flip) const;
 	
-	SDL_Texture* getAnimation(AnimationType _animation_type,int num)const;
-	int getAnimationSize(AnimationType _animation_type)const;
+	SDL_Texture* getAnimation(AnimationType _animation_type,unsigned long long num)const;
+	unsigned long long getAnimationSize(AnimationType _animation_type)const;
 
 	//改变视口位置
 	void renewViewPosition();
@@ -78,6 +78,6 @@ protected:
 	RenderingSystem();
 	~RenderingSystem();
 
-
+	static bool compareDepth(RenderingUnit* ru1, RenderingUnit* ru2);
 };
 

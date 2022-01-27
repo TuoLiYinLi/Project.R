@@ -24,20 +24,9 @@ void RenderingText::setTexture(const char* utf8_msg, SDL_Color color, double sca
 		texture = nullptr;
 	}
 
-	int count_str[4] = { 0,0,0,0 };
-	GameToolkit::getLengthUTF8(utf8_msg, count_str);
-
-	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_zpix, utf8_msg, color);
-
-	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
-
-	SDL_FreeSurface(surface);
-
-	texture = _texture;
-
 	int w, h;
 
-	TTF_SizeUTF8(RenderingSystem::getInstance()->font_zpix, utf8_msg, &w, &h);
+	texture = GameToolkit::getRenderedText(utf8_msg, color, &w, &h);
 
 	width = w * scale;
 	height = h * scale;

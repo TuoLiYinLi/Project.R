@@ -84,6 +84,9 @@
     <ClInclude Include="GameToolkit.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_game_info_debugger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -150,6 +153,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GameToolkit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_game_info_debugger.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

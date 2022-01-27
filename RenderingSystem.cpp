@@ -1,12 +1,14 @@
-#include "RenderingSystem.h"
+#include <string>
 #include "Defined.h"
 #include "GlobalData.h"
-#include <string>
 
-#include "PhysicsChara.h"
+#include "RenderingSystem.h"
+
 #include "PhysicsObject.h"
+#include "PhysicsChara.h"
 #include "PhysicsFacility.h"
 #include "PhysicsProjectile.h"
+
 #include "WorldSystem.h"
 
 RenderingSystem* RenderingSystem::getInstance()
@@ -202,7 +204,7 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
 
 void RenderingSystem::sortRenderingUnits() const
 {
-    list_rendering_units->sort();
+    list_rendering_units->sort(compareDepth);
 }
 
 
@@ -499,7 +501,7 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
 }
 
 
-SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,int num) const
+SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,unsigned long long num) const
 {
     auto L = list_animation_texture->at((int)_animation_type);
     if(num>=L->size())
@@ -511,7 +513,7 @@ SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,int num
     }
 }
 
-int RenderingSystem::getAnimationSize(AnimationType _animation_type) const
+unsigned long long RenderingSystem::getAnimationSize(AnimationType _animation_type) const
 {
     return list_animation_texture->at((int)_animation_type)->size();
 }
@@ -568,3 +570,7 @@ void RenderingSystem::remove(RenderingUnit* ru) const
     list_rendering_units->remove(ru);
 }
 
+bool RenderingSystem::compareDepth(RenderingUnit* ru1, RenderingUnit* ru2)
+{
+    return ru1->depth < ru2->depth;
+}
