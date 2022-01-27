@@ -59,7 +59,7 @@ void PhysicsFacility::renewSignedGrids()
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
+			Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
 			grid->list_physics_facility->push_back(this);
 			grid->renewBlockingType(type_blocking);
 			list_grid_signed->push_back(grid);

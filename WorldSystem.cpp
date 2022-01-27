@@ -104,3 +104,11 @@ void WorldSystem::logicGo_game_objects() const
 	}
 }
 
+Grid* WorldSystem::getGrid(int _x, int _y) const
+{
+	if (_x >= 0 && _x < WORLD_WIDTH && _y >= 0 && _y < WORLD_HEIGHT)
+	{
+		return map->at(_x)->at(_y);
+	}
+	else return nullptr;
+}

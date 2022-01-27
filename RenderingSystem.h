@@ -18,10 +18,9 @@ class RenderingAnimation;
 
 class RenderingSystem
 {
-public:
-	std::vector<std::vector<SDL_Texture*>*>* list_animation_texture;//一个二维的材质列表,用于加载所有的动画资源
-	std::list<RenderingUnit*>* list_rendering_units;//动画单元列表,储存需要渲染的动画元件
 
+
+public:
 	TTF_Font* font_zpix;//通用的ttf字体
 
 	//获取单例实例
@@ -30,14 +29,18 @@ public:
 	//销毁和析构
 	static void destroyInstance();
 
+	void add(RenderingUnit* ru)const;
+
+	void remove(RenderingUnit* ru)const;
+
 	//加载某一种动画资源
-	void loadAnim( AnimationType antp);
+	void loadAnimation( AnimationType antp);
 	//加载所有种类的动画资源
-	void loadAllAnim();
+	void loadAllAnimation();
 	//卸载某一种动画资源
-	void unloadAnim(AnimationType antp) const;
+	void unloadAnimation(AnimationType antp) const;
 	//卸载所有种类的动画资源
-	void unloadAllAnim();
+	void unloadAllAnimation();
 
 	//渲染单个的渲染单元
 	void renderOneUnit(const RenderingUnit* au) const;
@@ -49,14 +52,9 @@ public:
 	void renderAll() const;
 
 	void renderTexture(SDL_Texture* texture, double x,double deltaX, double y, double deltaY, double w, double h,SDL_RendererFlip flip) const;
-
-	void renderOnePhysicsObject(PhysicsObject* physics_object) const;
-
-	//渲染所有的物理模型
-	void renderALLPhysicsObjects() const;
 	
-
-	static void getLengthUTF8(char const* str, int* cnt);//计算str中共有多少字符以及含有多少1/2/3位的字符(共4位)
+	SDL_Texture* getAnimation(AnimationType _animation_type,int num)const;
+	int getAnimationSize(AnimationType _animation_type)const;
 
 	//改变视口位置
 	void renewViewPosition();
@@ -73,6 +71,8 @@ public:
 	double viewScale;//窗口的缩放水平
 
 protected:
+	std::list<RenderingUnit*>* list_rendering_units;//动画单元列表,储存需要渲染的动画元件
+	std::vector<std::vector<SDL_Texture*>*>* list_animation_texture;//一个二维的材质列表,用于加载所有的动画资源
 
 	static RenderingSystem* instance;//单例实例
 	RenderingSystem();

@@ -78,6 +78,12 @@
     <ClInclude Include="RenderingText.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_physics_debugger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameToolkit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -138,6 +144,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RenderingText.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_physics_debugger.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameToolkit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include "RenderingSystem.h"
 #include "GlobalData.h"
 #include "Defined.h"
+#include "GameToolkit.h"
 
 UISystem* UISystem::getInstance()
 {
@@ -292,12 +293,15 @@ UISystem::~UISystem()
 
 void UISystem::renewMouseWorldPosition()
 {
+	/*
 	const RenderingSystem* a = RenderingSystem::getInstance();
 	const double k = 1 / a->viewScale * 0.03125;
 	mouseX_world = a->viewX + double(WINDOW_WIDTH) * 0.015625 + k * (mouseX_window - double(0.5) *
 		WINDOW_WIDTH);
 	mouseY_world = a->viewY + double(WINDOW_HEIGHT) * 0.015625 + k * (mouseY_window - double(0.5) *
 		WINDOW_HEIGHT);
+	 */
+	GameToolkit::transPositionWindowToWorld(mouseX_window, mouseY_window, &mouseX_world, &mouseY_world);
 }
 
 void UISystem::controlGame() const
@@ -331,13 +335,13 @@ void UISystem::controlGame() const
 	//切换暂停时间
 	if(key_space_press)
 	{
-		GlobalData::time_stop = !GlobalData::time_stop;
+		GlobalData::flag_stop = !GlobalData::flag_stop;
 	}
 
 	//切换内置debug显示
 	if(key_f3_press)
 	{
-		GlobalData::debug_physics = !GlobalData::debug_physics;
+		GlobalData::flag_debug_physics = !GlobalData::flag_debug_physics;
 	}
 
 	//退出游戏

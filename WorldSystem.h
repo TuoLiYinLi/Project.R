@@ -18,7 +18,6 @@ public:
 
 	void logicGo() const;	//逻辑更新
 
-	std::vector<std::vector<Grid*>*>* map;//全部的网格
 
 	std::list<PhysicsChara*>* list_physics_chara;	//角色物理全集
 	std::list<PhysicsFacility*>* list_physics_facility;	//设施物理全集
@@ -26,9 +25,11 @@ public:
 
 	std::list<GameObject*>* list_game_objects;	//游戏物件全集
 
+	Grid* getGrid(int _x,int _y)const;
 
 protected:
 	//单例实例
+	std::vector<std::vector<Grid*>*>* map;//全部的网格
 	static WorldSystem* instance;	//唯一实例
 	WorldSystem();
 	~WorldSystem();

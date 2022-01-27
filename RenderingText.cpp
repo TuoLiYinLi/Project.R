@@ -1,5 +1,6 @@
 #include "RenderingText.h"
 
+#include "GameToolkit.h"
 #include "GlobalData.h"
 #include "RenderingSystem.h"
 
@@ -24,7 +25,7 @@ void RenderingText::setTexture(const char* utf8_msg, SDL_Color color, double sca
 	}
 
 	int count_str[4] = { 0,0,0,0 };
-	RenderingSystem::getLengthUTF8(utf8_msg, count_str);
+	GameToolkit::getLengthUTF8(utf8_msg, count_str);
 
 	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_zpix, utf8_msg, color);
 

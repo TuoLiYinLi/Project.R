@@ -7,6 +7,16 @@ enum class AnimationType
 	default_r,//默认贴图_红
 	default_g,//默认贴图_绿
 
+	physics_debug_layer_outside,
+	physics_debug_layer_air,
+	physics_debug_layer_support,
+	physics_debug_layer_liquid,
+	physics_debug_layer_absolute,
+	physics_debug_layer_chara,
+	physics_debug_layer_facility,
+	physics_debug_layer_projectile,
+
+
 	physics_facility_air,//物理模型_设施_空阻挡
 	physics_facility_liquid,//物理模型_设施_液体阻挡
 	physics_facility_support,//物理模型_设施_支撑

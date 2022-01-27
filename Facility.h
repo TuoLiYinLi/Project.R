@@ -25,8 +25,12 @@ public:
 
 	int health;	//一个设施的生命值
 
+	static  int getFacilityNum();
 protected:
 	Facility();
 	~Facility() override;
+
+private:
+	static int facility_num;
 };
 

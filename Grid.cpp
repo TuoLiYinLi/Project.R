@@ -17,8 +17,20 @@ void Grid::destroy() const
 	delete this;
 }
 
+
+
+int Grid::grid_num = 0;
+
+int Grid::getGridNum()
+{
+	return grid_num;
+}
+
+
 Grid::Grid(unsigned int x, unsigned int y)
 {
+	grid_num++;
+
 	X = x; Y = y;
 
 	list_physics_chara = new std::list<PhysicsChara*>();
@@ -36,6 +48,8 @@ Grid::~Grid()
 	delete list_physics_chara;
 	delete list_physics_facility;
 	delete list_physics_projectile;
+
+	grid_num--;
 }
 
 bool Grid::getBlockingType(BlockingType blocking_type) const
@@ -57,11 +71,6 @@ bool Grid::getBlockingType(BlockingType blocking_type) const
 
 void Grid::renewBlockingType(BlockingType blocking_type)
 {
-	if(blocking_type==BlockingType::air)
-	{
-		return;
-	}
-
 	bool result=false;
 
 	for (auto i = list_physics_facility->begin(); i != list_physics_facility->end(); ++i)
@@ -85,13 +94,7 @@ void Grid::renewBlockingType(BlockingType blocking_type)
 		blocking_solid = result;
 		break;
 	case BlockingType::air:
+		blocking_air = result;
 		break;
-	}
-	if(blocking_liquid||blocking_solid||blocking_support)
-	{
-		blocking_air = false;
-	}else
-	{
-		blocking_air = true;
 	}
 }

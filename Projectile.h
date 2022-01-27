@@ -12,11 +12,12 @@ public:
 	int animation_progress;	//动画进度
 	int life_time;	//能够留存的时间
 	
-
+	static int getProjectileNum();
 protected:
 	Projectile();
 	~Projectile() override;
 
-
+private:
+	static int projectile_num;
 };
 

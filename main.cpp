@@ -26,6 +26,8 @@
 #include "ProjectilePoint.h"
 #include "ProjectileFlying.h"
 
+#include "idea_physics_debugger.h"
+
 int main(int argc, char** argv) {
 	std::cout << u8"Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
     
@@ -65,20 +67,23 @@ int main(int argc, char** argv) {
     //测试版水印
     auto const version_mark = RenderingText::createNew();
     version_mark->reference = RenderingReference::window;
-	version_mark->setTexture(u8"Palace DEMO Alpha+1 by TheCarmineDepth", { 255,255,255,255 }, 1);
-    version_mark->depth = RENDERING_DEPTH_EXTRA + 1;
+	version_mark->setTexture(u8"Palace DEMO +1 by TheCarmineDepth", { 255,255,255,255 }, 1);
+    version_mark->depth = RENDERING_DEPTH_EXTRA + 2;
     version_mark->x = WINDOW_WIDTH - version_mark->width;
     version_mark->y = WINDOW_HEIGHT - version_mark->height;
 
+    //物理层调试器
+    auto physics_debugger = idea_physics_debugger::createNew();
+
     /*
-    auto range = PhysicsFacility::createNew();
-    range->X = 0;
-    range->Y = 0;
-    range->bodyX = WORLD_WIDTH;
-    range->bodyY = WORLD_HEIGHT;
-    range->setFacilityType(BlockingType::air);
-    range->renewSignedGrids();
      */
+	    auto range = PhysicsFacility::createNew();
+	    range->X = 10;
+	    range->Y = 2;
+	    range->bodyX = 10;
+	    range->bodyY = 10;
+	    range->setFacilityType(BlockingType::air);
+	    range->renewSignedGrids();
     //临时测试-设置测试模型
 	
 		auto pf1=PhysicsFacility::createNew();
@@ -96,10 +101,11 @@ int main(int argc, char** argv) {
 		pf1->setFacilityType(BlockingType::support);
 		pf1->renewSignedGrids();
 
-        auto pf2 = Chara::createNew();
-        pf2->getPhysicsChara()->setPosition(7, 2);
+        
 
-        /*
+        auto pf2 = Chara::createNew();
+        pf2->setPosition(7, 2);
+
 		auto pf4 = ProjectileFlying::createNew();
 		pf4->X = 0;
 		pf4->Y = 0;
@@ -107,6 +113,7 @@ int main(int argc, char** argv) {
 		pf4->y_v = 0;
 		pf4->y_a = 0.005;
 		pf4->renewSignedGrids();
+        /*
          */
 
 		auto pf5 = PhysicsFacility::createNew();
@@ -125,59 +132,51 @@ int main(int argc, char** argv) {
     {
 
         //时间系统
-        GlobalData::delta_time = SDL_GetTicks() - GlobalData::last_recorded_ticks;
-        GlobalData::last_recorded_ticks = SDL_GetTicks();
-        GlobalData::FPS += 1;
-        GlobalData::per_second_CD += GlobalData::delta_time;
-        if (GlobalData::per_second_CD >= 1000) {
-#ifdef SHOW_FPS
-            std::cout << "FPS:" << GlobalData::FPS << std::endl;
-#endif // SHOW_FPS
-            GlobalData::per_second_CD -= 1000;
-            GlobalData::FPS = 0;
-        }
-        //物理帧时间累积
-        if(!GlobalData::time_stop)
-        {
-			GlobalData::logic_frame_CD += GlobalData::delta_time;
-        }
+        GlobalData::update_time();
 
         //处理输入事件
         UISystem::getInstance()->pullEvent();
         UISystem::getInstance()->controlGame();
         
         //每16ms运行一次逻辑帧
-        while (GlobalData::logic_frame_CD > GlobalData::logical_interval_time)
+        while (GlobalData::getIfLogicGo())
         {
-            GlobalData::logic_frame_CD -= GlobalData::logical_interval_time;
-            
             WorldSystem::getInstance()->logicGo();
-            //SDL_Log(u8"%d", pf2->animation_progress);
-        }
 
+            SDL_Log(u8"t %d\nGameObject:%d Chara:%d Facility:%d Projectile:%d \nRenderingUnit:%d",
+                GlobalData::getTimePhysicsFrames(),
+                GameObject::getGameObjectNum(),Chara::getCharaNum(),Facility::getFacilityNum(),
+                Projectile::getProjectileNum(),RenderingUnit::getRenderingUnitNum());
+        }
         //渲染系统
-        RenderingSystem::getInstance()->renewViewPosition();
-        
-        
-        //渲染背景颜色
-        SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 14, 80, 81, 255);
-        SDL_RenderClear(GlobalData::sdl_renderer);
-
-        //渲染内容
-        //画面渲染
-
-        RenderingSystem::getInstance()->sortRenderingUnits();
-		RenderingSystem::getInstance()->renderAll();
-
-    	//物理debug渲染
-        if(GlobalData::debug_physics)
         {
-			RenderingSystem::getInstance()->renderALLPhysicsObjects();
-        }
-        
+    		//物理debug渲染
+	        if(GlobalData::flag_debug_physics)
+	        {
+	            physics_debugger->update();
+	        }
 
-        //交换双缓冲
-        SDL_RenderPresent(GlobalData::sdl_renderer);
+            //正常渲染
+	        SDL_SetRenderTarget(GlobalData::sdl_renderer, nullptr);
+
+	        RenderingSystem::getInstance()->renewViewPosition();
+	        
+	        
+	        //渲染背景颜色
+	        SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 14, 80, 81, 255);
+	        SDL_RenderClear(GlobalData::sdl_renderer);
+
+	        //渲染内容
+	        //画面渲染
+
+	        RenderingSystem::getInstance()->sortRenderingUnits();
+			RenderingSystem::getInstance()->renderAll();
+
+	        
+
+	        //交换双缓冲
+	        SDL_RenderPresent(GlobalData::sdl_renderer);
+        }
     }
 
     //结束清理

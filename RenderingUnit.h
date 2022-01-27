@@ -17,6 +17,8 @@ public:
 
 	RenderingReference reference;	//这个元件的位置参考系
 
+	bool flag_enable;//是否渲染
+
 	float depth;//这个渲染元件的深度,在渲染时优先渲染较小深度的图像
 
 	double x;//渲染的世界坐标位置
@@ -34,12 +36,12 @@ public:
 	void setTexture(SDL_Texture* _texture);
 	SDL_Texture* getTexture() const; //取得对应材质
 
-	static int getCurrentNum();	//获取正在使用内存的渲染元件数量
 
 	bool operator < (RenderingUnit* ru);//重写小于号运算符的含义，便于使用std的list排序功能
 
+	static int getRenderingUnitNum();	//获取正在使用内存的渲染元件数量
+
 protected:
-	static int current_num;//记录一共有多少的渲染元件占用内存
 
 	RenderingUnit();
 	virtual ~RenderingUnit();
@@ -47,5 +49,8 @@ protected:
 	bool flip;//是否横向反转,一般不反转时,角色面朝右边
 
 	SDL_Texture* texture;//持有的材质
+
+private:
+	static int rendering_unit_num;//记录一共有多少的渲染元件占用内存
 };
 

@@ -18,6 +18,11 @@ PhysicsChara* Chara::getPhysicsChara() const
 	return (PhysicsChara*)physics_object;
 }
 
+RenderingAnimation* Chara::getRenderingAnimation() const
+{
+	return (RenderingAnimation*)animation_unit;
+}
+
 
 void Chara::update()
 {
@@ -212,7 +217,7 @@ void Chara::update_animation() {
 				//重复闲置动画
 				animation_progress = 0;
 			}
-			animation_unit->setTexture(animation_type_idle, animation_length_idle, animation_progress);
+			getRenderingAnimation()->setTexture(animation_type_idle, animation_length_idle, animation_progress);
 		}
 		break;
 
@@ -233,7 +238,7 @@ void Chara::update_animation() {
 				//退出移动动画
 				setAnimationIdle();
 			}
-			animation_unit->setTexture(animation_type_moving, animation_length_moving, animation_progress);
+			getRenderingAnimation()->setTexture(animation_type_moving, animation_length_moving, animation_progress);
 		}
 		break;
 
@@ -253,7 +258,7 @@ void Chara::update_animation() {
 				//退出打断动画
 				setAnimationIdle();
 			}
-			animation_unit->setTexture(animation_type_disturbed, animation_length_disturbed, animation_progress);
+			getRenderingAnimation()->setTexture(animation_type_disturbed, animation_length_disturbed, animation_progress);
 		}
 		break;
 
@@ -274,7 +279,7 @@ void Chara::update_animation() {
 			{
 				setAnimationIdle();
 			}
-			animation_unit->setTexture(animation_type_skill_basic, animation_length_skill_basic, animation_progress);
+			getRenderingAnimation()->setTexture(animation_type_skill_basic, animation_length_skill_basic, animation_progress);
 		}
 		break;
 
@@ -294,7 +299,7 @@ void Chara::update_animation() {
 			{
 				setAnimationIdle();
 			}
-			animation_unit->setTexture(animation_type_skill_special, animation_length_skill_special, animation_progress);
+			getRenderingAnimation()->setTexture(animation_type_skill_special, animation_length_skill_special, animation_progress);
 		}
 		break;
 
@@ -309,7 +314,7 @@ void Chara::update_animation() {
 				return;
 			}else
 			{
-				animation_unit->setTexture(animation_type_dead, animation_length_dead, animation_progress);
+				getRenderingAnimation()->setTexture(animation_type_dead, animation_length_dead, animation_progress);
 			}
 		}
 		break;
@@ -321,22 +326,26 @@ void Chara::update_animation() {
 	//刷新角色朝向
 	if (getPhysicsChara()->getDirection() == CharaDirection::right)
 	{
-		animation_unit->setFlip(false);
+		getRenderingAnimation()->setFlip(false);
 	}else if(getPhysicsChara()->getDirection() == CharaDirection::left)
 	{
-		animation_unit->setFlip(true);
+		getRenderingAnimation()->setFlip(true);
 	}
 
 	//刷新角色位置
-	animation_unit->x = getPhysicsChara()->X;
-	animation_unit->y = getPhysicsChara()->Y;
-	animation_unit->width = getPhysicsChara()->bodyX * PIXEL_RATE;
-	animation_unit->height = getPhysicsChara()->bodyY * PIXEL_RATE;
+	getRenderingAnimation()->x = getPhysicsChara()->X;
+	getRenderingAnimation()->y = getPhysicsChara()->Y;
+	getRenderingAnimation()->width = getPhysicsChara()->bodyX * PIXEL_RATE;
+	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
 }
 
+int Chara::chara_num = 0;
+
 Chara::Chara()
 {
+	chara_num++;
+
 	name = u8"default_character";
 	action_type = CharaActionType::idle;
 
@@ -356,6 +365,7 @@ Chara::Chara()
 	//设置角色动画
 	{
 		animation_unit = RenderingAnimation::createNew();
+		animation_unit->depth = RENDERING_DEPTH_WORLD_CHARA;
 
 		animation_progress = 0;
 
@@ -376,7 +386,7 @@ Chara::Chara()
 		animation_type_disturbed = AnimationType::charaSlimeIdle;
 		animation_type_dead = AnimationType::charaSlimeDeath;
 
-		//animation_unit->setTexture(AnimationType::charaSlimeIdle, animation_length_idle, animation_progress);
+		//getRenderingAnimation()->setTexture(AnimationType::charaSlimeIdle, animation_length_idle, animation_progress);
 	}
 
 	//设置角色属性
@@ -420,7 +430,7 @@ Chara::Chara()
 
 Chara::~Chara()
 {
-	
+	chara_num--;
 }
 
 void Chara::setAnimationIdle()
@@ -442,6 +452,11 @@ void Chara::setAnimationDisturbed()
 	animation_progress = 0;
 }
 
+
+int Chara::getCharaNum()
+{
+	return chara_num;
+}
 
 void Chara::setAnimationSkillBasic()
 {
@@ -474,10 +489,32 @@ bool Chara::getIfMoving() const
 		&& !getPhysicsChara()->getIfHitBack();
 }
 
-
 bool Chara::setDirection(CharaDirection d) const
 {
 	return getPhysicsChara()->setDirection(d);
+}
+
+void Chara::setPosition(int x, int y)
+{
+	getPhysicsChara()->setPosition(x, y);
+	//设置动画
+	this->setAnimationIdle();
+	getRenderingAnimation()->setTexture(animation_type_idle, 0, 0);
+	//刷新角色朝向
+	if (getPhysicsChara()->getDirection() == CharaDirection::right)
+	{
+		getRenderingAnimation()->setFlip(false);
+	}
+	else if (getPhysicsChara()->getDirection() == CharaDirection::left)
+	{
+		getRenderingAnimation()->setFlip(true);
+	}
+
+	//刷新角色位置
+	getRenderingAnimation()->x = getPhysicsChara()->X;
+	getRenderingAnimation()->y = getPhysicsChara()->Y;
+	getRenderingAnimation()->width = getPhysicsChara()->bodyX * PIXEL_RATE;
+	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 }
 
 
@@ -522,7 +559,7 @@ void Chara::onHit()
 
 void Chara::onIdle()
 {
-	actMove(CharaDirection::right);
+	//actMove(CharaDirection::right);
 }
 
 void Chara::onImpact()

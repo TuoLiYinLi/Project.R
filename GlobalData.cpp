@@ -9,14 +9,63 @@ Uint32 GlobalData::FPS = 0;
 
 Uint32 GlobalData::last_recorded_ticks = 0;
 
-Uint32 GlobalData::delta_time = 0;
+Uint32 GlobalData::time_delta = 0;
+
+Uint32 GlobalData::time_physics_frames = 0;
 
 Uint32 GlobalData::logic_frame_CD = 0;
 
 Uint32 GlobalData::per_second_CD = 0;
 
-bool GlobalData::time_stop = true;
+bool GlobalData::flag_stop = true;
 
 Uint32 GlobalData::logical_interval_time = 16;
 
-bool GlobalData::debug_physics = true;
+bool GlobalData::flag_debug_physics = true;
+
+void GlobalData::update_time()
+{
+    //时间系统
+    time_delta = SDL_GetTicks() - last_recorded_ticks;
+    last_recorded_ticks = SDL_GetTicks();
+    FPS += 1;
+    per_second_CD += time_delta;
+    if (per_second_CD >= 1000) {
+        per_second_CD -= 1000;
+        FPS = 0;
+    }
+    //物理帧时间累积
+    if (!flag_stop)
+    {
+        logic_frame_CD += time_delta;
+    }
+}
+
+
+bool GlobalData::getIfLogicGo()
+{
+    if(logic_frame_CD > logical_interval_time)
+    {
+        logic_frame_CD -= logical_interval_time;
+        time_physics_frames++;
+        return true;
+    }
+    else
+        return false;
+}
+
+Uint32 GlobalData::getFPS()
+{
+    return FPS;
+}
+
+Uint32 GlobalData::getTimeDelta()
+{
+    return time_delta;
+}
+
+Uint32 GlobalData::getTimePhysicsFrames()
+{
+    return time_physics_frames;
+}
+

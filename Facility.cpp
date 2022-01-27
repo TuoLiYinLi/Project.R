@@ -10,7 +10,16 @@ Facility* Facility::createNew() {
 	return f;
 }
 
+int Facility::facility_num = 0;
+
+int Facility::getFacilityNum()
+{
+	return facility_num;
+}
+
+
 Facility::Facility() {
+	facility_num++;
 
 	name = u8"default facility";
 
@@ -35,7 +44,7 @@ Facility::Facility() {
 
 
 Facility::~Facility() {
-
+	facility_num--;
 }
 
 

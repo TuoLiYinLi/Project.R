@@ -71,7 +71,7 @@ void PhysicsChara::renewSignedGrids()
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
+			Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
 			grid->list_physics_chara->push_back(this);
 			list_grid_signed->push_back(grid);
 		}
@@ -198,7 +198,7 @@ bool PhysicsChara::detectSubmersed() const
 	{
 		for (int j = y_start; j <= y_end; ++j)
 		{
-			const Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
+			const Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
 			if (!grid->getBlockingType(BlockingType::liquid))
 			{
 				return false;
@@ -280,7 +280,7 @@ bool PhysicsChara::detectForward(CharaDirection direction, BlockingType blocking
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			const Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
+			const Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
 			if(grid->getBlockingType(blocking))
 			{
 				return true;

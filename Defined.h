@@ -1,7 +1,7 @@
 #pragma once
 
-constexpr unsigned int WORLD_WIDTH = 128; //单个的世界的宽度;
-constexpr unsigned int WORLD_HEIGHT = 128; //单个的世界的高度;
+constexpr int WORLD_WIDTH = 128; //单个的世界的宽度;
+constexpr int WORLD_HEIGHT = 128; //单个的世界的高度;
 
 constexpr float DEPTH_PRECISION = 0.0001f;//动画单元的深度的精确度
 

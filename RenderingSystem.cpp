@@ -55,7 +55,7 @@ RenderingSystem::RenderingSystem()
         SDL_Log(u8" ERROR:new std::vector<SDL_Texture*>()申请内存失败，值为nullptr");
 #endif // _DEBUG
     }
-    loadAllAnim();
+    loadAllAnimation();
 
     //渲染单元列表
     list_rendering_units = new std::list<RenderingUnit*>();
@@ -75,8 +75,8 @@ RenderingSystem::~RenderingSystem()
 #endif // ANIMATION_SYSTEM_DEBUG
 
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << " 活跃的TTFUnit数量:" << TTFUnit::getCurrentNum()
-        << "\n 活跃的AnimationUnit数量:" << RenderingAnimation::getCurrentNum() << "\n";
+    std::cout << " 活跃的TTFUnit数量:" << TTFUnit::getRenderingUnitNum()
+        << "\n 活跃的AnimationUnit数量:" << RenderingAnimation::getRenderingUnitNum() << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
 
     int count = 0;
@@ -89,7 +89,7 @@ RenderingSystem::~RenderingSystem()
     }
     delete list_rendering_units;
 
-    unloadAllAnim();
+    unloadAllAnimation();
     list_animation_texture = nullptr;
     delete list_animation_texture;
 
@@ -99,16 +99,16 @@ RenderingSystem::~RenderingSystem()
 void RenderingSystem::renewViewPosition()
 {
     double s1 = 1 / viewScale;
-    viewX += GlobalData::delta_time * vx / 1000 * s1;
-    viewY += GlobalData::delta_time * vy / 1000 * s1;
-    viewScale += GlobalData::delta_time * vs * viewScale / 1000;
+    viewX += GlobalData::getTimeDelta() * vx / 1000 * s1;
+    viewY += GlobalData::getTimeDelta() * vy / 1000 * s1;
+    viewScale += GlobalData::getTimeDelta() * vs * viewScale / 1000;
 
     if (viewScale > VIEW_SCALE_MAX) viewScale = VIEW_SCALE_MAX;
     if (viewScale < VIEW_SCALE_MIN)viewScale = VIEW_SCALE_MIN;
 
-    const double axt = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_X) / 1000;
-    const double ayt = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_Y) / 1000;
-    const double ast = GlobalData::delta_time * double(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
+    const double axt = GlobalData::getTimeDelta() * double(VIEW_ACCELERATE_SPEED_X) / 1000;
+    const double ayt = GlobalData::getTimeDelta() * double(VIEW_ACCELERATE_SPEED_Y) / 1000;
+    const double ast = GlobalData::getTimeDelta() * double(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
 
     if (vx > 0) {
         vx -= axt;
@@ -209,109 +209,34 @@ void RenderingSystem::sortRenderingUnits() const
 void RenderingSystem::renderAll() const {
     for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); i++)
     {
+        if((*i)->flag_enable)
         renderOneUnit(*i);
     }
 }
 
-void RenderingSystem::renderOnePhysicsObject(PhysicsObject* physics_object) const
-{
-    SDL_Rect rect;
 
-    rect.x = (int)round((physics_object->X - viewX) * 32 * viewScale - (viewScale - 1) * window_width * 0.5);
-    rect.y = (int)round((physics_object->Y - viewY) * 32 * viewScale - (viewScale - 1) * window_height * 0.5);
-    rect.w = (int)ceil(physics_object->bodyX * 32 * viewScale);
-    rect.h = (int)ceil(physics_object->bodyY * 32 * viewScale);
-
-    SDL_Color color = { 255,255,255,127 };
-
-    switch (physics_object->getPhysicsType())
-    {
-    case PhysicsType::facility:
-    {
-        const auto facility_type = ((PhysicsFacility*)physics_object)->getFacilityType();
-        switch (facility_type)
-        {
-        case BlockingType::support:
-            color = { 180,80,30 ,127 };//橙色
-            break;
-        case BlockingType::air:
-            color = { 226,176,251 ,23 };//淡紫色
-            break;
-        case BlockingType::solid:
-            color = { 102,56,49 ,127 };//褐色
-            break;
-        case BlockingType::liquid:
-            color = { 99,155,255 ,63 };//蓝色
-            break;
-        }
-    }
-    break;
-    case PhysicsType::projectile:
-        color = { 255,237,80 ,127 };//黄色
-
-        break;
-    case PhysicsType::chara:
-        color = { 55,232,55 ,127 };//绿色
-        break;
-    case PhysicsType::none:
-        color = { 0,0,0 ,127 };//黑色
-        break;
-    }
-
-    SDL_SetRenderDrawColor(GlobalData::sdl_renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderFillRect(GlobalData::sdl_renderer, &rect);
-}
-
-void RenderingSystem::renderALLPhysicsObjects() const
-{
-    for (auto i = WorldSystem::getInstance()->list_physics_facility->begin();
-        i != WorldSystem::getInstance()->list_physics_facility->end(); ++i)
-    {
-        if ((*i)->getFacilityType() != BlockingType::liquid && (*i)->getFacilityType() != BlockingType::air)
-            renderOnePhysicsObject(*i);
-    }
-    for (auto i = WorldSystem::getInstance()->list_physics_chara->begin();
-        i != WorldSystem::getInstance()->list_physics_chara->end(); ++i)
-    {
-        renderOnePhysicsObject(*i);
-    }
-    for (auto i = WorldSystem::getInstance()->list_physics_facility->begin();
-        i != WorldSystem::getInstance()->list_physics_facility->end(); ++i)
-    {
-        if ((*i)->getFacilityType() == BlockingType::liquid || (*i)->getFacilityType() == BlockingType::air)
-            renderOnePhysicsObject(*i);
-    }
-    for (auto i = WorldSystem::getInstance()->list_physics_projectile->begin();
-        i != WorldSystem::getInstance()->list_physics_projectile->end(); ++i)
-    {
-        renderOnePhysicsObject(*i);
-    }
-}
-
-
-
-void RenderingSystem::loadAllAnim() {
+void RenderingSystem::loadAllAnimation() {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "RenderingSystem::loadAllAnim()\n";
+    std::cout << "RenderingSystem::loadAllAnimation()\n";
 #endif // ANIMATION_SYSTEM_DEBUG
     for (auto i = 0; i<int(AnimationType::size); i++)
     {
-        loadAnim(AnimationType(i));
+        loadAnimation(AnimationType(i));
     }
 }
 
-void RenderingSystem::unloadAllAnim() {
+void RenderingSystem::unloadAllAnimation() {
     for (auto i = 0; i<int(AnimationType::size); i++)
     {
         if (list_animation_texture->at(i) != nullptr) {
-            unloadAnim(AnimationType(i));
+            unloadAnimation(AnimationType(i));
         }
     }
 }
 
-void RenderingSystem::loadAnim(AnimationType antp) {
+void RenderingSystem::loadAnimation(AnimationType antp) {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    SDL_Log(u8"RenderingSystem::loadAnim(AnimationType antp)");
+    SDL_Log(u8"RenderingSystem::loadAnimation(AnimationType antp)");
 #endif // ANIMATION_SYSTEM_DEBUG
 
     if (int(antp) >= int(AnimationType::size)) {
@@ -345,6 +270,40 @@ void RenderingSystem::loadAnim(AnimationType antp) {
             file = "./Resource/texture/default_g";
             num = 1;
             break;
+
+        case AnimationType::physics_debug_layer_outside:
+            file = "./Resource/texture/physics_debug_layer_outside";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_air:
+            file = "./Resource/texture/physics_debug_layer_air";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_support:
+            file = "./Resource/texture/physics_debug_layer_support";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_liquid:
+            file = "./Resource/texture/physics_debug_layer_liquid";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_absolute:
+            file = "./Resource/texture/physics_debug_layer_absolute";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_chara:
+            file = "./Resource/texture/physics_debug_layer_chara";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_facility:
+            file = "./Resource/texture/physics_debug_layer_facility";
+            num = 1;
+            break;
+        case AnimationType::physics_debug_layer_projectile:
+            file = "./Resource/texture/physics_debug_layer_projectile";
+            num = 1;
+            break;
+
         case AnimationType::physics_facility_air:
             file = "./Resource/texture/physics_facility_air";
             num = 1;
@@ -539,32 +498,29 @@ void RenderingSystem::loadAnim(AnimationType antp) {
 #endif // ANIMATION_SYSTEM_DEBUG
 }
 
-void RenderingSystem::getLengthUTF8(char const* str, int* cnt)
+
+SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,int num) const
 {
-    while (*str != '\0') {
-        if (*str & 1 << 7) {
-            if (*str & (1 << 6)) {
-                if (*str & (1 << 5)) {
-                    if (*str & (1 << 4)) {
-                        cnt[4]++; cnt[0]++; str += 4;
-                        continue;
-                    }
-                    cnt[3]++; cnt[0]++; str += 3;
-                    continue;
-                }
-                cnt[2]++; cnt[0]++; str += 2;
-                continue;
-            }
-        }
-        cnt[1]++; cnt[0]++; str += 1;
-        continue;
+    auto L = list_animation_texture->at((int)_animation_type);
+    if(num>=L->size())
+    {
+        return nullptr;
+    }else
+    {
+        return L->at(num);
     }
 }
 
+int RenderingSystem::getAnimationSize(AnimationType _animation_type) const
+{
+    return list_animation_texture->at((int)_animation_type)->size();
+}
 
-void RenderingSystem::unloadAnim(AnimationType antp) const {
+
+
+void RenderingSystem::unloadAnimation(AnimationType antp) const {
 #ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "unloadAnim(AnimationType antp)\n";
+    std::cout << "unloadAnimation(AnimationType antp)\n";
     std::cout << " 卸载动画:" << int(antp) << "\n";
 #endif // ANIMATION_SYSTEM_DEBUG
     std::vector<SDL_Texture*>* ap = list_animation_texture->at(int(antp));
@@ -601,4 +557,14 @@ void RenderingSystem::unloadAnim(AnimationType antp) const {
 }
 
 RenderingSystem* RenderingSystem::instance = nullptr;
+
+void RenderingSystem::add(RenderingUnit* ru) const
+{
+    list_rendering_units->push_back(ru);
+}
+
+void RenderingSystem::remove(RenderingUnit* ru) const
+{
+    list_rendering_units->remove(ru);
+}
 

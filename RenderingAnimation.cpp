@@ -15,33 +15,28 @@ RenderingAnimation* RenderingAnimation::createNew() {
 
 RenderingAnimation::RenderingAnimation() {
 
-	deltaX = 0;
-	deltaY = 0;
 }
 
 RenderingAnimation::~RenderingAnimation() {
 
-	RenderingSystem::getInstance()->list_rendering_units->remove(this);
-
-	current_num--;
 }
 
 void RenderingAnimation::setTexture(AnimationType type, int time_length, int current)
 {
 	if (time_length == 0 || current == 0)
 	{
-		texture = RenderingSystem::getInstance()->list_animation_texture->at(int(type))->front();
+		texture = RenderingSystem::getInstance()->getAnimation(type, 0);
 		return;
 	}
 
-	const auto texture_num = (double)RenderingSystem::getInstance()->list_animation_texture->at((int)type)->size();
+	const auto texture_num = (double)RenderingSystem::getInstance()->getAnimationSize(type);
 	const int animation_progress = (int)floor(texture_num * current / time_length);
 
 
 	if (animation_progress >= texture_num) {
-		SDL_Log(u8"ERROR:RenderingSystem::getTextureFromAU ³¬³ö·¶Î§ progress:%d num:%d",animation_progress,texture_num);
+		SDL_Log(u8"ERROR:RenderingSystem::getTextureFromAU ³¬³ö·¶Î§ progress:%d num:%d",animation_progress,(int)texture_num);
 	}
 
-	texture = RenderingSystem::getInstance()->list_animation_texture->at(int(type))->at(animation_progress);
+	texture = RenderingSystem::getInstance()->getAnimation(type, animation_progress);
 }
 

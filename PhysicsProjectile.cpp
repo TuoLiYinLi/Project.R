@@ -77,7 +77,7 @@ void PhysicsProjectile::renewSignedGrids()
 	{
 		for (int j = y_start; j <= y_end; j++)
 		{
-			Grid* grid = WorldSystem::getInstance()->map->at(i)->at(j);
+			Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
 			grid->list_physics_projectile->push_back(this);
 			list_grid_signed->push_back(grid);
 		}
@@ -104,7 +104,7 @@ void PhysicsProjectile::renewHitCharas() const
 	{
 		for (int y = up; y <= down; ++y)
 		{
-			Grid* g = WorldSystem::getInstance()->map->at(x)->at(y);
+			Grid* g = WorldSystem::getInstance()->getGrid(x, y);
 			for (auto i = g->list_physics_chara->begin(); i != g->list_physics_chara->end(); ++i)
 			{
 				hit_charas->push_front(*i);
@@ -133,7 +133,7 @@ void PhysicsProjectile::renewHitFacilities() const
 	{
 		for (int y = up; y <= down; ++y)
 		{
-			Grid* g = WorldSystem::getInstance()->map->at(x)->at(y);
+			Grid* g = WorldSystem::getInstance()->getGrid(x, y);
 			for (auto i = g->list_physics_facility->begin(); i != g->list_physics_facility->end(); ++i)
 			{
 				hit_facilities->push_front(*i);
@@ -161,7 +161,7 @@ void PhysicsProjectile::renewHitProjectiles() const
 	{
 		for (int y = up; y <= down; ++y)
 		{
-			Grid* g = WorldSystem::getInstance()->map->at(x)->at(y);
+			Grid* g = WorldSystem::getInstance()->getGrid(x, y);
 			for (auto i = g->list_physics_projectile->begin(); i != g->list_physics_projectile->end(); ++i)
 			{
 				if(*i!=this)

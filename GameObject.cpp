@@ -9,9 +9,18 @@ void GameObject::destroy()
 	delete this;
 }
 
+int GameObject::game_object_num = 0;
+
+int GameObject::getGameObjectNum()
+{
+	return game_object_num;
+}
+
 
 GameObject::GameObject()
 {
+	game_object_num++;
+
 	flag_destroy = false;
 	name = u8"default_game_object";
 	type_game_object = GameObjectType::default_object;
@@ -41,6 +50,8 @@ GameObject::~GameObject()
 
 	//不需要将自己从设施物理列表移除,由WorldSystem将对象移除
 	//WorldSystem::getInstance()->list_game_objects->remove(this);
+
+	game_object_num--;
 }
 
 void GameObject::update()

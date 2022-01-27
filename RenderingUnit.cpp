@@ -1,5 +1,5 @@
 #include "RenderingUnit.h"
-
+#include "Defined.h"
 #include "RenderingSystem.h"
 
 
@@ -21,9 +21,11 @@ void RenderingUnit::destroy() const {
 
 RenderingUnit::RenderingUnit()
 {
-	RenderingSystem::getInstance()->list_rendering_units->push_back(this);
+	rendering_unit_num++;
 
-	current_num++;
+	RenderingSystem::getInstance()->add(this);
+
+	flag_enable = true;
 
 	reference = RenderingReference::world;
 
@@ -46,9 +48,9 @@ RenderingUnit::RenderingUnit()
 
 RenderingUnit::~RenderingUnit() {
 
-	RenderingSystem::getInstance()->list_rendering_units->remove(this);
+	RenderingSystem::getInstance()->remove(this);
 
-	current_num--;
+	rendering_unit_num--;
 }
 
 void RenderingUnit::setFlip(bool _val)
@@ -84,11 +86,11 @@ SDL_Texture* RenderingUnit::getTexture() const
 	return texture;
 }
 
-int RenderingUnit::current_num = 0;
+int RenderingUnit::rendering_unit_num = 0;
 
-int RenderingUnit::getCurrentNum()
+int RenderingUnit::getRenderingUnitNum()
 {
-	return  current_num;
+	return  rendering_unit_num;
 }
 
 bool RenderingUnit::operator<(RenderingUnit* ru)

@@ -19,6 +19,7 @@ public:
 	void renewBlockingType(BlockingType blocking_type);
 	bool getBlockingType(BlockingType blocking_type) const;
 
+	static int getGridNum();
 protected:
 	Grid(unsigned int x, unsigned int y);
 	~Grid();
@@ -29,5 +30,8 @@ protected:
 	bool blocking_support;
 	bool blocking_liquid;
 	bool blocking_solid;
+
+private:
+	static int grid_num;
 };
 
