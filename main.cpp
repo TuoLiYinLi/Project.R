@@ -28,6 +28,7 @@
 
 #include "idea_physics_debugger.h"
 #include "idea_game_info_debugger.h"
+#include "idea_monster_slime.h"
 
 int main(int argc, char** argv) {
 	std::cout << u8"Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
@@ -74,8 +75,8 @@ int main(int argc, char** argv) {
     version_mark->y = WINDOW_HEIGHT - version_mark->height;
 
     //物理层调试器
-    auto physics_debugger = idea_physics_debugger::createNew();
-    auto game_info_debugger = idea_game_info_debugger::createNew();
+    auto debugger_physics = idea_physics_debugger::createNew();
+    auto debugger_game_info = idea_game_info_debugger::createNew();
 
     /*
      */
@@ -105,9 +106,10 @@ int main(int argc, char** argv) {
 
         
 
-        auto pf2 = Chara::createNew();
+        auto pf2 = idea_monster_slime::createNew();
         pf2->setPosition(7, 2);
 
+        /*
 		auto pf4 = ProjectileFlying::createNew();
 		pf4->X = 0;
 		pf4->Y = 0;
@@ -115,7 +117,6 @@ int main(int argc, char** argv) {
 		pf4->y_v = 0;
 		pf4->y_a = 0.005;
 		pf4->renewSignedGrids();
-        /*
          */
 
 		auto pf5 = PhysicsFacility::createNew();
@@ -144,16 +145,13 @@ int main(int argc, char** argv) {
         while (GlobalData::getIfLogicGo())
         {
             WorldSystem::getInstance()->logicGo();
-
-            SDL_Log(u8"t %d\nGameObject:%d Chara:%d Facility:%d Projectile:%d \nRenderingUnit:%d",
-                GlobalData::getTimePhysicsFrames(),
-                GameObject::getGameObjectNum(),Chara::getCharaNum(),Facility::getFacilityNum(),
-                Projectile::getProjectileNum(),RenderingUnit::getRenderingUnitNum());
         }
         //渲染系统
         {
-    		//物理debug渲染
-	        physics_debugger->update();
+    		//物理debug更新
+	        debugger_physics->update();
+            //游戏信息debug更新
+            debugger_game_info->update();
 	        
 
             //正常渲染

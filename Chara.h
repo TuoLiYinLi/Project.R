@@ -104,9 +104,10 @@ public:
 	static int getCharaNum();
 
 protected:
-
 	Chara();
 	~Chara() override;
+
+	static int chara_num;
 
 	void update_attributes();//更新属性数据
 	void update_effect();//更新效果
@@ -122,7 +123,5 @@ protected:
 	void setAnimationSkillBasic();//设置为普通能力动画
 	void setAnimationDead();//设置为死亡动画
 
-private:
-	static int chara_num;
 };
 

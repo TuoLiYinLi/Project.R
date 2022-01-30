@@ -357,6 +357,8 @@ Chara::Chara()
 		physics_object = PhysicsChara::createNew();
 		physics_object->game_object = this;
 
+		physics_object->type_ally = AllyType::neutral;
+
 		getPhysicsChara()->bodyX = 1;
 		getPhysicsChara()->bodyY = 1;
 
@@ -388,8 +390,6 @@ Chara::Chara()
 		animation_type_skill_special = AnimationType::default_banned;
 		animation_type_disturbed = AnimationType::charaSlimeIdle;
 		animation_type_dead = AnimationType::charaSlimeDeath;
-
-		//getRenderingAnimation()->setTexture(AnimationType::charaSlimeIdle, animation_length_idle, animation_progress);
 	}
 
 	//…Ë÷√Ω«…´ Ù–‘
@@ -562,7 +562,7 @@ void Chara::onHit()
 
 void Chara::onIdle()
 {
-	//actMove(CharaDirection::right);
+
 }
 
 void Chara::onImpact()

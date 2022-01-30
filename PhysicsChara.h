@@ -43,6 +43,8 @@ public:
     bool can_fly;//能否飞行
     bool steady; //是否不可击退
 
+    static int getPhysicsCharaNum();
+
 protected:
     PhysicsChara();
     ~PhysicsChara() override;
@@ -58,6 +60,8 @@ protected:
 
     int impact;//受到的冲击
     int falling_count;//记录下坠了多少距离
+
+    static int physicsCharaNum;//当前活跃的角色物理体
 
 private:
     void stepForward();//按步前进

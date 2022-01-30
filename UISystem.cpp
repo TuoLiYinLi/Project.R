@@ -38,6 +38,7 @@ void UISystem::pullEvent()
 	mouse_middle_last = mouse_middle_state;
 	key_space_last = key_space_state;
 	key_f3_last = key_f3_state;
+	key_f4_last = key_f4_state;
 
 	SDL_Event evt;
 	while (SDL_PollEvent(&evt))
@@ -86,6 +87,10 @@ void UISystem::pullEvent()
 			{
 				key_f3_state = true;
 			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_F4)
+			{
+				key_f4_state = true;
+			}
 		}
 		else if (evt.type == SDL_KEYUP)
 		{
@@ -116,6 +121,22 @@ void UISystem::pullEvent()
 			else if (evt.key.keysym.scancode == SDL_SCANCODE_F3)
 			{
 				key_f3_state = false;
+			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_F4)
+			{
+				key_f4_state = false;
+			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_1)
+			{
+				GlobalData::setTimeSpeed(TimeSpeedType::normal);
+			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_2)
+			{
+				GlobalData::setTimeSpeed(TimeSpeedType::double_speed);
+			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_3)
+			{
+				GlobalData::setTimeSpeed(TimeSpeedType::triple_speed);
 			}
 		}
 		else if (evt.type == SDL_MOUSEBUTTONDOWN)
@@ -239,6 +260,16 @@ void UISystem::pullEvent()
 		key_f3_press = false;
 	}
 
+	//处理f4按键
+	if (key_f4_state && !key_f4_last)
+	{
+		key_f4_press = true;
+	}
+	else
+	{
+		key_f4_press = false;
+	}
+
 	renewMouseWorldPosition();
 }
 
@@ -282,6 +313,10 @@ UISystem::UISystem()
 	key_f3_state = false;
 	key_f3_press = false;
 	key_f3_last = false;
+
+	key_f4_state = false;
+	key_f4_press = false;
+	key_f4_last = false;
 
 	keydown_esc = false;
 }
@@ -342,6 +377,12 @@ void UISystem::controlGame() const
 	if(key_f3_press)
 	{
 		GlobalData::flag_debug_physics = !GlobalData::flag_debug_physics;
+	}
+
+	//切换game info debug显示
+	if (key_f4_press)
+	{
+		GlobalData::flag_debug_game_info = !GlobalData::flag_debug_game_info;
 	}
 
 	//退出游戏

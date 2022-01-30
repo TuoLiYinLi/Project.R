@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "PhysicsObject.h"
 
 class GameToolkit
 {
@@ -14,5 +15,11 @@ public:
 
 	//生成一个特定颜色的透明字体,并用指针传递出生成的宽度和高度
 	static SDL_Texture* getRenderedText(char const*utf8_str, SDL_Color color,int* width,int* height);
+
+	//检查两个阵营是否交战(和平阵营永远不敌对,同阵营也不敌对)
+	static bool checkIfHostile(AllyType _t1, AllyType _t2);
+
+	//计算t波敌人的CD
+	static int getWaveTime(int t);
 };
 

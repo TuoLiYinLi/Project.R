@@ -17,6 +17,14 @@ enum class BlockingType
 	liquid,	//液态
 };
 
+enum class AllyType
+{
+	monster,//怪物阵营
+	warrior,//勇者阵营
+	neutral,//中立阵营
+	peace,//和平阵营
+};
+
 class PhysicsObject
 {
 public:
@@ -27,6 +35,7 @@ public:
 	double X, Y;	//自身的X、Y坐标
 	int bodyX, bodyY;	//模拟碰撞体积的大小，向右下方延申
 
+	AllyType type_ally;//所属的阵营
 	GameObject* game_object;	//绑定的游戏对象
 	PhysicsType getPhysicsType() const;	//获取物理种类
 
@@ -44,11 +53,14 @@ public:
 
 	virtual void renewSignedGrids();	//对地图签入自己的位置
 
+	static int getPhysicsObjectNum();
 protected:
 	PhysicsObject();	//不允许外部实例化
 	virtual ~PhysicsObject();	//为了继承自我并且保证销毁释放内存,必须虚析构函数
 
 	PhysicsType type_physics;	//物理类型
+
+	static int physicsObjectNum;
 
 };
 

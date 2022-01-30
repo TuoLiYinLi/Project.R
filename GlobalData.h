@@ -1,6 +1,13 @@
 #pragma once
 #include "SDL.h"
 
+enum class TimeSpeedType
+{
+	normal = 1,
+	double_speed = 2,
+	triple_speed = 3,
+};
+
 class GlobalData
 {
 public:
@@ -9,7 +16,8 @@ public:
 
 	static bool flag_quit;	//退出标志
 	static bool flag_stop;//时间是否暂停
-	static bool flag_debug_physics;	//是否开启内置debug
+	static bool flag_debug_physics;	//是否开启物理显示debug
+	static bool flag_debug_game_info;//是否开启游戏信息debug
 
 
 	static Uint32 getFPS();
@@ -21,6 +29,10 @@ public:
 	static  void update_time();//刷新时间
 
 	static bool getIfLogicGo();//检查是否可以推进逻辑,调用时视为运行了物理帧
+
+	static void setTimeSpeed(TimeSpeedType speed_type);
+
+	static TimeSpeedType getTimeSpeed();
 
 protected:
 	static Uint32 FPS;		//每秒多少帧（次数渲染）
@@ -35,7 +47,8 @@ protected:
 
 	static Uint32 logical_interval_time;	//上一物理帧到这一物理帧的时间间隔
 
-	static Uint32 per_second_CD;//进行一秒钟一轮的倒数
+	static TimeSpeedType time_speed_type;//游戏时间速度
 
+	static Uint32 per_second_CD;//进行一秒钟一轮的倒数
 };
 

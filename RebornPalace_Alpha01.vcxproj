@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClInclude Include="GameToolkit.h" />
     <ClInclude Include="idea_game_info_debugger.h" />
+    <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_physics_debugger.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="RenderingAnimation.h" />
     <ClInclude Include="Chara.h" />
@@ -42,12 +44,15 @@
     <ClInclude Include="ProjectileFlying.h" />
     <ClInclude Include="ProjectilePoint.h" />
     <ClInclude Include="ProjectileTarget.h" />
+    <ClInclude Include="Warrior.h" />
     <ClInclude Include="WorldSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameToolkit.cpp" />
     <ClCompile Include="idea_game_info_debugger.cpp" />
+    <ClCompile Include="idea_monster_slime.cpp" />
     <ClCompile Include="idea_physics_debugger.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="RenderingAnimation.cpp" />
     <ClCompile Include="Chara.cpp" />
@@ -67,6 +72,7 @@
     <ClCompile Include="ProjectileFlying.cpp" />
     <ClCompile Include="ProjectilePoint.cpp" />
     <ClCompile Include="ProjectileTarget.cpp" />
+    <ClCompile Include="Warrior.cpp" />
     <ClCompile Include="WorldSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

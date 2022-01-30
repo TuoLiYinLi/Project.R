@@ -33,6 +33,7 @@ public:
     double x_v;
     double y_v;
 
+    static int getPhysicsProjectilleNum();
 protected:
     PhysicsProjectile();
     ~PhysicsProjectile() override;
@@ -44,5 +45,7 @@ protected:
     std::list<PhysicsChara*>* hit_charas;   //碰撞到的人物
     std::list<PhysicsFacility*>* hit_facilities;    //碰撞到的设施
     std::list<PhysicsProjectile*>* hit_projectiles; //碰撞到的投射物
+
+    static int physicsProjectileNum;
 };
 

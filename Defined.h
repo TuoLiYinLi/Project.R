@@ -32,6 +32,7 @@ constexpr float RENDERING_DEPTH_WORLD_UI = 5000;//渲染深度世界UI
 constexpr float RENDERING_DEPTH_UI = 6000;//渲染深度固定UI
 constexpr float RENDERING_DEPTH_EXTRA = 10000;//额外信息
 
+constexpr double GOLDUST_RECOVERY = 0.01;//默认的金沙能量恢复速度
 
 //#define SHOW_FPS //将每秒帧数输出到窗口
 //#define SHOW_KEY //将键盘鼠标等输入信息输出到窗口

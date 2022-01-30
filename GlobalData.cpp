@@ -4,6 +4,11 @@
 SDL_Window* GlobalData::sdl_window = nullptr;
 SDL_Renderer* GlobalData::sdl_renderer = nullptr;
 bool GlobalData::flag_quit = false;
+bool GlobalData::flag_stop = true;
+bool GlobalData::flag_debug_physics = true;
+bool GlobalData::flag_debug_game_info = true;
+
+TimeSpeedType GlobalData::time_speed_type = TimeSpeedType::normal;
 
 Uint32 GlobalData::FPS = 0;
 
@@ -17,11 +22,9 @@ Uint32 GlobalData::logic_frame_CD = 0;
 
 Uint32 GlobalData::per_second_CD = 0;
 
-bool GlobalData::flag_stop = true;
 
 Uint32 GlobalData::logical_interval_time = 16;
 
-bool GlobalData::flag_debug_physics = true;
 
 void GlobalData::update_time()
 {
@@ -69,3 +72,24 @@ Uint32 GlobalData::getTimePhysicsFrames()
     return time_physics_frames;
 }
 
+void GlobalData::setTimeSpeed(TimeSpeedType speed_type)
+{
+    time_speed_type = speed_type;
+	switch (speed_type)
+	{
+    case TimeSpeedType::normal:
+        logical_interval_time = 16;
+        break;
+    case TimeSpeedType::double_speed:
+        logical_interval_time = 8;
+        break;
+    case TimeSpeedType::triple_speed:
+        logical_interval_time = 5;
+        break;
+	}
+}
+
+TimeSpeedType GlobalData::getTimeSpeed()
+{
+    return time_speed_type;
+}

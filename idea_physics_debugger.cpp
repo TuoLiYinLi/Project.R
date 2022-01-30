@@ -24,8 +24,8 @@ void idea_physics_debugger::update()
 {
     if (GlobalData::flag_debug_physics)
     {
-        animation_unit->flag_enable=true;
 		renew_texture();
+        animation_unit->flag_enable=true;
     }else
     {
         animation_unit->flag_enable = false;

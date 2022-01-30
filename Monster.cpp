@@ -1,0 +1,118 @@
+#include "Monster.h"
+
+#include "WorldSystem.h"
+
+Monster* Monster::createNew()
+{
+	const auto m = new Monster();
+	if (m == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new Monster()申请内存失败，值为nullptr");
+#endif // _DEBUG
+
+	}
+	return m;
+}
+
+Monster::Monster()
+{
+	monster_num++;
+
+	patrol_area = new std::list<Grid*>();
+	name = u8"default_monster";
+	physics_object->type_ally = AllyType::monster;
+}
+
+Monster::~Monster()
+{
+	delete patrol_area;
+
+	monster_num--;
+}
+
+void Monster::update()
+{
+	Chara::update();
+}
+
+void Monster::onBasicSkill()
+{
+	Chara::onBasicSkill();
+}
+
+void Monster::onBurning()
+{
+	Chara::onBurning();
+}
+
+void Monster::onDead()
+{
+	Chara::onDead();
+}
+
+void Monster::onHit()
+{
+	Chara::onHit();
+}
+
+void Monster::onIdle()
+{
+	Chara::onIdle();
+}
+
+void Monster::onImpact()
+{
+	Chara::onImpact();
+}
+
+void Monster::onKill()
+{
+	Chara::onKill();
+}
+
+void Monster::onMoving()
+{
+	Chara::onMoving();
+}
+
+void Monster::onPoisoned()
+{
+	Chara::onPoisoned();
+}
+
+void Monster::onSpecialSkill()
+{
+	Chara::onSpecialSkill();
+}
+
+
+
+void Monster::setPatrolArea(std::list<Grid*>* _grids)
+{
+	delete patrol_area;
+	patrol_area = _grids;
+}
+
+std::list<Grid*>* Monster::getPatrolArea() const
+{
+	return patrol_area;
+}
+
+bool Monster::getIfInPatrolArea() const
+{
+	for (int i = physics_object->getLeftGrid(); i <= physics_object->getRightGrid(); ++i)
+	{
+		for (int j =physics_object->getTopGrid(); j <= physics_object->getBottomGrid(); ++j)
+		{
+			auto t = std::find(patrol_area->begin(), patrol_area->end(), WorldSystem::getInstance()->getGrid(i, j));
+			if (t == patrol_area->end())return false;
+		}
+	}
+	return true;
+}
+
+int Monster::monster_num = 0;
+int Monster::getMonsterNum()
+{
+	return monster_num;
+}

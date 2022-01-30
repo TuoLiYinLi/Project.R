@@ -5,6 +5,7 @@
 #include "PhysicsChara.h"
 #include  "PhysicsFacility.h"
 #include "GameObject.h"
+#include "GameToolkit.h"
 
 #include "SDL.h"
 WorldSystem* WorldSystem::getInstance()
@@ -47,6 +48,13 @@ WorldSystem::WorldSystem()
 	list_physics_projectile = new std::list<PhysicsProjectile*>();
 
 	list_game_objects = new std::list<GameObject*>();
+
+	goldust_energy = 0;
+	goldust_energy_recovery = 0.01;
+	goldust_energy_accumulation = 0;
+
+	enemy_wave_CD = 0;
+	enemy_wave_num = 0;
 }
 
 WorldSystem::~WorldSystem()
@@ -68,10 +76,11 @@ WorldSystem::~WorldSystem()
 	SDL_Log("WorldSystem destruct");
 }
 
-void WorldSystem::logicGo() const
+void WorldSystem::logicGo()
 {
 	logicGo_physics();
 	logicGo_game_objects();
+	logicGo_game_data();
 }
 
 void WorldSystem::logicGo_physics() const
@@ -103,6 +112,23 @@ void WorldSystem::logicGo_game_objects() const
 		}
 	}
 }
+
+void WorldSystem::logicGo_game_data()
+{
+	goldust_energy_accumulation += goldust_energy_recovery;
+	const int delta = (int)floor(goldust_energy_accumulation);
+	goldust_energy += delta;
+	goldust_energy_accumulation -= delta;
+
+	enemy_wave_CD--;
+	if(enemy_wave_CD<=0)
+	{
+		//ÏÂÒ»²¨
+		enemy_wave_num++;
+		enemy_wave_CD = GameToolkit::getWaveTime(enemy_wave_num);
+	}
+}
+
 
 Grid* WorldSystem::getGrid(int _x, int _y) const
 {

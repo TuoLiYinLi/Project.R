@@ -16,6 +16,7 @@ public:
     BlockingType getFacilityType()const;
     void setFacilityType(BlockingType blocking);
     
+    static int getPhysicsFacillityNum();
 protected:
     PhysicsFacility();
     ~PhysicsFacility() override;
@@ -23,5 +24,7 @@ protected:
 
     BlockingType type_blocking; //设施的种类
     std::list<Grid*>* list_grid_signed;
+
+    static int physicsFacilityNumm;
 };
 

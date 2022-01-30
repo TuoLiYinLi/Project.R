@@ -14,6 +14,8 @@ PhysicsFacility* PhysicsFacility::createNew()
 
 PhysicsFacility::PhysicsFacility()
 {
+	physicsFacilityNumm++;
+
 	type_physics = PhysicsType::facility;
 	type_blocking = BlockingType::air;
 
@@ -29,6 +31,7 @@ PhysicsFacility::~PhysicsFacility()
 	WorldSystem::getInstance()->list_physics_facility->remove(this);
 
 	delete list_grid_signed;
+	physicsFacilityNumm--;
 }
 
 
@@ -77,4 +80,11 @@ BlockingType PhysicsFacility::getFacilityType() const
 void PhysicsFacility::setFacilityType(BlockingType blocking)
 {
 	this->type_blocking = blocking;
+}
+
+int PhysicsFacility::physicsFacilityNumm = 0;
+
+int PhysicsFacility::getPhysicsFacillityNum()
+{
+	return physicsFacilityNumm;
 }

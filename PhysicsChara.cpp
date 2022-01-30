@@ -15,6 +15,8 @@ PhysicsChara* PhysicsChara::createNew()
 
 PhysicsChara::PhysicsChara()
 {
+	physicsCharaNum++;
+
 	//初始化数据
 	type_physics = PhysicsType::chara;
 
@@ -48,6 +50,8 @@ PhysicsChara::~PhysicsChara()
 	WorldSystem::getInstance()->list_physics_chara->remove(this);
 	//移除网格列表
 	delete list_grid_signed;
+
+	physicsCharaNum--;
 }
 
 void PhysicsChara::renewSignedGrids()
@@ -518,3 +522,10 @@ double PhysicsChara::getSpeed() const
 	return moving_speed;
 }
 
+
+int PhysicsChara::physicsCharaNum = 0;
+
+int PhysicsChara::getPhysicsCharaNum()
+{
+	return physicsCharaNum;
+}

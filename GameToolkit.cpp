@@ -61,3 +61,29 @@ SDL_Texture* GameToolkit::getRenderedText(char const* str, SDL_Color color, int*
 }
 
 
+bool GameToolkit::checkIfHostile(AllyType _t1, AllyType _t2)
+{
+	if (_t1 == AllyType::peace || _t2 == AllyType::peace)return false;
+	if (_t1 == _t2)return false;
+	return true;
+}
+
+int GameToolkit::getWaveTime(int t)
+{
+	if(t<=0)
+	{
+		return 0;
+	}else if (t==1)
+	{
+		return 60 * 60 * 6;
+	}else if (t==2)
+	{
+		return 60 * 60 * 4;
+	}else if (t==3)
+	{
+		return 60 * 60 * 3;
+	}
+	else
+		return 60 * 60 * 2;
+		
+}

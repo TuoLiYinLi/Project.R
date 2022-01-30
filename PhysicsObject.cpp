@@ -9,8 +9,11 @@ void PhysicsObject::destroy()
 
 PhysicsObject::PhysicsObject()
 {
+	physicsObjectNum++;
+
 	game_object = nullptr;
 	type_physics = PhysicsType::none;
+	type_ally = AllyType::neutral;
 	X = 0;
 	Y = 0;
 	bodyX = 1;
@@ -26,6 +29,8 @@ PhysicsObject::~PhysicsObject()
 		game_object->destroy();
 		game_object = nullptr;
 	}
+
+	physicsObjectNum--;
 }
 
 void PhysicsObject::update()
@@ -89,3 +94,9 @@ int PhysicsObject::getRightGrid() const
 	return (int)floor(right - 0.5);
 }
 
+int PhysicsObject::physicsObjectNum = 0;
+
+int PhysicsObject::getPhysicsObjectNum()
+{
+	return physicsObjectNum;
+}

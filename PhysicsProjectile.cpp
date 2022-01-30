@@ -16,6 +16,8 @@ PhysicsProjectile* PhysicsProjectile::createNew()
 
 PhysicsProjectile::PhysicsProjectile()
 {
+	physicsProjectileNum++;
+
 	//将自己添加到投射物物理列表
 	WorldSystem::getInstance()->list_physics_projectile->push_front(this);
 
@@ -43,6 +45,7 @@ PhysicsProjectile::~PhysicsProjectile()
 	delete hit_facilities;
 	delete hit_projectiles;
 
+	physicsProjectileNum--;
 }
 
 void PhysicsProjectile::update()
@@ -192,4 +195,12 @@ void PhysicsProjectile::move(double _dx, double _dy)
 	X += _dx;
 	Y += _dy;
 	renewSignedGrids();
+}
+
+
+int PhysicsProjectile::physicsProjectileNum = 0;
+
+int PhysicsProjectile::getPhysicsProjectilleNum()
+{
+	return physicsProjectileNum;
 }
