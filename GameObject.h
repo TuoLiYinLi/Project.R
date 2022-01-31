@@ -7,10 +7,10 @@
 
 enum class GameObjectType
 {
-	default_object,//默认游戏物件
-	default_chara,//默认的角色物件
-	default_facility,//默认的设施物件
-	default_projectile//默认的投射物物件
+	default_object=0,//默认游戏物件
+	default_chara=1,//默认的角色物件
+	default_facility=3,//默认的设施物件
+	default_projectile=2,//默认的投射物物件
 };
 
 class GameObject

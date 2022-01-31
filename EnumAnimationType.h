@@ -24,6 +24,9 @@ enum class AnimationType
 	physics_chara,//物理模型_角色
 	physics_projectile,//物理模型_投射物
 
+	ui_exit_button_default,//UI_退出按钮_默认
+	ui_exit_button_highlight,//UI_退出按钮_高亮
+	ui_exit_button_pressed,//UI_退出按钮_按下
 
 
 	charaSlimeIdle,//史莱姆_停滞

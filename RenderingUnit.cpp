@@ -75,7 +75,6 @@ void RenderingUnit::setTexture(SDL_Texture* _texture)
 	if (texture)
 	{
 		texture = nullptr;
-		SDL_Log(u8"警告 设置新的材质时没有销毁原有材质");
 	}
 	texture = _texture;
 }

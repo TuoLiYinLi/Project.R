@@ -17,7 +17,7 @@ public:
 	static  void destroyInstance();	//销毁和析构
 
 	void logicGo();	//逻辑更新
-
+	void sortGameObjectList()const;//对游戏物体重新排序
 
 	std::list<PhysicsChara*>* list_physics_chara;	//角色物理全集
 	std::list<PhysicsFacility*>* list_physics_facility;	//设施物理全集
@@ -47,5 +47,6 @@ protected:
 
 	double goldust_energy_accumulation;//金沙能量恢复累积量
 
+	static bool compareGameObjects(GameObject* o1, GameObject* o2);
 };
 

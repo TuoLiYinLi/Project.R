@@ -78,10 +78,16 @@ WorldSystem::~WorldSystem()
 
 void WorldSystem::logicGo()
 {
+	logicGo_game_data();
 	logicGo_physics();
 	logicGo_game_objects();
-	logicGo_game_data();
 }
+
+void WorldSystem::sortGameObjectList()const
+{
+	list_game_objects->sort(compareGameObjects);
+}
+
 
 void WorldSystem::logicGo_physics() const
 {
@@ -98,6 +104,7 @@ void WorldSystem::logicGo_physics() const
 
 void WorldSystem::logicGo_game_objects() const
 {
+
 	auto i = list_game_objects->begin();
 	while (i != list_game_objects->end())
 	{
@@ -137,4 +144,9 @@ Grid* WorldSystem::getGrid(int _x, int _y) const
 		return map->at(_x)->at(_y);
 	}
 	else return nullptr;
+}
+
+bool WorldSystem::compareGameObjects(GameObject* o1, GameObject* o2)
+{
+	return (int)o1->type_game_object < (int)o2->type_game_object;
 }

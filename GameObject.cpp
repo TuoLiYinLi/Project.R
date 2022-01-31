@@ -27,8 +27,9 @@ GameObject::GameObject()
 	physics_object = nullptr;
 	animation_unit = nullptr;
 
-	//将自己添加到物理列表
-	WorldSystem::getInstance()->list_game_objects->push_front(this);
+	//将自己添加到物体列表
+	WorldSystem::getInstance()->list_game_objects->push_back(this);
+	WorldSystem::getInstance()->sortGameObjectList();
 }
 
 GameObject::~GameObject()

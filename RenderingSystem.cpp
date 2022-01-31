@@ -207,7 +207,6 @@ void RenderingSystem::sortRenderingUnits() const
     list_rendering_units->sort(compareDepth);
 }
 
-
 void RenderingSystem::renderAll() const {
     for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); i++)
     {
@@ -330,6 +329,21 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
             file = "./Resource/texture/physics_projectile";
             num = 1;
             break;
+
+        case AnimationType::ui_exit_button_default:
+            file = "./Resource/texture/exit_button_default";
+            num = 1;
+            break;
+        case AnimationType::ui_exit_button_highlight:
+            file = "./Resource/texture/exit_button_highlight";
+            num = 1;
+            break;
+        case AnimationType::ui_exit_button_pressed:
+            file = "./Resource/texture/exit_button_pressed";
+            num = 1;
+            break;
+
+        //角色材质
         case AnimationType::charaSlimeIdle:
             file = "./Resource/texture/SlimeIdle";
             num = 4;
@@ -478,7 +492,7 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
             }
             auto c_fullFile = fullFile.c_str();
             SDL_Texture* texture = IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
-#ifdef ANIMATION_SYSTEM_DEBUG
+#ifdef _DEBUG
             if (texture) {
                 SDL_Log(u8" 成功加载%s", c_fullFile);
             }
@@ -486,7 +500,7 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
             {
                 SDL_Log(u8" 无法加载%s", c_fullFile);
             }
-#endif // ANIMATION_SYSTEM_DEBUG
+#endif
 
             innerList->push_back(texture);
         }
@@ -570,7 +584,7 @@ void RenderingSystem::remove(RenderingUnit* ru) const
     list_rendering_units->remove(ru);
 }
 
-bool RenderingSystem::compareDepth(RenderingUnit* ru1, RenderingUnit* ru2)
+bool RenderingSystem::compareDepth(const RenderingUnit* ru1, const RenderingUnit* ru2)
 {
     return ru1->depth < ru2->depth;
 }

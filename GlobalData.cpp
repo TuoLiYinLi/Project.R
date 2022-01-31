@@ -12,6 +12,8 @@ TimeSpeedType GlobalData::time_speed_type = TimeSpeedType::normal;
 
 Uint32 GlobalData::FPS = 0;
 
+Uint32 GlobalData::rendered_times = 0;
+
 Uint32 GlobalData::last_recorded_ticks = 0;
 
 Uint32 GlobalData::time_delta = 0;
@@ -31,11 +33,12 @@ void GlobalData::update_time()
     //时间系统
     time_delta = SDL_GetTicks() - last_recorded_ticks;
     last_recorded_ticks = SDL_GetTicks();
-    FPS += 1;
+    rendered_times += 1;
     per_second_CD += time_delta;
     if (per_second_CD >= 1000) {
         per_second_CD -= 1000;
-        FPS = 0;
+        FPS = rendered_times;
+        rendered_times = 0;
     }
     //物理帧时间累积
     if (!flag_stop)
@@ -93,3 +96,7 @@ TimeSpeedType GlobalData::getTimeSpeed()
 {
     return time_speed_type;
 }
+
+
+idea_UI_inspector* GlobalData::ui_inspector = nullptr;
+idea_UI_scope* GlobalData::ui_scope = nullptr;

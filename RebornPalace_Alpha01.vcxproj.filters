@@ -78,13 +78,13 @@
     <ClInclude Include="RenderingText.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="idea_physics_debugger.h">
+    <ClInclude Include="idea_debugger_physics.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GameToolkit.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="idea_game_info_debugger.h">
+    <ClInclude Include="idea_debugger_game_info.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
@@ -94,6 +94,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Warrior.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_UI_inspector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_UI_scope.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -158,13 +164,13 @@
     <ClCompile Include="RenderingText.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="idea_physics_debugger.cpp">
+    <ClCompile Include="idea_debugger_physics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GameToolkit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="idea_game_info_debugger.cpp">
+    <ClCompile Include="idea_debugger_game_info.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
@@ -174,6 +180,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Warrior.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_inspector.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_scope.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

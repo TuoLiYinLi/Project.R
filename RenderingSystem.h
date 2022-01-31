@@ -78,6 +78,6 @@ protected:
 	RenderingSystem();
 	~RenderingSystem();
 
-	static bool compareDepth(RenderingUnit* ru1, RenderingUnit* ru2);
+	static bool compareDepth(const RenderingUnit* ru1, const RenderingUnit* ru2);
 };
 

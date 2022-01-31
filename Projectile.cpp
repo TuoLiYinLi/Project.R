@@ -23,6 +23,9 @@ int Projectile::getProjectileNum()
 Projectile::Projectile()
 {
 	projectile_num ++;
+
+	type_game_object = GameObjectType::default_projectile;
+
 	animation_length = 60;
 	animation_progress = 0;
 	life_time = 60;

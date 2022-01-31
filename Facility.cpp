@@ -22,6 +22,7 @@ Facility::Facility() {
 	facility_num++;
 
 	name = u8"default facility";
+	type_game_object = GameObjectType::default_facility;
 
 	state = FacilityState::idle;
 	animation_progress = 0;

@@ -21,5 +21,8 @@ public:
 
 	//计算t波敌人的CD
 	static int getWaveTime(int t);
+
+	//检查鼠标是否在某方形范围内
+	static bool checkMouseInRange(int _x1, int _y1, int _x2, int _y2);
 };
 

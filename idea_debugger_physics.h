@@ -1,14 +1,14 @@
 #pragma once
 #include "GameObject.h"
-class idea_physics_debugger :
+class idea_debugger_physics :
     public GameObject
 {
 public:
-    static idea_physics_debugger* createNew();
+    static idea_debugger_physics* createNew();
     void update() override;
 protected:
-    idea_physics_debugger();
-    ~idea_physics_debugger()override;
+    idea_debugger_physics();
+    ~idea_debugger_physics()override;
 
     void renew_texture()const;
 

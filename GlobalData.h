@@ -1,6 +1,9 @@
 #pragma once
 #include "SDL.h"
 
+#include "idea_UI_inspector.h"
+#include "idea_UI_scope.h"
+
 enum class TimeSpeedType
 {
 	normal = 1,
@@ -34,8 +37,14 @@ public:
 
 	static TimeSpeedType getTimeSpeed();
 
+
+	static idea_UI_inspector* ui_inspector;
+	static idea_UI_scope* ui_scope;
+
 protected:
 	static Uint32 FPS;		//每秒多少帧（次数渲染）
+
+	static Uint32 rendered_times;		//这1秒内渲染的次数
 
 	static Uint32 time_physics_frames;//当前的物理帧时间
 

@@ -1,4 +1,4 @@
-#include "idea_physics_debugger.h"
+#include "idea_debugger_physics.h"
 #include "GlobalData.h"
 #include "Defined.h"
 #include "GameToolkit.h"
@@ -8,19 +8,19 @@
 #include "RenderingSystem.h"
 #include "WorldSystem.h"
 
-idea_physics_debugger* idea_physics_debugger::createNew()
+idea_debugger_physics* idea_debugger_physics::createNew()
 {
-	const auto ru = new idea_physics_debugger();
+	const auto ru = new idea_debugger_physics();
 	if (ru == nullptr) {
 #ifdef _DEBUG
-		SDL_Log(u8"警告 new idea_physics_debugger()申请内存失败，值为nullptr");
+		SDL_Log(u8"警告 new idea_debugger_physics()申请内存失败，值为nullptr");
 #endif // _DEBUG
 
 	}
 	return ru;
 }
 
-void idea_physics_debugger::update()
+void idea_debugger_physics::update()
 {
     if (GlobalData::flag_debug_physics)
     {
@@ -32,19 +32,19 @@ void idea_physics_debugger::update()
     }
 }
 
-void idea_physics_debugger::renew_texture()const
+void idea_debugger_physics::renew_texture()const
 {
     //指定为渲染目标，开始调整
     SDL_SetRenderTarget(GlobalData::sdl_renderer, animation_unit->getTexture());
     //渲染为完全透明
     SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_NONE);
     SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 0, 0, 0, 0);
-    SDL_RenderFillRect(GlobalData::sdl_renderer, nullptr);
+    SDL_RenderClear(GlobalData::sdl_renderer);
     //渲染物理体
     render_all_grids();
 }
 
-void idea_physics_debugger::create_texture()const
+void idea_debugger_physics::create_texture()const
 {
     //创建纹理
     SDL_Texture* texture = SDL_CreateTexture(GlobalData::sdl_renderer,
@@ -56,7 +56,7 @@ void idea_physics_debugger::create_texture()const
     SDL_SetTextureBlendMode(animation_unit->getTexture(), SDL_BLENDMODE_BLEND);
 }
 
-void idea_physics_debugger::destroy_texture()const
+void idea_debugger_physics::destroy_texture()const
 {
     //手动销毁材质
     if (animation_unit->getTexture())
@@ -69,13 +69,15 @@ void idea_physics_debugger::destroy_texture()const
 
 
 
-void idea_physics_debugger::render_one_grid(int grid_x, int grid_y)const
+void idea_debugger_physics::render_one_grid(int grid_x, int grid_y)const
 {
+    SDL_SetRenderTarget(GlobalData::sdl_renderer, animation_unit->getTexture());
+
     double x_tar, y_tar;
     GameToolkit::transPositionWorldToWindow(grid_x, grid_y, &x_tar, &y_tar);
-    const int w = (int)round(RenderingSystem::getInstance()->viewScale / 0.03125);
+    const int w = (int)floor(RenderingSystem::getInstance()->viewScale * 32);
     const int h = w;
-    SDL_Rect rect = { (int)round(x_tar),(int)round(y_tar),w,h };
+    SDL_Rect rect = { (int)floor(x_tar),(int)floor(y_tar),w,h };
 
     Grid* g = WorldSystem::getInstance()->getGrid(grid_x, grid_y);
     if(g!=nullptr)
@@ -126,7 +128,7 @@ void idea_physics_debugger::render_one_grid(int grid_x, int grid_y)const
 
 }
 
-void idea_physics_debugger::render_all_grids()const
+void idea_debugger_physics::render_all_grids()const
 {
     double x_start, y_start, x_end, y_end;
     GameToolkit::transPositionWindowToWorld(0, 0, &x_start, &y_start);
@@ -143,7 +145,7 @@ void idea_physics_debugger::render_all_grids()const
 
 
 
-idea_physics_debugger::idea_physics_debugger()
+idea_debugger_physics::idea_debugger_physics()
 {
     name = "physics_debugger";
 
@@ -158,7 +160,7 @@ idea_physics_debugger::idea_physics_debugger()
     renew_texture();
 }
 
-idea_physics_debugger::~idea_physics_debugger()
+idea_debugger_physics::~idea_debugger_physics()
 {
     destroy_texture();
 }

@@ -21,14 +21,16 @@
 
 #include "Facility.h"
 #include "Chara.h"
+#include "GameToolkit.h"
 #include "Projectile.h"
 
 #include "ProjectilePoint.h"
 #include "ProjectileFlying.h"
 
-#include "idea_physics_debugger.h"
-#include "idea_game_info_debugger.h"
+#include "idea_debugger_physics.h"
+#include "idea_debugger_game_info.h"
 #include "idea_monster_slime.h"
+#include "idea_UI_scope.h"
 
 int main(int argc, char** argv) {
 	std::cout << u8"Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
@@ -64,7 +66,6 @@ int main(int argc, char** argv) {
     WorldSystem::getInstance();
     UISystem::getInstance();
     RenderingSystem::getInstance();
-    SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_BLEND);
 
     //测试版水印
     auto const version_mark = RenderingText::createNew();
@@ -75,8 +76,12 @@ int main(int argc, char** argv) {
     version_mark->y = WINDOW_HEIGHT - version_mark->height;
 
     //物理层调试器
-    auto debugger_physics = idea_physics_debugger::createNew();
-    auto debugger_game_info = idea_game_info_debugger::createNew();
+    auto debugger_physics = idea_debugger_physics::createNew();
+    auto debugger_game_info = idea_debugger_game_info::createNew();
+
+    //游戏UI初始化
+    GlobalData::ui_scope = idea_UI_scope::createNew();
+    GlobalData::ui_inspector = idea_UI_inspector::createNew();
 
     /*
      */
@@ -140,26 +145,30 @@ int main(int argc, char** argv) {
         //处理输入事件
         UISystem::getInstance()->pullEvent();
         UISystem::getInstance()->controlGame();
+
+	    RenderingSystem::getInstance()->renewViewPosition();
         
         //每16ms运行一次逻辑帧
         while (GlobalData::getIfLogicGo())
         {
             WorldSystem::getInstance()->logicGo();
         }
-        //渲染系统
+
+
+        //额外update()
         {
     		//物理debug更新
+	        debugger_game_info->update();
 	        debugger_physics->update();
-            //游戏信息debug更新
-            debugger_game_info->update();
-	        
+	        //游戏信息debug更新
+    		//更新UI
+            GlobalData::ui_scope->update();
+        	GlobalData::ui_inspector->update();
+        }
 
-            //正常渲染
+        //渲染系统
+        {
             SDL_SetRenderTarget(GlobalData::sdl_renderer, nullptr);
-
-	        RenderingSystem::getInstance()->renewViewPosition();
-	        
-	        
 	        //渲染背景颜色
 	        SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 14, 80, 81, 255);
 	        SDL_RenderClear(GlobalData::sdl_renderer);

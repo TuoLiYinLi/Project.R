@@ -3,6 +3,7 @@
 #include "Defined.h"
 #include "GlobalData.h"
 #include "RenderingSystem.h"
+#include "UISystem.h"
 
 void GameToolkit::transPositionWorldToWindow(double x_world, double y_world, double* x_window, double* y_window)
 {
@@ -86,4 +87,11 @@ int GameToolkit::getWaveTime(int t)
 	else
 		return 60 * 60 * 2;
 		
+}
+
+bool GameToolkit::checkMouseInRange(int _x1, int _y1, int _x2, int _y2)
+{
+	const auto u= UISystem::getInstance();
+	return u->mouseX_window >= _x1 && u->mouseX_window <= _x2
+		&& u->mouseY_window >= _y1 && u->mouseY_window <= _y2;
 }

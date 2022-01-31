@@ -350,6 +350,9 @@ Chara::Chara()
 	chara_num++;
 
 	name = u8"default_character";
+
+	type_game_object = GameObjectType::default_chara;
+
 	action_type = CharaActionType::idle;
 
 	//设定物理体
