@@ -156,6 +156,7 @@ int main(int argc, char** argv) {
 
 
         //额外update()
+        if(GlobalData::flag_stop)
         {
     		//物理debug更新
 	        debugger_game_info->update();

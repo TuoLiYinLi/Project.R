@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CountingContainer.h" />
     <ClInclude Include="GameToolkit.h" />
     <ClInclude Include="idea_debugger_game_info.h" />
     <ClInclude Include="idea_monster_slime.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="WorldSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CountingContainer.cpp" />
     <ClCompile Include="GameToolkit.cpp" />
     <ClCompile Include="idea_debugger_game_info.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
@@ -85,6 +87,7 @@
     <ProjectGuid>{9b795767-9a06-4ac4-9ae6-98c8942ffd4a}</ProjectGuid>
     <RootNamespace>RebornPalaceAlpha01</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GoldustPalace</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

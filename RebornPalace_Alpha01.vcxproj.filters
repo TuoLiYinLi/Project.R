@@ -102,6 +102,9 @@
     <ClInclude Include="idea_UI_scope.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CountingContainer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -186,6 +189,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_UI_scope.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CountingContainer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

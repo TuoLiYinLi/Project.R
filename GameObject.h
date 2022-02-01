@@ -20,6 +20,7 @@ public:
 	virtual void destroy();	//统一销毁方式
 
 	virtual void update();	//受遍历的更新
+	//virtual void update_rendering();	//受遍历的更新
 
 	bool getIfDestroy()const;//询问是否可以销毁
 	std::string name;	//名称

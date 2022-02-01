@@ -77,7 +77,7 @@ void idea_debugger_physics::render_one_grid(int grid_x, int grid_y)const
     GameToolkit::transPositionWorldToWindow(grid_x, grid_y, &x_tar, &y_tar);
     const int w = (int)floor(RenderingSystem::getInstance()->viewScale * 32);
     const int h = w;
-    SDL_Rect rect = { (int)floor(x_tar),(int)floor(y_tar),w,h };
+    const SDL_Rect rect = { (int)floor(x_tar),(int)floor(y_tar),w,h };
 
     Grid* g = WorldSystem::getInstance()->getGrid(grid_x, grid_y);
     if(g!=nullptr)

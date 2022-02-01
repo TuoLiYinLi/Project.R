@@ -1,22 +1,21 @@
-#include "Counting.h"
-#include "Defined.h"
+#include "CountingContainer.h"
 
-Counting* Counting::createNew()
+CountingContainer* CountingContainer::createNew()
 {
-	auto c = new Counting();
+	auto c = new CountingContainer();
 	return c;
 }
 
-void Counting::destroy()
+void CountingContainer::destroy()
 {
 	delete this;
 }
 
-int Counting::getNumOf(CountingType ct)
+int CountingContainer::getNumOf(CountingType ct)
 {
 	for (auto it = cpList.begin(); it != cpList.end(); it++)
 	{
-		countingObject co = *it;
+		CountingObject co = *it;
 		if (co.type==ct)
 		{
 			return co.num;
@@ -25,11 +24,11 @@ int Counting::getNumOf(CountingType ct)
 	return 0;
 }
 
-void Counting::addNumOf(CountingType ct, int num)
+void CountingContainer::addNumOf(CountingType ct, int num)
 {
 	for (auto it = cpList.begin(); it != cpList.end(); it++)
 	{
-		countingObject co = *it;
+		CountingObject co = *it;
 		if (co.type == ct)
 		{
 			co.num += num;
@@ -44,7 +43,7 @@ void Counting::addNumOf(CountingType ct, int num)
 	}
 	if (num > 0) 
 	{
-		auto new_co = countingObject(ct, num);
+		auto new_co = CountingObject(ct, num);
 		cpList.push_front(new_co);
 #ifdef COUNTING_DEBUG
 		std::cout << "\t\t创建了新countingObject\n";
@@ -53,22 +52,22 @@ void Counting::addNumOf(CountingType ct, int num)
 	}
 }
 
-Counting::Counting()
+CountingContainer::CountingContainer()
 {
 #ifdef COUNTING_DEBUG
-	std::cout << "\tCounting::Counting()\n";
+	std::cout << "\tCounting::CountingContainer()\n";
 #endif // COUNTING_DEBUG
-	cpList = std::list<countingObject>();
+	cpList = std::list<CountingObject>();
 }
 
-Counting::~Counting()
+CountingContainer::~CountingContainer()
 {
 #ifdef COUNTING_DEBUG
-	std::cout << "\tCounting::~Counting()\n";
+	std::cout << "\tCounting::~CountingContainer()\n";
 #endif // COUNTING_DEBUG
 }
 
-countingObject::countingObject(CountingType _type, int _num)
+CountingObject::CountingObject(CountingType _type, int _num)
 {
 	type = _type;
 	num = _num;
