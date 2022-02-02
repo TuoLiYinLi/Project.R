@@ -8,7 +8,7 @@ class idea_debugger_game_info :
 {
 public:
     static idea_debugger_game_info* createNew();
-    void update() override;
+    void updateOnRendering() override;
 protected:
     idea_debugger_game_info();
     ~idea_debugger_game_info()override;

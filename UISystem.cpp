@@ -10,13 +10,7 @@ UISystem* UISystem::getInstance()
 {
     if (instance == nullptr) {
         instance = new UISystem();
-        if (instance ==nullptr) {
-#ifdef _DEBUG
-            SDL_Log(u8" ERROR:new UISystem()ÉêÇëÄÚ´æÊ§°Ü,ÖµÎªnullptr");
-#endif // _DEBUG
-        }
     }
-
     return instance;
 }
 

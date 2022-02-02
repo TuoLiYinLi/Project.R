@@ -5,7 +5,7 @@ class idea_debugger_physics :
 {
 public:
     static idea_debugger_physics* createNew();
-    void update() override;
+    void updateOnRendering() override;
 protected:
     idea_debugger_physics();
     ~idea_debugger_physics()override;

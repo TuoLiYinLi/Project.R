@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "PhysicsChara.h"
 
+#include "CountingContainer.h"
+
 enum class CharaActionType
 {
 	idle,//闲置
@@ -70,6 +72,9 @@ public:
 	double stamina_recovery_accumulation;//活力值累积量
 	
 	int oxygen;//氧气值
+
+	//角色的计数物
+	CountingContainer* counting_container;//计数物容器
 
 
 	//角色效果

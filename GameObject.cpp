@@ -60,6 +60,12 @@ void GameObject::update()
 	
 }
 
+void GameObject::updateOnRendering()
+{
+	
+}
+
+
 
 bool GameObject::getIfDestroy() const
 {

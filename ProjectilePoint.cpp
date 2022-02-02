@@ -1,15 +1,8 @@
 #include "ProjectilePoint.h"
 
-#include <SDL_log.h>
-
 ProjectilePoint* ProjectilePoint::createNew()
 {
-	const auto p = new ProjectilePoint();
-	if (!p)
-	{
-		SDL_Log(u8"警告 分配ProjectilePoint内存不足");
-	}
-	return p;
+	return new ProjectilePoint();
 }
 
 void ProjectilePoint::update()

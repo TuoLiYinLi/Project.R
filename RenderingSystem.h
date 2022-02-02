@@ -8,7 +8,6 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
-#include "RenderingAnimation.h"
 #include "RenderingUnit.h"
 #include "EnumAnimationType.h"
 
@@ -34,13 +33,13 @@ public:
 	void remove(RenderingUnit* ru)const;
 
 	//加载某一种动画资源
-	void loadAnimation( AnimationType antp);
+	void loadAnimation( AnimationType antp)const;
 	//加载所有种类的动画资源
-	void loadAllAnimation();
+	void loadAllAnimation()const;
 	//卸载某一种动画资源
 	void unloadAnimation(AnimationType antp) const;
 	//卸载所有种类的动画资源
-	void unloadAllAnimation();
+	void unloadAllAnimation()const;
 
 	//渲染单个的渲染单元
 	void renderOneUnit(const RenderingUnit* au) const;
@@ -50,8 +49,6 @@ public:
 
 	//渲染所有动画单元(跳过不需要渲染的部分)
 	void renderAll() const;
-
-	void renderTexture(SDL_Texture* texture, double x,double deltaX, double y, double deltaY, double w, double h,SDL_RendererFlip flip) const;
 	
 	SDL_Texture* getAnimation(AnimationType _animation_type,unsigned long long num)const;
 	unsigned long long getAnimationSize(AnimationType _animation_type)const;

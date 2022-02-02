@@ -3,11 +3,7 @@
 #include "PhysicsFacility.h"
 
 Facility* Facility::createNew() {
-	auto const f = new Facility();
-	if (!f) {
-		SDL_Log(u8"警告 分配Facility内存不足");
-	}
-	return f;
+	return new Facility();
 }
 
 int Facility::facility_num = 0;
@@ -26,7 +22,6 @@ Facility::Facility() {
 
 	state = FacilityState::idle;
 	animation_progress = 0;
-	type_game_object = GameObjectType::default_facility;
 
 	animation_length_idle = 0;
 	animation_length_activated = 0;
