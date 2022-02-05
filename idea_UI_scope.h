@@ -5,7 +5,7 @@ class idea_UI_scope :
 {
 public:
 	static idea_UI_scope* createNew();
-	void updateOnRendering() override;
+	void update() override;
 	void enable();
 	void disable();
 	void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);//ÉèÖÃÑÕÉ«

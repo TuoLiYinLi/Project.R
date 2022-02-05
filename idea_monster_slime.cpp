@@ -4,7 +4,14 @@
 
 idea_monster_slime* idea_monster_slime::createNew()
 {
-	return new idea_monster_slime();
+	const auto m = new idea_monster_slime();
+	if (m == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new idea_monster_slime()申请内存失败，值为nullptr");
+#endif // _DEBUG
+
+	}
+	return m;
 }
 
 idea_monster_slime::idea_monster_slime()

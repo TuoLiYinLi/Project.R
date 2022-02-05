@@ -29,7 +29,7 @@ WorldSystem* WorldSystem::instance = nullptr;
 
 WorldSystem::WorldSystem()
 {
-	SDL_Log(u8"WorldSystem construct");
+	SDL_Log("WorldSystem construct");
 
 	map = new std::vector<std::vector<Grid*>*>();
 	for (int i = 0; i < WORLD_WIDTH; ++i)
@@ -73,7 +73,7 @@ WorldSystem::~WorldSystem()
 	delete list_physics_facility;
 	delete list_physics_projectile;
 
-	SDL_Log(u8"WorldSystem destruct");
+	SDL_Log("WorldSystem destruct");
 }
 
 void WorldSystem::logicGo()
@@ -120,29 +120,10 @@ void WorldSystem::logicGo_game_objects() const
 	}
 }
 
-void WorldSystem::logicGoOnRendering() const
-{
-	auto i = list_game_objects->begin();
-	while (i != list_game_objects->end())
-	{
-		(*i)->updateOnRendering();
-		if ((*i)->getIfDestroy())
-		{
-			(*i)->destroy();
-			i = list_game_objects->erase(i);
-		}
-		else
-		{
-			++i;
-		}
-	}
-}
-
-
 void WorldSystem::logicGo_game_data()
 {
 	goldust_energy_accumulation += goldust_energy_recovery;
-	const int delta = static_cast<int>(floor(goldust_energy_accumulation));
+	const int delta = (int)floor(goldust_energy_accumulation);
 	goldust_energy += delta;
 	goldust_energy_accumulation -= delta;
 
@@ -162,13 +143,10 @@ Grid* WorldSystem::getGrid(int _x, int _y) const
 	{
 		return map->at(_x)->at(_y);
 	}
-	else
-	{
-		return nullptr;
-	}
+	else return nullptr;
 }
 
 bool WorldSystem::compareGameObjects(GameObject* o1, GameObject* o2)
 {
-	return static_cast<int>(o1->type_game_object) < static_cast<int>(o2->type_game_object);
+	return (int)o1->type_game_object < (int)o2->type_game_object;
 }

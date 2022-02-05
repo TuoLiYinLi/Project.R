@@ -3,8 +3,15 @@
 #include "WorldSystem.h"
 
 Monster* Monster::createNew()
-{ 
-	return new Monster();
+{
+	const auto m = new Monster();
+	if (m == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new Monster()申请内存失败，值为nullptr");
+#endif // _DEBUG
+
+	}
+	return m;
 }
 
 Monster::Monster()

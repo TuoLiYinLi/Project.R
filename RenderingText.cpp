@@ -6,7 +6,14 @@
 
 RenderingText* RenderingText::createNew()
 {
-	return new RenderingText();
+	const auto rt = new RenderingText();
+	if (rt == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"ERROR:new RenderingAnimation()ÉêÇëÄÚ´æÊ§°Ü£¬ÖµÎªnullptr");
+#endif // _DEBUG
+
+	}
+	return rt;
 }
 
 void RenderingText::setTexture(const char* utf8_msg, SDL_Color color, double scale)

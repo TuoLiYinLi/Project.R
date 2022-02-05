@@ -7,10 +7,17 @@
 
 idea_UI_inspector* idea_UI_inspector::createNew()
 {
-	return new idea_UI_inspector();
+	const auto i = new idea_UI_inspector();
+	if (i == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new idea_UI_inspector()申请内存失败，值为nullptr");
+#endif // _DEBUG
+
+	}
+	return i;
 }
 
-void idea_UI_inspector::updateOnRendering()
+void idea_UI_inspector::update()
 {
 	if (!flag_enable)return;
 
@@ -28,7 +35,7 @@ idea_UI_inspector::idea_UI_inspector()
 	tar_facility = nullptr;
 	tar_warrior = nullptr;
 
-	name = u8"UI_inspector";
+	name = "UI_inspector";
 
 	animation_unit = RenderingUnit::createNew();
 	animation_unit->deltaX = 0;
@@ -70,18 +77,18 @@ void idea_UI_inspector::renew_texture() const
 	SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_NONE);
 
 	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 204, 204, 204, 255);
-	SDL_Rect rect={0,0,static_cast<int>(animation_unit->width),44};
+	SDL_Rect rect={0,0,(int)animation_unit->width,44};
 	SDL_RenderFillRect(GlobalData::sdl_renderer, &rect);
 
 	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 255, 255, 255, 255);
-	rect = { 0,44,static_cast<int>(animation_unit->width),static_cast<int>(animation_unit->height) };
+	rect = { 0,44,(int)animation_unit->width,(int)animation_unit->height };
 	SDL_RenderFillRect(GlobalData::sdl_renderer, &rect);
 
 	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 106, 106, 106, 255);
-	rect = { 4,48,static_cast<int>(animation_unit->width) - 8,static_cast<int>(animation_unit->height) - 52 };
+	rect = { 4,48,(int)animation_unit->width - 8,(int)animation_unit->height - 52 };
 	SDL_RenderFillRect(GlobalData::sdl_renderer, &rect);
 
-	rect = { static_cast<int>(animation_unit->width) - 40,4,36,36 };
+	rect = { (int)animation_unit->width - 40,4,36,36 };
 	SDL_RenderCopy(GlobalData::sdl_renderer, texture_exit_button, nullptr, &rect);
 
 	animation_unit->x = WINDOW_WIDTH - animation_unit->width - 24;
@@ -100,8 +107,8 @@ void idea_UI_inspector::destroy_texture() const
 
 void idea_UI_inspector::renew_state()
 {
-	const int _x1 = static_cast<int>(animation_unit->x + animation_unit->width) - 40;
-	const int _y1 = static_cast<int>(animation_unit->y) + 4;
+	const int _x1 = int(animation_unit->x + animation_unit->width) - 40;
+	const int _y1 = (int)animation_unit->y + 4;
 	const int _x2 = _x1 + 36;
 	const int _y2 = _y1 + 36;
 

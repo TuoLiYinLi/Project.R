@@ -6,7 +6,12 @@
 
 PhysicsProjectile* PhysicsProjectile::createNew()
 {
-	return new PhysicsProjectile();
+	PhysicsProjectile* physics_projectile = new PhysicsProjectile();
+	if(!physics_projectile)
+	{
+		SDL_Log(u8"¾¯¸æ ·ÖÅäphysics_projectileÄÚ´æ²»×ã");
+	}
+	return physics_projectile;
 }
 
 PhysicsProjectile::PhysicsProjectile()
@@ -65,6 +70,12 @@ void PhysicsProjectile::renewSignedGrids()
 	const int y_start = getTopGrid();
 	const int y_end = getBottomGrid();
 
+	if (x_start < 0 || x_end >= (int)WORLD_WIDTH || y_start < 0 || y_start >= (int)WORLD_HEIGHT)
+	{
+		SDL_Log(u8"projectile³¬³ö·¶Î§");
+		return;
+	}
+
 	for (int i = x_start; i <= x_end; i++)
 	{
 		for (int j = y_start; j <= y_end; j++)
@@ -85,6 +96,12 @@ void PhysicsProjectile::renewHitCharas() const
 	const int down = getBottomGrid();
 	const int left = getLeftGrid();
 	const int right = getRightGrid();
+
+	if (left < 0 || right >= (int)WORLD_WIDTH || up < 0 || down >= (int)WORLD_HEIGHT)
+	{
+		SDL_Log(u8"³¬³ö·¶Î§");
+		return;
+	}
 
 	for (int x = left; x <= right; ++x)
 	{
@@ -109,6 +126,12 @@ void PhysicsProjectile::renewHitFacilities() const
 	const int left = getLeftGrid();
 	const int right = getRightGrid();
 
+	if (left < 0 || right >= (int)WORLD_WIDTH || up < 0 || down >= (int)WORLD_HEIGHT)
+	{
+		SDL_Log(u8"³¬³ö·¶Î§");
+		return;
+	}
+
 	for (int x = left; x <= right; ++x)
 	{
 		for (int y = up; y <= down; ++y)
@@ -130,6 +153,12 @@ void PhysicsProjectile::renewHitProjectiles() const
 	const int down = getBottomGrid();
 	const int left = getLeftGrid();
 	const int right = getRightGrid();
+
+	if (left < 0 || right >= (int)WORLD_WIDTH || up < 0 || down >= (int)WORLD_HEIGHT)
+	{
+		SDL_Log(u8"³¬³ö·¶Î§");
+		return;
+	}
 
 	for (int x = left; x <= right; ++x)
 	{

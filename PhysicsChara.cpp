@@ -5,7 +5,12 @@
 
 PhysicsChara* PhysicsChara::createNew()
 {
-	return new PhysicsChara();
+	PhysicsChara* physics_chara = new PhysicsChara();
+	if(!physics_chara)
+	{
+		SDL_Log(u8"警告 分配physics_chara内存不足");
+	}
+	return physics_chara;
 }
 
 PhysicsChara::PhysicsChara()
@@ -99,7 +104,7 @@ void PhysicsChara::update()
 	}
 
 	//整点检查
-	if (moving_inertia <= static_cast<int>(floor(moving_inertia)))
+	if (moving_inertia <= (int)floor(moving_inertia))
 	{
 		//坠落检查
 		if (detectFalling())
@@ -135,7 +140,7 @@ void PhysicsChara::stepForward()
 			//撞墙检查
 			if (detectForward(moving_direction, BlockingType::solid)||detectBorder(moving_direction))
 			{
-				impact = static_cast<int>(round(moving_inertia));
+				impact = (int)round(moving_inertia);
 				moving_inertia = 0;
 				moving = false;
 			}
@@ -294,13 +299,13 @@ bool PhysicsChara::detectBorder(CharaDirection direction) const
 	switch (direction)
 	{
 	case CharaDirection::right:
-		return getRightGrid() + 1 >= static_cast<int>(WORLD_WIDTH);
+		return getRightGrid() + 1 >= (int)WORLD_WIDTH;
 	case CharaDirection::up:
 		return getTopGrid() - 1 < 0;
 	case CharaDirection::left:
 		return getLeftGrid() - 1 < 0;
 	case CharaDirection::down:
-		return getBottomGrid() + 1 >= static_cast<int>(WORLD_HEIGHT);
+		return getBottomGrid() + 1 >= (int)WORLD_HEIGHT;
 	}
 
 	return false;
@@ -356,12 +361,10 @@ bool PhysicsChara::detectMoving(CharaDirection direction) const
 
 void PhysicsChara::setMotion(CharaDirection direction, double speed, double inertia, bool _hit_back)
 {
-#ifdef _DEBUG
 	if(inertia<0)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_ERROR,u8"PhysicsChara::setMotion设置运动量小于0");
+		SDL_Log(u8"警告 设置运动量小于0");
 	}
-#endif
 
 	if(!_hit_back)
 	{
@@ -400,7 +403,7 @@ void PhysicsChara::setMotion(CharaDirection direction, double speed, double iner
 			{
 				//在运动中
 
-				const auto j = abs(static_cast<int>(direction) - static_cast<int>(moving_direction));
+				const auto j = abs(int(direction) - int(moving_direction));
 				if (j==0)
 				{
 					//同方向
@@ -412,7 +415,7 @@ void PhysicsChara::setMotion(CharaDirection direction, double speed, double iner
 				}else if (j==2)
 				{
 					//产生的冲击
-					impact = static_cast<int>(floor(moving_inertia)) + falling_count;
+					impact = (int)floor(moving_inertia) + falling_count;
 					falling_count = 0;
 					//反方向
 					moving_direction = direction;
@@ -425,7 +428,7 @@ void PhysicsChara::setMotion(CharaDirection direction, double speed, double iner
 				}else
 				{
 					//产生的冲击
-					impact = static_cast<int>(floor(moving_inertia)) + falling_count;
+					impact = (int)floor(moving_inertia) + falling_count;
 					falling_count = 0;
 					//垂直方向
 					const double decimal_part = moving_inertia - floor(moving_inertia);

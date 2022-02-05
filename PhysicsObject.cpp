@@ -76,22 +76,22 @@ double PhysicsObject::getRight() const
 int PhysicsObject::getTopGrid() const
 {
 	const double top = getTop();
-	return static_cast<int>(ceil(top - 0.5));
+	return (int)ceil(top - 0.5);
 }
 int PhysicsObject::getBottomGrid() const
 {
 	const double bottom = getBottom();
-	return static_cast<int>(floor(bottom - 0.5));
+	return (int)floor(bottom - 0.5);
 }
 int PhysicsObject::getLeftGrid() const
 {
 	const double left = getLeft();
-	return static_cast<int>(ceil(left - 0.5));
+	return (int)ceil(left - 0.5);
 }
 int PhysicsObject::getRightGrid() const
 {
 	const double right = getRight();
-	return static_cast<int>(floor(right - 0.5));
+	return (int)floor(right - 0.5);
 }
 
 int PhysicsObject::physicsObjectNum = 0;

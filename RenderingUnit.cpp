@@ -5,11 +5,12 @@
 RenderingUnit* RenderingUnit::createNew()
 {
 	const auto ru = new RenderingUnit();
-#ifdef _DEBUG
 	if (ru == nullptr) {
-		SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"new RenderingUnit()申请内存失败，值为nullptr");
-	}
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new RenderingUnit()申请内存失败，值为nullptr");
 #endif // _DEBUG
+
+	}
 	return ru;
 }
 

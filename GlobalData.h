@@ -38,8 +38,8 @@ public:
 	static TimeSpeedType getTimeSpeed();
 
 
-	static idea_UI_inspector* ui_inspector;//UI检查器
-	static idea_UI_scope* ui_scope;//UI选中框
+	static idea_UI_inspector* ui_inspector;
+	static idea_UI_scope* ui_scope;
 
 protected:
 	static Uint32 FPS;		//每秒多少帧（次数渲染）

@@ -8,10 +8,17 @@
 
 idea_UI_scope* idea_UI_scope::createNew()
 {
-	return new idea_UI_scope();
+	const auto i = new idea_UI_scope();
+	if (i == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new idea_UI_inspector()申请内存失败，值为nullptr");
+#endif // _DEBUG
+
+	}
+	return i;
 }
 
-void idea_UI_scope::updateOnRendering()
+void idea_UI_scope::update()
 {
 	if(!flag_enable)return;
 	renew_state();
@@ -30,7 +37,7 @@ idea_UI_scope::idea_UI_scope()
 	color_b = 255;
 	color_a = 255;
 
-	name = u8"UI_scope";
+	name = "UI_scope";
 
 	animation_unit = RenderingUnit::createNew();
 
@@ -69,10 +76,10 @@ void idea_UI_scope::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 
 void idea_UI_scope::renew_state()
 {
-	const int _x = static_cast<int>(floor(UISystem::getInstance()->mouseX_world));
-	const int _y = static_cast<int>(floor(UISystem::getInstance()->mouseY_world));
+	const int _x = (int)floor(UISystem::getInstance()->mouseX_world);
+	const int _y = (int)floor(UISystem::getInstance()->mouseY_world);
 
-	animation_unit->width = static_cast<int>(floor(RenderingSystem::getInstance()->viewScale * 32));
+	animation_unit->width = (int)floor(RenderingSystem::getInstance()->viewScale * 32);
 	animation_unit->height = animation_unit->width;
 
 	GameToolkit::transPositionWorldToWindow(_x, _y,
@@ -84,7 +91,7 @@ void idea_UI_scope::create_texture()
 {
 	SDL_Texture* texture = SDL_CreateTexture(GlobalData::sdl_renderer,
 		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-		static_cast<int>(animation_unit->width), static_cast<int>(animation_unit->height));
+		(int)animation_unit->width, (int)animation_unit->height);
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
 	animation_unit->setTexture(texture);
 }

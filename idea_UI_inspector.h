@@ -11,7 +11,7 @@ public:
 
     static idea_UI_inspector* createNew();
 
-    void updateOnRendering() override;
+    void update() override;
 
     void enable();
     void disable();

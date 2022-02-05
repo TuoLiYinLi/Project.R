@@ -4,7 +4,12 @@
 
 Grid* Grid::createNew(unsigned int x, unsigned int y)
 {
-	return new Grid(x, y);
+	Grid* g = new Grid(x, y);
+	if (!g)
+	{
+		SDL_Log(u8"警告 Grid生成内存不足");
+	}
+	return g;
 }
 
 void Grid::destroy() const
@@ -60,9 +65,7 @@ bool Grid::getBlockingType(BlockingType blocking_type) const
 	case BlockingType::air:
 		return blocking_air;
 	}
-#ifdef _DEBUG
-	SDL_LogError(SDL_LOG_CATEGORY_ERROR,u8"Grid::getBlockingType未预料的返回Grid::getBlockingType");
-#endif
+	SDL_Log(u8"警告 未预料的返回Grid::getBlockingType");
 	return false;
 }
 

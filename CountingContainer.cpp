@@ -2,20 +2,21 @@
 
 CountingContainer* CountingContainer::createNew()
 {
-	return new CountingContainer();
+	auto c = new CountingContainer();
+	return c;
 }
 
-void CountingContainer::destroy()const
+void CountingContainer::destroy()
 {
 	delete this;
 }
 
 int CountingContainer::getNumOf(CountingType ct)
 {
-	for (auto it = list_counting_type.begin(); it != list_counting_type.end(); ++it)
+	for (auto it = cpList.begin(); it != cpList.end(); it++)
 	{
-		const CountingObject co = *it;
-		if (co.type == ct)
+		CountingObject co = *it;
+		if (co.type==ct)
 		{
 			return co.num;
 		}
@@ -25,44 +26,45 @@ int CountingContainer::getNumOf(CountingType ct)
 
 void CountingContainer::addNumOf(CountingType ct, int num)
 {
-	for (auto it = list_counting_type.begin(); it != list_counting_type.end(); ++it)
+	for (auto it = cpList.begin(); it != cpList.end(); it++)
 	{
 		CountingObject co = *it;
 		if (co.type == ct)
 		{
 			co.num += num;
 			if (co.num <= 0) {
-				list_counting_type.erase(it);
+				cpList.erase(it);
+#ifdef COUNTING_DEBUG
+				std::cout << "\t\t移除了countingObject\n";
+#endif // COUNTING_DEBUG
 				return;
 			}
 		}
 	}
-	//说明没有这种计数物,将会新增这种计数物
 	if (num > 0) 
 	{
-		list_counting_type.push_front(CountingObject(ct, num));
-	}
-}
+		auto new_co = CountingObject(ct, num);
+		cpList.push_front(new_co);
+#ifdef COUNTING_DEBUG
+		std::cout << "\t\t创建了新countingObject\n";
+#endif // COUNTING_DEBUG
 
-void CountingContainer::removeNumOf(CountingType ct)
-{
-	for (auto it = list_counting_type.begin(); it != list_counting_type.end(); ++it)
-	{
-		if ((*it).type == ct)
-		{
-			list_counting_type.erase(it);
-			return;
-		}
 	}
 }
 
 CountingContainer::CountingContainer()
 {
-	list_counting_type = std::list<CountingObject>();
+#ifdef COUNTING_DEBUG
+	std::cout << "\tCounting::CountingContainer()\n";
+#endif // COUNTING_DEBUG
+	cpList = std::list<CountingObject>();
 }
 
 CountingContainer::~CountingContainer()
 {
+#ifdef COUNTING_DEBUG
+	std::cout << "\tCounting::~CountingContainer()\n";
+#endif // COUNTING_DEBUG
 }
 
 CountingObject::CountingObject(CountingType _type, int _num)
@@ -70,4 +72,3 @@ CountingObject::CountingObject(CountingType _type, int _num)
 	type = _type;
 	num = _num;
 }
-

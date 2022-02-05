@@ -4,7 +4,12 @@
 
 PhysicsFacility* PhysicsFacility::createNew()
 {
-	return new PhysicsFacility();
+	PhysicsFacility* physics_facility = new PhysicsFacility();
+	if (physics_facility==nullptr)
+	{
+		SDL_Log(u8"警告 分配physics_facility内存不足");
+	}
+	return physics_facility;
 }
 
 PhysicsFacility::PhysicsFacility()

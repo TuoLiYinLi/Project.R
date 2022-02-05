@@ -10,10 +10,17 @@
 
 idea_debugger_physics* idea_debugger_physics::createNew()
 {
-	return new idea_debugger_physics();
+	const auto ru = new idea_debugger_physics();
+	if (ru == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"警告 new idea_debugger_physics()申请内存失败，值为nullptr");
+#endif // _DEBUG
+
+	}
+	return ru;
 }
 
-void idea_debugger_physics::updateOnRendering()
+void idea_debugger_physics::update()
 {
     if (GlobalData::flag_debug_physics)
     {
@@ -68,9 +75,9 @@ void idea_debugger_physics::render_one_grid(int grid_x, int grid_y)const
 
     double x_tar, y_tar;
     GameToolkit::transPositionWorldToWindow(grid_x, grid_y, &x_tar, &y_tar);
-    const int w = static_cast<int>(floor(RenderingSystem::getInstance()->viewScale * 32));
+    const int w = (int)floor(RenderingSystem::getInstance()->viewScale * 32);
     const int h = w;
-    const SDL_Rect rect = { static_cast<int>(floor(x_tar)),static_cast<int>(floor(y_tar)),w,h };
+    const SDL_Rect rect = { (int)floor(x_tar),(int)floor(y_tar),w,h };
 
     Grid* g = WorldSystem::getInstance()->getGrid(grid_x, grid_y);
     if(g!=nullptr)
@@ -127,9 +134,9 @@ void idea_debugger_physics::render_all_grids()const
     GameToolkit::transPositionWindowToWorld(0, 0, &x_start, &y_start);
     GameToolkit::transPositionWindowToWorld(WINDOW_WIDTH, WINDOW_HEIGHT, &x_end, &y_end);
 
-    for (int i = static_cast<int>(floor(x_start)); i < x_end; ++i)
+    for (int i = (int)floor(x_start); i < x_end; ++i)
     {
-        for (int j = static_cast<int>(floor(y_start)); j < y_end; ++j)
+        for (int j = (int)floor(y_start); j < y_end; ++j)
         {
             render_one_grid(i, j);
         }

@@ -5,19 +5,22 @@
 #include "SDL.h"
 
 
-Chara* Chara::createNew()
-{
-	return new Chara();
+Chara* Chara::createNew() {
+	Chara* c = new Chara();
+	if (!c) {
+		SDL_Log(u8"警告 生成Chara内存不足");
+	}
+	return c;
 }
 
 PhysicsChara* Chara::getPhysicsChara() const
 {
-	return static_cast<PhysicsChara*>(physics_object);
+	return (PhysicsChara*)physics_object;
 }
 
 RenderingAnimation* Chara::getRenderingAnimation() const
 {
-	return static_cast<RenderingAnimation*>(animation_unit);
+	return (RenderingAnimation*)animation_unit;
 }
 
 
@@ -38,7 +41,7 @@ void Chara::update_attributes()
 	{
 		onBurning();
 		burning_damage_accumulation += BURNING_SPEED;
-		const int delta = static_cast<int>(floor(burning_damage_accumulation));
+		const int delta = (int)floor(burning_damage_accumulation);
 		health -= delta;
 		burning_damage_accumulation -= delta;
 		if(health<0)
@@ -55,7 +58,7 @@ void Chara::update_attributes()
 	{
 		onPoisoned();
 		poisoned_damage_accumulation += health * POISONED_SPEED;
-		const int delta = static_cast<int>(floor(poisoned_damage_accumulation));
+		const int delta = (int)floor(poisoned_damage_accumulation);
 		health -= delta;
 		poisoned_damage_accumulation -= delta;
 		if(health<0)
@@ -77,7 +80,7 @@ void Chara::update_attributes()
 			//缺氧
 			oxygen = 0;
 			oxygen_damage_accumulation += health_max * OXYGEN_DAMAGE;
-			const int delta = static_cast<int>(floor(oxygen_damage_accumulation));
+			const int delta = (int)floor(oxygen_damage_accumulation);
 			health -= delta;
 			oxygen_damage_accumulation -= delta;
 			if (health < 0)
@@ -105,7 +108,7 @@ void Chara::update_attributes()
 	if (effect_poisoned <= 0)
 	{
 		health_recovery_accumulation += health_recovery_speed;
-		const int delta = static_cast<int>(floor(health_recovery_accumulation));
+		const int delta = (int)floor(health_recovery_accumulation);
 		health += delta;
 		health_recovery_accumulation -= delta;
 		if(health>health_max)
@@ -336,7 +339,7 @@ void Chara::update_animation() {
 	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
 	//刷新深度
-	animation_unit->depth = RENDERING_DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
+	animation_unit->depth = RENDERING_DEPTH_WORLD_CHARA + (float)physics_object->Y;
 
 }
 
@@ -417,9 +420,6 @@ Chara::Chara()
 		
 		oxygen = OXYGEN_MAX;//氧气值
 	}
-	//角色计数物
-	counting_container = CountingContainer::createNew();
-
 
 	//设置角色效果
 	{
@@ -436,8 +436,6 @@ Chara::Chara()
 
 Chara::~Chara()
 {
-	counting_container->destroy();
-
 	chara_num--;
 }
 

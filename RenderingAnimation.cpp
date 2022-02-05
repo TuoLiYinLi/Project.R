@@ -1,9 +1,16 @@
 #include "RenderingAnimation.h"
 #include "RenderingSystem.h"
 
-RenderingAnimation* RenderingAnimation::createNew()
-{
-	return new RenderingAnimation();
+RenderingAnimation* RenderingAnimation::createNew() {
+
+	const auto au = new RenderingAnimation();
+	if (au == nullptr) {
+#ifdef _DEBUG
+		SDL_Log(u8"ERROR:new RenderingAnimation()ÉêÇëÄÚ´æÊ§°Ü£¬ÖµÎªnullptr");
+#endif // _DEBUG
+
+	}
+	return au;
 }
 
 RenderingAnimation::RenderingAnimation() {
@@ -22,14 +29,13 @@ void RenderingAnimation::setTexture(AnimationType type, int time_length, int cur
 		return;
 	}
 
-	const auto texture_num = static_cast<double>(RenderingSystem::getInstance()->getAnimationSize(type));
-	const int animation_progress = static_cast<int>(floor(texture_num * current / time_length));
+	const auto texture_num = (double)RenderingSystem::getInstance()->getAnimationSize(type);
+	const int animation_progress = (int)floor(texture_num * current / time_length);
 
-#ifdef _DEBUG
+
 	if (animation_progress >= texture_num) {
-		SDL_LogError(SDL_LOG_CATEGORY_ERROR,u8"RenderingSystem::getTextureFromAU ³¬³ö·¶Î§ progress:%d num:%d",animation_progress,static_cast<int>(texture_num));
+		SDL_Log(u8"ERROR:RenderingSystem::getTextureFromAU ³¬³ö·¶Î§ progress:%d num:%d",animation_progress,(int)texture_num);
 	}
-#endif
 
 	texture = RenderingSystem::getInstance()->getAnimation(type, animation_progress);
 }

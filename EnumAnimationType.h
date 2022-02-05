@@ -13,6 +13,7 @@ enum class AnimationType
 	physics_debug_layer_liquid,
 	physics_debug_layer_absolute,
 	physics_debug_layer_chara,
+	physics_debug_layer_facility,
 	physics_debug_layer_projectile,
 
 

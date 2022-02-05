@@ -26,17 +26,18 @@ public:
 	//创建一组计数物
 	static CountingContainer* createNew();
 	//销毁这一组计数物
-	void destroy()const;
+	void destroy();
 	//记录有哪些计数物以及它们的数量
-	std::list<CountingObject> list_counting_type;
+	std::list<CountingObject> cpList;
 	//查询一种计数物的数量
 	int getNumOf(CountingType ct);
 	//增加一种计数物的数量
 	void addNumOf(CountingType ct, int num);
 
-	void removeNumOf(CountingType ct);//移除一种计数物
-
 protected:
+	//从列表删除一种计数物
+	
+	//新增一种计数物
 
 	CountingContainer();
 	~CountingContainer();
