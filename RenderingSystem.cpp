@@ -196,211 +196,254 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
         int num = 0;
         switch (antp)
         {
-        case AnimationType::default_banned:
-            file = "./Resource/texture/default_banned";
+			//debug
+        case AnimationType::debug_banned:
+            file = "./Resource/texture/debug_banned";
             num = 1;
             break;
-        case AnimationType::default_b:
-            file = "./Resource/texture/default_b";
+            //
+        case AnimationType::debug_physics_outside:
+            file = "./Resource/texture/debug_physics_outside";
             num = 1;
             break;
-        case AnimationType::default_r:
-            file = "./Resource/texture/default_r";
+        case AnimationType::debug_physics_air:
+            file = "./Resource/texture/debug_physics_air";
             num = 1;
             break;
-        case AnimationType::default_g:
-            file = "./Resource/texture/default_g";
+        case AnimationType::debug_physics_support:
+            file = "./Resource/texture/debug_physics_support";
             num = 1;
             break;
-
-        case AnimationType::physics_debug_layer_outside:
-            file = "./Resource/texture/physics_debug_layer_outside";
+        case AnimationType::debug_physics_liquid:
+            file = "./Resource/texture/debug_physics_liquid";
             num = 1;
             break;
-        case AnimationType::physics_debug_layer_air:
-            file = "./Resource/texture/physics_debug_layer_air";
+        case AnimationType::debug_physics_solid:
+            file = "./Resource/texture/debug_physics_solid";
             num = 1;
             break;
-        case AnimationType::physics_debug_layer_support:
-            file = "./Resource/texture/physics_debug_layer_support";
+        case AnimationType::debug_physics_chara:
+            file = "./Resource/texture/debug_physics_chara";
             num = 1;
             break;
-        case AnimationType::physics_debug_layer_liquid:
-            file = "./Resource/texture/physics_debug_layer_liquid";
+        case AnimationType::debug_physics_projectile:
+            file = "./Resource/texture/debug_physics_projectile";
             num = 1;
             break;
-        case AnimationType::physics_debug_layer_absolute:
-            file = "./Resource/texture/physics_debug_layer_absolute";
-            num = 1;
-            break;
-        case AnimationType::physics_debug_layer_chara:
-            file = "./Resource/texture/physics_debug_layer_chara";
-            num = 1;
-            break;
-        case AnimationType::physics_debug_layer_projectile:
-            file = "./Resource/texture/physics_debug_layer_projectile";
-            num = 1;
-            break;
-
-        case AnimationType::physics_facility_air:
-            file = "./Resource/texture/physics_facility_air";
-            num = 1;
-            break;
-        case AnimationType::physics_facility_liquid:
-            file = "./Resource/texture/physics_facility_liquid";
-            num = 1;
-            break;
-        case AnimationType::physics_facility_support:
-            file = "./Resource/texture/physics_facility_support";
-            num = 1;
-            break;
-        case AnimationType::physics_facility_solid:
-            file = "./Resource/texture/physics_facility_solid";
-            num = 1;
-            break;
-        case AnimationType::physics_chara:
-            file = "./Resource/texture/physics_chara";
-            num = 1;
-            break;
-        case AnimationType::physics_projectile:
-            file = "./Resource/texture/physics_projectile";
-            num = 1;
-            break;
-
-        case AnimationType::ui_exit_button_default:
-            file = "./Resource/texture/exit_button_default";
-            num = 1;
-            break;
-        case AnimationType::ui_exit_button_highlight:
-            file = "./Resource/texture/exit_button_highlight";
-            num = 1;
-            break;
-        case AnimationType::ui_exit_button_pressed:
-            file = "./Resource/texture/exit_button_pressed";
-            num = 1;
-            break;
-
-        //角色材质
-        case AnimationType::charaSlimeIdle:
-            file = "./Resource/texture/SlimeIdle";
+            //
+        case AnimationType::debug_sequence_white:
+            file = "./Resource/texture/debug_sequence_white";
             num = 4;
             break;
-        case AnimationType::charaSlimeMove:
-            file = "./Resource/texture/SlimeMove";
+        case AnimationType::debug_sequence_red:
+            file = "./Resource/texture/debug_sequence_red";
             num = 4;
             break;
-        case AnimationType::charaSlimeBasic:
-            file = "./Resource/texture/SlimeEject";
+        case AnimationType::debug_sequence_yellow:
+            file = "./Resource/texture/debug_sequence_yellow";
             num = 4;
             break;
-        case AnimationType::charaSlimeSpecial:
-            file = "./Resource/texture/SlimeAbsorb";
+        case AnimationType::debug_sequence_green:
+            file = "./Resource/texture/debug_sequence_green";
+            num = 4;
+            break;
+        case AnimationType::debug_sequence_blue:
+            file = "./Resource/texture/debug_sequence_blue";
+            num = 4;
+            break;
+        case AnimationType::debug_sequence_black:
+            file = "./Resource/texture/debug_sequence_black";
+            num = 4;
+            break;
+
+            //UI
+        case AnimationType::ui_button_exit_default:
+            file = "./Resource/texture/ui_button_exit_default";
+            num = 1;
+            break;
+        case AnimationType::ui_button_exit_highlight:
+            file = "./Resource/texture/ui_button_exit_highlight";
+            num = 1;
+            break;
+        case AnimationType::ui_button_exit_pressed:
+            file = "./Resource/texture/ui_button_exit_pressed";
+            num = 1;
+            break;
+
+        	//monster
+        case AnimationType::monster_slime_idle:
+            file = "./Resource/texture/monster_slime_idle";
+            num = 4;
+            break;
+        case AnimationType::monster_slime_moving:
+            file = "./Resource/texture/monster_slime_moving";
+            num = 4;
+            break;
+        case AnimationType::monster_slime_dead:
+            file = "./Resource/texture/monster_slime_dead";
+            num = 9;
+            break;
+        case AnimationType::monster_slime_absorb:
+            file = "./Resource/texture/monster_slime_absorb";
             num = 7;
             break;
-        case AnimationType::charaSlimeDeath:
-            file = "./Resource/texture/SlimeDeath";
-            num = 9;
-            break;
-        case AnimationType::charaWarriorMiner1_idle:
-            file = "./Resource/texture/miner1-idle";
+        case AnimationType::monster_slime_eject:
+            file = "./Resource/texture/monster_slime_eject";
             num = 4;
             break;
-        case AnimationType::charaWarriorMiner1_walk:
-            file = "./Resource/texture/miner1-walk";
+
+            //warrior
+        case AnimationType::warrior_miner_pickaxe_idle:
+            file = "./Resource/texture/warrior_miner_pickaxe_idle";
+            num = 4;
+            break;
+        case AnimationType::warrior_miner_pickaxe_moving:
+            file = "./Resource/texture/warrior_miner_pickaxe_moving";
             num = 8;
             break;
-        case AnimationType::charaWarriorMiner1_dig:
-            file = "./Resource/texture/miner1-dig";
-            num = 4;
-            break;
-        case AnimationType::charaWarriorMiner1_death:
-            file = "./Resource/texture/miner1-death";
+        case AnimationType::warrior_miner_pickaxe_dead:
+            file = "./Resource/texture/warrior_miner_pickaxe_dead";
             num = 9;
             break;
-        case AnimationType::gridDirt_1a:
-            file = "./Resource/texture/Dirt_a_t1";
+        case AnimationType::warrior_miner_pickaxe_dig:
+            file = "./Resource/texture/warrior_miner_pickaxe_dig";
+            num = 4;
+            break;
+
+            //facility
+        case AnimationType::facility_dirt_background_1:
+            file = "./Resource/texture/facility_dirt_background_1";
             num = 1;
             break;
-        case AnimationType::gridDirt_1n:
-            file = "./Resource/texture/Dirt_n_t1";
+        case AnimationType::facility_dirt_background_2:
+            file = "./Resource/texture/facility_dirt_background_2";
             num = 1;
             break;
-        case AnimationType::gridDirdCracked:
-            file = "./Resource/texture/Dirt_Cracked";
+        case AnimationType::facility_dirt_background_3:
+            file = "./Resource/texture/facility_dirt_background_3";
             num = 1;
             break;
-        case AnimationType::gridDirtStair_1L:
-            file = "./Resource/texture/Dirt_stairL_t1";
+        case AnimationType::facility_dirt_background_4:
+            file = "./Resource/texture/facility_dirt_background_4";
             num = 1;
             break;
-        case AnimationType::gridDirtStair_1R:
-            file = "./Resource/texture/Dirt_stairR_t1";
+        case AnimationType::facility_dirt_background_5:
+            file = "./Resource/texture/facility_dirt_background_5";
             num = 1;
             break;
-        case AnimationType::gridDirtStair_1B:
-            file = "./Resource/texture/Dirt_stairB_t1";
+        case AnimationType::facility_dirt_background_6:
+            file = "./Resource/texture/facility_dirt_background_6";
             num = 1;
             break;
-        case AnimationType::gridDirtClimb_L_t1:
-            file = "./Resource/texture/DirtClimb_Lt1";
+        case AnimationType::facility_dirt_background_7:
+            file = "./Resource/texture/facility_dirt_background_7";
             num = 1;
             break;
-        case AnimationType::gridDirtClimb_L_t2:
-            file = "./Resource/texture/DirtClimb_Lt2";
+        case AnimationType::facility_dirt_background_8:
+            file = "./Resource/texture/facility_dirt_background_8";
             num = 1;
             break;
-        case AnimationType::gridGrass_h4:
-            file = "./Resource/texture/Grass_h4";
+
+        case AnimationType::facility_dirt_solid_1:
+            file = "./Resource/texture/facility_dirt_solid_1";
             num = 1;
             break;
-        case AnimationType::gridDirtButton_1:
-            file = "./Resource/texture/Dirt_a_button_t1";
+        case AnimationType::facility_dirt_solid_2:
+            file = "./Resource/texture/facility_dirt_solid_2";
             num = 1;
             break;
-        case AnimationType::gridWater_1full:
-            file = "./Resource/texture/Water_full_t1";
+        case AnimationType::facility_dirt_solid_3:
+            file = "./Resource/texture/facility_dirt_solid_3";
             num = 1;
             break;
-        case AnimationType::gridWater_1upper:
-            file = "./Resource/texture/Water_upper_t1";
+
+        case AnimationType::facility_soil_cracked_1:
+            file = "./Resource/texture/facility_soil_cracked_1";
             num = 1;
             break;
-        case AnimationType::ladder:
-            file = "./Resource/texture/Ladder_L";
+        case AnimationType::facility_soil_cracked_2:
+            file = "./Resource/texture/facility_soil_cracked_2";
             num = 1;
             break;
-        case AnimationType::ropeHead:
-            file = "./Resource/texture/RopeHeadR";
+        case AnimationType::facility_soil_cracked_3:
+            file = "./Resource/texture/facility_soil_cracked_3";
             num = 1;
             break;
-        case AnimationType::rope1:
-            file = "./Resource/texture/Rope1R";
+        case AnimationType::facility_soil_cracked_4:
+            file = "./Resource/texture/facility_soil_cracked_4";
             num = 1;
             break;
-        case AnimationType::rope2:
-            file = "./Resource/texture/Rope2R";
+
+        case AnimationType::facility_water_clean:
+            file = "./Resource/texture/facility_water_clean";
             num = 1;
             break;
-        case AnimationType::ropeTail:
-            file = "./Resource/texture/RopeTailR";
+        case AnimationType::facility_water_clean_top:
+            file = "./Resource/texture/facility_water_clean_top";
             num = 1;
             break;
-        case AnimationType::faciSlimeGlue_L1:
-            file = "./Resource/texture/SlimeGlue_L1";
+        case AnimationType::facility_water_blood:
+            file = "./Resource/texture/facility_water_blood";
+            num = 1;
+        case AnimationType::facility_water_blood_top:
+            file = "./Resource/texture/facility_water_blood_top";
             num = 1;
             break;
-        case AnimationType::chopDown:
-            file = "./Resource/texture/chopDown";
+        case AnimationType::facility_water_swamp:
+            file = "./Resource/texture/facility_water_swamp";
+            num = 1;
+            break;
+        case AnimationType::facility_water_swamp_top:
+            file = "./Resource/texture/facility_water_swamp_top";
+            num = 1;
+            break;
+
+        case AnimationType::facility_ladder_wooden_1:
+            file = "./Resource/texture/facility_ladder_wooden_1";
+            num = 1;
+            break;
+        case AnimationType::facility_ladder_wooden_2:
+            file = "./Resource/texture/facility_ladder_wooden_2";
+            num = 1;
+            break;
+        case AnimationType::facility_ladder_wooden_3:
+            file = "./Resource/texture/facility_ladder_wooden_3";
+            num = 1;
+            break;
+        case AnimationType::facility_ladder_wooden_4:
+            file = "./Resource/texture/facility_ladder_wooden_4";
+            num = 1;
+            break;
+        case AnimationType::facility_ladder_wooden_5:
+            file = "./Resource/texture/facility_ladder_wooden_5";
+            num = 1;
+            break;
+        case AnimationType::facility_ladder_wooden_6:
+            file = "./Resource/texture/facility_ladder_wooden_6";
+            num = 1;
+            break;
+
+
+            //projectile
+        case AnimationType::projectile_chop:
+            file = "./Resource/texture/projectile_chop";
             num = 5;
             break;
-        case AnimationType::slimeBall:
-            file = "./Resource/texture/slimeBall";
+        case AnimationType::projectile_little_magic_ball:
+            file = "./Resource/texture/projectile_little_magic_ball";
+            num = 4;
+            break;
+        case AnimationType::projectile_little_slime_ball:
+            file = "./Resource/texture/projectile_little_slime_ball";
             num = 2;
             break;
+
+            //particle
         case AnimationType::particle_goldust:
-            file = "./Resource/texture/goldust";
+            file = "./Resource/texture/particle_goldust";
             num = 5;
             break;
+
         case AnimationType::size:
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"不能加载AnimationType::size");
         }

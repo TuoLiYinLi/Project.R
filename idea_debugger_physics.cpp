@@ -78,44 +78,44 @@ void idea_debugger_physics::render_one_grid(int grid_x, int grid_y)const
 	    if(!g->list_physics_chara->empty())
 	    {
             SDL_RenderCopy(GlobalData::sdl_renderer, 
-                RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_chara, 0), 
+                RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_chara, 0), 
                 nullptr, &rect);
 	    }
 	    if (g->getBlockingType(BlockingType::support))
 	    {
             SDL_RenderCopy(GlobalData::sdl_renderer,
-                RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_support, 0),
+                RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_support, 0),
                 nullptr, &rect);
 	    }
 	    if(g->getBlockingType(BlockingType::air))
 	    {
             SDL_RenderCopy(GlobalData::sdl_renderer,
-                RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_air, 0),
+                RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_air, 0),
                 nullptr, &rect);
 	    }
 		if (g->getBlockingType(BlockingType::liquid))
 	    {
             SDL_RenderCopy(GlobalData::sdl_renderer,
-                RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_liquid, 0),
+                RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_liquid, 0),
                 nullptr, &rect);
 	    }
 	    if (!g->list_physics_projectile->empty())
 	    {
             SDL_RenderCopy(GlobalData::sdl_renderer,
-                RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_projectile, 0),
+                RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_projectile, 0),
                 nullptr, &rect);
 	    }
 	    if (g->getBlockingType(BlockingType::solid))
 	    {
             SDL_RenderCopy(GlobalData::sdl_renderer,
-                RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_absolute, 0),
+                RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_solid, 0),
                 nullptr, &rect);
 	    }
     }else
     {
 	    //ÔÚÍâ²¿
         SDL_RenderCopy(GlobalData::sdl_renderer,
-            RenderingSystem::getInstance()->getAnimation(AnimationType::physics_debug_layer_outside, 0),
+            RenderingSystem::getInstance()->getAnimation(AnimationType::debug_physics_outside, 0),
             nullptr, &rect);
     }
 

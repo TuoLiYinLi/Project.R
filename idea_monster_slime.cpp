@@ -33,12 +33,12 @@ idea_monster_slime::idea_monster_slime()
 		trigger_CD_skill_basic = 0;
 		trigger_CD_skill_special = 0;
 
-		animation_type_idle = AnimationType::charaSlimeIdle;
-		animation_type_moving = AnimationType::charaSlimeMove;
-		animation_type_skill_basic = AnimationType::default_banned;
-		animation_type_skill_special = AnimationType::default_banned;
-		animation_type_disturbed = AnimationType::charaSlimeIdle;
-		animation_type_dead = AnimationType::charaSlimeDeath;
+		animation_type_idle = AnimationType::monster_slime_idle;
+		animation_type_moving = AnimationType::monster_slime_moving;
+		animation_type_skill_basic = AnimationType::monster_slime_eject;
+		animation_type_skill_special = AnimationType::monster_slime_absorb;
+		animation_type_disturbed = AnimationType::monster_slime_idle;
+		animation_type_dead = AnimationType::monster_slime_dead;
 		
 	}
 

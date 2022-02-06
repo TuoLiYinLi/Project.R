@@ -23,33 +23,9 @@ void GameToolkit::transPositionWindowToWorld(double x_window, double y_window, d
 	+ k * (y_window - 0.5 * WINDOW_HEIGHT);
 }
 
-void GameToolkit::getLengthUTF8(char const* str, int* cnt)
-{
-    while (*str != '\0') {
-        if (*str & 1 << 7) {
-            if (*str & (1 << 6)) {
-                if (*str & (1 << 5)) {
-                    if (*str & (1 << 4)) {
-                        cnt[4]++; cnt[0]++; str += 4;
-                        continue;
-                    }
-                    cnt[3]++; cnt[0]++; str += 3;
-                    continue;
-                }
-                cnt[2]++; cnt[0]++; str += 2;
-                continue;
-            }
-        }
-        cnt[1]++; cnt[0]++; str += 1;
-        continue;
-    }
-}
 
 SDL_Texture* GameToolkit::getRenderedText(char const* str, SDL_Color color, int* width, int* height)
 {
-	int count_str[4] = { 0,0,0,0 };
-	GameToolkit::getLengthUTF8(str, count_str);
-
 	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_zpix, str, color);
 
 	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);

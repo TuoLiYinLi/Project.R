@@ -20,7 +20,7 @@ void idea_UI_inspector::updateOnRendering()
 
 idea_UI_inspector::idea_UI_inspector()
 {
-	texture_exit_button = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_exit_button_default, 0);
+	texture_exit_button = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_default, 0);
 
 	flag_enable = true;
 
@@ -114,14 +114,14 @@ void idea_UI_inspector::renew_state()
 
 		if(UISystem::getInstance()->mouse_left_state)
 		{
-			texture_exit_button= RenderingSystem::getInstance()->getAnimation(AnimationType::ui_exit_button_pressed, 0);
+			texture_exit_button= RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_pressed, 0);
 		}else
 		{
-			texture_exit_button = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_exit_button_highlight, 0);
+			texture_exit_button = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_highlight, 0);
 		}
 	}else
 	{
-		texture_exit_button = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_exit_button_default, 0);
+		texture_exit_button = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_default, 0);
 	}
 }
 

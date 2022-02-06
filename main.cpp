@@ -34,7 +34,7 @@
 #include "idea_UI_scope.h"
 
 int main(int argc, char** argv) {
-	std::cout << u8"Palace Alpha+1 by TheCarmineDepth\ninitiation now start\n" << std::endl;
+	std::cout << u8"Goldust Palace DEMO +1 by TheCarmineDepth\n" << std::endl;
     
 
     //检查SDL加载是否成功，报错
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
     }
      
     //检查窗口加载是否成功，报错
-    GlobalData::sdl_window = SDL_CreateWindow(u8"Palace Alpha+1 by TheCarmineDepth ", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    GlobalData::sdl_window = SDL_CreateWindow(u8"Goldust Palace DEMO +1 by TheCarmineDepth", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if (GlobalData::sdl_window == nullptr) {
         std::cout << SDL_GetError() << std::endl;
         return 1;
@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
 
     //设置SDL_Log优先级
 #ifdef _DEBUG
-    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_ERROR);
+    SDL_LogSetPriority(SDL_LOG_CATEGORY_ERROR, SDL_LOG_PRIORITY_ERROR);
 #endif
 
 
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     //测试版水印
     auto const version_mark = RenderingText::createNew();
     version_mark->reference = RenderingReference::window;
-	version_mark->setTexture(u8"Palace DEMO +1 by TheCarmineDepth", { 255,255,255,255 }, 1);
+	version_mark->setTexture(u8"Goldust Palace DEMO +1 by TheCarmineDepth", { 255,255,255,255 }, 1);
     version_mark->depth = RENDERING_DEPTH_EXTRA + 5;
     version_mark->x = WINDOW_WIDTH - version_mark->width;
     version_mark->y = WINDOW_HEIGHT - version_mark->height;

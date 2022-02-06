@@ -384,12 +384,12 @@ Chara::Chara()
 		trigger_CD_skill_basic = 0;
 		trigger_CD_skill_special = 0;
 
-		animation_type_idle = AnimationType::charaSlimeIdle;
-		animation_type_moving = AnimationType::charaSlimeMove;
-		animation_type_skill_basic = AnimationType::default_banned;
-		animation_type_skill_special = AnimationType::default_banned;
-		animation_type_disturbed = AnimationType::charaSlimeIdle;
-		animation_type_dead = AnimationType::charaSlimeDeath;
+		animation_type_idle = AnimationType::debug_sequence_white;
+		animation_type_moving = AnimationType::debug_sequence_white;
+		animation_type_skill_basic = AnimationType::debug_sequence_blue;
+		animation_type_skill_special = AnimationType::debug_sequence_red;
+		animation_type_disturbed = AnimationType::debug_sequence_green;
+		animation_type_dead = AnimationType::debug_sequence_black;
 	}
 
 	//…Ë÷√Ω«…´ Ù–‘
