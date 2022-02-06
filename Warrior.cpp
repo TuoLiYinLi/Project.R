@@ -1,14 +1,7 @@
 #include "Warrior.h"
 Warrior* Warrior::createNew()
 {
-	const auto m = new Warrior();
-	if (m == nullptr) {
-#ifdef _DEBUG
-		SDL_Log(u8"警告 new Monster()申请内存失败，值为nullptr");
-#endif // _DEBUG
-
-	}
-	return m;
+	return new Warrior();
 }
 
 Warrior::Warrior()

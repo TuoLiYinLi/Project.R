@@ -16,17 +16,10 @@
 
 idea_debugger_game_info* idea_debugger_game_info::createNew()
 {
-	const auto ru = new idea_debugger_game_info();
-	if (ru == nullptr) {
-#ifdef _DEBUG
-		SDL_Log(u8"警告 new idea_debugger_game_info()申请内存失败，值为nullptr");
-#endif // _DEBUG
-
-	}
-	return ru;
+	return new idea_debugger_game_info();
 }
 
-void idea_debugger_game_info::update()
+void idea_debugger_game_info::updateOnRendering()
 {
 	if(GlobalData::flag_debug_game_info)
 	{
@@ -40,7 +33,7 @@ void idea_debugger_game_info::update()
 
 idea_debugger_game_info::idea_debugger_game_info()
 {
-	name = "game_info_debugger";
+	name = u8"game_info_debugger";
 
 	animation_unit = RenderingUnit::createNew();
 	animation_unit->deltaX = 0;
@@ -148,8 +141,8 @@ void idea_debugger_game_info::render_text() const
 	last_text_textures->push_back(text);
 
 
-	const int grid_x = (int)floor(UISystem::getInstance()->mouseX_world);
-	const int grid_y = (int)floor(UISystem::getInstance()->mouseY_world);
+	const int grid_x = static_cast<int>(floor(UISystem::getInstance()->mouseX_world));
+	const int grid_y = static_cast<int>(floor(UISystem::getInstance()->mouseY_world));
 	msg = u8"GridAt:(" + std::to_string(grid_x)
 		+ u8"," + std::to_string(grid_y)
 		+ u8") MousePosition:(" + std::to_string(UISystem::getInstance()->mouseX_window)
@@ -188,13 +181,13 @@ void idea_debugger_game_info::render_text() const
 
 	msg = u8"EnemyWaveNum:" + std::to_string(WorldSystem::getInstance()->enemy_wave_num)
 		+ u8" EnemyWaveCD:" + std::to_string(WorldSystem::getInstance()->enemy_wave_CD)
-		+ u8" GoldustEnergy:" + std::to_string((int)WorldSystem::getInstance()->goldust_energy);
+		+ u8" GoldustEnergy:" + std::to_string(static_cast<int>(WorldSystem::getInstance()->goldust_energy));
 	rect.y += rect.h;
 	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
 	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
 	last_text_textures->push_back(text);
 
-	msg = u8"TimeSpeed:" + std::to_string((int)GlobalData::getTimeSpeed())
+	msg = u8"TimeSpeed:" + std::to_string(static_cast<int>(GlobalData::getTimeSpeed()))
 		+ u8" TimePause:" + std::to_string(GlobalData::flag_stop);
 	rect.y += rect.h;
 	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);

@@ -17,6 +17,8 @@ public:
 	static  void destroyInstance();	//销毁和析构
 
 	void logicGo();	//逻辑更新
+	void logicGoOnRendering()const;	//渲染时的物件更新
+
 	void sortGameObjectList()const;//对游戏物体重新排序
 
 	std::list<PhysicsChara*>* list_physics_chara;	//角色物理全集

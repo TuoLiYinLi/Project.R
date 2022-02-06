@@ -6,8 +6,9 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
  
-#include "GlobalData.h"
 #include "Defined.h"
+#include "GlobalData.h"
+#include "GameToolkit.h"
 
 #include "UISystem.h"
 #include "WorldSystem.h"
@@ -20,10 +21,10 @@
 #include "PhysicsProjectile.h"
 
 #include "Facility.h"
-#include "Chara.h"
-#include "GameToolkit.h"
-#include "Projectile.h"
 
+#include "Chara.h"
+
+#include "Projectile.h"
 #include "ProjectilePoint.h"
 #include "ProjectileFlying.h"
 
@@ -61,6 +62,13 @@ int main(int argc, char** argv) {
         return 1;
     }
     //设置窗口图标
+
+    //设置SDL_Log优先级
+#ifdef _DEBUG
+    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_ERROR);
+#endif
+
+
 
     //系统初始化
     WorldSystem::getInstance();
@@ -155,17 +163,8 @@ int main(int argc, char** argv) {
         }
 
 
-        //额外update()
-        if(GlobalData::flag_stop)
-        {
-    		//物理debug更新
-	        debugger_game_info->update();
-	        debugger_physics->update();
-	        //游戏信息debug更新
-    		//更新UI
-            GlobalData::ui_scope->update();
-        	GlobalData::ui_inspector->update();
-        }
+        //渲染时更新
+        WorldSystem::getInstance()->logicGoOnRendering();
 
         //渲染系统
         {
@@ -179,9 +178,7 @@ int main(int argc, char** argv) {
 
 	        RenderingSystem::getInstance()->sortRenderingUnits();
 			RenderingSystem::getInstance()->renderAll();
-
-	        
-
+            
 	        //交换双缓冲
 	        SDL_RenderPresent(GlobalData::sdl_renderer);
         }

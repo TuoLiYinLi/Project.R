@@ -4,22 +4,17 @@
 
 #include "RenderingSystem.h"
 
-#include "PhysicsObject.h"
-#include "PhysicsChara.h"
-#include "PhysicsFacility.h"
-#include "PhysicsProjectile.h"
-
 #include "WorldSystem.h"
 
 RenderingSystem* RenderingSystem::getInstance()
 {
     if (instance == nullptr) {
-        auto a = new RenderingSystem();
-        if (a == nullptr) {
+        const auto a = new RenderingSystem();
 #ifdef _DEBUG
-            SDL_Log(u8"警告 RenderingSystem::new RenderingSystem()申请内存失败，值为nullptr");
-#endif // _DEBUG
+        if (a == nullptr) {
+            SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"RenderingSystem* RenderingSystem::getInstance()申请内存失败，值为nullptr");
         }
+#endif // _DEBUG
         instance = a;
     }
     return instance;
@@ -52,34 +47,14 @@ RenderingSystem::RenderingSystem()
 
     //渲染资源列表
     list_animation_texture = new std::vector<std::vector<SDL_Texture*>*>();
-    if (list_animation_texture == nullptr) {
-#ifdef _DEBUG
-        SDL_Log(u8" ERROR:new std::vector<SDL_Texture*>()申请内存失败，值为nullptr");
-#endif // _DEBUG
-    }
     loadAllAnimation();
 
     //渲染单元列表
     list_rendering_units = new std::list<RenderingUnit*>();
-    if (list_rendering_units == nullptr) {
-#ifdef _DEBUG
-        SDL_Log(u8"ERROR:new std::vector<RenderingAnimation*>()申请内存失败，值为nullptr");
-#endif // _DEBUG
-    }
-
-
 }
 
 RenderingSystem::~RenderingSystem()
 {
-#ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "RenderingSystem::~RenderingSystem()\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-
-#ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << " 活跃的TTFUnit数量:" << TTFUnit::getRenderingUnitNum()
-        << "\n 活跃的AnimationUnit数量:" << RenderingAnimation::getRenderingUnitNum() << "\n";
-#endif // ANIMATION_SYSTEM_DEBUG
 
     int count = 0;
 
@@ -100,7 +75,7 @@ RenderingSystem::~RenderingSystem()
 
 void RenderingSystem::renewViewPosition()
 {
-    double s1 = 1 / viewScale;
+    const double s1 = 1 / viewScale;
     viewX += GlobalData::getTimeDelta() * vx / 1000 * s1;
     viewY += GlobalData::getTimeDelta() * vy / 1000 * s1;
     viewScale += GlobalData::getTimeDelta() * vs * viewScale / 1000;
@@ -108,9 +83,9 @@ void RenderingSystem::renewViewPosition()
     if (viewScale > VIEW_SCALE_MAX) viewScale = VIEW_SCALE_MAX;
     if (viewScale < VIEW_SCALE_MIN)viewScale = VIEW_SCALE_MIN;
 
-    const double axt = GlobalData::getTimeDelta() * double(VIEW_ACCELERATE_SPEED_X) / 1000;
-    const double ayt = GlobalData::getTimeDelta() * double(VIEW_ACCELERATE_SPEED_Y) / 1000;
-    const double ast = GlobalData::getTimeDelta() * double(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
+    const double axt = GlobalData::getTimeDelta() * static_cast<double>(VIEW_ACCELERATE_SPEED_X) / 1000;
+    const double ayt = GlobalData::getTimeDelta() * static_cast<double>(VIEW_ACCELERATE_SPEED_Y) / 1000;
+    const double ast = GlobalData::getTimeDelta() * static_cast<double>(VIEW_ACCELERATE_SPEED_SCALE) / 1000;
 
     if (vx > 0) {
         vx -= axt;
@@ -145,27 +120,6 @@ void RenderingSystem::renewViewPosition()
 
 }
 
-void RenderingSystem::renderTexture(SDL_Texture* texture, double x, double deltaX, double y, double deltaY, double w, double h, SDL_RendererFlip flip) const
-{
-    SDL_Rect rect;
-
-    rect.x = (int)round(((x - viewX) * 32 + deltaX * 2) * viewScale - (viewScale - 1) * window_width * 0.5);
-    rect.y = (int)round(((y - viewY) * 32 + deltaY * 2) * viewScale - (viewScale - 1) * window_height * 0.5);
-    rect.w = (int)ceil(w * viewScale);
-    rect.h = (int)ceil(h * viewScale);
-
-    if (rect.x<-rect.w || rect.x>WINDOW_WIDTH + rect.w ||
-        rect.y<-rect.h || rect.y>WINDOW_HEIGHT + rect.h)
-    {
-#ifdef ANIMATION_RENDER_DEBUG
-        //std::cout << " 跳过一个超出范围的渲染目标\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-        return;
-    }
-
-    SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, nullptr, &rect, 0, nullptr, flip);
-}
-
 void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
     SDL_Texture* texture = au->getTexture();
 
@@ -176,26 +130,23 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
     switch (au->reference)
     {
     case RenderingReference::world:
-        rect.x = (int)round(((au->x - viewX) * 32 + au->deltaX * 2) * viewScale - (viewScale - 1) * window_width * 0.5);
-        rect.y = (int)round(((au->y - viewY) * 32 + au->deltaY * 2) * viewScale - (viewScale - 1) * window_height * 0.5);
-        rect.w = (int)ceil(au->width * viewScale);
-        rect.h = (int)ceil(au->height * viewScale);
+        rect.x = static_cast<int>(round(((au->x - viewX) * 32 + au->deltaX * 2) * viewScale - (viewScale - 1) * window_width * 0.5));
+        rect.y = static_cast<int>(round(((au->y - viewY) * 32 + au->deltaY * 2) * viewScale - (viewScale - 1) * window_height * 0.5));
+        rect.w = static_cast<int>(ceil(au->width * viewScale));
+        rect.h = static_cast<int>(ceil(au->height * viewScale));
 
         break;
     case RenderingReference::window:
-        rect.x = (int)round(au->x);
-        rect.y = (int)round(au->y);
-        rect.w = (int)round(au->width);
-        rect.h = (int)round(au->height);
+        rect.x = static_cast<int>(round(au->x));
+        rect.y = static_cast<int>(round(au->y));
+        rect.w = static_cast<int>(round(au->width));
+        rect.h = static_cast<int>(round(au->height));
         break;
     }
 
     if (rect.x<-rect.w || rect.x>WINDOW_WIDTH + rect.w ||
         rect.y<-rect.h || rect.y>WINDOW_HEIGHT + rect.h)
     {
-#ifdef ANIMATION_RENDER_DEBUG
-        //std::cout << " 跳过一个超出范围的渲染目标\n";
-#endif // ANIMATION_SYSTEM_DEBUG
         return;
     }
 
@@ -208,7 +159,7 @@ void RenderingSystem::sortRenderingUnits() const
 }
 
 void RenderingSystem::renderAll() const {
-    for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); i++)
+    for (auto i = list_rendering_units->begin(); i != list_rendering_units->end(); ++i)
     {
         if((*i)->flag_enable)
         renderOneUnit(*i);
@@ -216,41 +167,31 @@ void RenderingSystem::renderAll() const {
 }
 
 
-void RenderingSystem::loadAllAnimation() {
-#ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "RenderingSystem::loadAllAnimation()\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-    for (auto i = 0; i<int(AnimationType::size); i++)
+void RenderingSystem::loadAllAnimation()const{
+    for (auto i = 0; i<static_cast<int>(AnimationType::size); ++i)
     {
-        loadAnimation(AnimationType(i));
+        loadAnimation(static_cast<AnimationType>(i));
     }
 }
 
-void RenderingSystem::unloadAllAnimation() {
-    for (auto i = 0; i<int(AnimationType::size); i++)
+void RenderingSystem::unloadAllAnimation()const {
+    for (auto i = 0; i<static_cast<int>(AnimationType::size); ++i)
     {
         if (list_animation_texture->at(i) != nullptr) {
-            unloadAnimation(AnimationType(i));
+            unloadAnimation(static_cast<AnimationType>(i));
         }
     }
 }
 
-void RenderingSystem::loadAnimation(AnimationType antp) {
-#ifdef ANIMATION_SYSTEM_DEBUG
-    SDL_Log(u8"RenderingSystem::loadAnimation(AnimationType antp)");
-#endif // ANIMATION_SYSTEM_DEBUG
+void RenderingSystem::loadAnimation(AnimationType antp)const {
 
-    if (int(antp) >= int(AnimationType::size)) {
 #ifdef _DEBUG
-        SDL_Log(u8"ERROR:int(AnimationType)超出AnimType范围");
-#endif // _DEBUG
-        return;
+    if (static_cast<int>(antp) >= static_cast<int>(AnimationType::size)) {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR,u8"int(AnimationType)超出AnimType范围");
     }
+#endif
 
-    if (list_animation_texture->size() == unsigned(antp)) {
-#ifdef ANIMATION_SYSTEM_DEBUG
-        std::cout << " 加载动画:" << int(antp) << "\n";
-#endif // ANIMATION_SYSTEM_DEBUG
+    if (list_animation_texture->size() == static_cast<unsigned>(antp)) {
         std::string file = "";
         int num = 0;
         switch (antp)
@@ -294,10 +235,6 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
             break;
         case AnimationType::physics_debug_layer_chara:
             file = "./Resource/texture/physics_debug_layer_chara";
-            num = 1;
-            break;
-        case AnimationType::physics_debug_layer_facility:
-            file = "./Resource/texture/physics_debug_layer_facility";
             num = 1;
             break;
         case AnimationType::physics_debug_layer_projectile:
@@ -465,20 +402,11 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
             num = 5;
             break;
         case AnimationType::size:
-            SDL_Log(u8"错误 不能加载size");
-            break;
+            SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"不能加载AnimationType::size");
         }
-#ifdef ANIMATION_SYSTEM_DEBUG
-        std::cout << " 材质数量:" << num << "\n";
-#endif // ANIMATION_SYSTEM_DEBUG
         auto innerList = new std::vector<SDL_Texture*>();
-        if (innerList == nullptr) {
-            SDL_Log(u8" ERROR:加载材质内存不足");
-            return;
-        }
+
         list_animation_texture->push_back(innerList);
-
-
 
         for (auto i = 1; i <= num; i++)
         {
@@ -493,31 +421,23 @@ void RenderingSystem::loadAnimation(AnimationType antp) {
             auto c_fullFile = fullFile.c_str();
             SDL_Texture* texture = IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
 #ifdef _DEBUG
-            if (texture) {
-                SDL_Log(u8" 成功加载%s", c_fullFile);
-            }
-            else
-            {
-                SDL_Log(u8" 无法加载%s", c_fullFile);
-            }
+            texture == nullptr ? SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"加载错误%s", c_fullFile) : SDL_Log(u8"成功加载%s", c_fullFile);
 #endif
-
             innerList->push_back(texture);
         }
     }
-#ifdef ANIMATION_SYSTEM_DEBUG
+#ifdef _DEBUG
     else
     {
-        std::cout << " ERROR:已经加载了动画" << int(antp) << "，不能重复加载\n";
-        return;
+    SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"已经加载了动画%d，不能重复加载", static_cast<int>(antp));
     }
-#endif // ANIMATION_SYSTEM_DEBUG
+#endif 
 }
 
 
 SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,unsigned long long num) const
 {
-    auto L = list_animation_texture->at((int)_animation_type);
+    const auto L = list_animation_texture->at(static_cast<int>(_animation_type));
     if(num>=L->size())
     {
         return nullptr;
@@ -529,47 +449,40 @@ SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,unsigne
 
 unsigned long long RenderingSystem::getAnimationSize(AnimationType _animation_type) const
 {
-    return list_animation_texture->at((int)_animation_type)->size();
+    return list_animation_texture->at(static_cast<int>(_animation_type))->size();
 }
 
 
 
 void RenderingSystem::unloadAnimation(AnimationType antp) const {
-#ifdef ANIMATION_SYSTEM_DEBUG
-    std::cout << "unloadAnimation(AnimationType antp)\n";
-    std::cout << " 卸载动画:" << int(antp) << "\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-    std::vector<SDL_Texture*>* ap = list_animation_texture->at(int(antp));
-    if (list_animation_texture->at(int(antp)) == nullptr) {
-#ifdef ANIMATION_SYSTEM_DEBUG
-        std::cout << " ERROR:动画" << int(antp) << "并没有被加载，不能卸载\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-        return;
-    }
-    else
+    std::vector<SDL_Texture*>* ap = list_animation_texture->at(static_cast<int>(antp));
+#ifdef _DEBUG
+	if (ap == nullptr) 
     {
-        int textureCount = 0;
-        for (auto it = ap->begin(); it != ap->end(); ++it)
-        {
-            textureCount++;
-            if ((*it) == nullptr) {
-#ifdef ANIMATION_SYSTEM_DEBUG
-                std::cout << " ERROR:这个动画的第" << textureCount << "个SDL_Texture*为nullptr,请检查加载过程\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-            }
-            else
-            {
-                SDL_DestroyTexture(*it);
-                (*it) = nullptr;
-#ifdef ANIMATION_SYSTEM_DEBUG
-                std::cout << " 完成卸载第" << textureCount << "个SDL_Texture\n";
-#endif // ANIMATION_SYSTEM_DEBUG
-            }
-
-        }
-        delete list_animation_texture->at(int(antp));
-        list_animation_texture->at(int(antp)) = nullptr;
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR,u8"动画%d的材质列表为nullptr，不能卸载",static_cast<int>(antp));
     }
+    int count = 0;
+#endif
+
+    for (auto it = ap->begin(); it != ap->end(); ++it)
+    {
+#ifdef _DEBUG
+        count++;
+#endif
+        if ((*it) != nullptr) {
+            SDL_DestroyTexture(*it);
+            (*it) = nullptr;
+        }
+#ifdef _DEBUG
+        else
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"动画%d的第%d个材质是nullptr，不能卸载", static_cast<int>(antp), count);
+        }
+#endif
+    }
+    delete list_animation_texture->at(static_cast<int>(antp));
+    list_animation_texture->at(static_cast<int>(antp)) = nullptr;
+    
 }
 
 RenderingSystem* RenderingSystem::instance = nullptr;

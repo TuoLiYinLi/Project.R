@@ -1,17 +1,11 @@
 #include "ProjectileTarget.h"
 
-#include <SDL_log.h>
 
 #include "PhysicsChara.h"
 
 ProjectileTarget* ProjectileTarget::createNew()
 {
-	const auto p = new ProjectileTarget();
-	if (!p)
-	{
-		SDL_Log(u8"警告 分配ProjectilePoint内存不足");
-	}
-	return p;
+	return new ProjectileTarget();
 }
 
 void ProjectileTarget::update()
