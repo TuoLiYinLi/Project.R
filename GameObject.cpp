@@ -1,7 +1,5 @@
 #include "GameObject.h"
 
-#include <iostream>
-
 #include "WorldSystem.h"
 
 void GameObject::destroy()
@@ -21,11 +19,14 @@ GameObject::GameObject()
 {
 	game_object_num++;
 
-	flag_destroy = false;
 	name = u8"default_game_object";
 	type_game_object = GameObjectType::default_object;
+
+	flag_destroy = false;
+	flag_static = false;
+
 	physics_object = nullptr;
-	animation_unit = nullptr;
+	rendering_unit = nullptr;
 
 	//将自己添加到物体列表
 	WorldSystem::getInstance()->list_game_objects->push_back(this);
@@ -43,10 +44,10 @@ GameObject::~GameObject()
 		physics_object = nullptr;
 	}
 
-	if (animation_unit)
+	if (rendering_unit)
 	{
-		animation_unit->destroy();
-		animation_unit = nullptr;
+		rendering_unit->destroy();
+		rendering_unit = nullptr;
 	}
 
 	//不需要将自己从设施物理列表移除,由WorldSystem将对象移除
@@ -66,8 +67,12 @@ void GameObject::updateOnRendering()
 }
 
 
-
-bool GameObject::getIfDestroy() const
+bool GameObject::checkIfDestroy() const
 {
 	return flag_destroy;
+}
+
+bool GameObject::checkIfStatic() const
+{
+	return flag_static;
 }

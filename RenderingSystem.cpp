@@ -43,7 +43,34 @@ RenderingSystem::RenderingSystem()
     vx = 0;
     vs = 0;
 
-    font_zpix = TTF_OpenFont("./Resource/ttf/Zpix.ttf", FONT_PRECISION);
+    //初始化文字渲染资源
+    remapping_grid_height = 12;
+    remapping_grid_width = 12;
+    remapping_total_rows = 256;
+    unicode_range_min = 0x20;
+    unicode_range_max = 0xfa0b;
+
+    //打开字体
+    font_silver = TTF_OpenFont("./Resource/ttf/Silver.ttf", 19);
+    if(font_silver==nullptr)
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"字体文件错误无法打开");
+    }
+
+    font_unicode_map = IMG_LoadTexture(GlobalData::sdl_renderer, "./Resource/ttf/SilverUnicodeMap.png");
+	if(font_unicode_map==nullptr)
+    {
+        SDL_Log(u8"加载UnicodeMap文件出错,重新生成");
+        createUnicodeMap("./Resource/ttf/SilverUnicodeMap.png");
+    	font_unicode_map = IMG_LoadTexture(GlobalData::sdl_renderer, "./Resource/ttf/SilverUnicodeMap.png");
+    }
+    if (font_unicode_map == nullptr)
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"UnicodeMap文件仍有错误");
+    }else
+    {
+        SDL_Log(u8"成功加载UnicodeMap文件");
+    }
 
     //渲染资源列表
     list_animation_texture = new std::vector<std::vector<SDL_Texture*>*>();
@@ -55,7 +82,18 @@ RenderingSystem::RenderingSystem()
 
 RenderingSystem::~RenderingSystem()
 {
+    //释放文字资源
+#ifdef _DEBUG
+    if (font_silver == nullptr)
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"关闭字体时出错 font_silver = nullptr");
+    }
+#endif
+    TTF_CloseFont(font_silver);
+    SDL_DestroyTexture(font_unicode_map);
 
+
+    //释放图像材质资源
     int count = 0;
 
     while (!list_rendering_units->empty())
@@ -543,4 +581,73 @@ void RenderingSystem::remove(RenderingUnit* ru) const
 bool RenderingSystem::compareDepth(const RenderingUnit* ru1, const RenderingUnit* ru2)
 {
     return ru1->depth < ru2->depth;
+}
+
+SDL_Rect RenderingSystem::getMappingRect(Uint16 num, int total_rows, int font_width, int font_height, int grid_width, int grid_height)
+{
+    return { num / total_rows * grid_width,num % total_rows * grid_height,font_width,font_height };
+}
+
+void RenderingSystem::createUnicodeMap(const char* _save_file)
+{
+    SDL_Log(u8"开始生成UnicodeMap");
+
+    const auto x_max = remappingUnicodeRule(unicode_range_max) / remapping_total_rows + 1;
+
+    SDL_Surface* tar_surface = SDL_CreateRGBSurfaceWithFormat(0, x_max * remapping_grid_width, remapping_total_rows * remapping_grid_height, 32, SDL_PIXELFORMAT_RGBA32);
+
+    Uint16 current_char[] = { unicode_range_min,0 };
+
+    while (current_char[0] <= unicode_range_max)
+    {
+        SDL_Log(u8"进度:%d/%d", current_char[0], unicode_range_max);
+
+        SDL_Surface* s = TTF_RenderUNICODE_Solid(font_silver, current_char, { 255,255,255,255 });
+        const auto mapped_num = remappingUnicodeRule(current_char[0]);
+        if (mapped_num != 0)
+        {
+            auto rect = getMappingRect(mapped_num, remapping_total_rows, 0, 0, remapping_grid_width, remapping_grid_height);
+            TTF_SizeUNICODE(font_silver, current_char, &rect.w, &rect.h);
+            SDL_BlitSurface(s, nullptr, tar_surface, &rect);
+        }
+        SDL_FreeSurface(s);
+        current_char[0]++;
+    }
+
+    SDL_Log(u8"保存图片%s",_save_file);
+    IMG_SavePNG(tar_surface,_save_file);
+    SDL_FreeSurface(tar_surface);
+}
+
+Uint16 RenderingSystem::remappingUnicodeRule(Uint16 _char)
+{
+    if (0x1f < _char && _char <= 0x7e)
+    {
+        return _char - 0x1f;
+    }
+    if (0xa0 < _char && _char <= 0x17f)
+    {
+        return _char - 0x1f + remappingUnicodeRule(0x7e);
+    }
+    if (0x24f < _char && _char <= 0x2af)
+    {
+        return _char - 0x24f + remappingUnicodeRule(0x17f);
+    }
+    if (0x36f < _char && _char <= 0x451)
+    {
+        return _char - 0x36f + remappingUnicodeRule(0x2af);
+    }
+    if (0x3000 < _char && _char <= 0x318e)
+    {
+        return _char - 0x3000 + remappingUnicodeRule(0x451);
+    }
+    if (0x4dff < _char && _char <= 0x9fa0)
+    {
+        return _char - 0x4dff + remappingUnicodeRule(0x318e);
+    }
+    if (0xf8ff < _char && _char <= 0xfa0b)
+    {
+        return _char - 0xf8ff + remappingUnicodeRule(0x9fa0);
+    }
+    return 0;
 }

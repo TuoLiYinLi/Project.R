@@ -17,7 +17,7 @@ PhysicsChara* Chara::getPhysicsChara() const
 
 RenderingAnimation* Chara::getRenderingAnimation() const
 {
-	return static_cast<RenderingAnimation*>(animation_unit);
+	return static_cast<RenderingAnimation*>(rendering_unit);
 }
 
 
@@ -261,7 +261,7 @@ void Chara::update_animation() {
 
 	case CharaActionType::skill_basic:
 		{
-			if(animation_progress == trigger_CD_skill_basic)
+			if(animation_progress == delay_skill_basic)
 			{
 				onBasicSkill();
 			}
@@ -282,7 +282,7 @@ void Chara::update_animation() {
 
 	case CharaActionType::skill_special:
 		{
-			if (animation_progress == trigger_CD_skill_special)
+			if (animation_progress == delay_skill_special)
 			{
 				onSpecialSkill();
 			}
@@ -336,7 +336,7 @@ void Chara::update_animation() {
 	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
 	//刷新深度
-	animation_unit->depth = RENDERING_DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
+	rendering_unit->depth = RENDERING_DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
 
 }
 
@@ -369,8 +369,8 @@ Chara::Chara()
 
 	//设置角色动画
 	{
-		animation_unit = RenderingAnimation::createNew();
-		animation_unit->depth = RENDERING_DEPTH_WORLD_CHARA;
+		rendering_unit = RenderingAnimation::createNew();
+		rendering_unit->depth = RENDERING_DEPTH_WORLD_CHARA;
 
 		animation_progress = 0;
 
@@ -381,8 +381,8 @@ Chara::Chara()
 		animation_length_disturbed = 40;
 		animation_length_dead = 60;
 
-		trigger_CD_skill_basic = 0;
-		trigger_CD_skill_special = 0;
+		delay_skill_basic = 0;
+		delay_skill_special = 0;
 
 		animation_type_idle = AnimationType::debug_sequence_white;
 		animation_type_moving = AnimationType::debug_sequence_white;

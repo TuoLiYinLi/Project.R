@@ -24,10 +24,10 @@ void idea_debugger_game_info::updateOnRendering()
 	if(GlobalData::flag_debug_game_info)
 	{
 		renew_texture();
-		animation_unit->flag_enable = true;
+		rendering_unit->flag_enable = true;
 	}else
 	{
-		animation_unit->flag_enable = false;
+		rendering_unit->flag_enable = false;
 	}
 }
 
@@ -35,13 +35,13 @@ idea_debugger_game_info::idea_debugger_game_info()
 {
 	name = u8"game_info_debugger";
 
-	animation_unit = RenderingUnit::createNew();
-	animation_unit->deltaX = 0;
-	animation_unit->deltaY = 0;
-	animation_unit->width = WINDOW_WIDTH;
-	animation_unit->height = WINDOW_HEIGHT;
-	animation_unit->reference = RenderingReference::window;
-	animation_unit->depth = RENDERING_DEPTH_EXTRA + 2;
+	rendering_unit = RenderingUnit::createNew();
+	rendering_unit->deltaX = 0;
+	rendering_unit->deltaY = 0;
+	rendering_unit->width = WINDOW_WIDTH;
+	rendering_unit->height = WINDOW_HEIGHT;
+	rendering_unit->reference = RenderingReference::window;
+	rendering_unit->depth = RENDERING_DEPTH_EXTRA + 2;
 
 	last_text_textures = new std::list<SDL_Texture*>();
 
@@ -59,7 +59,7 @@ idea_debugger_game_info::~idea_debugger_game_info()
 void idea_debugger_game_info::renew_texture() const
 {
 
-	SDL_SetRenderTarget(GlobalData::sdl_renderer, animation_unit->getTexture());
+	SDL_SetRenderTarget(GlobalData::sdl_renderer, rendering_unit->getTexture());
 	//渲染为完全透明
 	SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_NONE);
 	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 0, 0, 0, 0);
@@ -83,16 +83,16 @@ void idea_debugger_game_info::create_texture() const
 		WINDOW_WIDTH, WINDOW_HEIGHT);
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
 
-	animation_unit->setTexture(texture);
+	rendering_unit->setTexture(texture);
 }
 
 void idea_debugger_game_info::destroy_texture() const
 {
 	//手动销毁材质
-	if (animation_unit->getTexture())
+	if (rendering_unit->getTexture())
 	{
-		SDL_DestroyTexture(animation_unit->getTexture());
-		animation_unit->setTexture(nullptr);
+		SDL_DestroyTexture(rendering_unit->getTexture());
+		rendering_unit->setTexture(nullptr);
 	}
 }
 

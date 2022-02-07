@@ -186,7 +186,7 @@ int main(int argc, char** argv) {
 
     //结束清理
     
-    SDL_Log(u8"--\t--\t--\t--结束清理,停止运行--\t--\t--\t--");
+    SDL_Log(u8"--\t--\t--\t--停止运行,开始清理--\t--\t--\t--");
 
     //释放创建的所有SDL内容
     RenderingSystem::destroyInstance();

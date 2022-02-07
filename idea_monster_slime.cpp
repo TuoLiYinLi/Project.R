@@ -30,8 +30,8 @@ idea_monster_slime::idea_monster_slime()
 		animation_length_disturbed = 40;
 		animation_length_dead = 60;
 
-		trigger_CD_skill_basic = 0;
-		trigger_CD_skill_special = 0;
+		delay_skill_basic = 0;
+		delay_skill_special = 0;
 
 		animation_type_idle = AnimationType::monster_slime_idle;
 		animation_type_moving = AnimationType::monster_slime_moving;

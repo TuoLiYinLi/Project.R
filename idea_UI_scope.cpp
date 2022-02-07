@@ -32,14 +32,14 @@ idea_UI_scope::idea_UI_scope()
 
 	name = u8"UI_scope";
 
-	animation_unit = RenderingUnit::createNew();
+	rendering_unit = RenderingUnit::createNew();
 
-	animation_unit->deltaX = 0;
-	animation_unit->deltaY = 0;
+	rendering_unit->deltaX = 0;
+	rendering_unit->deltaY = 0;
 
-	animation_unit->reference = RenderingReference::window;
+	rendering_unit->reference = RenderingReference::window;
 
-	animation_unit->depth = RENDERING_DEPTH_UI;
+	rendering_unit->depth = RENDERING_DEPTH_UI;
 }
 
 idea_UI_scope::~idea_UI_scope()
@@ -50,13 +50,13 @@ idea_UI_scope::~idea_UI_scope()
 void idea_UI_scope::enable()
 {
 	flag_enable = true;
-	animation_unit->flag_enable = true;
+	rendering_unit->flag_enable = true;
 }
 
 void idea_UI_scope::disable()
 {
 	flag_enable = false;
-	animation_unit->flag_enable = false;
+	rendering_unit->flag_enable = false;
 }
 
 void idea_UI_scope::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
@@ -72,11 +72,11 @@ void idea_UI_scope::renew_state()
 	const int _x = static_cast<int>(floor(UISystem::getInstance()->mouseX_world));
 	const int _y = static_cast<int>(floor(UISystem::getInstance()->mouseY_world));
 
-	animation_unit->width = static_cast<int>(floor(RenderingSystem::getInstance()->viewScale * 32));
-	animation_unit->height = animation_unit->width;
+	rendering_unit->width = static_cast<int>(floor(RenderingSystem::getInstance()->viewScale * 32));
+	rendering_unit->height = rendering_unit->width;
 
 	GameToolkit::transPositionWorldToWindow(_x, _y,
-		&animation_unit->x, &animation_unit->y);
+		&rendering_unit->x, &rendering_unit->y);
 }
 
 
@@ -84,14 +84,14 @@ void idea_UI_scope::create_texture()
 {
 	SDL_Texture* texture = SDL_CreateTexture(GlobalData::sdl_renderer,
 		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-		static_cast<int>(animation_unit->width), static_cast<int>(animation_unit->height));
+		static_cast<int>(rendering_unit->width), static_cast<int>(rendering_unit->height));
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-	animation_unit->setTexture(texture);
+	rendering_unit->setTexture(texture);
 }
 
 void idea_UI_scope::renew_texture()
 {
-	SDL_SetRenderTarget(GlobalData::sdl_renderer, animation_unit->getTexture());
+	SDL_SetRenderTarget(GlobalData::sdl_renderer, rendering_unit->getTexture());
 	SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_NONE);
 	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, color_r, color_g, color_b, color_a);
 	SDL_RenderDrawRect(GlobalData::sdl_renderer, nullptr);
@@ -100,9 +100,9 @@ void idea_UI_scope::renew_texture()
 
 void idea_UI_scope::destroy_texture()
 {
-	if (animation_unit->getTexture())
+	if (rendering_unit->getTexture())
 	{
-		SDL_DestroyTexture(animation_unit->getTexture());
-		animation_unit->setTexture(nullptr);
+		SDL_DestroyTexture(rendering_unit->getTexture());
+		rendering_unit->setTexture(nullptr);
 	}
 }

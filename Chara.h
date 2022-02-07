@@ -37,8 +37,8 @@ protected:
 	int animation_length_skill_special;//特殊能力动画时长,0代表没有动画
 	int animation_length_dead;//死亡动画总时长,0代表没有动画
 
-	int trigger_CD_skill_basic;//基础能力的触发倒数
-	int trigger_CD_skill_special;//特殊能力的触发倒数
+	int delay_skill_basic;//基础能力的触发倒数
+	int delay_skill_special;//特殊能力的触发倒数
 
 	AnimationType animation_type_idle;//闲置动画
 	AnimationType animation_type_moving;//移动动画

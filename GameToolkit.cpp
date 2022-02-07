@@ -26,13 +26,13 @@ void GameToolkit::transPositionWindowToWorld(double x_window, double y_window, d
 
 SDL_Texture* GameToolkit::getRenderedText(char const* str, SDL_Color color, int* width, int* height)
 {
-	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_zpix, str, color);
+	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_silver, str, color);
 
 	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
 
 	SDL_FreeSurface(surface);
 
-	TTF_SizeUTF8(RenderingSystem::getInstance()->font_zpix, str, width, height);
+	TTF_SizeUTF8(RenderingSystem::getInstance()->font_silver, str, width, height);
 
 	return _texture;
 }

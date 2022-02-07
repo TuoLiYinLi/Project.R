@@ -108,8 +108,11 @@ void WorldSystem::logicGo_game_objects() const
 	auto i = list_game_objects->begin();
 	while (i != list_game_objects->end())
 	{
-		(*i)->update();
-		if((*i)->getIfDestroy())
+		if(!(*i)->checkIfStatic())
+		{
+			(*i)->update();
+		}
+		if((*i)->checkIfDestroy())
 		{
 			(*i)->destroy();
 			i = list_game_objects->erase(i);
@@ -125,8 +128,11 @@ void WorldSystem::logicGoOnRendering() const
 	auto i = list_game_objects->begin();
 	while (i != list_game_objects->end())
 	{
-		(*i)->updateOnRendering();
-		if ((*i)->getIfDestroy())
+		if(!(*i)->checkIfStatic())
+		{
+			(*i)->updateOnRendering();
+		}
+		if ((*i)->checkIfDestroy())
 		{
 			(*i)->destroy();
 			i = list_game_objects->erase(i);

@@ -18,17 +18,17 @@ void idea_debugger_physics::updateOnRendering()
     if (GlobalData::flag_debug_physics)
     {
 		renew_texture();
-        animation_unit->flag_enable=true;
+        rendering_unit->flag_enable=true;
     }else
     {
-        animation_unit->flag_enable = false;
+        rendering_unit->flag_enable = false;
     }
 }
 
 void idea_debugger_physics::renew_texture()const
 {
     //指定为渲染目标，开始调整
-    SDL_SetRenderTarget(GlobalData::sdl_renderer, animation_unit->getTexture());
+    SDL_SetRenderTarget(GlobalData::sdl_renderer, rendering_unit->getTexture());
     //渲染为完全透明
     SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_NONE);
     SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 0, 0, 0, 0);
@@ -44,18 +44,18 @@ void idea_debugger_physics::create_texture()const
         SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
         WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    animation_unit->setTexture(texture);
-    SDL_SetTextureAlphaMod(animation_unit->getTexture(),160);
-    SDL_SetTextureBlendMode(animation_unit->getTexture(), SDL_BLENDMODE_BLEND);
+    rendering_unit->setTexture(texture);
+    SDL_SetTextureAlphaMod(rendering_unit->getTexture(),160);
+    SDL_SetTextureBlendMode(rendering_unit->getTexture(), SDL_BLENDMODE_BLEND);
 }
 
 void idea_debugger_physics::destroy_texture()const
 {
     //手动销毁材质
-    if (animation_unit->getTexture())
+    if (rendering_unit->getTexture())
     {
-        SDL_DestroyTexture(animation_unit->getTexture());
-        animation_unit->setTexture(nullptr);
+        SDL_DestroyTexture(rendering_unit->getTexture());
+        rendering_unit->setTexture(nullptr);
     }
 }
 
@@ -64,7 +64,7 @@ void idea_debugger_physics::destroy_texture()const
 
 void idea_debugger_physics::render_one_grid(int grid_x, int grid_y)const
 {
-    SDL_SetRenderTarget(GlobalData::sdl_renderer, animation_unit->getTexture());
+    SDL_SetRenderTarget(GlobalData::sdl_renderer, rendering_unit->getTexture());
 
     double x_tar, y_tar;
     GameToolkit::transPositionWorldToWindow(grid_x, grid_y, &x_tar, &y_tar);
@@ -142,13 +142,13 @@ idea_debugger_physics::idea_debugger_physics()
 {
     name = "physics_debugger";
 
-	animation_unit = RenderingUnit::createNew();
-    animation_unit->deltaX = 0;
-    animation_unit->deltaY = 0;
-    animation_unit->width = WINDOW_WIDTH;
-    animation_unit->height = WINDOW_HEIGHT;
-    animation_unit->reference = RenderingReference::window;
-    animation_unit->depth = RENDERING_DEPTH_EXTRA + 1;
+	rendering_unit = RenderingUnit::createNew();
+    rendering_unit->deltaX = 0;
+    rendering_unit->deltaY = 0;
+    rendering_unit->width = WINDOW_WIDTH;
+    rendering_unit->height = WINDOW_HEIGHT;
+    rendering_unit->reference = RenderingReference::window;
+    rendering_unit->depth = RENDERING_DEPTH_EXTRA + 1;
     create_texture();
     renew_texture();
 }
