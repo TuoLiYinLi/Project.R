@@ -143,12 +143,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)3rdParty\SDL2_ttf\include;$(ProjectDir)3rdParty\SDL2_mixer\include;$(ProjectDir)3rdParty\SDL2_image\include;$(ProjectDir)3rdParty\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)3rdParty\SDL2_ttf\MTd;$(ProjectDir)3rdParty\SDL2_mixer\MTd;$(ProjectDir)3rdParty\SDL2_image\MTd;$(ProjectDir)3rdParty\SDL2\MTd;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)3rdParty\SDL2_ttf\lib;$(ProjectDir)3rdParty\SDL2_mixer\lib;$(ProjectDir)3rdParty\SDL2_image\lib;$(ProjectDir)3rdParty\SDL2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)3rdParty\SDL2_ttf\include;$(ProjectDir)3rdParty\SDL2_mixer\include;$(ProjectDir)3rdParty\SDL2_image\include;$(ProjectDir)3rdParty\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)3rdParty\SDL2_ttf\MT;$(ProjectDir)3rdParty\SDL2_mixer\MT;$(ProjectDir)3rdParty\SDL2_image\MT;$(ProjectDir)3rdParty\SDL2\MT;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)3rdParty\SDL2_ttf\lib;$(ProjectDir)3rdParty\SDL2_mixer\lib;$(ProjectDir)3rdParty\SDL2_image\lib;$(ProjectDir)3rdParty\SDL2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -184,14 +184,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2maind.lib;SDL2d.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;Setupapi.lib;Winmm.lib;Imm32.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;Setupapi.lib;Winmm.lib;Imm32.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -203,8 +204,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
