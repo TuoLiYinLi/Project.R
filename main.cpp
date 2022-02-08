@@ -11,6 +11,9 @@
 #include "GameToolkit.h"
 
 #include "UISystem.h"
+#include "UIObject.h"
+#include "UIButton.h"
+
 #include "WorldSystem.h"
 
 #include "RenderingSystem.h"
@@ -32,17 +35,77 @@
 #include "idea_debugger_game_info.h"
 #include "idea_monster_slime.h"
 #include "idea_UI_scope.h"
+#include "idea_UI_inspector.h"
+#include "idea_UI_button_exit.h"
+
+void test()
+{
+    SDL_Log("callback");
+}
+
+void test_init()
+{
+
+    auto range = PhysicsFacility::createNew();
+    range->X = 10;
+    range->Y = 2;
+    range->bodyX = 10;
+    range->bodyY = 10;
+    range->setFacilityType(BlockingType::air);
+    range->renewSignedGrids();
+
+    auto pf1 = PhysicsFacility::createNew();
+    pf1->X = 7;
+    pf1->Y = 12;
+    pf1->bodyX = 50;
+    pf1->setFacilityType(BlockingType::solid);
+    pf1->renewSignedGrids();
+
+    pf1 = PhysicsFacility::createNew();
+    pf1->X = 5;
+    pf1->Y = 8;
+    pf1->bodyY = 5;
+    pf1->bodyX = 5;
+    pf1->setFacilityType(BlockingType::support);
+    pf1->renewSignedGrids();
+
+
+
+    auto pf2 = idea_monster_slime::createNew();
+    pf2->setPosition(7, 2);
+
+    auto pf5 = PhysicsFacility::createNew();
+    pf5->X = 9;
+    pf5->Y = 10;
+    pf5->bodyY = 5;
+    pf5->bodyX = 5;
+    pf5->setFacilityType(BlockingType::air);
+    pf5->renewSignedGrids();
+
+    //UIObject测试
+    const auto test_button = idea_UI_button_exit::createNew();
+    test_button->setCallback(test);
+    test_button->setPosition(500, 300, 18, 18);
+}
+
+void test_physics()
+{
+	
+}
+
+void test_rendering()
+{
+	
+}
+
 
 int main(int argc, char** argv) {
 	std::cout << u8"Goldust Palace DEMO +1 by TheCarmineDepth\n" << std::endl;
-    
-
     //检查SDL加载是否成功，报错
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
         std::cout << SDL_GetError() << std::endl;
         return 1;
     }
-     
     //检查窗口加载是否成功，报错
     GlobalData::sdl_window = SDL_CreateWindow(u8"Goldust Palace DEMO +1 by TheCarmineDepth", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if (GlobalData::sdl_window == nullptr) {
@@ -68,8 +131,6 @@ int main(int argc, char** argv) {
     SDL_LogSetPriority(SDL_LOG_CATEGORY_ERROR, SDL_LOG_PRIORITY_ERROR);
 #endif
 
-
-
     //系统初始化
     WorldSystem::getInstance();
     UISystem::getInstance();
@@ -78,8 +139,8 @@ int main(int argc, char** argv) {
     //测试版水印
     auto const version_mark = RenderingText::createNew();
     version_mark->reference = RenderingReference::window;
-	version_mark->setTexture(u8"Goldust Palace DEMO +1 by TheCarmineDepth", { 255,255,255,255 }, 1);
-    version_mark->depth = RENDERING_DEPTH_EXTRA + 5;
+	version_mark->setTexture(L"Goldust Palace DEMO +1 by TheCarmineDepth",1, { 255,255,255,255 });
+    version_mark->depth = DEPTH_EXTRA + 5;
     version_mark->x = WINDOW_WIDTH - version_mark->width;
     version_mark->y = WINDOW_HEIGHT - version_mark->height;
 
@@ -91,54 +152,8 @@ int main(int argc, char** argv) {
     GlobalData::ui_scope = idea_UI_scope::createNew();
     GlobalData::ui_inspector = idea_UI_inspector::createNew();
 
-    /*
-     */
-	    auto range = PhysicsFacility::createNew();
-	    range->X = 10;
-	    range->Y = 2;
-	    range->bodyX = 10;
-	    range->bodyY = 10;
-	    range->setFacilityType(BlockingType::air);
-	    range->renewSignedGrids();
-    //临时测试-设置测试模型
-	
-		auto pf1=PhysicsFacility::createNew();
-		pf1->X = 7;
-		pf1->Y = 12;
-        pf1->bodyX = 50;
-		pf1->setFacilityType(BlockingType::solid);
-		pf1->renewSignedGrids();
-
-		pf1 = PhysicsFacility::createNew();
-		pf1->X = 5;
-		pf1->Y = 8;
-		pf1->bodyY = 5;
-		pf1->bodyX = 5;
-		pf1->setFacilityType(BlockingType::support);
-		pf1->renewSignedGrids();
-
-        
-
-        auto pf2 = idea_monster_slime::createNew();
-        pf2->setPosition(7, 2);
-
-        /*
-		auto pf4 = ProjectileFlying::createNew();
-		pf4->X = 0;
-		pf4->Y = 0;
-		pf4->x_v = 0.1;
-		pf4->y_v = 0;
-		pf4->y_a = 0.005;
-		pf4->renewSignedGrids();
-         */
-
-		auto pf5 = PhysicsFacility::createNew();
-		pf5->X = 9;
-		pf5->Y = 10;
-		pf5->bodyY = 5;
-		pf5->bodyX = 5;
-		pf5->setFacilityType(BlockingType::air);
-		pf5->renewSignedGrids();
+    //代码测试
+    test_init();
 	
 
     SDL_Log(u8"--\t--\t--\t--初始化完成,游戏运行--\t--\t--\t--");
@@ -155,11 +170,16 @@ int main(int argc, char** argv) {
         UISystem::getInstance()->controlGame();
 
 	    RenderingSystem::getInstance()->renewViewPosition();
-        
+
+        //UI触发
+        UISystem::getInstance()->trigger_UIObjects();
+
         //每16ms运行一次逻辑帧
         while (GlobalData::getIfLogicGo())
         {
             WorldSystem::getInstance()->logicGo();
+            //代码测试
+            test_physics();
         }
 
 
@@ -172,6 +192,9 @@ int main(int argc, char** argv) {
 	        //渲染背景颜色
 	        SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 14, 80, 81, 255);
 	        SDL_RenderClear(GlobalData::sdl_renderer);
+
+            //测试代码
+            test_rendering();
 
 	        //渲染内容
 	        //画面渲染

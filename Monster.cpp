@@ -12,7 +12,7 @@ Monster::Monster()
 	monster_num++;
 
 	patrol_area = new std::list<Grid*>();
-	name = u8"default_monster";
+	name = L"default_monster";
 	physics_object->type_ally = AllyType::monster;
 }
 

@@ -80,7 +80,14 @@ void RenderingUnit::setTexture(SDL_Texture* _texture)
 
 SDL_Texture* RenderingUnit::getTexture() const
 {
-	return texture;
+#ifdef _DEBUG
+	if(texture==nullptr)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"从RenderingUnit::getTexture()获取了空的材质");
+	}
+#endif
+
+	return this->texture;
 }
 
 int RenderingUnit::rendering_unit_num = 0;

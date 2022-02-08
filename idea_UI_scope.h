@@ -13,12 +13,10 @@ protected:
 	idea_UI_scope();
 	~idea_UI_scope()override;
 
-	void create_texture();
-	void renew_texture();
-	void renew_state();
-	void destroy_texture();
-
-	bool flag_enable;
+	void create_texture()const;
+	void renew_texture()const;
+	void renew_state()const;
+	void destroy_texture()const;
 
 	Uint8 color_r;
 	Uint8 color_g;

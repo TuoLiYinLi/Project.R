@@ -140,7 +140,7 @@ void idea_debugger_physics::render_all_grids()const
 
 idea_debugger_physics::idea_debugger_physics()
 {
-    name = "physics_debugger";
+    name = L"physics_debugger";
 
 	rendering_unit = RenderingUnit::createNew();
     rendering_unit->deltaX = 0;
@@ -148,7 +148,7 @@ idea_debugger_physics::idea_debugger_physics()
     rendering_unit->width = WINDOW_WIDTH;
     rendering_unit->height = WINDOW_HEIGHT;
     rendering_unit->reference = RenderingReference::window;
-    rendering_unit->depth = RENDERING_DEPTH_EXTRA + 1;
+    rendering_unit->depth = DEPTH_FIXED_UI - 2;
     create_texture();
     renew_texture();
 }

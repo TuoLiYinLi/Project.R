@@ -105,6 +105,15 @@
     <ClInclude Include="CountingContainer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="UIObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_UI_button_exit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -192,6 +201,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CountingContainer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_button_exit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

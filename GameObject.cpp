@@ -19,7 +19,7 @@ GameObject::GameObject()
 {
 	game_object_num++;
 
-	name = u8"default_game_object";
+	name = L"default_game_object";
 	type_game_object = GameObjectType::default_object;
 
 	flag_destroy = false;

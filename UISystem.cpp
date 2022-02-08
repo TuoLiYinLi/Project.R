@@ -313,11 +313,17 @@ UISystem::UISystem()
 	key_f4_last = false;
 
 	keydown_esc = false;
+
+	last_tar = nullptr;
+
+	list_ui_objects = new std::list<UIObject*>();
 }
 
 UISystem::~UISystem()
 {
 	SDL_Log("UISystem destruct");
+
+	delete list_ui_objects;
 }
 
 void UISystem::renewMouseWorldPosition()
@@ -387,4 +393,49 @@ void UISystem::controlGame() const
 	}
 
 
+}
+
+void UISystem::trigger_UIObjects()
+{
+	//寻找当前碰撞的UI元件
+	float current_depth = 0;
+
+	UIObject* current_tar = nullptr;
+
+	for (auto i = list_ui_objects->begin(); i != list_ui_objects->end(); ++i)
+	{
+		if ((*i)->checkColliderEnabled() &&
+			(*i)->rendering_unit->depth > current_depth &&
+			GameToolkit::checkMouseInRange(
+				(*i)->collider_x,
+				(*i)->collider_y,
+				(*i)->collider_w + (*i)->collider_x,
+				(*i)->collider_y + (*i)->collider_h)
+			)
+		{
+			current_depth = (*i)->rendering_unit->depth;
+			current_tar = (*i);
+		}
+	}
+
+	//开始触发
+	if (current_tar)
+	{
+		if (mouse_left_press)current_tar->onMouseDown();
+		else if (mouse_left_release)current_tar->onMouseUp();
+
+		if (mouse_left_state)current_tar->onMousePressing();
+		else current_tar->onMouseHanging();
+
+		if (mouse_wheel_forward)current_tar->onMouseRoll(true);
+		else if (mouse_wheel_backward)current_tar->onMouseRoll(false);
+	}
+
+	if (current_tar != last_tar)
+	{
+		if (current_tar)current_tar->onMouseEnter();
+		if (last_tar)last_tar->onMouseExit();
+	}
+
+	last_tar = current_tar;
 }

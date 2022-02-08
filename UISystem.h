@@ -1,4 +1,7 @@
 #pragma once
+#include <list>
+
+#include "UIObject.h"
 
 class UISystem
 {
@@ -42,9 +45,15 @@ public:
 
 	bool keydown_esc;	//按键escape状态
 
+	std::list<UIObject*>* list_ui_objects;//UI元件列表
+
 	void pullEvent();	//处理输入事件
 
 	void controlGame()const;	//将输入传入游戏
+
+	void trigger_UIObjects();//触发UI元件碰撞箱
+
+	UIObject* last_tar;//上一次碰撞到的UI元件
 
 protected:
 	bool mouse_left_last;	//鼠标左键上次状态
@@ -60,5 +69,6 @@ protected:
 	~UISystem();
 
 	void renewMouseWorldPosition();	//更新鼠标世界坐标
+
 };
 

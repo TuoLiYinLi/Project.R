@@ -25,8 +25,6 @@ protected:
 
     void destroy_texture()const;
 
-    void render_text()const;
-
     void renew_state();//更新用户交互状态
 
     SDL_Texture* texture_exit_button;

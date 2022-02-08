@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
-#include <list>
+#include <string>
+
 
 //显示游戏信息Debug的物件
 class idea_debugger_game_info :
@@ -13,14 +14,12 @@ protected:
     idea_debugger_game_info();
     ~idea_debugger_game_info()override;
 
-    void renew_texture()const;
-
     void create_texture()const;
+
+    void renew_texture()const;
 
     void destroy_texture()const;
 
-    void render_text()const;
-
-    std::list<SDL_Texture*>* last_text_textures;
+    std::wstring create_text()const;
 };
 

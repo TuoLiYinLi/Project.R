@@ -28,7 +28,7 @@ idea_UI_inspector::idea_UI_inspector()
 	tar_facility = nullptr;
 	tar_warrior = nullptr;
 
-	name = u8"UI_inspector";
+	name = L"UI_inspector";
 
 	rendering_unit = RenderingUnit::createNew();
 	rendering_unit->deltaX = 0;
@@ -37,7 +37,7 @@ idea_UI_inspector::idea_UI_inspector()
 	rendering_unit->height = 0;
 	rendering_unit->reference = RenderingReference::window;
 
-	rendering_unit->depth = RENDERING_DEPTH_UI+1;
+	rendering_unit->depth = DEPTH_FIXED_UI+1;
 
 	create_texture(146, 77);
 	renew_texture();

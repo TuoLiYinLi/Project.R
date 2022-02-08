@@ -9,7 +9,7 @@ idea_monster_slime* idea_monster_slime::createNew()
 
 idea_monster_slime::idea_monster_slime()
 {
-	name = u8"史莱姆";
+	name = L"史莱姆";
 
 	//设定物理体
 	{

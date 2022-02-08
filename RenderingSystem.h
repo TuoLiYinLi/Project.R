@@ -9,6 +9,8 @@
 #include "SDL_ttf.h"
 
 #include "RenderingUnit.h"
+#include "UIObject.h"
+
 #include "EnumAnimationType.h"
 
 class PhysicsObject;
@@ -20,7 +22,7 @@ class RenderingSystem
 
 
 public:
-	TTF_Font* font_grey;//字体Silver.ttf
+	TTF_Font* font_grey;//字体grey.ttf
 
 	//获取单例实例
 	static RenderingSystem* getInstance();
@@ -40,8 +42,6 @@ public:
 	void unloadAnimation(AnimationType antp) const;
 	//卸载所有种类的动画资源
 	void unloadAllAnimation()const;
-
-	//对字体初始化
 
 	//渲染单个的渲染单元
 	void renderOneUnit(const RenderingUnit* au) const;

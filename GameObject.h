@@ -27,7 +27,7 @@ public:
 	bool checkIfDestroy()const;//询问是否可以销毁
 	bool checkIfStatic()const;//检查是否为静态
 
-	std::string name;	//名称
+	std::wstring name;	//名称
 	GameObjectType type_game_object;	//游戏对象类型
 
 	PhysicsObject* physics_object;	//持有的物理对象

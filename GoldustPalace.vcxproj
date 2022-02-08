@@ -24,6 +24,7 @@
     <ClInclude Include="idea_debugger_game_info.h" />
     <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_debugger_physics.h" />
+    <ClInclude Include="idea_UI_button_exit.h" />
     <ClInclude Include="idea_UI_inspector.h" />
     <ClInclude Include="idea_UI_scope.h" />
     <ClInclude Include="Monster.h" />
@@ -38,6 +39,8 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="RenderingText.h" />
     <ClInclude Include="RenderingUnit.h" />
+    <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIObject.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="PhysicsChara.h" />
     <ClInclude Include="PhysicsFacility.h" />
@@ -56,6 +59,7 @@
     <ClCompile Include="idea_debugger_game_info.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
     <ClCompile Include="idea_debugger_physics.cpp" />
+    <ClCompile Include="idea_UI_button_exit.cpp" />
     <ClCompile Include="idea_UI_inspector.cpp" />
     <ClCompile Include="idea_UI_scope.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -68,6 +72,8 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="RenderingText.cpp" />
     <ClCompile Include="RenderingUnit.cpp" />
+    <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsChara.cpp" />

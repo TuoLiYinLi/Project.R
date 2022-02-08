@@ -12,12 +12,12 @@ Chara* Chara::createNew()
 
 PhysicsChara* Chara::getPhysicsChara() const
 {
-	return static_cast<PhysicsChara*>(physics_object);
+	return dynamic_cast<PhysicsChara*>(physics_object);
 }
 
 RenderingAnimation* Chara::getRenderingAnimation() const
 {
-	return static_cast<RenderingAnimation*>(rendering_unit);
+	return dynamic_cast<RenderingAnimation*>(rendering_unit);
 }
 
 
@@ -336,9 +336,16 @@ void Chara::update_animation() {
 	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
 	//刷新深度
-	rendering_unit->depth = RENDERING_DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
+	rendering_unit->depth = DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
 
 }
+
+void Chara::update_depth()const
+{
+	rendering_unit->depth = DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
+}
+
+
 
 int Chara::chara_num = 0;
 
@@ -346,7 +353,7 @@ Chara::Chara()
 {
 	chara_num++;
 
-	name = u8"default_character";
+	name = L"default_character";
 
 	type_game_object = GameObjectType::default_chara;
 
@@ -370,7 +377,8 @@ Chara::Chara()
 	//设置角色动画
 	{
 		rendering_unit = RenderingAnimation::createNew();
-		rendering_unit->depth = RENDERING_DEPTH_WORLD_CHARA;
+
+		update_depth();
 
 		animation_progress = 0;
 
@@ -523,6 +531,9 @@ void Chara::setPosition(int x, int y)
 	getRenderingAnimation()->y = getPhysicsChara()->Y;
 	getRenderingAnimation()->width = getPhysicsChara()->bodyX * PIXEL_RATE;
 	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
+
+	//刷新角色深度
+	update_depth();
 }
 
 

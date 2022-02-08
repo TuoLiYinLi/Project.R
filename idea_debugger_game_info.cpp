@@ -1,4 +1,3 @@
-#include <string>
 #include "idea_debugger_game_info.h"
 
 #include "Chara.h"
@@ -33,7 +32,7 @@ void idea_debugger_game_info::updateOnRendering()
 
 idea_debugger_game_info::idea_debugger_game_info()
 {
-	name = u8"game_info_debugger";
+	name = L"game_info_debugger";
 
 	rendering_unit = RenderingUnit::createNew();
 	rendering_unit->deltaX = 0;
@@ -41,49 +40,31 @@ idea_debugger_game_info::idea_debugger_game_info()
 	rendering_unit->width = WINDOW_WIDTH;
 	rendering_unit->height = WINDOW_HEIGHT;
 	rendering_unit->reference = RenderingReference::window;
-	rendering_unit->depth = RENDERING_DEPTH_EXTRA + 2;
-
-	last_text_textures = new std::list<SDL_Texture*>();
+	rendering_unit->depth = DEPTH_EXTRA + 2;
 
 	create_texture();
-	renew_texture();
 }
 
 idea_debugger_game_info::~idea_debugger_game_info()
 {
 	destroy_texture();
-
-	delete last_text_textures;
 }
 
 void idea_debugger_game_info::renew_texture() const
 {
-
-	SDL_SetRenderTarget(GlobalData::sdl_renderer, rendering_unit->getTexture());
-	//渲染为完全透明
-	SDL_SetRenderDrawBlendMode(GlobalData::sdl_renderer, SDL_BLENDMODE_NONE);
-	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 0, 0, 0, 0);
-	SDL_RenderClear(GlobalData::sdl_renderer);
-
-	//渲染鼠标位置
-	const int _x= UISystem::getInstance()->mouseX_window;
-	const int _y = UISystem::getInstance()->mouseY_window;
-	
-	SDL_SetRenderDrawColor(GlobalData::sdl_renderer, 255, 0, 0, 120);
-	SDL_RenderDrawLine(GlobalData::sdl_renderer,0, _y, WINDOW_WIDTH, _y);
-	SDL_RenderDrawLine(GlobalData::sdl_renderer, _x, 0, _x, WINDOW_HEIGHT);
-
-	render_text();
+	destroy_texture();
+	create_texture();
 }
 
 void idea_debugger_game_info::create_texture() const
 {
-	SDL_Texture* texture = SDL_CreateTexture(GlobalData::sdl_renderer,
-		SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-		WINDOW_WIDTH, WINDOW_HEIGHT);
-	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+	int w, h;
 
-	rendering_unit->setTexture(texture);
+	const auto t = GameToolkit::createUnicodeText(create_text().c_str(), { 255,255,255,255 }, WINDOW_WIDTH / 3, &w, &h);
+
+	rendering_unit->setTexture(t);
+	rendering_unit->width = static_cast<double>(w);
+	rendering_unit->height = static_cast<double>(h);
 }
 
 void idea_debugger_game_info::destroy_texture() const
@@ -96,101 +77,56 @@ void idea_debugger_game_info::destroy_texture() const
 	}
 }
 
-void idea_debugger_game_info::render_text() const
+std::wstring idea_debugger_game_info::create_text() const
 {
-	for (auto i = last_text_textures->begin(); i != last_text_textures->end(); ++i)
-	{
-		SDL_DestroyTexture(*i);
-	}
-	last_text_textures->clear();
+	//performance
+	std::wstring msg = L"[Performance]\nphysics frame:" + std::to_wstring(GlobalData::getTimePhysicsFrames())
+		+ L"\nFPS:" + std::to_wstring(GlobalData::getFPS()) + L" delta:" + std::to_wstring(GlobalData::getTimeDelta());
+	//statistics
+	msg += L"\n[Statistics]\nRenderingUnit:" + std::to_wstring(RenderingUnit::getRenderingUnitNum())
+		+ L" Grid:" + std::to_wstring(Grid::getGridNum())
+		+ L"\nGameObjectNum:<Total:" + std::to_wstring(GameObject::getGameObjectNum())
+		+ L"> <Character:" + std::to_wstring(Chara::getCharaNum())
+		+ L"> <Facility:" + std::to_wstring(Facility::getFacilityNum())
+		+ L"> <Projectile:" + std::to_wstring(Projectile::getProjectileNum())
+		+ L">\nPhysicsNum:<Object:" + std::to_wstring(PhysicsObject::getPhysicsObjectNum())
+		+ L"> <Character:" + std::to_wstring(PhysicsChara::getPhysicsCharaNum())
+		+ L"> <Facility:" + std::to_wstring(PhysicsFacility::getPhysicsFacillityNum())
+		+ L"> <Projectile:" + std::to_wstring(PhysicsProjectile::getPhysicsProjectilleNum())
+		+ L">";
 
-	std::string msg = u8"physics frame:" + std::to_string(GlobalData::getTimePhysicsFrames())
-		+ u8" FPS:" + std::to_string(GlobalData::getFPS())
-		+ u8" delta:" + std::to_string(GlobalData::getTimeDelta());
-	SDL_Rect rect = { 0,0,0,0 };
-
-	SDL_Texture* text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
-
-	msg = +u8"RenderingUnit:" + std::to_string(RenderingUnit::getRenderingUnitNum())
-		+ u8" Grid:" + std::to_string(Grid::getGridNum());
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
-
-	msg = u8"GameObjectNum: <Total:" + std::to_string(GameObject::getGameObjectNum())
-		+ u8"> <Character:" + std::to_string(Chara::getCharaNum())
-		+ u8"> <Facility:" + std::to_string(Facility::getFacilityNum())
-		+ u8"> <Projectile:" + std::to_string(Projectile::getProjectileNum())
-		+ u8">";
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
-
-	msg = u8"PhysicsNum: <Object:" + std::to_string(PhysicsObject::getPhysicsObjectNum())
-		+ u8"> <Character:" + std::to_string(PhysicsChara::getPhysicsCharaNum())
-		+ u8"> <Facility:" + std::to_string(PhysicsFacility::getPhysicsFacillityNum())
-		+ u8"> <Projectile:" + std::to_string(PhysicsProjectile::getPhysicsProjectilleNum())
-		+ u8">";
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
-
-
+	//grid info
 	const int grid_x = static_cast<int>(floor(UISystem::getInstance()->mouseX_world));
 	const int grid_y = static_cast<int>(floor(UISystem::getInstance()->mouseY_world));
-	msg = u8"GridAt:(" + std::to_string(grid_x)
-		+ u8"," + std::to_string(grid_y)
-		+ u8") MousePosition:(" + std::to_string(UISystem::getInstance()->mouseX_window)
-		+ u8"," + std::to_string(UISystem::getInstance()->mouseY_window)
-		+ u8")";
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
-
-	const auto g= WorldSystem::getInstance()->getGrid(grid_x, grid_y);
-
-	if(g==nullptr)
+	msg += L"\n[Cursor info]\nGrid at:(" + std::to_wstring(grid_x)+ L"," + std::to_wstring(grid_y)
+		+ L") MousePosition:(" + std::to_wstring(UISystem::getInstance()->mouseX_window)
+		+ L"," + std::to_wstring(UISystem::getInstance()->mouseY_window)+ L")";
+	const auto g = WorldSystem::getInstance()->getGrid(grid_x, grid_y);
+	if (g == nullptr)
 	{
-		msg = u8"Outside Grid";
-		rect.y += rect.h;
-		text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-		SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-		last_text_textures->push_back(text);
+		msg += L"\nOutside Grid";
+	}
+	else
+	{
+		msg += L"\nCharaNum:" + std::to_wstring(g->list_physics_chara->size())
+			+ L" FacilityNum:" + std::to_wstring(g->list_physics_facility->size())
+			+ L" ProjectileNum:" + std::to_wstring(g->list_physics_projectile->size());
+	}
+	if(UISystem::getInstance()->last_tar)
+	{
+		msg += L"\nUI target:" + UISystem::getInstance()->last_tar->name;
 	}else
 	{
-		msg = u8"CharaNum:" + std::to_string(g->list_physics_chara->size())
-			+ u8" FacilityNum:" + std::to_string(g->list_physics_facility->size())
-			+ u8" ProjectileNum:" + std::to_string(g->list_physics_projectile->size());
-		rect.y += rect.h;
-		text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-		SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-		last_text_textures->push_back(text);
+		msg += L"\nUI target:null";
 	}
-	msg = u8"EnemyNum:" + std::to_string(Warrior::getWarriorNum())
-		+ u8" MonsterNum:" + std::to_string(Monster::getMonsterNum());
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
 
-	msg = u8"EnemyWaveNum:" + std::to_string(WorldSystem::getInstance()->enemy_wave_num)
-		+ u8" EnemyWaveCD:" + std::to_string(WorldSystem::getInstance()->enemy_wave_CD)
-		+ u8" GoldustEnergy:" + std::to_string(static_cast<int>(WorldSystem::getInstance()->goldust_energy));
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
-
-	msg = u8"TimeSpeed:" + std::to_string(static_cast<int>(GlobalData::getTimeSpeed()))
-		+ u8" TimePause:" + std::to_string(GlobalData::flag_stop);
-	rect.y += rect.h;
-	text = GameToolkit::getRenderedText(msg.c_str(), { 255,255,255,255 }, &rect.w, &rect.h);
-	SDL_RenderCopy(GlobalData::sdl_renderer, text, nullptr, &rect);
-	last_text_textures->push_back(text);
+	//game info
+	msg += L"\n[Game info]\nTimeSpeed:" + std::to_wstring(static_cast<int>(GlobalData::getTimeSpeed()))
+		+ L" TimePause:" + std::to_wstring(GlobalData::flag_stop)
+		+ L"\nWarriorNum:" + std::to_wstring(Warrior::getWarriorNum())
+		+ L" MonsterNum:" + std::to_wstring(Monster::getMonsterNum())
+		+ L" EnemyWaveNum:" + std::to_wstring(WorldSystem::getInstance()->enemy_wave_num)
+		+ L" EnemyWaveCD:" + std::to_wstring(WorldSystem::getInstance()->enemy_wave_CD)
+		+ L" GoldustEnergy:" + std::to_wstring(static_cast<int>(WorldSystem::getInstance()->goldust_energy));
+	return msg;
 }

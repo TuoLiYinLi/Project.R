@@ -1,5 +1,6 @@
 #include <string>
 #include "Defined.h"
+
 #include "GlobalData.h"
 
 #include "RenderingSystem.h"
@@ -45,12 +46,15 @@ RenderingSystem::RenderingSystem()
 
     //打开字体
     font_grey = TTF_OpenFont("./Resource/ttf/Grey.ttf", 19);
+#ifdef _DEBUG
     if(font_grey==nullptr)
     {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"字体文件错误无法打开");
     }
-    
-    //渲染资源列表
+#endif
+    TTF_SetFontKerning(font_grey, true);
+
+	//渲染资源列表
     list_animation_texture = new std::vector<std::vector<SDL_Texture*>*>();
     loadAllAnimation();
 

@@ -23,13 +23,13 @@ constexpr double VIEW_ACCELERATE_SPEED_X = 100; //窗口水平速度的减速度;
 constexpr double VIEW_ACCELERATE_SPEED_Y = 100; //窗口竖直速度的减速度;
 constexpr double VIEW_ACCELERATE_SPEED_SCALE = 8; //窗口缩放速度的减速度;
 
-constexpr float RENDERING_DEPTH_WORLD_FACILITY = 1000;//渲染深度设施
-constexpr float RENDERING_DEPTH_WORLD_CHARA = 2000;//渲染深度角色
-constexpr float RENDERING_DEPTH_WORLD_PARTICLE = 3000;//渲染深度粒子
+constexpr float DEPTH_WORLD_FACILITY = 1000;//渲染深度设施
+constexpr float DEPTH_WORLD_CHARA = 2000;//渲染深度角色
+constexpr float DEPTH_WORLD_PROJECTILE = 3000;//渲染深度投射物
 
-constexpr float RENDERING_DEPTH_WORLD_UI = 5000;//渲染深度世界UI
-constexpr float RENDERING_DEPTH_UI = 6000;//渲染深度固定UI
-constexpr float RENDERING_DEPTH_EXTRA = 10000;//额外信息
+constexpr float DEPTH_WORLD_UI = 5000;//渲染深度世界UI
+constexpr float DEPTH_FIXED_UI = 6000;//渲染深度固定UI
+constexpr float DEPTH_EXTRA = 10000;//额外信息
 
 constexpr double GOLDUST_RECOVERY = 0.01;//默认的金沙能量恢复速度
 

@@ -23,16 +23,36 @@ void GameToolkit::transPositionWindowToWorld(double x_window, double y_window, d
 	+ k * (y_window - 0.5 * WINDOW_HEIGHT);
 }
 
-
-SDL_Texture* GameToolkit::getRenderedText(char const* str, SDL_Color color, int* width, int* height)
+SDL_Texture* GameToolkit::createUnicodeLine(const wchar_t* unicode_str, SDL_Color color, int* width, int* height)
 {
-	SDL_Surface* surface = TTF_RenderUTF8_Blended(RenderingSystem::getInstance()->font_grey, str, color);
+	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
+
+	SDL_Surface* surface = TTF_RenderUNICODE_Solid(RenderingSystem::getInstance()->font_grey, str, color);
+
+	if(width)*width = surface->w;
+	if(height)*height = surface->h;
 
 	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
 
 	SDL_FreeSurface(surface);
 
-	TTF_SizeUTF8(RenderingSystem::getInstance()->font_grey, str, width, height);
+	return _texture;
+}
+
+SDL_Texture* GameToolkit::createUnicodeText(const wchar_t* unicode_str, SDL_Color color, int wrapLength, int* w, int* h)
+{
+	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
+	int extent;
+
+	TTF_MeasureUNICODE(RenderingSystem::getInstance()->font_grey, str, wrapLength, &extent,nullptr);
+
+	SDL_Surface* surface = TTF_RenderUNICODE_Solid_Wrapped(RenderingSystem::getInstance()->font_grey, str, color, extent);
+
+	if (w)*w = surface->w;
+	if (h)*h = surface->h;
+
+	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
+	SDL_FreeSurface(surface);
 
 	return _texture;
 }

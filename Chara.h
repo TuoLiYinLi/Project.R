@@ -117,6 +117,7 @@ protected:
 	void update_attributes();//更新属性数据
 	void update_effect();//更新效果
 	void update_animation();//更新行为和动画
+	void update_depth()const;//更新动画元件的深度
 
 	bool getIfDisturbed() const;//符合被打断状态的条件
 	bool getIfMoving() const;//符合移动状态的条件

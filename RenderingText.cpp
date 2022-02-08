@@ -9,20 +9,33 @@ RenderingText* RenderingText::createNew()
 	return new RenderingText();
 }
 
-void RenderingText::setTexture(const char* utf8_msg, SDL_Color color, double scale)
+void RenderingText::setTexture(const wchar_t* unicode_str, double scale, SDL_Color color)
 {
-	if(texture)
+	if (texture)
 	{
 		SDL_DestroyTexture(texture);
 		texture = nullptr;
 	}
-
 	int w, h;
-
-	texture = GameToolkit::getRenderedText(utf8_msg, color, &w, &h);
+	texture = GameToolkit::createUnicodeLine(unicode_str, color, &w, &h);
 
 	width = w * scale;
 	height = h * scale;
+}
+
+
+void RenderingText::setTexture(const wchar_t* unicode_str, double scale, SDL_Color color, int wrapLength)
+{
+	if (texture)
+	{
+		SDL_DestroyTexture(texture);
+		texture = nullptr;
+	}
+	int w, h;
+	texture = GameToolkit::createUnicodeText(unicode_str, color, wrapLength, &w, &h);
+
+	width = w*scale;
+	height = h*scale;
 }
 
 
