@@ -20,7 +20,7 @@ class RenderingSystem
 
 
 public:
-	TTF_Font* font_silver;//字体Silver.ttf
+	TTF_Font* font_grey;//字体Silver.ttf
 
 	//获取单例实例
 	static RenderingSystem* getInstance();
@@ -78,21 +78,6 @@ protected:
 	std::list<RenderingUnit*>* list_rendering_units;//动画单元列表,储存需要渲染的动画元件
 	std::vector<std::vector<SDL_Texture*>*>* list_animation_texture;//一个二维的材质列表,用于加载所有的动画资源
 
-	SDL_Texture* font_unicode_map;//保存Unicode重新映射后的字表材质
-
-	void createUnicodeMap(const char* _save_file);//创建一个Unicode字表
-
-	static  SDL_Rect getMappingRect(Uint16 num, int total_rows, int font_width, int font_height, int  grid_width, int grid_height);//获取编号在font_unicode_map中的位置
-
-	static Uint16 remappingUnicodeRule(Uint16 unicode_char);//将Unicode字符重新映射一个数值
-
 	static bool compareDepth(const RenderingUnit* ru1, const RenderingUnit* ru2);//比较两个渲染单元的大小,用于排序回调函数
-
-	Uint16 unicode_range_min;//重映射字体Unicode最小值
-	Uint16 unicode_range_max;//重映射字体Unicode最大值
-
-	int remapping_grid_width;//重映射格位宽
-	int remapping_grid_height;//重映射格位高
-	int remapping_total_rows;//重映射总行数
 };
 
