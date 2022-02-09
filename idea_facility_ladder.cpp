@@ -7,6 +7,8 @@ idea_facility_ladder* idea_facility_ladder::createNew()
 
 idea_facility_ladder::idea_facility_ladder()
 {
+	name = L"ÅÀÌÝ";
+
 	getPhysicsFacility()->setFacilityType(BlockingType::support);
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_1);
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_2);

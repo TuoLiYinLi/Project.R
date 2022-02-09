@@ -27,6 +27,7 @@ UIButton::~UIButton()
 
 void UIButton::onMouseUp()
 {
+	UIObject::onMouseUp();
 	rendering_unit->setTexture(texture_highlight);
 
 	if(callback_f)
@@ -37,16 +38,19 @@ void UIButton::onMouseUp()
 
 void UIButton::onMousePressing()
 {
+	UIObject::onMousePressing();
 	rendering_unit->setTexture(texture_pressed);
 }
 
 void UIButton::onMouseEnter()
 {
+	UIObject::onMouseEnter();
 	rendering_unit->setTexture(texture_highlight);
 }
 
 void UIButton::onMouseExit()
 {
+	UIObject::onMouseExit();
 	rendering_unit->setTexture(texture_default);
 }
 

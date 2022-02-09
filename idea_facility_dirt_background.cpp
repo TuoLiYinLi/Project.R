@@ -7,6 +7,7 @@ idea_facility_dirt_background* idea_facility_dirt_background::createNew()
 
 idea_facility_dirt_background::idea_facility_dirt_background()
 {
+	name = L"ÄàÍÁ";
 	getPhysicsFacility()->setFacilityType(BlockingType::solid);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_1);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_2);

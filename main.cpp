@@ -39,6 +39,8 @@
 #include "idea_UI_scope.h"
 #include "idea_UI_inspector.h"
 #include "idea_UI_button_exit.h"
+#include "idea_UI_button_menu.h"
+#include "idea_UI_speed_controller.h"
 
 void test()
 {
@@ -60,10 +62,12 @@ void test_init()
     f1->setPosition(7, 7);
 
     //UIObject测试
-    const auto test_button = idea_UI_button_exit::createNew();
-    test_button->setCallback(test);
-    test_button->setPosition(500, 300, 18, 18);
 
+
+    const auto test_button2 = idea_UI_speed_controller::createNew();
+    
+
+    //泥土
     for (int x = 0; x < 5; ++x)
     {
 	    for (int y = 0; y < 4; ++y)
@@ -72,6 +76,8 @@ void test_init()
             f2->setPosition(8 + x, 8 + y);
 	    }
     }
+
+
 }
 
 void test_physics()
@@ -137,6 +143,8 @@ int main(int argc, char** argv) {
     //游戏UI初始化
     GlobalData::ui_scope = idea_UI_scope::createNew();
     GlobalData::ui_inspector = idea_UI_inspector::createNew();
+    GlobalData::ui_menu_button = idea_UI_button_menu::createNew();
+    GlobalData::ui_speed_controller = idea_UI_speed_controller::createNew();
 
     //代码测试
     test_init();

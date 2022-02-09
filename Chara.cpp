@@ -522,8 +522,6 @@ void Chara::setAnimationMoving()
 
 bool Chara::getIfDisturbed() const
 {
-	SDL_Log("disturber");
-
 	return getPhysicsChara()->getIfFalling()
 		||getPhysicsChara()->getIfHitBack();
 }

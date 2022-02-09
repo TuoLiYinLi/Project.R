@@ -123,6 +123,15 @@
     <ClInclude Include="idea_facility_dirt_background.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_UI_button_menu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_UI_speed_controller.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UICheckbox.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -185,9 +194,6 @@
     <ClCompile Include="RenderingText.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="idea_debugger_physics.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="GameToolkit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -228,6 +234,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_facility_dirt_background.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_button_menu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_speed_controller.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UICheckbox.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_debugger_physics.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,6 +17,7 @@ UIObject::UIObject()
 
 	flag_collider_enabled = true;
 	flag_static = true;
+	flag_mouse_in = false;
 
 	collider_x = 0;
 	collider_y = 0;
@@ -59,6 +60,12 @@ bool UIObject::checkColliderEnabled()const
 	return flag_collider_enabled;
 }
 
+bool UIObject::checkMouseIn() const
+{
+	return flag_mouse_in;
+}
+
+
 int UIObject::ui_object_num = 0;
 
 int UIObject::getUIObjectNum()
@@ -82,12 +89,12 @@ void UIObject::setPosition(int x, int y, int w, int h)
 
 void UIObject::onMouseEnter()
 {
-	//SDL_Log("onMouseEnter");
+	flag_mouse_in = true;
 }
 
 void UIObject::onMouseExit()
 {
-	//SDL_Log("onMouseExit");
+	flag_mouse_in = false;
 }
 
 void UIObject::onMouseDown()

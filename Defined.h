@@ -33,6 +33,8 @@ constexpr float DEPTH_EXTRA = 10000;//额外信息
 
 constexpr double GOLDUST_RECOVERY = 0.01;//默认的金沙能量恢复速度
 
+constexpr double UI_SCALE = 4;//UI放大倍数
+
 //#define SHOW_FPS //将每秒帧数输出到窗口
 //#define SHOW_KEY //将键盘鼠标等输入信息输出到窗口
 

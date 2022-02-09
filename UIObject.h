@@ -11,6 +11,7 @@ public:
     static UIObject* createNew();
 
     bool checkColliderEnabled()const;
+    bool checkMouseIn()const;
 
     void update_depth(float _d)const;
 
@@ -35,7 +36,8 @@ protected:
 
     static int ui_object_num;//当前活跃的UIObject数量
 
-    int flag_collider_enabled;//碰撞箱是否启用
-    
+    bool flag_collider_enabled;//碰撞箱是否启用
+
+    bool flag_mouse_in;//是否鼠标在此UIObject上
 };
 

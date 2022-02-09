@@ -289,6 +289,24 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             num = 1;
             break;
 
+        case AnimationType::ui_button_menu_default:
+            file = "./Resource/texture/ui_button_menu_default";
+            num = 1;
+            break;
+        case AnimationType::ui_button_menu_highlight:
+            file = "./Resource/texture/ui_button_menu_highlight";
+            num = 1;
+            break;
+        case AnimationType::ui_button_menu_pressed:
+            file = "./Resource/texture/ui_button_menu_pressed";
+            num = 1;
+            break;
+
+        case AnimationType::ui_button_controller_mask:
+            file = "./Resource/texture/ui_button_controller_mask";
+            num = 1;
+            break;
+
         	//monster
         case AnimationType::monster_slime_idle:
             file = "./Resource/texture/monster_slime_idle";

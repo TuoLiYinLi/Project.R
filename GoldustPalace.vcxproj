@@ -28,8 +28,10 @@
     <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_debugger_physics.h" />
     <ClInclude Include="idea_UI_button_exit.h" />
+    <ClInclude Include="idea_UI_button_menu.h" />
     <ClInclude Include="idea_UI_inspector.h" />
     <ClInclude Include="idea_UI_scope.h" />
+    <ClInclude Include="idea_UI_speed_controller.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="RenderingAnimation.h" />
@@ -43,6 +45,7 @@
     <ClInclude Include="RenderingText.h" />
     <ClInclude Include="RenderingUnit.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UICheckbox.h" />
     <ClInclude Include="UIObject.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="PhysicsChara.h" />
@@ -61,13 +64,15 @@
     <ClCompile Include="FacilityVarious.cpp" />
     <ClCompile Include="GameToolkit.cpp" />
     <ClCompile Include="idea_debugger_game_info.cpp" />
+    <ClCompile Include="idea_debugger_physics.cpp" />
     <ClCompile Include="idea_facility_dirt_background.cpp" />
     <ClCompile Include="idea_facility_ladder.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
-    <ClCompile Include="idea_debugger_physics.cpp" />
     <ClCompile Include="idea_UI_button_exit.cpp" />
+    <ClCompile Include="idea_UI_button_menu.cpp" />
     <ClCompile Include="idea_UI_inspector.cpp" />
     <ClCompile Include="idea_UI_scope.cpp" />
+    <ClCompile Include="idea_UI_speed_controller.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="RenderingAnimation.cpp" />
@@ -79,6 +84,7 @@
     <ClCompile Include="RenderingText.cpp" />
     <ClCompile Include="RenderingUnit.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UICheckbox.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="main.cpp" />
