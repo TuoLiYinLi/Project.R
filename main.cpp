@@ -33,6 +33,7 @@
 
 #include "idea_debugger_physics.h"
 #include "idea_debugger_game_info.h"
+#include "idea_facility_dirt_background.h"
 #include "idea_facility_ladder.h"
 #include "idea_monster_slime.h"
 #include "idea_UI_scope.h"
@@ -62,6 +63,15 @@ void test_init()
     const auto test_button = idea_UI_button_exit::createNew();
     test_button->setCallback(test);
     test_button->setPosition(500, 300, 18, 18);
+
+    for (int x = 0; x < 5; ++x)
+    {
+	    for (int y = 0; y < 4; ++y)
+	    {
+            auto f2 = idea_facility_dirt_background::createNew();
+            f2->setPosition(8 + x, 8 + y);
+	    }
+    }
 }
 
 void test_physics()

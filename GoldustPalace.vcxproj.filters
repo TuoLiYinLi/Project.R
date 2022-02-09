@@ -120,6 +120,9 @@
     <ClInclude Include="FacilityVarious.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_facility_dirt_background.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -222,6 +225,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FacilityVarious.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_facility_dirt_background.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

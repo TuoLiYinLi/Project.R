@@ -23,6 +23,7 @@
     <ClInclude Include="FacilityVarious.h" />
     <ClInclude Include="GameToolkit.h" />
     <ClInclude Include="idea_debugger_game_info.h" />
+    <ClInclude Include="idea_facility_dirt_background.h" />
     <ClInclude Include="idea_facility_ladder.h" />
     <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_debugger_physics.h" />
@@ -60,6 +61,7 @@
     <ClCompile Include="FacilityVarious.cpp" />
     <ClCompile Include="GameToolkit.cpp" />
     <ClCompile Include="idea_debugger_game_info.cpp" />
+    <ClCompile Include="idea_facility_dirt_background.cpp" />
     <ClCompile Include="idea_facility_ladder.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
     <ClCompile Include="idea_debugger_physics.cpp" />
