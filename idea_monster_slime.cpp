@@ -113,9 +113,9 @@ void idea_monster_slime::onIdle()
 	Monster::onIdle();
 }
 
-void idea_monster_slime::onImpact()
+void idea_monster_slime::onImpact(int _impact)
 {
-	Monster::onImpact();
+	Monster::onImpact(_impact);
 }
 
 void idea_monster_slime::onKill()
@@ -136,4 +136,9 @@ void idea_monster_slime::onPoisoned()
 void idea_monster_slime::onSpecialSkill()
 {
 	Monster::onSpecialSkill();
+}
+
+void idea_monster_slime::decide_action()
+{
+	actMove(CharaDirection::right);
 }

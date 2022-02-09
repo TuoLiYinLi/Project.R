@@ -25,10 +25,87 @@ void Chara::update()
 {
 	//调用父级函数
 	GameObject::update();
+	//触发onImpact
+	const int _impact = getPhysicsChara()->getImpact();
+	if(_impact>0)onImpact(_impact);
 
-	update_attributes();
 	update_effect();
+	update_attributes();
 	update_animation();
+
+	sync_animation();
+}
+
+void Chara::update_effect()
+{
+	//充能效果
+	if (effect_charging > 0)
+	{
+		effect_charging--;
+	}
+	else
+	{
+		effect_charging = 0;
+	}
+
+	//抵抗效果时间
+	if (effect_resistant > 0)
+	{
+		effect_resistant--;
+	}
+	else
+	{
+		effect_resistant = 0;
+	}
+
+	//中毒效果时间
+	if (effect_poisoned > 0)
+	{
+		effect_poisoned--;
+	}
+	else
+	{
+		effect_poisoned = 0;
+	}
+
+	//燃烧效果
+	if(effect_burning>0)
+	{
+		effect_burning--;
+	}else
+	{
+		effect_burning = 0;
+	}
+
+	//封印效果
+	if (effect_sealed > 0)
+	{
+		effect_sealed--;
+	}
+	else
+	{
+		effect_sealed = 0;
+	}
+
+	//盲目效果
+	if (effect_blind > 0)
+	{
+		effect_blind--;
+	}
+	else
+	{
+		effect_blind = 0;
+	}
+
+	//眩晕效果
+	if (effect_dizzy > 0)
+	{
+		effect_dizzy--;
+	}
+	else
+	{
+		effect_dizzy = 0;
+	}
 }
 
 void Chara::update_attributes()
@@ -115,106 +192,30 @@ void Chara::update_attributes()
 	}
 }
 
-void Chara::update_effect()
-{
-	//充能效果
-	if (effect_charging > 0)
-	{
-		effect_charging--;
-	}
-	else
-	{
-		effect_charging = 0;
-	}
-
-	//抵抗效果时间
-	if (effect_resistant > 0)
-	{
-		effect_resistant--;
-	}
-	else
-	{
-		effect_resistant = 0;
-	}
-
-	//中毒效果时间
-	if (effect_poisoned > 0)
-	{
-		effect_poisoned--;
-	}
-	else
-	{
-		effect_poisoned = 0;
-	}
-
-	//燃烧效果
-	if(effect_burning>0)
-	{
-		effect_burning--;
-	}else
-	{
-		effect_burning = 0;
-	}
-
-	//封印效果
-	if (effect_sealed > 0)
-	{
-		effect_sealed--;
-	}
-	else
-	{
-		effect_sealed = 0;
-	}
-
-	//盲目效果
-	if (effect_blind > 0)
-	{
-		effect_blind--;
-	}
-	else
-	{
-		effect_blind = 0;
-	}
-
-	//眩晕效果
-	if (effect_dizzy > 0)
-	{
-		effect_dizzy--;
-	}
-	else
-	{
-		effect_dizzy = 0;
-	}
-}
-
 void Chara::update_animation() {
-	if (action_type == CharaActionType::idle)
+
+	//推进动画
+	animation_progress++;
+
+	if (action_type != CharaActionType::disturbed && getIfDisturbed())
 	{
-		onIdle();
+		setAnimationDisturbed();
+	}else if (action_type == CharaActionType::idle)
+	{
+		decide_action();
 	}
 
 	switch (action_type)
 	{
 	case CharaActionType::idle:
+		onIdle();
 		//当前是闲置状态
 		{
-			if (getPhysicsChara()->getIfFalling()
-			|| getPhysicsChara()->getIfHitBack())
-			{
-				//角色物理体受到打断
-				setAnimationDisturbed();
-			}
-			else if (getIfMoving())
-			{
-				//角色物理体正在主动运动
-				setAnimationMoving();
-			}
-			else if (animation_progress >= animation_length_idle)
+			if (animation_progress >= animation_length_idle)
 			{
 				//重复闲置动画
 				animation_progress = 0;
 			}
-			getRenderingAnimation()->setTexture(animation_type_idle, animation_length_idle, animation_progress);
 		}
 		break;
 
@@ -232,10 +233,8 @@ void Chara::update_animation() {
 			}
 			else
 			{
-				//退出移动动画
 				setAnimationIdle();
 			}
-			getRenderingAnimation()->setTexture(animation_type_moving, animation_length_moving, animation_progress);
 		}
 		break;
 
@@ -255,7 +254,6 @@ void Chara::update_animation() {
 				//退出打断动画
 				setAnimationIdle();
 			}
-			getRenderingAnimation()->setTexture(animation_type_disturbed, animation_length_disturbed, animation_progress);
 		}
 		break;
 
@@ -266,17 +264,10 @@ void Chara::update_animation() {
 				onBasicSkill();
 			}
 
-			//使用基本技能状态
-			if (getIfDisturbed())
-			{
-				//角色物理体受到打断
-				setAnimationDisturbed();
-			}
-			else if (animation_progress >= animation_length_skill_basic)
+			if (animation_progress >= animation_length_skill_basic)
 			{
 				setAnimationIdle();
 			}
-			getRenderingAnimation()->setTexture(animation_type_skill_basic, animation_length_skill_basic, animation_progress);
 		}
 		break;
 
@@ -286,17 +277,11 @@ void Chara::update_animation() {
 			{
 				onSpecialSkill();
 			}
-			//使用特殊能力状态
-			if (getIfDisturbed())
-			{
-				//角色物理体受到打断
-				setAnimationDisturbed();
-			}
-			else if (animation_progress >= animation_length_skill_special)
+
+			if (animation_progress >= animation_length_skill_special)
 			{
 				setAnimationIdle();
 			}
-			getRenderingAnimation()->setTexture(animation_type_skill_special, animation_length_skill_special, animation_progress);
 		}
 		break;
 
@@ -308,23 +293,67 @@ void Chara::update_animation() {
 				//已经播放完死亡动画
 				onDead();
 				flag_destroy = true;
-				return;
-			}else
-			{
-				getRenderingAnimation()->setTexture(animation_type_dead, animation_length_dead, animation_progress);
+				flag_static = true;
 			}
 		}
 		break;
 	}
+}
 
-	//推进动画
-	animation_progress++;
+void Chara::decide_action()
+{
+	
+}
+
+void Chara::sync_animation()
+{
+	switch (action_type)
+	{
+	case CharaActionType::idle:
+		//当前是闲置状态
+	{
+		getRenderingAnimation()->setTexture(animation_type_idle, animation_length_idle, animation_progress);
+	}
+	break;
+
+	case CharaActionType::moving:
+		onMoving();
+		{
+			getRenderingAnimation()->setTexture(animation_type_moving, animation_length_moving, animation_progress);
+		}
+		break;
+
+	case CharaActionType::disturbed:
+	{
+		getRenderingAnimation()->setTexture(animation_type_disturbed, animation_length_disturbed, animation_progress);
+	}
+	break;
+
+	case CharaActionType::skill_basic:
+	{
+		getRenderingAnimation()->setTexture(animation_type_skill_basic, animation_length_skill_basic, animation_progress);
+	}
+	break;
+
+	case CharaActionType::skill_special:
+	{
+		getRenderingAnimation()->setTexture(animation_type_skill_special, animation_length_skill_special, animation_progress);
+	}
+	break;
+
+	case CharaActionType::dead:
+	{
+		getRenderingAnimation()->setTexture(animation_type_dead, animation_length_dead, animation_progress);
+	}
+	break;
+	}
 
 	//刷新角色朝向
 	if (getPhysicsChara()->getDirection() == CharaDirection::right)
 	{
 		getRenderingAnimation()->setFlip(false);
-	}else if(getPhysicsChara()->getDirection() == CharaDirection::left)
+	}
+	else if (getPhysicsChara()->getDirection() == CharaDirection::left)
 	{
 		getRenderingAnimation()->setFlip(true);
 	}
@@ -336,14 +365,14 @@ void Chara::update_animation() {
 	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
 	//刷新深度
-	rendering_unit->depth = DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
-
+	update_depth();
 }
 
 void Chara::update_depth()const
 {
 	rendering_unit->depth = DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
 }
+
 
 
 
@@ -378,7 +407,7 @@ Chara::Chara()
 	{
 		rendering_unit = RenderingAnimation::createNew();
 
-		update_depth();
+		sync_animation();
 
 		animation_progress = 0;
 
@@ -427,7 +456,6 @@ Chara::Chara()
 	}
 	//角色计数物
 	counting_container = CountingContainer::createNew();
-
 
 	//设置角色效果
 	{
@@ -494,6 +522,8 @@ void Chara::setAnimationMoving()
 
 bool Chara::getIfDisturbed() const
 {
+	SDL_Log("disturber");
+
 	return getPhysicsChara()->getIfFalling()
 		||getPhysicsChara()->getIfHitBack();
 }
@@ -515,32 +545,15 @@ void Chara::setPosition(int x, int y)
 	getPhysicsChara()->setPosition(x, y);
 	//设置动画
 	this->setAnimationIdle();
-	getRenderingAnimation()->setTexture(animation_type_idle, 0, 0);
-	//刷新角色朝向
-	if (getPhysicsChara()->getDirection() == CharaDirection::right)
-	{
-		getRenderingAnimation()->setFlip(false);
-	}
-	else if (getPhysicsChara()->getDirection() == CharaDirection::left)
-	{
-		getRenderingAnimation()->setFlip(true);
-	}
-
-	//刷新角色位置
-	getRenderingAnimation()->x = getPhysicsChara()->X;
-	getRenderingAnimation()->y = getPhysicsChara()->Y;
-	getRenderingAnimation()->width = getPhysicsChara()->bodyX * PIXEL_RATE;
-	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
-
-	//刷新角色深度
-	update_depth();
+	sync_animation();
 }
 
 
 
-void Chara::actMove(CharaDirection d) const
+void Chara::actMove(CharaDirection d)
 {
 	if (action_type != CharaActionType::idle)return;
+	setAnimationMoving();
 	getPhysicsChara()->setMotion(d, moving_speed, 1, false);
 }
 
@@ -581,7 +594,7 @@ void Chara::onIdle()
 
 }
 
-void Chara::onImpact()
+void Chara::onImpact(int _impact)
 {
 	
 }

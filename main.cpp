@@ -33,6 +33,7 @@
 
 #include "idea_debugger_physics.h"
 #include "idea_debugger_game_info.h"
+#include "idea_facility_ladder.h"
 #include "idea_monster_slime.h"
 #include "idea_UI_scope.h"
 #include "idea_UI_inspector.h"
@@ -45,42 +46,17 @@ void test()
 
 void test_init()
 {
-
-    auto range = PhysicsFacility::createNew();
-    range->X = 10;
-    range->Y = 2;
-    range->bodyX = 10;
-    range->bodyY = 10;
-    range->setFacilityType(BlockingType::air);
-    range->renewSignedGrids();
-
-    auto pf1 = PhysicsFacility::createNew();
-    pf1->X = 7;
-    pf1->Y = 12;
-    pf1->bodyX = 50;
-    pf1->setFacilityType(BlockingType::solid);
-    pf1->renewSignedGrids();
-
-    pf1 = PhysicsFacility::createNew();
-    pf1->X = 5;
-    pf1->Y = 8;
-    pf1->bodyY = 5;
-    pf1->bodyX = 5;
-    pf1->setFacilityType(BlockingType::support);
-    pf1->renewSignedGrids();
-
-
+    auto f1 = idea_facility_ladder::createNew();
+    f1->setPosition(5, 6);
 
     auto pf2 = idea_monster_slime::createNew();
     pf2->setPosition(7, 2);
 
-    auto pf5 = PhysicsFacility::createNew();
-    pf5->X = 9;
-    pf5->Y = 10;
-    pf5->bodyY = 5;
-    pf5->bodyX = 5;
-    pf5->setFacilityType(BlockingType::air);
-    pf5->renewSignedGrids();
+    f1 = idea_facility_ladder::createNew();
+    f1->setPosition(6, 6);
+
+    f1 = idea_facility_ladder::createNew();
+    f1->setPosition(7, 7);
 
     //UIObject≤‚ ‘
     const auto test_button = idea_UI_button_exit::createNew();

@@ -53,9 +53,9 @@ void Monster::onIdle()
 	Chara::onIdle();
 }
 
-void Monster::onImpact()
+void Monster::onImpact(int _impact)
 {
-	Chara::onImpact();
+	Chara::onImpact(_impact);
 }
 
 void Monster::onKill()

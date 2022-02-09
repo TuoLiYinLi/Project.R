@@ -272,7 +272,7 @@ bool PhysicsChara::detectForward(CharaDirection direction, BlockingType blocking
 
 	if(detectBorder(direction))
 	{
-		return false;
+		return true;
 	}
 
 	for (int i = x_start; i <= x_end; i++)
