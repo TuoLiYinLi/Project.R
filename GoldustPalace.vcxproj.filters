@@ -114,6 +114,12 @@
     <ClInclude Include="idea_UI_button_exit.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_facility_ladder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FacilityVarious.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -210,6 +216,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_UI_button_exit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_facility_ladder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FacilityVarious.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

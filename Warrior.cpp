@@ -45,9 +45,9 @@ void Warrior::onIdle()
 	Chara::onIdle();
 }
 
-void Warrior::onImpact()
+void Warrior::onImpact(int _impact)
 {
-	Chara::onImpact();
+	Chara::onImpact(_impact);
 }
 
 void Warrior::onKill()
