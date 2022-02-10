@@ -102,3 +102,4 @@ idea_UI_inspector* GlobalData::ui_inspector = nullptr;
 idea_UI_scope* GlobalData::ui_scope = nullptr;
 idea_UI_speed_controller* GlobalData::ui_speed_controller = nullptr;
 idea_UI_button_menu* GlobalData::ui_menu_button = nullptr;
+idea_UI_energy* GlobalData::ui_energy = nullptr;

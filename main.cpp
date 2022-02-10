@@ -41,6 +41,7 @@
 #include "idea_UI_button_exit.h"
 #include "idea_UI_button_menu.h"
 #include "idea_UI_speed_controller.h"
+#include "UIScroll.h"
 
 void test()
 {
@@ -77,7 +78,13 @@ void test_init()
 	    }
     }
 
+    //测试scroll
 
+    auto scroll= UIScroll::createNew();
+    int w, h;
+    auto text0 = GameToolkit::createUnicodeText(L"测试一下我的卷轴UI1234564874513126548975421315498712389746513215461", { 255,255,255,150 }, 60, &w, &h);
+
+    scroll->setUp(text0, 500, 400, w, h, 100, 30, 50, 8, 500);
 }
 
 void test_physics()
@@ -145,6 +152,7 @@ int main(int argc, char** argv) {
     GlobalData::ui_inspector = idea_UI_inspector::createNew();
     GlobalData::ui_menu_button = idea_UI_button_menu::createNew();
     GlobalData::ui_speed_controller = idea_UI_speed_controller::createNew();
+    GlobalData::ui_energy = idea_UI_energy::createNew();
 
     //代码测试
     test_init();
@@ -161,12 +169,13 @@ int main(int argc, char** argv) {
 
         //处理输入事件
         UISystem::getInstance()->pullEvent();
-        UISystem::getInstance()->controlGame();
 
 	    RenderingSystem::getInstance()->renewViewPosition();
 
         //UI触发
         UISystem::getInstance()->trigger_UIObjects();
+        //UI介入游戏逻辑
+        UISystem::getInstance()->controlGame();
 
         //每16ms运行一次逻辑帧
         while (GlobalData::getIfLogicGo())

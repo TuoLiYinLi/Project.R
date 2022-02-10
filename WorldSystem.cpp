@@ -50,8 +50,9 @@ WorldSystem::WorldSystem()
 	list_game_objects = new std::list<GameObject*>();
 
 	goldust_energy = 0;
-	goldust_energy_recovery = 0.01;
+	goldust_energy_recovery = GOLDUST_RECOVERY;
 	goldust_energy_accumulation = 0;
+	goldust_goal = 1000;
 
 	enemy_wave_CD = 0;
 	enemy_wave_num = 0;

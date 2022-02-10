@@ -32,6 +32,7 @@ enum class AnimationType
 
 	ui_button_controller_mask,
 
+	ui_energy_bar,
 	//monster
 	monster_slime_idle,
 	monster_slime_moving,

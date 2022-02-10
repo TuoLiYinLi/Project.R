@@ -29,6 +29,7 @@
     <ClInclude Include="idea_debugger_physics.h" />
     <ClInclude Include="idea_UI_button_exit.h" />
     <ClInclude Include="idea_UI_button_menu.h" />
+    <ClInclude Include="idea_UI_energy.h" />
     <ClInclude Include="idea_UI_inspector.h" />
     <ClInclude Include="idea_UI_scope.h" />
     <ClInclude Include="idea_UI_speed_controller.h" />
@@ -45,8 +46,8 @@
     <ClInclude Include="RenderingText.h" />
     <ClInclude Include="RenderingUnit.h" />
     <ClInclude Include="UIButton.h" />
-    <ClInclude Include="UICheckbox.h" />
     <ClInclude Include="UIObject.h" />
+    <ClInclude Include="UIScroll.h" />
     <ClInclude Include="UISystem.h" />
     <ClInclude Include="PhysicsChara.h" />
     <ClInclude Include="PhysicsFacility.h" />
@@ -70,6 +71,7 @@
     <ClCompile Include="idea_monster_slime.cpp" />
     <ClCompile Include="idea_UI_button_exit.cpp" />
     <ClCompile Include="idea_UI_button_menu.cpp" />
+    <ClCompile Include="idea_UI_energy.cpp" />
     <ClCompile Include="idea_UI_inspector.cpp" />
     <ClCompile Include="idea_UI_scope.cpp" />
     <ClCompile Include="idea_UI_speed_controller.cpp" />
@@ -84,8 +86,8 @@
     <ClCompile Include="RenderingText.cpp" />
     <ClCompile Include="RenderingUnit.cpp" />
     <ClCompile Include="UIButton.cpp" />
-    <ClCompile Include="UICheckbox.cpp" />
     <ClCompile Include="UIObject.cpp" />
+    <ClCompile Include="UIScroll.cpp" />
     <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsChara.cpp" />

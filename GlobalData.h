@@ -1,5 +1,6 @@
 #pragma once
 #include "idea_UI_button_menu.h"
+#include "idea_UI_energy.h"
 #include "idea_UI_speed_controller.h"
 #include "SDL.h"
 
@@ -44,6 +45,7 @@ public:
 	static idea_UI_scope* ui_scope;//UI选中框
 	static idea_UI_speed_controller* ui_speed_controller;//UI速度控制器
 	static idea_UI_button_menu* ui_menu_button;//UI打开菜单按钮
+	static idea_UI_energy* ui_energy;//ui能量条
 
 protected:
 	static Uint32 FPS;		//每秒多少帧（次数渲染）

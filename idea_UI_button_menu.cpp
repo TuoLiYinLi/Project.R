@@ -17,7 +17,8 @@ idea_UI_button_menu::idea_UI_button_menu()
 	texture_pressed = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_menu_pressed, 0);
 	rendering_unit->setTexture(texture_default);
 
-	setPosition(WINDOW_WIDTH - 9 * UI_SCALE - 16, 16, 9 * UI_SCALE, 9 * UI_SCALE);
+	setPosition(WINDOW_WIDTH - 9 * static_cast<int>(UI_SCALE) - 16, 16,
+		9 * static_cast<int>(UI_SCALE), 9 * static_cast<int>(UI_SCALE));
 }
 
 idea_UI_button_menu::~idea_UI_button_menu()

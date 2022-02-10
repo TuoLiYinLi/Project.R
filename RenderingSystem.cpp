@@ -307,6 +307,11 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             num = 1;
             break;
 
+        case AnimationType::ui_energy_bar:
+            file = "./Resource/texture/ui_energy_bar";
+            num = 1;
+            break;
+
         	//monster
         case AnimationType::monster_slime_idle:
             file = "./Resource/texture/monster_slime_idle";

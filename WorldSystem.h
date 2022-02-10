@@ -30,6 +30,7 @@ public:
 	//游戏数据
 	double goldust_energy;//金沙能量
 	double goldust_energy_recovery;//金沙能量恢复速度
+	double goldust_goal;//目标的金沙量
 
 	int enemy_wave_CD;//敌人下一波倒计时
 	int enemy_wave_num;//当前波次数

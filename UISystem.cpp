@@ -342,12 +342,15 @@ void UISystem::renewMouseWorldPosition()
 void UISystem::controlGame() const
 {
 	//放大缩小画面
-	if(mouse_wheel_forward)
+	if(last_tar==nullptr)
 	{
-		RenderingSystem::getInstance()->vs = VIEW_SPEED_SCALE_MAX;
-	}else if(mouse_wheel_backward)
-	{
-		RenderingSystem::getInstance()->vs = -VIEW_SPEED_SCALE_MAX;
+		if(mouse_wheel_forward)
+		{
+			RenderingSystem::getInstance()->vs = VIEW_SPEED_SCALE_MAX;
+		}else if(mouse_wheel_backward)
+		{
+			RenderingSystem::getInstance()->vs = -VIEW_SPEED_SCALE_MAX;
+		}
 	}
 
 	//控制镜头运动

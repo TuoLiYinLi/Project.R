@@ -51,7 +51,7 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 	rendering_unit->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_controller_mask, 0));
 	rendering_unit->width = 37 * UI_SCALE;
 	rendering_unit->height = 9 * UI_SCALE;
-	rendering_unit->x = static_cast<double>(WINDOW_WIDTH) - rendering_unit->width - 10 * UI_SCALE - 16;
+	rendering_unit->x = static_cast<double>(WINDOW_WIDTH) - rendering_unit->width - 11 * UI_SCALE - 16;
 	rendering_unit->y = 16;
 	update_depth(1);
 
