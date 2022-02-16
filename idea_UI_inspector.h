@@ -1,11 +1,12 @@
 #pragma once
-#include "Facility.h"
-#include "GameObject.h"
-#include "Monster.h"
-#include "Warrior.h"
+#include "UIObject.h"
+
+class UIScroll;
+class idea_UI_inspector_exit;
+class abstract_inspect_target;
 
 class idea_UI_inspector :
-    public GameObject
+    public UIObject
 {
 public:
 
@@ -15,23 +16,25 @@ public:
 
     void enable();
     void disable();
+
+    void set_target(abstract_inspect_target* _target);
+
+
 protected:
     idea_UI_inspector();
     ~idea_UI_inspector()override;
 
-    void renew_texture()const;
+    idea_UI_inspector_exit* exit_button;
 
-    void create_texture(int w, int h)const;
+    abstract_inspect_target* target;
 
-    void destroy_texture()const;
+    SDL_Texture* t_main;
+    SDL_Texture* t_data;
+    SDL_Texture* t_extra;
 
-    void renew_state();//更新用户交互状态
-
-    SDL_Texture* texture_exit_button;
-
-    Monster* tar_monster;//选取的怪物
-    Warrior* tar_warrior;//选取的勇者
-    Facility* tar_facility;//选取的设施
+    UIScroll* s_main;
+    UIScroll* s_data;
+    UIScroll* s_extra;
 
     bool flag_enable;//是否启用
 };

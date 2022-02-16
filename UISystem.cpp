@@ -6,6 +6,8 @@
 #include "Defined.h"
 #include "GameToolkit.h"
 
+#include "idea_UI_sizer.h"
+
 UISystem* UISystem::getInstance()
 {
     if (instance == nullptr) {
@@ -418,7 +420,7 @@ void UISystem::controlGame() const
 	}
 
 	//´ò¿ªÉ¸Ñ¡Æ÷
-	if (mouse_left_release && last_tar == nullptr)
+	if (mouse_left_state && last_tar == nullptr)
 	{
 		if(GlobalData::ui_sizer->flag_enabled)
 		{

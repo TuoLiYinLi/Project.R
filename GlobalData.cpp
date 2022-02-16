@@ -1,6 +1,5 @@
 #include "GlobalData.h"
 
-
 SDL_Window* GlobalData::sdl_window = nullptr;
 SDL_Renderer* GlobalData::sdl_renderer = nullptr;
 bool GlobalData::flag_quit = false;

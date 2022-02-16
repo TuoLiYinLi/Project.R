@@ -1,13 +1,12 @@
 #pragma once
 #include "SDL.h"
 
-#include "idea_UI_button_menu.h"
-#include "idea_UI_energy.h"
-#include "idea_UI_speed_controller.h"
-
-#include "idea_UI_inspector.h"
-#include "idea_UI_scope.h"
-#include "idea_UI_sizer.h"
+class idea_UI_sizer;
+class idea_UI_energy;
+class idea_UI_button_menu;
+class idea_UI_speed_controller;
+class idea_UI_scope;
+class idea_UI_inspector;
 
 enum class TimeSpeedType
 {

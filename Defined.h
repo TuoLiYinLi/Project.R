@@ -77,3 +77,6 @@ constexpr int OXYGEN_MAX = 600;//氧气最大值
 constexpr double OXYGEN_DAMAGE = 0.2 / 60;//氧气造成的伤害
 constexpr double BURNING_SPEED = 1.0 / 60;//燃烧速度
 constexpr double POISONED_SPEED = 1.0 / 600;//中毒速度
+
+
+constexpr auto wchar_multiply = static_cast<wchar_t>(215);

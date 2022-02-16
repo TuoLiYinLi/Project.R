@@ -10,8 +10,11 @@ public:
 
     void onMouseRoll(bool forward) override;
 
-    void setUp(SDL_Texture* _texture_full, int _x, int _y, int _texture_width, int _texture_height,
+    void setup(SDL_Texture* _texture_full, int _x, int _y, int _texture_width, int _texture_height,
         int _display_height, double _limit_length, double _obstruction, double _resistant,double roll_speed);
+
+	void enable();
+    void disable();
 
 protected:
     UIScroll();

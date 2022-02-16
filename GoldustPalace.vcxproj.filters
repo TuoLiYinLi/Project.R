@@ -111,7 +111,7 @@
     <ClInclude Include="UIButton.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="idea_UI_button_exit.h">
+    <ClInclude Include="idea_UI_inspector_exit.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="idea_facility_ladder.h">
@@ -144,7 +144,7 @@
     <ClInclude Include="idea_UI_sizer_button.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="abstract_SizerTarget.h">
+    <ClInclude Include="abstract_inspect_target.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -239,7 +239,7 @@
     <ClCompile Include="UIButton.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="idea_UI_button_exit.cpp">
+    <ClCompile Include="idea_UI_inspector_exit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_facility_ladder.cpp">
@@ -275,7 +275,7 @@
     <ClCompile Include="idea_UI_sizer_button.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="abstract_SizerTarget.cpp">
+    <ClCompile Include="abstract_inspect_target.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

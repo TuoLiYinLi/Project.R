@@ -38,9 +38,11 @@
 #include "idea_monster_slime.h"
 #include "idea_UI_scope.h"
 #include "idea_UI_inspector.h"
-#include "idea_UI_button_exit.h"
+#include "idea_UI_inspector_exit.h"
 #include "idea_UI_button_menu.h"
 #include "idea_UI_speed_controller.h"
+#include "idea_UI_energy.h"
+#include "idea_UI_sizer.h"
 #include "UIScroll.h"
 
 void test()
@@ -50,15 +52,29 @@ void test()
 
 void test_init()
 {
-    for (int i = 0; i < 20; ++i)
-    {
-	    auto pf2 = idea_monster_slime::createNew();
-	    pf2->setPosition(7, 2);
-	    
-    }
+    auto pf2 = idea_monster_slime::createNew();
+    pf2->setPosition(7, 2);
+
+    pf2->effect_burning = 60;
+    pf2->effect_blind = 60;
+    pf2->effect_charging = 60;
+    pf2->effect_dizzy = 60;
+    pf2->effect_poisoned = 60;
+    pf2->effect_resistant = 60;
+    pf2->effect_sealed = 60;
+
+    pf2->counting_container->addNumOf(CountingType::corpse, 5);
+    pf2->counting_container->addNumOf(CountingType::food, 5);
+    pf2->counting_container->addNumOf(CountingType::corpse, 5);
+    pf2->counting_container->addNumOf(CountingType::icy, 5);
+    pf2->counting_container->addNumOf(CountingType::fire, 5);
+    pf2->counting_container->addNumOf(CountingType::fire, 5);
+    pf2->counting_container->removeNumOf(CountingType::food);
+    
      
     auto f1 = idea_facility_ladder::createNew();
     f1->setPosition(5, 6);
+    
 
     f1 = idea_facility_ladder::createNew();
     f1->setPosition(6, 6);
@@ -66,6 +82,7 @@ void test_init()
     f1 = idea_facility_ladder::createNew();
     f1->setPosition(7, 7);
 
+    /*
     //UIObject测试
     UIObject::createNew();
 
@@ -79,7 +96,6 @@ void test_init()
     r->flag_enable = true;
     r->reference = RenderingReference::window;
 
-    /*
     const auto test_button2 = idea_UI_speed_controller::createNew();
     
 
@@ -94,14 +110,14 @@ void test_init()
     }
 
     //测试scroll
-     */
 
     auto scroll= UIScroll::createNew();
     int w, h;
-    auto text0 = GameToolkit::createUnicodeText(L"测试一下我的卷轴UI1234564874513126548975421315498712389746513215461", { 255,255,255,150 }, 60, &w, &h);
+    auto text0 = GameToolkit::createUnicodeText(L"测试一下我的卷轴中文排版是否存在一些问题是否需要改变间距", { 255,255,255,150 }, 60, &w, &h);
 
-    scroll->setUp(text0, 500, 400, w, h, 100, 30, 50, 8, 500);
-
+    scroll->setup(text0, 500, 400, w, h, 100, 30, 50, 8, 500);
+    scroll->enable();
+     */
 
 
 }
@@ -160,8 +176,8 @@ int main(int argc, char** argv) {
     version_mark->reference = RenderingReference::window;
 	version_mark->setTexture(L"Goldust Palace DEMO +1 by TheCarmineDepth",1, { 255,255,255,255 });
     version_mark->depth = DEPTH_EXTRA + 5;
-    version_mark->x = WINDOW_WIDTH - version_mark->width;
-    version_mark->y = WINDOW_HEIGHT - version_mark->height;
+    version_mark->x = WINDOW_WIDTH - version_mark->width - 4;
+    version_mark->y = WINDOW_HEIGHT - version_mark->height + 6;
 
     //物理层调试器
     auto debugger_physics = idea_debugger_physics::createNew();
@@ -169,7 +185,7 @@ int main(int argc, char** argv) {
 
     //游戏UI初始化
     GlobalData::ui_scope = idea_UI_scope::createNew();
-    //GlobalData::ui_inspector = idea_UI_inspector::createNew();
+    GlobalData::ui_inspector = idea_UI_inspector::createNew();
     GlobalData::ui_menu_button = idea_UI_button_menu::createNew();
     GlobalData::ui_speed_controller = idea_UI_speed_controller::createNew();
     GlobalData::ui_energy = idea_UI_energy::createNew();

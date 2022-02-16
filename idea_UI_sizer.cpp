@@ -1,7 +1,7 @@
 #include "idea_UI_sizer.h"
 #include "idea_UI_sizer_button.h"
 
-#include "abstract_SizerTarget.h"
+#include "abstract_inspect_target.h"
 #include "Chara.h"
 #include "Defined.h"
 #include "Facility.h"
@@ -192,7 +192,7 @@ void idea_UI_sizer::updateOnRendering()
 	update_position();
 }
 
-void idea_UI_sizer::create_button(int _offset, abstract_SizerTarget* _target)
+void idea_UI_sizer::create_button(int _offset, abstract_inspect_target* _target)
 {
 	const auto b = idea_UI_sizer_button::createNew();
 

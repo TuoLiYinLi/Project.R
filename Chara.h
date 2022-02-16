@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "abstract_SizerTarget.h"
+#include "abstract_inspect_target.h"
 
 #include "PhysicsChara.h"
 
@@ -17,7 +17,7 @@ enum class CharaActionType
 };
 
 class Chara :
-	public GameObject,public abstract_SizerTarget
+	public GameObject,public abstract_inspect_target
 {
 public:
 	static Chara* createNew();
@@ -25,7 +25,15 @@ public:
 
 	std::wstring getBrief() override;
 	SDL_Texture* getThumbnail() override;
+
+	std::wstring getMainInfo() override;
+	std::wstring getDataInfo() override;
+	std::wstring getExtraInfo() override;
+	
 protected:
+	std::wstring science_name;//学名
+	std::wstring introduction;//介绍信息
+
 	PhysicsChara* getPhysicsChara() const;
 	RenderingAnimation* getRenderingAnimation()const;
 

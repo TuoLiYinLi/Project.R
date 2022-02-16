@@ -8,9 +8,11 @@ public:
     static class RenderingText* createNew();
     //创建单行Unicode字
     void setTexture(const wchar_t* unicode_str, double scale, SDL_Color color);
+    void setTexture(const wchar_t* unicode_str, double scale, SDL_Color color, SDL_Color bg_color);
 
     //创建多行Unicode字
     void setTexture(const wchar_t* unicode_str, double scale, SDL_Color color,int wrapLength);
+    void setTexture(const wchar_t* unicode_str, double scale, SDL_Color color, SDL_Color bg_color, int wrapLength);
 
 protected:
     RenderingText();

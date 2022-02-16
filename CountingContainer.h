@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <string>
 
 enum class CountingType
 {
@@ -27,8 +28,6 @@ public:
 	static CountingContainer* createNew();
 	//销毁这一组计数物
 	void destroy()const;
-	//记录有哪些计数物以及它们的数量
-	std::list<CountingObject> list_counting_type;
 	//查询一种计数物的数量
 	int getNumOf(CountingType ct);
 	//增加一种计数物的数量
@@ -36,8 +35,14 @@ public:
 
 	void removeNumOf(CountingType ct);//移除一种计数物
 
-protected:
+	std::list<CountingType> getAllTypes();
 
+	static std::wstring get_name(CountingType type);
+
+protected:
 	CountingContainer();
 	~CountingContainer();
+
+	//记录有哪些计数物以及它们的数量
+	std::list<CountingObject> list_counting_type;
 };

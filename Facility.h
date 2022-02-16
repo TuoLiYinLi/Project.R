@@ -1,5 +1,5 @@
 #pragma once
-#include "abstract_SizerTarget.h"
+#include "abstract_inspect_target.h"
 #include "CountingContainer.h"
 #include "GameObject.h"
 #include "PhysicsFacility.h"
@@ -12,7 +12,7 @@ enum class FacilityState
 };
 
 class Facility :
-	public GameObject,public abstract_SizerTarget
+	public GameObject,public abstract_inspect_target
 {
 public:
 	static Facility* createNew();
@@ -21,6 +21,14 @@ public:
 
 	SDL_Texture* getThumbnail() override;
 	std::wstring getBrief() override;
+
+	std::wstring getMainInfo() override;
+	std::wstring getDataInfo() override;
+	std::wstring getExtraInfo() override;
+
+protected:
+	std::wstring science_name;//学名
+	std::wstring introduction;//介绍信息
 protected:
 
 	FacilityState state;	//设施的状态
@@ -39,14 +47,15 @@ protected:
 	AnimationType animation_type_idle;//闲置动画
 	AnimationType animation_type_activated;//激活动画
 	AnimationType animation_type_dead;//死亡动画
-
+public:
 	//设施的属性
 	int health;	//一个设施的生命值
+	int health_max;//设施的最大生命值
 
 	//设施的计数物
 	CountingContainer* counting_container;//计数物容器
 
-
+protected:
 	//触发接口
 	virtual void onIdle();//当闲置状态时 每帧触发
 	virtual void onActivate();//当基础能力被使用时 单刻触发

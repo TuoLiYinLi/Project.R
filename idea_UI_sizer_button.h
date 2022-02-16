@@ -1,6 +1,7 @@
 #pragma once
 #include "UIObject.h"
-class abstract_SizerTarget;
+class RenderingText;
+class abstract_inspect_target;
 class idea_UI_sizer;
 
 //请使用setup启动
@@ -19,7 +20,7 @@ public:
     void onMouseRoll(bool forward) override;//当鼠标滚动
 
 
-    void setup(idea_UI_sizer* _parent, abstract_SizerTarget* _target, int _offset);
+    void setup(idea_UI_sizer* _parent, abstract_inspect_target* _target, int _offset);
 
 protected:
     idea_UI_sizer_button();
@@ -27,7 +28,7 @@ protected:
 
     int position_offset;//自己相对父级的纵坐标
     idea_UI_sizer* parent;
-    abstract_SizerTarget* target;//针对的目标
+    abstract_inspect_target* target;//针对的目标
 
     SDL_Texture* current_texture_;//当前状态的材质
 
@@ -37,5 +38,14 @@ protected:
 
     void createTexture() const;//创建当前状态下对应的材质
     void destroyTexture()const;//销毁现在使用的材质
+
+    void set_inspector();
+
+    RenderingText* floating_text;//当有鼠标靠近时会呈现的提示字体
+
+    void create_floating_text();
+    void destroy_floating_text();
+
+	void renew_floating_text_position()const;
 };
 

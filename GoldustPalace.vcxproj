@@ -29,7 +29,7 @@
     <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_debugger_physics.h" />
     <ClInclude Include="idea_UI_sizer.h" />
-    <ClInclude Include="idea_UI_button_exit.h" />
+    <ClInclude Include="idea_UI_inspector_exit.h" />
     <ClInclude Include="idea_UI_button_menu.h" />
     <ClInclude Include="idea_UI_energy.h" />
     <ClInclude Include="idea_UI_inspector.h" />
@@ -48,7 +48,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="RenderingText.h" />
     <ClInclude Include="RenderingUnit.h" />
-    <ClInclude Include="abstract_SizerTarget.h" />
+    <ClInclude Include="abstract_inspect_target.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UIObject.h" />
     <ClInclude Include="UIScroll.h" />
@@ -75,7 +75,7 @@
     <ClCompile Include="idea_facility_ladder.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
     <ClCompile Include="idea_UI_sizer.cpp" />
-    <ClCompile Include="idea_UI_button_exit.cpp" />
+    <ClCompile Include="idea_UI_inspector_exit.cpp" />
     <ClCompile Include="idea_UI_button_menu.cpp" />
     <ClCompile Include="idea_UI_energy.cpp" />
     <ClCompile Include="idea_UI_inspector.cpp" />
@@ -92,7 +92,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="RenderingText.cpp" />
     <ClCompile Include="RenderingUnit.cpp" />
-    <ClCompile Include="abstract_SizerTarget.cpp" />
+    <ClCompile Include="abstract_inspect_target.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="UIScroll.cpp" />

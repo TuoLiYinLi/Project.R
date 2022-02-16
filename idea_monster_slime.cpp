@@ -10,6 +10,8 @@ idea_monster_slime* idea_monster_slime::createNew()
 idea_monster_slime::idea_monster_slime()
 {
 	name = L"史莱姆";
+	introduction = L"软泥组成的怪物，脆弱但廉价。";
+	science_name = L"史莱姆";
 
 	//设定物理体
 	{

@@ -39,14 +39,49 @@ SDL_Texture* GameToolkit::createUnicodeLine(const wchar_t* unicode_str, SDL_Colo
 	return _texture;
 }
 
+SDL_Texture* GameToolkit::createUnicodeLine(const wchar_t* unicode_str, SDL_Color color, SDL_Color bg_color, int* width, int* height)
+{
+	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
+
+	SDL_Surface* surface = TTF_RenderUNICODE_Shaded(RenderingSystem::getInstance()->font_grey, str, color,bg_color);
+
+	if (width)*width = surface->w;
+	if (height)*height = surface->h;
+
+	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
+
+	SDL_FreeSurface(surface);
+
+	return _texture;
+}
+
+
 SDL_Texture* GameToolkit::createUnicodeText(const wchar_t* unicode_str, SDL_Color color, int wrapLength, int* w, int* h)
 {
 	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
-	int extent;
 
-	TTF_MeasureUNICODE(RenderingSystem::getInstance()->font_grey, str, wrapLength, &extent,nullptr);
+	//int extent;
+	//TTF_MeasureUNICODE(RenderingSystem::getInstance()->font_grey, str, wrapLength, &extent,nullptr);
 
-	SDL_Surface* surface = TTF_RenderUNICODE_Solid_Wrapped(RenderingSystem::getInstance()->font_grey, str, color, extent);
+	SDL_Surface* surface = TTF_RenderUNICODE_Solid_Wrapped(RenderingSystem::getInstance()->font_grey, str, color, wrapLength);
+
+	if (w)*w = surface->w;
+	if (h)*h = surface->h;
+
+	SDL_Texture* _texture = SDL_CreateTextureFromSurface(GlobalData::sdl_renderer, surface);
+	SDL_FreeSurface(surface);
+
+	return _texture;
+}
+
+SDL_Texture* GameToolkit::createUnicodeText(const wchar_t* unicode_str, SDL_Color color, SDL_Color bg_color, int wrapLength, int* w, int* h)
+{
+	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
+
+	//int extent;
+	//TTF_MeasureUNICODE(RenderingSystem::getInstance()->font_grey, str, wrapLength, &extent, nullptr);
+
+	SDL_Surface* surface = TTF_RenderUNICODE_Shaded_Wrapped(RenderingSystem::getInstance()->font_grey, str, color, bg_color, wrapLength);
 
 	if (w)*w = surface->w;
 	if (h)*h = surface->h;
@@ -90,4 +125,11 @@ bool GameToolkit::checkMouseInRange(int _x1, int _y1, int _x2, int _y2)
 	const auto u= UISystem::getInstance();
 	return u->mouseX_window >= _x1 && u->mouseX_window <= _x2
 		&& u->mouseY_window >= _y1 && u->mouseY_window <= _y2;
+}
+
+std::wstring GameToolkit::double_reserve_decimal(double d, int n)
+{
+	std::wstring s = std::to_wstring(d);
+	const auto find = s.find_first_of(L'.');
+	return s.substr(0, find + n + 1);
 }

@@ -42,6 +42,11 @@ UIObject::UIObject()
 
 UIObject::~UIObject()
 {
+	if(UISystem::getInstance()->last_tar==this)
+	{
+		UISystem::getInstance()->last_tar = nullptr;
+	}
+
 	if(rendering_unit)
 	{
 		rendering_unit->destroy();

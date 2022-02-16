@@ -33,6 +33,8 @@ UIScroll::UIScroll()
 	reset_color_g = 255;
 
 	can_destroy_texture = false;
+
+	disable();
 }
 
 UIScroll::~UIScroll()
@@ -123,19 +125,15 @@ void UIScroll::onMouseRoll(bool forward)
 	user_rolling = true;
 	if(forward)
 	{
-		velocity += mouse_roll_speed;
+		velocity -= mouse_roll_speed;
 	}else
 	{
-		velocity += -mouse_roll_speed;
+		velocity += mouse_roll_speed;
 	}
 }
 
-void UIScroll::setUp(SDL_Texture* _texture_full, int _x, int _y, int _texture_width, int _texture_height,int _display_height, double _limit_length, double _obstruction, double _resistant, double roll_speed)
+void UIScroll::setup(SDL_Texture* _texture_full, int _x, int _y, int _texture_width, int _texture_height,int _display_height, double _limit_length, double _obstruction, double _resistant, double roll_speed)
 {
-	flag_static = false;
-	flag_collider_enabled = true;
-	rendering_unit->flag_enable = true;
-
 	texture_full = _texture_full;
 	SDL_SetTextureBlendMode(texture_full, SDL_BLENDMODE_NONE);
 	texture_full_width = _texture_width;
@@ -150,7 +148,9 @@ void UIScroll::setUp(SDL_Texture* _texture_full, int _x, int _y, int _texture_wi
 
 void UIScroll::create_texture()
 {
-	const auto t = SDL_CreateTexture(GlobalData::sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, rendering_unit->width, rendering_unit->height);
+	const auto t = SDL_CreateTexture(GlobalData::sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET,
+		static_cast<int>(rendering_unit->width), static_cast<int>(rendering_unit->height));
+
 	SDL_SetRenderTarget(GlobalData::sdl_renderer, t);
 	SDL_SetTextureBlendMode(t, SDL_BLENDMODE_BLEND);
 
@@ -268,3 +268,16 @@ void UIScroll::destroy_texture()
 }
 
 
+void UIScroll::enable()
+{
+	flag_static = false;
+	flag_collider_enabled = true;
+	rendering_unit->flag_enable = true;
+}
+
+void UIScroll::disable()
+{
+	flag_static = true;
+	flag_collider_enabled = false;
+	rendering_unit->flag_enable = false;
+}

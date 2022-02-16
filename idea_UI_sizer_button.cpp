@@ -1,9 +1,12 @@
 #include "idea_UI_sizer_button.h"
 #include "idea_UI_sizer.h"
-#include "abstract_SizerTarget.h"
+#include "abstract_inspect_target.h"
 #include "Defined.h"
 #include "GlobalData.h"
 #include "RenderingSystem.h"
+#include "RenderingText.h"
+#include "UISystem.h"
+#include "idea_UI_inspector.h"
 
 idea_UI_sizer_button* idea_UI_sizer_button::createNew()
 {
@@ -28,11 +31,14 @@ idea_UI_sizer_button::idea_UI_sizer_button()
 	position_offset = 0;
 	parent = nullptr;
 	target = nullptr;
+
+	floating_text = nullptr;
 }
 
 idea_UI_sizer_button::~idea_UI_sizer_button()
 {
 	destroyTexture();
+	destroy_floating_text();
 }
 
 void idea_UI_sizer_button::updateOnRendering()
@@ -79,6 +85,8 @@ void idea_UI_sizer_button::updateOnRendering()
 			}
 		}
 	}
+
+	renew_floating_text_position();
 }
 
 
@@ -126,7 +134,9 @@ void idea_UI_sizer_button::destroyTexture()const
 void idea_UI_sizer_button::onMouseUp()
 {
 	UIObject::onMouseUp();
-	SDL_Log(u8"ÉèÖÃÄ¿±ê");
+	GlobalData::ui_inspector->set_target(target);
+	GlobalData::ui_inspector->enable();
+	GlobalData::ui_sizer->disable();
 	current_texture_ = texture_highlight_;
 }
 
@@ -140,12 +150,14 @@ void idea_UI_sizer_button::onMouseEnter()
 {
 	UIObject::onMouseEnter();
 	current_texture_ = texture_highlight_;
+	create_floating_text();
 }
 
 void idea_UI_sizer_button::onMouseExit()
 {
 	UIObject::onMouseExit();
 	current_texture_ = texture_default_;
+	destroy_floating_text();
 }
 
 
@@ -154,7 +166,7 @@ void idea_UI_sizer_button::onMouseRoll(bool forward)
 	parent->onMouseRoll(forward);
 }
 
-void idea_UI_sizer_button::setup(idea_UI_sizer* _parent, abstract_SizerTarget* _target, int _offset)
+void idea_UI_sizer_button::setup(idea_UI_sizer* _parent, abstract_inspect_target* _target, int _offset)
 {
 	parent = _parent;
 	target = _target;
@@ -163,4 +175,43 @@ void idea_UI_sizer_button::setup(idea_UI_sizer* _parent, abstract_SizerTarget* _
 	createTexture();
 
 	flag_static = false;
+}
+
+void idea_UI_sizer_button::set_inspector()
+{
+	
+}
+
+void idea_UI_sizer_button::create_floating_text()
+{
+	floating_text = RenderingText::createNew();
+	floating_text->setTexture(target->getBrief().c_str(), 1, { 255,255,255,255 }, { 0,0,0,205 });
+
+	floating_text->setClipping(0, 0, static_cast<int>(floating_text->width), static_cast<int>(floating_text->height)-8);
+	floating_text->height -= 8;
+
+	floating_text->x = static_cast<double>(UISystem::getInstance()->mouseX_window) + 16;
+	floating_text->y = UISystem::getInstance()->mouseY_window - floating_text->height / 2;
+
+	floating_text->reference = RenderingReference::window;
+	floating_text->depth = DEPTH_FIXED_UI + 3;
+
+}
+
+void idea_UI_sizer_button::destroy_floating_text()
+{
+	if(floating_text)
+	{
+		floating_text->destroy();
+		floating_text = nullptr;
+	}
+}
+
+void idea_UI_sizer_button::renew_floating_text_position()const
+{
+	if (floating_text)
+	{
+		floating_text->x = static_cast<double>(UISystem::getInstance()->mouseX_window) + 16;
+		floating_text->y = UISystem::getInstance()->mouseY_window - floating_text->height / 2;
+	}
 }

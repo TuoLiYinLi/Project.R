@@ -2,6 +2,7 @@
 
 #include "PhysicsChara.h"
 #include "Defined.h"
+#include "GameToolkit.h"
 #include "SDL.h"
 
 
@@ -29,6 +30,123 @@ SDL_Texture* Chara::getThumbnail()
 {
 	return rendering_unit->getTexture();
 }
+
+std::wstring Chara::getMainInfo()
+{
+	std::wstring s = L"[学名] " + science_name + L"\n"
+		+ L"[昵称] " + name + L"\n"
+		+ L"[介绍] " + introduction;
+	return s;
+}
+
+
+std::wstring Chara::getDataInfo()
+{
+	std::wstring s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(health_max) + L" (+" + std::to_wstring(health_recovery_speed * 60).substr(0, 4) + L"/s)" + L'\n'
+		+ L"[活力] " + std::to_wstring(stamina) + L"/" + std::to_wstring(stamina_max) + L" (+" + std::to_wstring(stamina_recovery_speed * 60).substr(0, 4) + L"/s)" + L'\n'
+		+ L"[氧气] " + std::to_wstring(static_cast<int>(static_cast<double>(oxygen) / OXYGEN_MAX * 100)) + L"%" + L'\n'
+		+ L"[位置] " + L"( " + GameToolkit::double_reserve_decimal(physics_object->X, 1) + L" , " + GameToolkit::double_reserve_decimal(physics_object->Y, 1) + L" )" + L'\n'
+		+ L"[大小] " + L"( " + std::to_wstring(physics_object->bodyX) + L" " + wchar_multiply + L" " + std::to_wstring(physics_object->bodyY) + L" )" + L'\n';
+
+	std::wstring s_action = L"[行动] ";
+	switch (action_type)
+	{
+	case CharaActionType::idle:
+		s_action += L"闲置";
+		break;
+	case CharaActionType::skill_basic:
+		s_action += L"使用基本能力";
+		break;
+	case CharaActionType::skill_special:
+		s_action += L"使用特殊能力";
+		break;
+	case CharaActionType::dead:
+		s_action += L"死亡";
+		break;
+	case CharaActionType::disturbed:
+		if (getPhysicsChara()->getIfHitBack())
+		{
+			s_action += L"被击退";
+		}else if (getPhysicsChara()->getIfFalling())
+		{
+			s_action += L"坠落";
+		}else
+		{
+			s_action += L"被干扰";
+		}
+		break;
+	case CharaActionType::moving:
+		switch (getPhysicsChara()->getDirection())
+		{
+		case CharaDirection::up:
+			s_action += L"向上移动";
+			break;
+		case CharaDirection::down:
+			s_action += L"向下移动";
+			break;
+		case CharaDirection::left:
+			s_action += L"向左移动";
+			break;
+		case CharaDirection::right:
+			s_action += L"向右移动";
+			break;
+		}
+		break;
+	}
+	s += s_action + L"\n";
+
+	return s;
+}
+
+std::wstring Chara::getExtraInfo()
+{
+	std::wstring s;
+
+	std::wstring s_statement= L"[状态] ";
+	if (effect_burning > 0)
+	{
+		s_statement += L"\n  <燃烧> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_burning) / 60, 1) + L's';
+	}
+	if (effect_blind > 0)
+	{
+		s_statement += L"\n  <盲目> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_blind) / 60, 1) + L's';
+	}
+	if (effect_charging > 0)
+	{
+		s_statement += L"\n  <充能> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_charging) / 60, 1) + L's';
+	}
+	if (effect_dizzy > 0)
+	{
+		s_statement += L"\n  <眩晕> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_dizzy) / 60, 1) + L's';
+	}
+	if (effect_poisoned > 0)
+	{
+		s_statement += L"\n  <燃烧> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_poisoned) / 60, 1) + L's';
+	}
+	if (effect_resistant > 0)
+	{
+		s_statement += L"\n  <抵抗> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_resistant) / 60, 1) + L's';
+	}
+	if (effect_sealed > 0)
+	{
+		s_statement += L"\n  <封印> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_sealed) / 60, 1) + L's';
+	}
+	s += s_statement;
+
+	std::wstring s_counting = L"\n[计数物]";
+
+	for (const auto type : counting_container->getAllTypes())
+	{
+		const auto n = CountingContainer::get_name(type);
+
+		s_counting += L"\n  <" + n + L"> " + std::to_wstring(counting_container->getNumOf(type));
+	}
+
+	s += s_counting + L"\n";
+
+	return s;
+}
+
 
 void Chara::update()
 {
@@ -392,6 +510,8 @@ Chara::Chara()
 	chara_num++;
 
 	name = L"default_character";
+	science_name = L"默认学名";
+	introduction = L"默认介绍";
 
 	type_game_object = GameObjectType::default_chara;
 

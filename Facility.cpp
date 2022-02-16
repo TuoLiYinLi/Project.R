@@ -1,6 +1,7 @@
 #include "Facility.h"
 
 #include "Defined.h"
+#include "GameToolkit.h"
 #include "SDL.h"
 #include "PhysicsFacility.h"
 
@@ -19,6 +20,9 @@ Facility::Facility() {
 	facility_num++;
 
 	name = L"default_facility";
+	science_name = L"默认学名";
+	introduction = L"默认介绍";
+
 	type_game_object = GameObjectType::default_facility;
 
 	flag_static = true;
@@ -62,6 +66,7 @@ Facility::Facility() {
 	//设施的数值
 	{
 		health = 8;
+		health_max = 8;
 
 		counting_container = CountingContainer::createNew();
 	}
@@ -235,4 +240,54 @@ void Facility::setAnimationDead()
 	onKill();
 	state = FacilityState::dead;
 	animation_progress = 0;
+}
+
+std::wstring Facility::getDataInfo()
+{
+	std::wstring s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(health_max) + L"\n"
+		+ L"[位置] " + L"( " + std::to_wstring(static_cast<int>(physics_object->X)) + L" , " + std::to_wstring(static_cast<int>(physics_object->Y)) + L" )" + L'\n'
+		+ L"[大小] " + L"( " + std::to_wstring(physics_object->bodyX) + L" " + wchar_multiply + L" " + std::to_wstring(physics_object->bodyY) + L" )" + L'\n';
+		
+
+	std::wstring s_state = L"[状态] ";
+	switch (state)
+	{
+	case FacilityState::idle:
+		s_state += L"闲置";
+		break;
+	case FacilityState::activated:
+		s_state += L"激活";
+		break;
+	case FacilityState::dead:
+		s_state += L"被破坏";
+		break;
+	}
+	s += s_state + L"\n";
+
+	return s;
+}
+
+std::wstring Facility::getExtraInfo()
+{
+	std::wstring s ;
+
+	std::wstring s_counting = L"[计数物]";
+
+	for (const auto type : counting_container->getAllTypes())
+	{
+		const auto n= CountingContainer::get_name(type);
+
+		s_counting += L"\n  <" + n + L"> " + std::to_wstring(counting_container->getNumOf(type));
+	}
+	
+	s += s_counting + L"\n";
+
+	return s;
+}
+
+std::wstring Facility::getMainInfo()
+{
+	std::wstring s = L"[名称] " + science_name + L"\n"
+		+ L"[介绍] " + introduction;
+	return s;
 }

@@ -2,7 +2,7 @@
 #include "UIObject.h"
 
 class idea_UI_sizer_button;
-class abstract_SizerTarget;
+class abstract_inspect_target;
 
 //ui中的角色与设施筛选器
 class idea_UI_sizer :
@@ -36,7 +36,7 @@ protected:
 
     void update_position();//更新质点运动
 
-    void create_button(int _offset, abstract_SizerTarget* _target);//创造单个按钮
+    void create_button(int _offset, abstract_inspect_target* _target);//创造单个按钮
     int setup_buttons(int grid_x, int grid_y);//创建所有的按钮
     void clear_buttons()const;
 
