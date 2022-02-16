@@ -77,6 +77,15 @@ Facility::~Facility() {
 	facility_num--;
 }
 
+std::wstring Facility::getBrief()
+{
+	return name;
+}
+
+SDL_Texture* Facility::getThumbnail()
+{
+	return rendering_unit->getTexture();
+}
 
 
 void Facility::update()

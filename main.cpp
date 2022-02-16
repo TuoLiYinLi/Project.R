@@ -50,11 +50,15 @@ void test()
 
 void test_init()
 {
+    for (int i = 0; i < 20; ++i)
+    {
+	    auto pf2 = idea_monster_slime::createNew();
+	    pf2->setPosition(7, 2);
+	    
+    }
+     
     auto f1 = idea_facility_ladder::createNew();
     f1->setPosition(5, 6);
-
-    auto pf2 = idea_monster_slime::createNew();
-    pf2->setPosition(7, 2);
 
     f1 = idea_facility_ladder::createNew();
     f1->setPosition(6, 6);
@@ -63,8 +67,19 @@ void test_init()
     f1->setPosition(7, 7);
 
     //UIObject测试
+    UIObject::createNew();
 
+    auto r= RenderingUnit::createNew();
 
+    r->x = 200;
+    r->y = 200;
+    r->width = 200;
+    r->height = 100;
+    r->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::debug_sequence_white, 1));
+    r->flag_enable = true;
+    r->reference = RenderingReference::window;
+
+    /*
     const auto test_button2 = idea_UI_speed_controller::createNew();
     
 
@@ -79,13 +94,18 @@ void test_init()
     }
 
     //测试scroll
+     */
 
     auto scroll= UIScroll::createNew();
     int w, h;
     auto text0 = GameToolkit::createUnicodeText(L"测试一下我的卷轴UI1234564874513126548975421315498712389746513215461", { 255,255,255,150 }, 60, &w, &h);
 
     scroll->setUp(text0, 500, 400, w, h, 100, 30, 50, 8, 500);
+
+
+
 }
+
 
 void test_physics()
 {
@@ -149,10 +169,11 @@ int main(int argc, char** argv) {
 
     //游戏UI初始化
     GlobalData::ui_scope = idea_UI_scope::createNew();
-    GlobalData::ui_inspector = idea_UI_inspector::createNew();
+    //GlobalData::ui_inspector = idea_UI_inspector::createNew();
     GlobalData::ui_menu_button = idea_UI_button_menu::createNew();
     GlobalData::ui_speed_controller = idea_UI_speed_controller::createNew();
     GlobalData::ui_energy = idea_UI_energy::createNew();
+    GlobalData::ui_sizer = idea_UI_sizer::createNew();
 
     //代码测试
     test_init();
@@ -182,14 +203,14 @@ int main(int argc, char** argv) {
         {
             WorldSystem::getInstance()->logicGo();
             //代码测试
-            test_physics();
+            //test_physics();
         }
-
 
         //渲染时更新
         WorldSystem::getInstance()->logicGoOnRendering();
 
         //渲染系统
+
         {
             SDL_SetRenderTarget(GlobalData::sdl_renderer, nullptr);
 	        //渲染背景颜色
@@ -197,7 +218,7 @@ int main(int argc, char** argv) {
 	        SDL_RenderClear(GlobalData::sdl_renderer);
 
             //测试代码
-            test_rendering();
+            //test_rendering();
 
 	        //渲染内容
 	        //画面渲染

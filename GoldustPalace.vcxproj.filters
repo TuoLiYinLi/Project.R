@@ -135,6 +135,18 @@
     <ClInclude Include="UIScroll.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Gene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_UI_sizer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_UI_sizer_button.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="abstract_SizerTarget.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -252,6 +264,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="UIScroll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Gene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_sizer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_UI_sizer_button.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="abstract_SizerTarget.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

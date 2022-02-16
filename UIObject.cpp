@@ -42,7 +42,11 @@ UIObject::UIObject()
 
 UIObject::~UIObject()
 {
-	rendering_unit->destroy();
+	if(rendering_unit)
+	{
+		rendering_unit->destroy();
+		rendering_unit = nullptr;
+	}
 
 	UISystem::getInstance()->list_ui_objects->remove(this);
 

@@ -18,13 +18,13 @@ enum class GameObjectType
 class GameObject
 {
 public:
-	
 	virtual void destroy();	//统一销毁方式
 
 	virtual void update();	//受遍历的更新是固定触发的
 	virtual void updateOnRendering();	//受遍历的更新,在渲染帧时触发
 
 	bool checkIfDestroy()const;//询问是否可以销毁
+	void readyToDestroy();
 	bool checkIfStatic()const;//检查是否为静态
 
 	std::wstring name;	//名称

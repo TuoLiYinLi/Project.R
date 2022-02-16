@@ -1,4 +1,5 @@
 #pragma once
+#include "abstract_SizerTarget.h"
 #include "CountingContainer.h"
 #include "GameObject.h"
 #include "PhysicsFacility.h"
@@ -11,12 +12,15 @@ enum class FacilityState
 };
 
 class Facility :
-	public GameObject
+	public GameObject,public abstract_SizerTarget
 {
 public:
 	static Facility* createNew();
 
 	void update() override;
+
+	SDL_Texture* getThumbnail() override;
+	std::wstring getBrief() override;
 protected:
 
 	FacilityState state;	//ÉèÊ©µÄ×´Ì¬

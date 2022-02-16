@@ -55,11 +55,6 @@ idea_monster_slime::idea_monster_slime()
 		poisoned_damage_accumulation = 0;
 		oxygen_damage_accumulation = 0;
 
-		magic_max = 4;
-		magic = 4;
-		magic_recovery_speed = 0.2 / 60;
-		magic_recovery_accumulation = 0;
-
 		stamina_max = 4;
 		stamina = 4;
 		stamina_recovery_speed = 0.2 / 60;

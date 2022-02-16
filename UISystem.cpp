@@ -33,6 +33,7 @@ void UISystem::pullEvent()
 	key_space_last = key_space_state;
 	key_f3_last = key_f3_state;
 	key_f4_last = key_f4_state;
+	key_f11_last = key_f11_state;
 
 	SDL_Event evt;
 	while (SDL_PollEvent(&evt))
@@ -85,6 +86,10 @@ void UISystem::pullEvent()
 			{
 				key_f4_state = true;
 			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_F11)
+			{
+				key_f11_state = true;
+			}
 		}
 		else if (evt.type == SDL_KEYUP)
 		{
@@ -119,6 +124,10 @@ void UISystem::pullEvent()
 			else if (evt.key.keysym.scancode == SDL_SCANCODE_F4)
 			{
 				key_f4_state = false;
+			}
+			else if (evt.key.keysym.scancode == SDL_SCANCODE_F11)
+			{
+				key_f11_state = false;
 			}
 			else if (evt.key.keysym.scancode == SDL_SCANCODE_1)
 			{
@@ -264,6 +273,15 @@ void UISystem::pullEvent()
 		key_f4_press = false;
 	}
 
+	if (key_f11_state && !key_f11_last)
+	{
+		key_f11_press = true;
+	}
+	else
+	{
+		key_f11_press = false;
+	}
+
 	renewMouseWorldPosition();
 }
 
@@ -311,6 +329,10 @@ UISystem::UISystem()
 	key_f4_state = false;
 	key_f4_press = false;
 	key_f4_last = false;
+
+	key_f11_state = false;
+	key_f11_press = false;
+	key_f11_last = false;
 
 	keydown_esc = false;
 
@@ -395,7 +417,15 @@ void UISystem::controlGame() const
 		SDL_Log(u8"now quit by keydown_esc");
 	}
 
-
+	//´ò¿ªÉ¸Ñ¡Æ÷
+	if (mouse_left_release && last_tar == nullptr)
+	{
+		if(GlobalData::ui_sizer->flag_enabled)
+		{
+			GlobalData::ui_sizer->disable();
+		}
+		GlobalData::ui_sizer->enable();
+	}
 }
 
 void UISystem::trigger_UIObjects()

@@ -8,12 +8,6 @@ public:
 
 	void update() override;
 
-	void setPatrolArea(std::list<Grid*>* _grids);//设定巡逻区
-
-	std::list <Grid*>* getPatrolArea()const;//获取巡逻区
-
-	bool getIfInPatrolArea()const;//检查是否在巡逻区内
-
 	static int getMonsterNum();
 
 protected:
@@ -31,8 +25,6 @@ protected:
 
 protected:
 	static int monster_num;
-
-	std::list<Grid*>* patrol_area;//怪物可以活动的区域
 
 	Monster();
 	~Monster()override;

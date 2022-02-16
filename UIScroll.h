@@ -35,5 +35,9 @@ protected:
     Uint8 reset_color_r;
     Uint8 reset_color_g;
     Uint8 reset_color_b;
+
+    void create_texture();
+    void destroy_texture();
+    bool can_destroy_texture;
 };
 

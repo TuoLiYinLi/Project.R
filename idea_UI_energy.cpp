@@ -12,6 +12,8 @@ idea_UI_energy* idea_UI_energy::createNew()
 
 idea_UI_energy::idea_UI_energy()
 {
+	name = L"ui_energy_bar";
+
 	flag_static = false;
 	rendering_unit->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::ui_energy_bar, 0));
 	update_depth(0);

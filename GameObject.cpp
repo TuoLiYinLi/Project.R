@@ -72,6 +72,14 @@ bool GameObject::checkIfDestroy() const
 	return flag_destroy;
 }
 
+void GameObject::readyToDestroy()
+{
+	flag_destroy = true;
+	flag_static = true;
+	if (rendering_unit)rendering_unit->flag_enable = false;
+}
+
+
 bool GameObject::checkIfStatic() const
 {
 	return flag_static;

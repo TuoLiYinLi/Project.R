@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "abstract_SizerTarget.h"
+
 #include "PhysicsChara.h"
 
 #include "CountingContainer.h"
@@ -15,12 +17,14 @@ enum class CharaActionType
 };
 
 class Chara :
-	public GameObject
+	public GameObject,public abstract_SizerTarget
 {
 public:
 	static Chara* createNew();
 	void update() override;
 
+	std::wstring getBrief() override;
+	SDL_Texture* getThumbnail() override;
 protected:
 	PhysicsChara* getPhysicsChara() const;
 	RenderingAnimation* getRenderingAnimation()const;
@@ -60,11 +64,6 @@ public:
 	double burning_damage_accumulation;//燃烧产生的累积伤害
 	double poisoned_damage_accumulation;//中毒产生的累积伤害
 	double oxygen_damage_accumulation;//缺氧产生累积伤害
-
-	int magic_max;//最大魔力值
-	int magic;//魔力值
-	double magic_recovery_speed;//魔力值恢复速度
-	double magic_recovery_accumulation;//魔力值积累量
 
 	int stamina_max;//最大活力值
 	int stamina;//活力值

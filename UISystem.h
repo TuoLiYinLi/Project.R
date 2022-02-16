@@ -43,6 +43,9 @@ public:
 	bool key_f4_state;	//按键f4状态
 	bool key_f4_press;	//按键f4按下瞬间
 
+	bool key_f11_state;
+	bool key_f11_press;
+
 	bool keydown_esc;	//按键escape状态
 
 	std::list<UIObject*>* list_ui_objects;//UI元件列表
@@ -62,6 +65,7 @@ protected:
 	bool key_space_last;	//鼠标中间上次状态
 	bool key_f3_last;	//按键f3状态
 	bool key_f4_last;	//按键f3状态
+	bool key_f11_last;
 
 	static UISystem* instance;
 
@@ -69,6 +73,5 @@ protected:
 	~UISystem();
 
 	void renewMouseWorldPosition();	//更新鼠标世界坐标
-
 };
 

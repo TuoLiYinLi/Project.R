@@ -41,7 +41,8 @@ RenderingUnit::RenderingUnit()
 	flip = false;
 
 	texture = nullptr;
-
+	
+	clipping_rect = nullptr;
 }
 
 RenderingUnit::~RenderingUnit() {
@@ -49,6 +50,11 @@ RenderingUnit::~RenderingUnit() {
 	RenderingSystem::getInstance()->remove(this);
 
 	rendering_unit_num--;
+
+	
+	delete clipping_rect;
+	clipping_rect = nullptr;
+	
 }
 
 void RenderingUnit::setFlip(bool _val)
@@ -97,3 +103,8 @@ int RenderingUnit::getRenderingUnitNum()
 	return  rendering_unit_num;
 }
 
+void RenderingUnit::setClipping(int _x, int _y, int _w, int _h)
+{
+	delete clipping_rect;
+	clipping_rect = new SDL_Rect({ _x, _y, _w, _h });
+}

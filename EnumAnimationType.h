@@ -26,9 +26,15 @@ enum class AnimationType
 	ui_button_exit_highlight,
 	ui_button_exit_pressed,
 
+	ui_inspector_panel,
+
 	ui_button_menu_default,
 	ui_button_menu_highlight,
 	ui_button_menu_pressed,
+
+	ui_button_grid_default,
+	ui_button_grid_highlight,
+	ui_button_grid_pressed,
 
 	ui_button_controller_mask,
 

@@ -144,6 +144,8 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
 
     if (!texture)return;
 
+    const SDL_Rect* clipping_rect= au->clipping_rect;
+
     SDL_Rect rect = { 0,0,0,0 };
 
     switch (au->reference)
@@ -168,8 +170,7 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
     {
         return;
     }
-
-    SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, nullptr, &rect, 0, nullptr, au->getFlip());
+    SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, clipping_rect, &rect, 0, nullptr, au->getFlip());
 }
 
 void RenderingSystem::sortRenderingUnits() const
@@ -289,6 +290,11 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             num = 1;
             break;
 
+        case AnimationType::ui_inspector_panel:
+            file = "./Resource/texture/ui_inspector_panel";
+            num = 1;
+            break;
+
         case AnimationType::ui_button_menu_default:
             file = "./Resource/texture/ui_button_menu_default";
             num = 1;
@@ -301,6 +307,21 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             file = "./Resource/texture/ui_button_menu_pressed";
             num = 1;
             break;
+
+
+        case AnimationType::ui_button_grid_default:
+            file = "./Resource/texture/ui_button_grid_default";
+            num = 1;
+            break;
+        case AnimationType::ui_button_grid_highlight:
+            file = "./Resource/texture/ui_button_grid_highlight";
+            num = 1;
+            break;
+        case AnimationType::ui_button_grid_pressed:
+            file = "./Resource/texture/ui_button_grid_pressed";
+            num = 1;
+            break;
+
 
         case AnimationType::ui_button_controller_mask:
             file = "./Resource/texture/ui_button_controller_mask";
@@ -505,6 +526,10 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             }
             auto c_fullFile = fullFile.c_str();
             SDL_Texture* texture = IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
+            //SDL_BlendMode a;
+            //SDL_GetTextureBlendMode(texture, &a);
+            //SDL_Log("BlendMode %d", a);
+
 #ifdef _DEBUG
             texture == nullptr ? SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"¼ÓÔØ´íÎó%s", c_fullFile) : SDL_Log(u8"³É¹¦¼ÓÔØ%s", c_fullFile);
 #endif
@@ -523,10 +548,13 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
 SDL_Texture* RenderingSystem::getAnimation(AnimationType _animation_type,unsigned long long num) const
 {
     const auto L = list_animation_texture->at(static_cast<int>(_animation_type));
-    if(num>=L->size())
+#ifdef _DEBUG
+	if(num>=L->size())
     {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"RenderingSystem::getAnimation³¬³ö·¶Î§");
         return nullptr;
-    }else
+    }
+#endif
     {
         return L->at(num);
     }

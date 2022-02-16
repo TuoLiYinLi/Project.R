@@ -18,6 +18,7 @@ public:
 	RenderingReference reference;	//这个元件的位置参考系
 
 	bool flag_enable;//是否渲染
+	SDL_Rect* clipping_rect;//剪裁矩形
 
 	float depth;//这个渲染元件的深度,在渲染时优先渲染较小深度的图像
 
@@ -37,6 +38,8 @@ public:
 	SDL_Texture* getTexture() const; //取得对应材质
 
 	static int getRenderingUnitNum();	//获取正在使用内存的渲染元件数量
+
+	void setClipping(int _x, int _y, int _w, int _h);//设置剪裁
 
 protected:
 
