@@ -3,6 +3,7 @@
 #include "PhysicsChara.h"
 #include "Defined.h"
 #include "GameToolkit.h"
+#include "idea_UI_inspector.h"
 #include "SDL.h"
 
 
@@ -38,7 +39,6 @@ std::wstring Chara::getMainInfo()
 		+ L"[½éÉÜ] " + introduction;
 	return s;
 }
-
 
 std::wstring Chara::getDataInfo()
 {
@@ -324,7 +324,7 @@ void Chara::update_animation() {
 	//ÍÆ½ø¶¯»­
 	animation_progress++;
 
-	if (action_type != CharaActionType::disturbed && getIfDisturbed())
+	if (action_type != CharaActionType::disturbed && getIfDisturbed() && action_type != CharaActionType::dead)
 	{
 		setAnimationDisturbed();
 	}else if (action_type == CharaActionType::idle)
@@ -596,7 +596,10 @@ Chara::Chara()
 
 Chara::~Chara()
 {
+	push_nullptr();
+
 	counting_container->destroy();
+	counting_container = nullptr;
 
 	chara_num--;
 }

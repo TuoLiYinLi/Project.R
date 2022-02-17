@@ -33,6 +33,8 @@ idea_UI_sizer_button::idea_UI_sizer_button()
 	target = nullptr;
 
 	floating_text = nullptr;
+
+	can_destroy_texture = false;
 }
 
 idea_UI_sizer_button::~idea_UI_sizer_button()
@@ -44,9 +46,15 @@ idea_UI_sizer_button::~idea_UI_sizer_button()
 void idea_UI_sizer_button::updateOnRendering()
 {
 	//¸üÐÂ²ÄÖÊ
-
 	destroyTexture();
-	createTexture();
+	if(target)
+	{
+		createTexture();
+	}
+	else
+	{
+		rendering_unit->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_grid_banned,0));
+	}
 
 	//¼ô²Ã
 	{
@@ -90,7 +98,7 @@ void idea_UI_sizer_button::updateOnRendering()
 }
 
 
-void idea_UI_sizer_button::createTexture() const
+void idea_UI_sizer_button::createTexture()
 {
 #ifdef _DEBUG
 	if (target == nullptr)
@@ -121,22 +129,27 @@ void idea_UI_sizer_button::createTexture() const
 	SDL_RenderCopy(GlobalData::sdl_renderer, tar_thumbnail, nullptr, &dst_rect);
 
 	rendering_unit->setTexture(texture);
+	can_destroy_texture = true;
 }
 
-void idea_UI_sizer_button::destroyTexture()const
+void idea_UI_sizer_button::destroyTexture()
 {
-	if(rendering_unit->getTexture())
+	if(can_destroy_texture)
 	{
 		SDL_DestroyTexture(rendering_unit->getTexture());
+		can_destroy_texture = false;
 	}
 }
 
 void idea_UI_sizer_button::onMouseUp()
 {
 	UIObject::onMouseUp();
-	GlobalData::ui_inspector->set_target(target);
-	GlobalData::ui_inspector->enable();
-	GlobalData::ui_sizer->disable();
+	if(target)
+	{
+		GlobalData::ui_inspector->set_target(target);
+		GlobalData::ui_inspector->enable();
+		GlobalData::ui_sizer->disable();
+	}
 	current_texture_ = texture_highlight_;
 }
 
@@ -170,6 +183,7 @@ void idea_UI_sizer_button::setup(idea_UI_sizer* _parent, abstract_inspect_target
 {
 	parent = _parent;
 	target = _target;
+	_target->pointer_to_this_sizer_button = &target;
 	position_offset = _offset;
 
 	createTexture();
@@ -184,6 +198,8 @@ void idea_UI_sizer_button::set_inspector()
 
 void idea_UI_sizer_button::create_floating_text()
 {
+	if(!target)return;
+
 	floating_text = RenderingText::createNew();
 	floating_text->setTexture(target->getBrief().c_str(), 1, { 255,255,255,255 }, { 0,0,0,205 });
 

@@ -53,9 +53,9 @@ void test()
 void test_init()
 {
     auto pf2 = idea_monster_slime::createNew();
-    pf2->setPosition(7, 2);
+    pf2->setPosition(7, 7);
 
-    pf2->effect_burning = 60;
+    pf2->effect_burning = 600;
     pf2->effect_blind = 60;
     pf2->effect_charging = 60;
     pf2->effect_dizzy = 60;
@@ -77,7 +77,7 @@ void test_init()
     
 
     f1 = idea_facility_ladder::createNew();
-    f1->setPosition(6, 6);
+    f1->setPosition(8, 6);
 
     f1 = idea_facility_ladder::createNew();
     f1->setPosition(7, 7);

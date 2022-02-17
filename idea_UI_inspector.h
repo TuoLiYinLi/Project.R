@@ -21,12 +21,12 @@ public:
 
 
 protected:
+    abstract_inspect_target* target;
     idea_UI_inspector();
     ~idea_UI_inspector()override;
 
     idea_UI_inspector_exit* exit_button;
 
-    abstract_inspect_target* target;
 
     SDL_Texture* t_main;
     SDL_Texture* t_data;

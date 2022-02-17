@@ -22,6 +22,15 @@ PhysicsFacility::PhysicsFacility()
 
 PhysicsFacility::~PhysicsFacility()
 {
+	//重置签入格
+	for (auto it = list_grid_signed->begin(); it != list_grid_signed->end(); ++it)
+	{
+		Grid* grid = *it;
+		grid->list_physics_facility->remove(this);
+		grid->renewBlockingType(type_blocking);
+	}
+	list_grid_signed->clear();
+
 	//将自己从设施物理列表移除
 	WorldSystem::getInstance()->list_physics_facility->remove(this);
 

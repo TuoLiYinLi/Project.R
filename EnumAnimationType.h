@@ -31,6 +31,7 @@ enum class AnimationType
 	ui_button_menu_default,
 	ui_button_menu_highlight,
 	ui_button_menu_pressed,
+	ui_button_grid_banned,
 
 	ui_button_grid_default,
 	ui_button_grid_highlight,

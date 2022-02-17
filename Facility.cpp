@@ -2,8 +2,10 @@
 
 #include "Defined.h"
 #include "GameToolkit.h"
+#include "GlobalData.h"
 #include "SDL.h"
 #include "PhysicsFacility.h"
+#include "idea_UI_inspector.h"
 
 Facility* Facility::createNew() {
 	return new Facility();
@@ -76,6 +78,8 @@ Facility::Facility() {
 
 
 Facility::~Facility() {
+	push_nullptr();
+
 	counting_container->destroy();
 	counting_container = nullptr;
 

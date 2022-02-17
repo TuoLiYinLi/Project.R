@@ -137,5 +137,4 @@ void idea_monster_slime::onSpecialSkill()
 
 void idea_monster_slime::decide_action()
 {
-	actMove(CharaDirection::down);
 }

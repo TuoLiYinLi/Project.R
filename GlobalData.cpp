@@ -4,7 +4,7 @@ SDL_Window* GlobalData::sdl_window = nullptr;
 SDL_Renderer* GlobalData::sdl_renderer = nullptr;
 bool GlobalData::flag_quit = false;
 bool GlobalData::flag_stop = true;
-bool GlobalData::flag_debug_physics = true;
+bool GlobalData::flag_debug_physics = false;
 bool GlobalData::flag_debug_game_info = true;
 
 TimeSpeedType GlobalData::time_speed_type = TimeSpeedType::normal;

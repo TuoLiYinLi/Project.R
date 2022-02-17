@@ -41,6 +41,14 @@ PhysicsChara::PhysicsChara()
 
 PhysicsChara::~PhysicsChara()
 {
+	//重置签入格
+	for (auto it = list_grid_signed->begin(); it != list_grid_signed->end(); ++it)
+	{
+		const Grid* grid = *it;
+		grid->list_physics_chara->remove(this);
+	}
+	list_grid_signed->clear();
+
 	//将自己从角色物理列表移除
 	WorldSystem::getInstance()->list_physics_chara->remove(this);
 	//移除网格列表

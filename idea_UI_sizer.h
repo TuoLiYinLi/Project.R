@@ -30,9 +30,7 @@ protected:
     idea_UI_sizer();
     ~idea_UI_sizer()override;
 
-
     std::list<idea_UI_sizer_button*>* children;//持有的所有UI按钮
-
 
     void update_position();//更新质点运动
 

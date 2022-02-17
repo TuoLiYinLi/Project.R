@@ -321,6 +321,10 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             file = "./Resource/texture/ui_button_grid_pressed";
             num = 1;
             break;
+        case AnimationType::ui_button_grid_banned:
+            file = "./Resource/texture/ui_button_grid_banned";
+            num = 1;
+            break;
 
 
         case AnimationType::ui_button_controller_mask:

@@ -51,7 +51,7 @@ public:
 
 	virtual void setPosition(int x, int y);//设置(传送)位置
 
-	virtual void renewSignedGrids();	//对地图签入自己的位置
+	virtual void renewSignedGrids()=0;	//对地图签入自己的位置
 
 	static int getPhysicsObjectNum();
 protected:

@@ -13,6 +13,12 @@ idea_UI_inspector* idea_UI_inspector::createNew()
 
 void idea_UI_inspector::updateOnRendering()
 {
+	if(!target)
+	{
+		disable();
+		return;
+	}
+
 	{
 		if (t_main)
 		{
@@ -48,6 +54,7 @@ void idea_UI_inspector::updateOnRendering()
 		s_extra->setup(t_extra, collider_x + (2 + 98) * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
 			24, 50, 8, 500);
 	}
+	
 }
 
 idea_UI_inspector::idea_UI_inspector()
@@ -101,6 +108,7 @@ idea_UI_inspector::~idea_UI_inspector()
 void idea_UI_inspector::enable()
 {
 	flag_enable = true;
+	flag_collider_enabled = true;
 	flag_static = false;
 	rendering_unit->flag_enable = true;
 
@@ -114,6 +122,7 @@ void idea_UI_inspector::enable()
 void idea_UI_inspector::disable()
 {
 	flag_enable = false;
+	flag_collider_enabled = false;
 	flag_static = true;
 	rendering_unit->flag_enable = false;
 
@@ -127,4 +136,5 @@ void idea_UI_inspector::disable()
 void idea_UI_inspector::set_target(abstract_inspect_target* _target)
 {
 	target = _target;
+	target->pointer_to_this_inspector = &target;
 }

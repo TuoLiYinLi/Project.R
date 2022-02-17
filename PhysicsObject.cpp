@@ -22,6 +22,7 @@ PhysicsObject::PhysicsObject()
 
 PhysicsObject::~PhysicsObject()
 {
+
 	//尝试销毁持有的game_object
 	if(game_object)
 	{
@@ -43,12 +44,6 @@ void PhysicsObject::setPosition(int x, int y)
 	X = x;
 	Y = y;
 	renewSignedGrids();
-}
-
-
-void PhysicsObject::renewSignedGrids()
-{
-	
 }
 
 PhysicsType PhysicsObject::getPhysicsType() const

@@ -31,6 +31,13 @@ PhysicsProjectile::PhysicsProjectile()
 
 PhysicsProjectile::~PhysicsProjectile()
 {
+	//重置签入的格子
+	for (auto it = list_grid_signed->begin(); it != list_grid_signed->end(); ++it)
+	{
+		const Grid* grid = *it;
+		grid->list_physics_projectile->remove(this);
+	}
+	list_grid_signed->clear();
 	//将自己从投射物列表移除
 	WorldSystem::getInstance()->list_physics_projectile->remove(this);
 

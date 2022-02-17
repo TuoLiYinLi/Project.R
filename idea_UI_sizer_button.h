@@ -36,8 +36,8 @@ protected:
     SDL_Texture* texture_highlight_;//每次创建纹理所使用的高亮材质
     SDL_Texture* texture_pressed_;//每次创建纹理所使用的按下材质
 
-    void createTexture() const;//创建当前状态下对应的材质
-    void destroyTexture()const;//销毁现在使用的材质
+    void createTexture();//创建当前状态下对应的材质
+    void destroyTexture();//销毁现在使用的材质
 
     void set_inspector();
 
@@ -47,5 +47,7 @@ protected:
     void destroy_floating_text();
 
 	void renew_floating_text_position()const;
+
+    bool can_destroy_texture;
 };
 
