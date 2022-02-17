@@ -5,6 +5,7 @@
 
 #include "Grid.h"
 
+//物理体 设施
 class PhysicsFacility :
     public PhysicsObject
 {
@@ -16,7 +17,7 @@ public:
     BlockingType getFacilityType()const;
     void setFacilityType(BlockingType blocking);
     
-    static int getPhysicsFacillityNum();
+    static int getPhysicsFacilityNum();
 protected:
     PhysicsFacility();
     ~PhysicsFacility() override;

@@ -1,5 +1,7 @@
 #pragma once
 
+//枚举 动画资源类型
+//对应着所有从外部加载的图像资源
 enum class AnimationType
 {
 	//debug

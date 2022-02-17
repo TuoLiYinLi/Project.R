@@ -25,6 +25,7 @@ enum class AllyType
 	peace,//和平阵营
 };
 
+//物理体
 class PhysicsObject
 {
 public:

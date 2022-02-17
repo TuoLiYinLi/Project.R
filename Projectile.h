@@ -1,21 +1,29 @@
 #pragma once
 #include "GameObject.h"
 
+//游戏物体 投射物 不可实例化
 class Projectile:
 	public GameObject
 {
 public:
-	//创建new 投射物
-	static Projectile* createNew();
-	
-	int animation_length;	//循环一次动画的时间
-	int animation_progress;	//动画进度
-	int life_time;	//能够留存的时间
+	void update() override;//更新行为
+
+	RenderingAnimation* getRenderingAnimation()const;
 	
 	static int getProjectileNum();
 protected:
 	Projectile();
 	~Projectile() override;
+
+	void sync_animation()const;
+	void sync_flip()const;
+	void update_depth()const;
+
+	int animation_length;	//循环一次动画的时间
+	int animation_progress;	//动画进度
+	AnimationType animation_type;//动画
+
+	int life_time;	//能够留存的时间
 
 private:
 	static int projectile_num;

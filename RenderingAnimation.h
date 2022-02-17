@@ -6,6 +6,7 @@
 class GameObject;
 class RenderingSystem;
 
+//渲染单元 资源动画元件
 class RenderingAnimation:
 public RenderingUnit
 {

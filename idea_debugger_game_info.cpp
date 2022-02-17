@@ -91,8 +91,8 @@ std::wstring idea_debugger_game_info::create_text() const
 		+ L"> <Projectile:" + std::to_wstring(Projectile::getProjectileNum())
 		+ L">\nPhysicsNum:<Object:" + std::to_wstring(PhysicsObject::getPhysicsObjectNum())
 		+ L"> <Character:" + std::to_wstring(PhysicsChara::getPhysicsCharaNum())
-		+ L"> <Facility:" + std::to_wstring(PhysicsFacility::getPhysicsFacillityNum())
-		+ L"> <Projectile:" + std::to_wstring(PhysicsProjectile::getPhysicsProjectilleNum())
+		+ L"> <Facility:" + std::to_wstring(PhysicsFacility::getPhysicsFacilityNum())
+		+ L"> <Projectile:" + std::to_wstring(PhysicsProjectile::getPhysicsProjectileNum())
 		+ L">";
 
 	//grid info

@@ -178,7 +178,7 @@ void PhysicsProjectile::move(double _dx, double _dy)
 
 int PhysicsProjectile::physicsProjectileNum = 0;
 
-int PhysicsProjectile::getPhysicsProjectilleNum()
+int PhysicsProjectile::getPhysicsProjectileNum()
 {
 	return physicsProjectileNum;
 }

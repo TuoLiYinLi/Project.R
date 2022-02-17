@@ -28,14 +28,15 @@
 #include "Chara.h"
 
 #include "Projectile.h"
-#include "ProjectilePoint.h"
-#include "ProjectileFlying.h"
+#include "PhysicsProjectilePoint.h"
+#include "PhysicsProjectileFlying.h"
 
 #include "idea_debugger_physics.h"
 #include "idea_debugger_game_info.h"
 #include "idea_facility_dirt_background.h"
 #include "idea_facility_ladder.h"
 #include "idea_monster_slime.h"
+#include "idea_projectile_chop.h"
 #include "idea_UI_scope.h"
 #include "idea_UI_inspector.h"
 #include "idea_UI_inspector_exit.h"
@@ -70,10 +71,14 @@ void test_init()
     pf2->counting_container->addNumOf(CountingType::fire, 5);
     pf2->counting_container->addNumOf(CountingType::fire, 5);
     pf2->counting_container->removeNumOf(CountingType::food);
-    
+
+    pf2 = idea_monster_slime::createNew();
+    pf2->setPosition(8, 7);
      
     auto f1 = idea_facility_ladder::createNew();
     f1->setPosition(5, 6);
+    pf2->health = 2;
+    pf2->effect_burning = 600;
     
 
     f1 = idea_facility_ladder::createNew();
@@ -119,6 +124,8 @@ void test_init()
     scroll->enable();
      */
 
+    idea_projectile_chop::createNew()->setup(10,10,CharaDirection::right,false);
+    
 
 }
 
@@ -180,8 +187,8 @@ int main(int argc, char** argv) {
     version_mark->y = WINDOW_HEIGHT - version_mark->height + 6;
 
     //物理层调试器
-    auto debugger_physics = idea_debugger_physics::createNew();
-    auto debugger_game_info = idea_debugger_game_info::createNew();
+    idea_debugger_physics::createNew();
+    idea_debugger_game_info::createNew();
 
     //游戏UI初始化
     GlobalData::ui_scope = idea_UI_scope::createNew();

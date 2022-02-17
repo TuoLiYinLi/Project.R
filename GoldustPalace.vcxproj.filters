@@ -60,13 +60,13 @@
     <ClInclude Include="EnumAnimationType.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectilePoint.h">
+    <ClInclude Include="PhysicsProjectilePoint.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectileFlying.h">
+    <ClInclude Include="PhysicsProjectileFlying.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectileTarget.h">
+    <ClInclude Include="PhysicsProjectileTarget.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Defined.h">
@@ -147,6 +147,12 @@
     <ClInclude Include="abstract_inspect_target.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_projectile_chop.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -194,13 +200,13 @@
     <ClCompile Include="RenderingAnimation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectilePoint.cpp">
+    <ClCompile Include="PhysicsProjectilePoint.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectileFlying.cpp">
+    <ClCompile Include="PhysicsProjectileFlying.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectileTarget.cpp">
+    <ClCompile Include="PhysicsProjectileTarget.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RenderingUnit.cpp">
@@ -276,6 +282,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="abstract_inspect_target.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_projectile_chop.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

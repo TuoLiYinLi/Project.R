@@ -1,5 +1,8 @@
 #pragma once
 #include "Chara.h"
+
+//游戏物体 怪物
+//我们的主角
 class Monster :
     public Chara
 {

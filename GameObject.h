@@ -15,6 +15,7 @@ enum class GameObjectType
 	default_particle = 4//默认的粒子物件
 };
 
+//游戏对象基类 不可实例化
 class GameObject
 {
 public:

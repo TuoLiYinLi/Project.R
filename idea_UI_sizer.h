@@ -1,5 +1,6 @@
 #pragma once
 #include "UIObject.h"
+#include <list>
 
 class idea_UI_sizer_button;
 class abstract_inspect_target;

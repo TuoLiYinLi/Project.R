@@ -3,13 +3,14 @@
 #include <vector>
 
 #include "Grid.h"
-//#include "PhysicsFacility.h"
 
 class GameObject;
 class PhysicsProjectile;
 class PhysicsFacility;
 class PhysicsChara;
 
+//系统 世界系统
+//全局管理
 class WorldSystem
 {
 public:

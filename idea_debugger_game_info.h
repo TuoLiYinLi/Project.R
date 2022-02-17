@@ -3,7 +3,7 @@
 #include <string>
 
 
-//显示游戏信息Debug的物件
+//理念 游戏信息Debugger
 class idea_debugger_game_info :
     public GameObject
 {

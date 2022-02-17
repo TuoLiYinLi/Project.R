@@ -2,7 +2,6 @@
 
 #include "Defined.h"
 #include "GameToolkit.h"
-#include "GlobalData.h"
 #include "SDL.h"
 #include "PhysicsFacility.h"
 #include "idea_UI_inspector.h"

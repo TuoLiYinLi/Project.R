@@ -1,5 +1,9 @@
 #pragma once
 #include "UIObject.h"
+
+//UI 按钮
+//拥有三种显示状态
+//弹起时触发callback
 class UIButton :
     public UIObject
 {

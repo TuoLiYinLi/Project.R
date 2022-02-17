@@ -1,12 +1,14 @@
 #pragma once
 #include "SDL.h"
 
+//枚举 渲染参考系
 enum class RenderingReference
 {
 	window,//窗口参考系
 	world,//世界参考系
 };
 
+//渲染单元 基本单元
 class RenderingUnit
 {
 public:

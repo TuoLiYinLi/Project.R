@@ -1,18 +1,18 @@
-#include "ProjectilePoint.h"
+#include "PhysicsProjectilePoint.h"
 
-ProjectilePoint* ProjectilePoint::createNew()
+PhysicsProjectilePoint* PhysicsProjectilePoint::createNew()
 {
-	return new ProjectilePoint();
+	return new PhysicsProjectilePoint();
 }
 
-void ProjectilePoint::update()
+void PhysicsProjectilePoint::update()
 {
 	setVelocity(0.16);
 
 	PhysicsProjectile::update();
 }
 
-ProjectilePoint::ProjectilePoint()
+PhysicsProjectilePoint::PhysicsProjectilePoint()
 {
 	type_projectile = ProjectileType::point;
 
@@ -20,9 +20,9 @@ ProjectilePoint::ProjectilePoint()
 	y_aiming = 0;
 }
 
-ProjectilePoint::~ProjectilePoint() = default;
+PhysicsProjectilePoint::~PhysicsProjectilePoint() = default;
 
-void ProjectilePoint::setVelocity(double _v)
+void PhysicsProjectilePoint::setVelocity(double _v)
 {
 	const double x_distance = x_aiming - X;
 	const double y_distance = y_aiming - Y;
@@ -49,9 +49,11 @@ void ProjectilePoint::setVelocity(double _v)
 	y_v = y_distance * mo * _v;
 }
 
-void ProjectilePoint::setAiming(int _x, int _y)
+void PhysicsProjectilePoint::setup(int _x, int _y, double _velocity)
 {
 	x_aiming = _x;
 	y_aiming = _y;
+
+	setVelocity(_velocity);
 }
 

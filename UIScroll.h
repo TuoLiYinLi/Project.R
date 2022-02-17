@@ -1,5 +1,8 @@
 #pragma once
 #include "UIObject.h"
+
+//UI 滚动轴
+//对特定材质以卷轴的方式滚动显示
 class UIScroll :
     public UIObject
 {

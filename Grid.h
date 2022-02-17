@@ -6,6 +6,7 @@ class PhysicsChara;
 class PhysicsFacility;
 class PhysicsProjectile;
 
+//Íø¸ñ
 class Grid
 {
 public:

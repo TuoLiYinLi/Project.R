@@ -1,4 +1,5 @@
 #pragma once
+//»ùÒòÀà
 class Gene
 {
 public:

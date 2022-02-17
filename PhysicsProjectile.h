@@ -11,6 +11,7 @@ enum class ProjectileType
     flying,//飞行投射物,按照物理规则飞行
 };
 
+//物理体 基本投射物
 class PhysicsProjectile :
     public PhysicsObject
 {
@@ -33,7 +34,7 @@ public:
     double x_v;
     double y_v;
 
-    static int getPhysicsProjectilleNum();
+    static int getPhysicsProjectileNum();
 protected:
     PhysicsProjectile();
     ~PhysicsProjectile() override;

@@ -14,6 +14,8 @@ enum class CountingType
 	icy,//冰霜计数物
 };
 
+//计数物对象
+//储存计数物数据
 struct CountingObject
 {
 	CountingType type;
@@ -21,6 +23,8 @@ struct CountingObject
 	CountingObject(CountingType _type,int _num);
 };
 
+//计数物容器
+//有了它就可以附着计数物了
 class CountingContainer
 {
 public:

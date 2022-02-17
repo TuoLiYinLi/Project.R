@@ -88,7 +88,7 @@ void PhysicsFacility::setFacilityType(BlockingType blocking)
 
 int PhysicsFacility::physicsFacilityNumm = 0;
 
-int PhysicsFacility::getPhysicsFacillityNum()
+int PhysicsFacility::getPhysicsFacilityNum()
 {
 	return physicsFacilityNumm;
 }

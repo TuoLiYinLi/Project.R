@@ -65,15 +65,11 @@ std::wstring Chara::getDataInfo()
 		break;
 	case CharaActionType::disturbed:
 		if (getPhysicsChara()->getIfHitBack())
-		{
 			s_action += L"被击退";
-		}else if (getPhysicsChara()->getIfFalling())
-		{
+		else if (getPhysicsChara()->getIfFalling())
 			s_action += L"坠落";
-		}else
-		{
+		else
 			s_action += L"被干扰";
-		}
 		break;
 	case CharaActionType::moving:
 		switch (getPhysicsChara()->getDirection())
@@ -300,7 +296,7 @@ void Chara::update_attributes()
 		oxygen_damage_accumulation = 0;
 	}
 
-	if(health<=0&&action_type!=CharaActionType::dead)
+	if (health <= 0 && action_type != CharaActionType::dead)
 	{
 		setAnimationDead();
 	}
@@ -417,10 +413,10 @@ void Chara::update_animation() {
 			//死亡状态
 			if (animation_progress >= animation_length_dead)
 			{
+				animation_progress = animation_length_dead - 1;
 				//已经播放完死亡动画
 				onDead();
-				flag_destroy = true;
-				flag_static = true;
+				readyToDestroy();
 			}
 		}
 		break;

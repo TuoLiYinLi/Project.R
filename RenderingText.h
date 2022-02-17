@@ -1,5 +1,7 @@
 #pragma once
 #include "RenderingUnit.h"
+
+//渲染单元 文字单元
 class RenderingText :
     public RenderingUnit
 {

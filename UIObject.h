@@ -1,7 +1,9 @@
 #pragma once
-#include <list>
 
 #include "GameObject.h"
+
+//UI 基类
+//被UISystem触发鼠标接口
 class UIObject :
     public GameObject
 {

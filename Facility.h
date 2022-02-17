@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "PhysicsFacility.h"
 
+//枚举 设施状态
 enum class FacilityState
 {
 	idle,
@@ -11,6 +12,7 @@ enum class FacilityState
 	dead
 };
 
+//游戏物体 设施
 class Facility :
 	public GameObject,public abstract_inspect_target
 {

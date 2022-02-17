@@ -3,6 +3,7 @@
 
 #include "Facility.h"
 
+//游戏物体 多样设施
 //囊括不同变体的同种设施
 class FacilityVarious :
     public Facility

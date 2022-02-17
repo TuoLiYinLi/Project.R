@@ -11,6 +11,7 @@ enum class CharaDirection
     down//下
 };
 
+//物理体 角色
 class PhysicsChara :
     public PhysicsObject
 {

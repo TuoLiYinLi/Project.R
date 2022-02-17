@@ -1,29 +1,35 @@
-#include "ProjectileTarget.h"
+#include "PhysicsProjectileTarget.h"
 
 
 #include "PhysicsChara.h"
 
-ProjectileTarget* ProjectileTarget::createNew()
+PhysicsProjectileTarget* PhysicsProjectileTarget::createNew()
 {
-	return new ProjectileTarget();
+	return new PhysicsProjectileTarget();
 }
 
-void ProjectileTarget::update()
+void PhysicsProjectileTarget::update()
 {
 	PhysicsProjectile::update();
 }
 
+void PhysicsProjectileTarget::setup(PhysicsChara* _target, double _velocity)
+{
+	target = _target;
+	setVelocity(_velocity);
+}
 
-ProjectileTarget::ProjectileTarget()
+
+PhysicsProjectileTarget::PhysicsProjectileTarget()
 {
 	type_projectile = ProjectileType::target;
 
 	target = nullptr;
 }
 
-ProjectileTarget::~ProjectileTarget() = default;
+PhysicsProjectileTarget::~PhysicsProjectileTarget() = default;
 
-void ProjectileTarget::setVelocity(double _v)
+void PhysicsProjectileTarget::setVelocity(double _v)
 {
 	if(!target)
 	{

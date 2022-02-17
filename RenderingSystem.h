@@ -9,7 +9,6 @@
 #include "SDL_ttf.h"
 
 #include "RenderingUnit.h"
-#include "UIObject.h"
 
 #include "EnumAnimationType.h"
 
@@ -17,10 +16,9 @@ class PhysicsObject;
 
 class RenderingAnimation;
 
+//äÖÈ¾ÏµÍ³
 class RenderingSystem
 {
-
-
 public:
 	TTF_Font* font_grey;//×ÖÌågrey.ttf
 

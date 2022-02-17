@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include "PhysicsObject.h"
 
+//æ≤Ã¨π§æﬂ¿‡
 class GameToolkit
 {
 public:

@@ -5,7 +5,7 @@
 #include "PhysicsChara.h"
 
 #include "CountingContainer.h"
-
+//枚举 角色行动状态
 enum class CharaActionType
 {
 	idle,//闲置
@@ -16,6 +16,7 @@ enum class CharaActionType
 	dead,//死亡
 };
 
+//游戏物体 角色 
 class Chara :
 	public GameObject,public abstract_inspect_target
 {

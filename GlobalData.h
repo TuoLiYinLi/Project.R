@@ -15,6 +15,7 @@ enum class TimeSpeedType
 	triple_speed = 3,
 };
 
+//全局数据
 class GlobalData
 {
 public:

@@ -1,18 +1,20 @@
 #pragma once
 #include "PhysicsProjectile.h"
-class ProjectilePoint :
+
+//物理体 定点投射物
+class PhysicsProjectilePoint :
     public PhysicsProjectile
 {
 public:
-    static ProjectilePoint* createNew();
+    static PhysicsProjectilePoint* createNew();
 
 	void update() override;
 
-    void setAiming(int _x, int _y);
+    void setup(int _x, int _y, double _velocity);
 
 protected:
-    ProjectilePoint();
-    ~ProjectilePoint() override;
+    PhysicsProjectilePoint();
+    ~PhysicsProjectilePoint() override;
 
     int x_aiming;  //目标位置x
     int y_aiming;  //目标位置y
