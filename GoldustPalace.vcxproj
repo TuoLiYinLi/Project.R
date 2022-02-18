@@ -28,6 +28,7 @@
     <ClInclude Include="idea_facility_ladder.h" />
     <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_debugger_physics.h" />
+    <ClInclude Include="idea_particle_dizzy.h" />
     <ClInclude Include="idea_particle_flame.h" />
     <ClInclude Include="idea_particle_goldust.h" />
     <ClInclude Include="idea_particle_poisoned.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="idea_facility_dirt_background.cpp" />
     <ClCompile Include="idea_facility_ladder.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
+    <ClCompile Include="idea_particle_dizzy.cpp" />
     <ClCompile Include="idea_particle_flame.cpp" />
     <ClCompile Include="idea_particle_goldust.cpp" />
     <ClCompile Include="idea_particle_poisoned.cpp" />

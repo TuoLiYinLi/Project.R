@@ -37,6 +37,7 @@
 #include "idea_facility_dirt_background.h"
 #include "idea_facility_ladder.h"
 #include "idea_monster_slime.h"
+#include "idea_particle_dizzy.h"
 #include "idea_particle_flame.h"
 #include "idea_particle_goldust.h"
 #include "idea_particle_poisoned.h"
@@ -62,10 +63,10 @@ void test_init()
     auto pf2 = idea_monster_slime::createNew();
     pf2->setPosition(7, 7);
 
-    pf2->effect_burning = 600;
+    //pf2->effect_burning = 600;
     //pf2->effect_blind = 60;
-    //pf2->effect_charging = 60;
-    //pf2->effect_dizzy = 60;
+    //pf2->effect_charging = 6000;
+    //pf2->effect_dizzy = 6000;
     //pf2->effect_poisoned = 600;
     //pf2->effect_resistant = 60;
     //pf2->effect_sealed = 60;
@@ -121,7 +122,7 @@ void test_init()
     scroll->enable();
      */
 
-    idea_projectile_chop::createNew()->setup(AllyType::monster,7,7,CharaDirection::up, false);
+    idea_projectile_chop::createNew()->setup(AllyType::monster,7,7,CharaDirection::right, false);
 
     //auto particle = idea_particle_goldust::createNew();
 }
@@ -198,8 +199,8 @@ int main(int argc, char** argv) {
     //代码测试
     test_init();
 	
-    auto pm = integrate_particles_maker<idea_particle_flame>();
-    pm.update(3, 10, 60, 0.5, 0.5, 0.4, 0.002, 0.004, -0.5 * pi,0.5*pi);
+    auto pm = integrate_particles_maker<idea_particle_dizzy>();
+    pm.update(1, 120, 0, 0.5, 0.5, 0, 0, 0, -0.5 * pi,0.5*pi);
 
 	SDL_Log(u8"--\t--\t--\t--初始化完成,游戏运行--\t--\t--\t--");
 

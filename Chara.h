@@ -5,6 +5,7 @@
 #include "PhysicsChara.h"
 
 #include "CountingContainer.h"
+#include "idea_particle_dizzy.h"
 #include "idea_particle_flame.h"
 #include "idea_particle_poisoned.h"
 
@@ -150,5 +151,6 @@ protected:
 
 	integrate_particles_maker<idea_particle_poisoned> pm_poisoned;
 	integrate_particles_maker<idea_particle_flame> pm_burning;
+	integrate_particles_maker<idea_particle_dizzy> pm_dizzy;
 };
 

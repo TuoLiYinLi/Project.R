@@ -170,7 +170,7 @@ void Chara::update()
 
 	pm_poisoned.update_position(physics_object->X + 0.5, physics_object->Y + 0.5);
 	pm_burning.update_position(physics_object->X + 0.5, physics_object->Y + 0.75);
-
+	pm_dizzy.update_position(physics_object->X + 0.5, physics_object->Y + 0.1);
 }
 
 void Chara::update_effect()
@@ -239,6 +239,7 @@ void Chara::update_effect()
 	//Ñ£ÔÎÐ§¹û
 	if (effect_dizzy > 0)
 	{
+		pm_dizzy.make_particle();
 		effect_dizzy--;
 	}
 	else
@@ -592,6 +593,9 @@ Chara::Chara()
 		pm_burning.update(3, 10, 60, 
 			physics_object->X + 0.5, physics_object->Y + 0.75, 0.4,
 			0.002, 0.0035, -0.5 * pi, 0.5 * pi);
+		pm_dizzy.update(1, 120, 0,
+			physics_object->X + 0.5, physics_object->Y + 0.75, 0,
+			0, 0, -0.5 * pi, 0.5 * pi);
 
 	}
 
@@ -686,8 +690,9 @@ void Chara::setAnimationMoving()
 
 bool Chara::getIfDisturbed() const
 {
-	return getPhysicsChara()->getIfFalling()
-		||getPhysicsChara()->getIfHitBack();
+	return getPhysicsChara()->getIfFalling() ||
+		getPhysicsChara()->getIfHitBack() ||
+		effect_dizzy > 0;
 }
 
 bool Chara::getIfMoving() const

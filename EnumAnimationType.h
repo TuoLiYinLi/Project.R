@@ -95,6 +95,7 @@ enum class AnimationType
 	particle_goldust,
 	particle_poisoned,
 	particle_flame,
+	particle_dizzy,
 
 	size,//末尾，代表了总数量
 };
