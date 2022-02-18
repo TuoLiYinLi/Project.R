@@ -13,6 +13,14 @@ idea_UI_scope* idea_UI_scope::createNew()
 
 void idea_UI_scope::updateOnRendering()
 {
+	if(UISystem::getInstance()->last_tar!=nullptr)
+	{
+		rendering_unit->flag_enable = false;
+		return;
+	}else
+	{
+		rendering_unit->flag_enable = true;
+	}
 	renew_state();
 	renew_texture();
 }
@@ -24,9 +32,9 @@ idea_UI_scope::idea_UI_scope()
 	color_r = 255;
 	color_g = 255;
 	color_b = 255;
-	color_a = 255;
+	color_a = 72;
 
-	name = L"UI_scope";
+	name = L"Ñ¡ÖÐ·¶Î§¿ò";
 
 	rendering_unit = RenderingUnit::createNew();
 

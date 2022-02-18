@@ -140,7 +140,7 @@ void idea_debugger_physics::render_all_grids()const
 
 idea_debugger_physics::idea_debugger_physics()
 {
-    name = L"physics_debugger";
+    name = L"物理体调试器";
 
 	rendering_unit = RenderingUnit::createNew();
     rendering_unit->deltaX = 0;

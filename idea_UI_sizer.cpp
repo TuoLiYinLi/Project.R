@@ -18,7 +18,7 @@ idea_UI_sizer* idea_UI_sizer::createNew()
 
 idea_UI_sizer::idea_UI_sizer()
 {
-	name = L"ui_sizer";
+	name = L"É¸Ñ¡Æ÷";
 
 	flag_enabled = false;
 	flag_collider_enabled = true;

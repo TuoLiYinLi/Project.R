@@ -1,7 +1,6 @@
 #include "PhysicsProjectile.h"
 
 #include <SDL_log.h>
-#include "Defined.h"
 #include "WorldSystem.h"
 
 PhysicsProjectile* PhysicsProjectile::createNew()
@@ -81,6 +80,10 @@ void PhysicsProjectile::renewSignedGrids()
 			list_grid_signed->push_back(grid);
 		}
 	}
+
+	renewHitCharas();
+	renewHitFacilities();
+	renewHitProjectiles();
 }
 
 

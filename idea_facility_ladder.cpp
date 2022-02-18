@@ -8,8 +8,10 @@ idea_facility_ladder* idea_facility_ladder::createNew()
 idea_facility_ladder::idea_facility_ladder()
 {
 	name = L"ÅÀÌÝ";
+	science_name = L"Ä¾ÅÀÌÝ";
+	introduction = L"·½±ãÓÚ´¹Ö±ÒÆ¶¯µÄÌÝ×Ó£¬ÆÆÆÆÀÃÀÃµÄ¡£";
 
-	getPhysicsFacility()->setFacilityType(BlockingType::support);
+	getPhysics()->setFacilityType(BlockingType::support);
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_1);
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_2);
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_3);

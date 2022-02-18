@@ -11,7 +11,7 @@ idea_UI_inspector_exit* idea_UI_inspector_exit::createNew()
 
 idea_UI_inspector_exit::idea_UI_inspector_exit()
 {
-	name = L"退出按钮";
+	name = L"检视器退出按钮";
 	texture_default = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_default, 0);
 	texture_highlight = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_highlight, 0);
 	texture_pressed = RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_exit_pressed, 0);

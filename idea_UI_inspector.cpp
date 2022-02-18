@@ -26,7 +26,7 @@ void idea_UI_inspector::updateOnRendering()
 			t_main = nullptr;
 		}
 		int w, h;
-		t_main = GameToolkit::createUnicodeText(target->getMainInfo().c_str(), { 255,255,255,255 }, 48 * static_cast<int>(UI_SCALE), &w, &h);
+		t_main = GameToolkit::createUnicodeText(target->getMainInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(UI_SCALE), &w, &h);
 		s_main->setup(t_main, collider_x + 2 * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
 			24, 50, 8, 500);
 	}
@@ -38,7 +38,7 @@ void idea_UI_inspector::updateOnRendering()
 			t_data = nullptr;
 		}
 		int w, h;
-		t_data = GameToolkit::createUnicodeText(target->getDataInfo().c_str(), { 255,255,255,255 }, 48 * static_cast<int>(UI_SCALE), &w, &h);
+		t_data = GameToolkit::createUnicodeText(target->getDataInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(UI_SCALE), &w, &h);
 		s_data->setup(t_data, collider_x + (2 + 49) * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
 			24, 50, 8, 500);
 	}
@@ -50,7 +50,7 @@ void idea_UI_inspector::updateOnRendering()
 			t_extra = nullptr;
 		}
 		int w, h;
-		t_extra = GameToolkit::createUnicodeText(target->getExtraInfo().c_str(), { 255,255,255,255 }, 48 * static_cast<int>(UI_SCALE), &w, &h);
+		t_extra = GameToolkit::createUnicodeText(target->getExtraInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(UI_SCALE), &w, &h);
 		s_extra->setup(t_extra, collider_x + (2 + 98) * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
 			24, 50, 8, 500);
 	}
@@ -63,7 +63,7 @@ idea_UI_inspector::idea_UI_inspector()
 
 	target = nullptr;
 
-	name = L"UI_inspector";
+	name = L"¼ìÊÓÆ÷";
 	
 	rendering_unit->reference = RenderingReference::window;
 	rendering_unit->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::ui_inspector_panel, 0));

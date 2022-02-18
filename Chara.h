@@ -110,12 +110,12 @@ protected:
 	virtual void onKill();//当生命值归零时 单刻触发
 	virtual void onDead();//当死亡并消失时 单刻触发
 	virtual void onImpact(int _impact);//当受到外部冲击时 单刻触发
-	virtual void onHit();//当受到投射物直接伤害时 单刻触发
 	virtual void onBurning();//当自己燃烧时 每帧触发
 	virtual void onPoisoned();//当自己中毒时 每帧触发
 	//角色控制接口
 	virtual void decide_action();//当角色闲置时,直接决定下一个动作
-
+public:
+	virtual void onHit();//当受到投射物直接伤害时 单刻触发
 public:
 	static int getCharaNum();
 
@@ -130,6 +130,7 @@ protected:
 	void update_animation();//推进动画数据变化
 	void sync_animation();//将动画与数据同步
 	void update_depth()const;//更新动画元件的深度
+	void update_damaged_highlight();//更新受击颜色
 
 
 	bool getIfDisturbed() const;//符合被打断状态的条件
@@ -142,5 +143,7 @@ protected:
 	void setAnimationSkillBasic();//设置为普通能力动画
 	void setAnimationDead();//设置为死亡动画
 
+
+	int damaged_highlight;//受伤产生红色高亮
 };
 

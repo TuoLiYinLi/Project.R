@@ -45,6 +45,8 @@ void idea_UI_speed_controller::updateOnRendering()
 
 idea_UI_speed_controller::idea_UI_speed_controller()
 {
+	name = L"速度控制器";
+
 	flag_collider_enabled = false;
 	flag_static = false;
 
@@ -172,6 +174,12 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 		b5->rendering_unit->setTexture(texture_selected);
 		break;
 	}
+
+	b1->name = L"暂停按钮";
+	b2->name = L"开始按钮";
+	b3->name = L"一倍速按钮";
+	b4->name = L"二倍速按钮";
+	b5->name = L"三倍速按钮";
 }
 
 idea_UI_speed_controller::~idea_UI_speed_controller()

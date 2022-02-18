@@ -28,6 +28,7 @@ void Projectile::sync_animation() const
 	rendering_unit->y = physics_object->Y;
 
 	getRenderingAnimation()->setTexture(animation_type, animation_length, animation_progress);
+	update_depth();
 }
 
 void Projectile::sync_flip() const

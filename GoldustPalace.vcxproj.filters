@@ -153,6 +153,9 @@
     <ClInclude Include="idea_projectile_chop.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="recorder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">

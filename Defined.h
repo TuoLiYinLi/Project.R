@@ -68,15 +68,17 @@ constexpr double UI_SCALE = 4;//UI放大倍数
 
 //#define STIFLE_DAMAGE 0.0025 //窒息伤害常量
 
-constexpr double LOW_SPEED = 1.0/60;//低速
-constexpr double FALLING_SPEED = 5.0/60;//坠落速度
-constexpr double HIGH_SPEED = 6.0/60;//高速,一般不可超过这个速度
-constexpr double MAX_SPEED = 1;//最大速度
+constexpr double low_speed = 1.0/60;//低速
+constexpr double falling_speed = 5.0/60;//坠落速度
+constexpr double high_speed = 6.0/60;//高速,一般不可超过这个速度
+constexpr double max_speed = 1;//最大速度
 
-constexpr int OXYGEN_MAX = 600;//氧气最大值
-constexpr double OXYGEN_DAMAGE = 0.2 / 60;//氧气造成的伤害
-constexpr double BURNING_SPEED = 1.0 / 60;//燃烧速度
-constexpr double POISONED_SPEED = 1.0 / 600;//中毒速度
+constexpr int oxygen_max = 600;//氧气最大值
+constexpr double oxygen_damage = 0.2 / 60;//氧气造成的伤害
+constexpr double burning_speed = 1.0 / 60;//燃烧速度
+constexpr double poisoned_speed = 1.0 / 600;//中毒速度
 
 
 constexpr auto wchar_multiply = static_cast<wchar_t>(215);
+
+constexpr auto damaged_highlight_length = 10;//受到攻击时高亮时间

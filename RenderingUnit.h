@@ -33,6 +33,8 @@ public:
 	double width;//元件显示的宽度
 	double height;//元件显示的高度
 
+	SDL_Color blend_color{ 255,255,255,255 };
+
 	void setFlip(bool _val);	//设置是否翻转
 	SDL_RendererFlip getFlip() const;	//取得是否翻转
 

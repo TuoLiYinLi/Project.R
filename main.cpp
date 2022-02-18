@@ -124,9 +124,8 @@ void test_init()
     scroll->enable();
      */
 
-    idea_projectile_chop::createNew()->setup(10,10,CharaDirection::right,false);
-    
-
+    idea_projectile_chop::createNew()->setup(AllyType::monster,7,7,CharaDirection::up, false);
+  
 }
 
 

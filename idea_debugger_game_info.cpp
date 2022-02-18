@@ -32,7 +32,7 @@ void idea_debugger_game_info::updateOnRendering()
 
 idea_debugger_game_info::idea_debugger_game_info()
 {
-	name = L"game_info_debugger";
+	name = L"游戏信息调试器";
 
 	rendering_unit = RenderingUnit::createNew();
 	rendering_unit->deltaX = 0;

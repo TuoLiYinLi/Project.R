@@ -7,8 +7,11 @@ idea_facility_dirt_background* idea_facility_dirt_background::createNew()
 
 idea_facility_dirt_background::idea_facility_dirt_background()
 {
-	name = L"泥土";
-	getPhysicsFacility()->setFacilityType(BlockingType::solid);
+	name = L"泥土背景";
+	science_name = L"泥土";
+	introduction = L"很明显是泥巴和石头";
+
+	getPhysics()->setFacilityType(BlockingType::solid);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_1);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_2);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_3);

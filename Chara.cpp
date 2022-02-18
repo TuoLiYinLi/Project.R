@@ -44,7 +44,7 @@ std::wstring Chara::getDataInfo()
 {
 	std::wstring s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(health_max) + L" (+" + std::to_wstring(health_recovery_speed * 60).substr(0, 4) + L"/s)" + L'\n'
 		+ L"[活力] " + std::to_wstring(stamina) + L"/" + std::to_wstring(stamina_max) + L" (+" + std::to_wstring(stamina_recovery_speed * 60).substr(0, 4) + L"/s)" + L'\n'
-		+ L"[氧气] " + std::to_wstring(static_cast<int>(static_cast<double>(oxygen) / OXYGEN_MAX * 100)) + L"%" + L'\n'
+		+ L"[氧气] " + std::to_wstring(static_cast<int>(static_cast<double>(oxygen) / oxygen_max * 100)) + L"%" + L'\n'
 		+ L"[位置] " + L"( " + GameToolkit::double_reserve_decimal(physics_object->X, 1) + L" , " + GameToolkit::double_reserve_decimal(physics_object->Y, 1) + L" )" + L'\n'
 		+ L"[大小] " + L"( " + std::to_wstring(physics_object->bodyX) + L" " + wchar_multiply + L" " + std::to_wstring(physics_object->bodyY) + L" )" + L'\n';
 
@@ -90,6 +90,16 @@ std::wstring Chara::getDataInfo()
 		break;
 	}
 	s += s_action + L"\n";
+
+	std::wstring s_ally = L"[立场] ";
+	switch (physics_object->type_ally)
+	{
+	case AllyType::monster:s_ally += L"友方"; break;
+	case AllyType::warrior:s_ally += L"敌方"; break;
+	case AllyType::neutral:s_ally += L"中立"; break;
+	case AllyType::peace:s_ally += L"和平"; break;
+	}
+	s += s_ally + L"\n";
 
 	return s;
 }
@@ -155,7 +165,7 @@ void Chara::update()
 	update_effect();
 	update_attributes();
 	update_animation();
-
+	update_damaged_highlight();
 	sync_animation();
 }
 
@@ -237,7 +247,7 @@ void Chara::update_attributes()
 	if (effect_burning > 0)
 	{
 		onBurning();
-		burning_damage_accumulation += BURNING_SPEED;
+		burning_damage_accumulation += burning_speed;
 		const int delta = static_cast<int>(floor(burning_damage_accumulation));
 		health -= delta;
 		burning_damage_accumulation -= delta;
@@ -254,7 +264,7 @@ void Chara::update_attributes()
 	if (effect_poisoned > 0)
 	{
 		onPoisoned();
-		poisoned_damage_accumulation += health * POISONED_SPEED;
+		poisoned_damage_accumulation += health * poisoned_speed;
 		const int delta = static_cast<int>(floor(poisoned_damage_accumulation));
 		health -= delta;
 		poisoned_damage_accumulation -= delta;
@@ -276,7 +286,7 @@ void Chara::update_attributes()
 		{
 			//缺氧
 			oxygen = 0;
-			oxygen_damage_accumulation += health_max * OXYGEN_DAMAGE;
+			oxygen_damage_accumulation += health_max * oxygen_damage;
 			const int delta = static_cast<int>(floor(oxygen_damage_accumulation));
 			health -= delta;
 			oxygen_damage_accumulation -= delta;
@@ -289,9 +299,9 @@ void Chara::update_attributes()
 	{
 		//被没有被水淹没
 		oxygen++;
-		if (oxygen>OXYGEN_MAX)
+		if (oxygen>oxygen_max)
 		{
-			oxygen = OXYGEN_MAX;
+			oxygen = oxygen_max;
 		}
 		oxygen_damage_accumulation = 0;
 	}
@@ -496,6 +506,20 @@ void Chara::update_depth()const
 	rendering_unit->depth = DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
 }
 
+void Chara::update_damaged_highlight()
+{
+	if (damaged_highlight > 0)
+	{
+		damaged_highlight--;
+
+		rendering_unit->blend_color.b = 0;
+		rendering_unit->blend_color.g = 0;
+	}else
+	{
+		rendering_unit->blend_color.b = 255;
+		rendering_unit->blend_color.g = 255;
+	}
+}
 
 
 
@@ -552,11 +576,13 @@ Chara::Chara()
 		animation_type_skill_special = AnimationType::debug_sequence_red;
 		animation_type_disturbed = AnimationType::debug_sequence_green;
 		animation_type_dead = AnimationType::debug_sequence_black;
+
+		damaged_highlight = 0;
 	}
 
 	//设置角色属性
 	{
-		moving_speed = LOW_SPEED;
+		moving_speed = low_speed;
 
 		health_max = 4;
 		health = 4;
@@ -572,7 +598,7 @@ Chara::Chara()
 		stamina_recovery_speed = 0.2/60;
 		stamina_recovery_accumulation = 0;
 		
-		oxygen = OXYGEN_MAX;//氧气值
+		oxygen = oxygen_max;//氧气值
 	}
 	//角色计数物
 	counting_container = CountingContainer::createNew();
@@ -707,7 +733,7 @@ void Chara::onDead()
 
 void Chara::onHit()
 {
-	
+	damaged_highlight = damaged_highlight_length;
 }
 
 void Chara::onIdle()

@@ -98,10 +98,10 @@ void PhysicsChara::update()
 		{
 			if(detectForward(CharaDirection::down,BlockingType::liquid))
 			{
-				setMotion(CharaDirection::down, LOW_SPEED, 1, false);
+				setMotion(CharaDirection::down, low_speed, 1, false);
 			}else
 			{
-				setMotion(CharaDirection::down, FALLING_SPEED, 1, false);
+				setMotion(CharaDirection::down, falling_speed, 1, false);
 			}
 		}
 	}

@@ -63,10 +63,11 @@ protected:
 	virtual void onActivate();//当基础能力被使用时 单刻触发
 	virtual void onKill();//当生命值归零时 单刻触发
 	virtual void onDead();//当死亡并消失时 单刻触发
+public:
 	virtual void onHit();//当受到投射物直接伤害时 单刻触发
-
-	RenderingAnimation* getRenderingAnimation()const;
-	PhysicsFacility* getPhysicsFacility()const;
+protected:
+	RenderingAnimation* getRendering()const;
+	PhysicsFacility* getPhysics()const;
 public:
 	void setPosition(int x, int y);//传送角色到坐标位置
 	static int getFacilityNum();
@@ -78,6 +79,8 @@ protected:
 	void update_animation();//更新动画
 	void sync_animation()const;//同步动画
 	void update_depth()const;
+	void update_damaged_highlight();//更新受击颜色
+	int damaged_highlight;//受伤产生红色高亮
 
 	void setAnimationIdle();//设置为闲置动画
 	void setAnimationActivate();//设置为激活动画

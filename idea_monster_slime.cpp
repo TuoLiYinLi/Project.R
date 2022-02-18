@@ -46,7 +46,7 @@ idea_monster_slime::idea_monster_slime()
 
 	//ÉèÖÃ½ÇÉ«ÊôĞÔ
 	{
-		moving_speed = LOW_SPEED;
+		moving_speed = low_speed;
 
 		health_max = 4;
 		health = 4;

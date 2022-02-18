@@ -15,7 +15,7 @@ idea_UI_sizer_button* idea_UI_sizer_button::createNew()
 
 idea_UI_sizer_button::idea_UI_sizer_button()
 {
-	name = L"ui_sizer_button";
+	name = L"É¸Ñ¡Æ÷°´Å¥";
 
 	flag_static = true;
 	flag_collider_enabled = true;

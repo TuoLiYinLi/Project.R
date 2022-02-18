@@ -170,6 +170,9 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
     {
         return;
     }
+    SDL_SetTextureAlphaMod(texture, au->blend_color.a);
+    SDL_SetTextureColorMod(texture, au->blend_color.r, au->blend_color.g, au->blend_color.b);
+
     SDL_RenderCopyEx(GlobalData::sdl_renderer, texture, clipping_rect, &rect, 0, nullptr, au->getFlip());
 }
 

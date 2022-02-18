@@ -38,7 +38,7 @@ Facility::Facility() {
 		physics_object->bodyX = 1;
 		physics_object->bodyY = 1;
 
-		getPhysicsFacility()->setFacilityType(BlockingType::air);
+		getPhysics()->setFacilityType(BlockingType::air);
 	}
 
 	//设施的动画
@@ -60,6 +60,8 @@ Facility::Facility() {
 		animation_type_idle = AnimationType::debug_sequence_blue;
 		animation_type_activated = AnimationType::debug_sequence_red;
 		animation_type_dead = AnimationType::debug_sequence_black;
+
+		damaged_highlight = 0;
 
 		setAnimationIdle();
 	}
@@ -99,6 +101,7 @@ SDL_Texture* Facility::getThumbnail()
 void Facility::update()
 {
 	update_animation();
+	update_damaged_highlight();
 	sync_animation();
 }
 
@@ -161,21 +164,21 @@ void Facility::sync_animation()const
 	switch (state)
 	{
 	case FacilityState::idle:
-		getRenderingAnimation()->setTexture(animation_type_idle, animation_length_idle, animation_progress);
+		getRendering()->setTexture(animation_type_idle, animation_length_idle, animation_progress);
 		break;
 	case FacilityState::activated:
-		getRenderingAnimation()->setTexture(animation_type_activated, animation_length_activated, animation_progress);
+		getRendering()->setTexture(animation_type_activated, animation_length_activated, animation_progress);
 		break;
 	case FacilityState::dead:
-		getRenderingAnimation()->setTexture(animation_type_dead, animation_length_dead, animation_progress);
+		getRendering()->setTexture(animation_type_dead, animation_length_dead, animation_progress);
 		break;
 	}
 
 	//刷新设施位置
-	getRenderingAnimation()->x = physics_object->X;
-	getRenderingAnimation()->y = physics_object->Y;
-	getRenderingAnimation()->width = physics_object->bodyX * PIXEL_RATE;
-	getRenderingAnimation()->height = physics_object->bodyY * PIXEL_RATE;
+	getRendering()->x = physics_object->X;
+	getRendering()->y = physics_object->Y;
+	getRendering()->width = physics_object->bodyX * PIXEL_RATE;
+	getRendering()->height = physics_object->bodyY * PIXEL_RATE;
 
 	//刷新深度
 	update_depth();
@@ -207,7 +210,7 @@ void Facility::onKill()
 
 void Facility::onHit()
 {
-	
+	damaged_highlight = damaged_highlight_length;
 }
 
 void Facility::onDead()
@@ -215,12 +218,12 @@ void Facility::onDead()
 	
 }
 
-RenderingAnimation* Facility::getRenderingAnimation() const
+RenderingAnimation* Facility::getRendering() const
 {
 	return reinterpret_cast<RenderingAnimation*>(rendering_unit);
 }
 
-PhysicsFacility* Facility::getPhysicsFacility() const
+PhysicsFacility* Facility::getPhysics() const
 {
 	return reinterpret_cast<PhysicsFacility*>(physics_object);
 }
@@ -267,6 +270,16 @@ std::wstring Facility::getDataInfo()
 	}
 	s += s_state + L"\n";
 
+	std::wstring s_ally = L"[立场] ";
+	switch (physics_object->type_ally)
+	{
+	case AllyType::monster:s_ally += L"友方"; break;
+	case AllyType::warrior:s_ally += L"敌方"; break;
+	case AllyType::neutral:s_ally += L"中立"; break;
+	case AllyType::peace:s_ally += L"和平"; break;
+	}
+	s += s_ally + L"\n";
+
 	return s;
 }
 
@@ -293,4 +306,20 @@ std::wstring Facility::getMainInfo()
 	std::wstring s = L"[名称] " + science_name + L"\n"
 		+ L"[介绍] " + introduction;
 	return s;
+}
+
+void Facility::update_damaged_highlight()
+{
+	if (damaged_highlight > 0)
+	{
+		damaged_highlight--;
+
+		rendering_unit->blend_color.b = 0;
+		rendering_unit->blend_color.g = 0;
+	}
+	else
+	{
+		rendering_unit->blend_color.b = 255;
+		rendering_unit->blend_color.g = 255;
+	}
 }
