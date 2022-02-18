@@ -517,6 +517,10 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             file = "./Resource/texture/particle_poisoned";
             num = 6;
             break;
+        case AnimationType::particle_flame:
+            file = "./Resource/texture/particle_flame";
+            num = 11;
+            break;
 
         case AnimationType::size:
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"²»ÄÜ¼ÓÔØAnimationType::size");

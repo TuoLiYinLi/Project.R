@@ -169,6 +169,8 @@ void Chara::update()
 	sync_animation();
 
 	pm_poisoned.update_position(physics_object->X + 0.5, physics_object->Y + 0.5);
+	pm_burning.update_position(physics_object->X + 0.5, physics_object->Y + 0.75);
+
 }
 
 void Chara::update_effect()
@@ -207,6 +209,7 @@ void Chara::update_effect()
 	//燃烧效果
 	if(effect_burning>0)
 	{
+		pm_burning.make_particle();
 		effect_burning--;
 	}else
 	{
@@ -586,6 +589,10 @@ Chara::Chara()
 			1, 20, 10,
 			physics_object->X + 0.5, physics_object->Y + 0.5, 0.15,
 			0.005, 0.02, -0.5 * pi, 0.6);
+		pm_burning.update(3, 10, 60, 
+			physics_object->X + 0.5, physics_object->Y + 0.75, 0.4,
+			0.002, 0.0035, -0.5 * pi, 0.5 * pi);
+
 	}
 
 	//设置角色属性

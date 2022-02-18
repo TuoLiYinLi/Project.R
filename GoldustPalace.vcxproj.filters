@@ -165,6 +165,9 @@
     <ClInclude Include="integrate_particles_maker.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_particle_flame.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -309,6 +312,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="integrate_particles_maker.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_particle_flame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

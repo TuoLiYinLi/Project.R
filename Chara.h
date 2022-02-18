@@ -5,6 +5,7 @@
 #include "PhysicsChara.h"
 
 #include "CountingContainer.h"
+#include "idea_particle_flame.h"
 #include "idea_particle_poisoned.h"
 
 #include "integrate_particles_maker.h"
@@ -148,5 +149,6 @@ protected:
 	void setAnimationDead();//ÉèÖÃÎªËÀÍö¶¯»­
 
 	integrate_particles_maker<idea_particle_poisoned> pm_poisoned;
+	integrate_particles_maker<idea_particle_flame> pm_burning;
 };
 
