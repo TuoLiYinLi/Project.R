@@ -60,7 +60,7 @@ void idea_UI_sizer_button::updateOnRendering()
 	{
 		const int raw_x = parent->collider_x;
 		int raw_y = static_cast<int>(parent->collider_y + parent->position + round(position_offset));
-		constexpr int raw_w = static_cast<int>(UI_SCALE) * 18;
+		constexpr int raw_w = static_cast<int>(ui_scale) * 18;
 		int raw_h = raw_w;
 
 		if (raw_y < parent->collider_y)
@@ -117,13 +117,13 @@ void idea_UI_sizer_button::createTexture()
 #endif
 
 	const auto texture = SDL_CreateTexture(GlobalData::sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET,
-		18 * static_cast<int>(UI_SCALE), 18 * static_cast<int>(UI_SCALE));
+		18 * static_cast<int>(ui_scale), 18 * static_cast<int>(ui_scale));
 	
 	SDL_SetRenderTarget(GlobalData::sdl_renderer, texture);
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
 
-	constexpr SDL_Rect dst_rect = { static_cast<int>(UI_SCALE),static_cast<int>(UI_SCALE),
-		static_cast<int>(UI_SCALE) * 16,static_cast<int>(UI_SCALE) * 16 };
+	constexpr SDL_Rect dst_rect = { static_cast<int>(ui_scale),static_cast<int>(ui_scale),
+		static_cast<int>(ui_scale) * 16,static_cast<int>(ui_scale) * 16 };
 
 	SDL_RenderCopy(GlobalData::sdl_renderer, current_texture_, nullptr, nullptr);
 	SDL_RenderCopy(GlobalData::sdl_renderer, tar_thumbnail, nullptr, &dst_rect);
@@ -210,7 +210,7 @@ void idea_UI_sizer_button::create_floating_text()
 	floating_text->y = UISystem::getInstance()->mouseY_window - floating_text->height / 2;
 
 	floating_text->reference = RenderingReference::window;
-	floating_text->depth = DEPTH_FIXED_UI + 3;
+	floating_text->depth = depth_fixed_ui + 3;
 
 }
 

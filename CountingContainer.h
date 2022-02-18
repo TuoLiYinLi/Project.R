@@ -12,6 +12,7 @@ enum class CountingType
 	gems,//宝石计数物
 	fire,//火焰计数物
 	icy,//冰霜计数物
+	growth,//成长计数物
 };
 
 //计数物对象

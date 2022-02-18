@@ -60,7 +60,7 @@ UIObject::~UIObject()
 
 void UIObject::update_depth(float _d) const
 {
-	rendering_unit->depth = DEPTH_FIXED_UI+_d;
+	rendering_unit->depth = depth_fixed_ui+_d;
 }
 
 

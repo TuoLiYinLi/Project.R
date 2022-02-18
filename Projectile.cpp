@@ -48,7 +48,7 @@ void Projectile::sync_flip() const
 
 void Projectile::update_depth() const
 {
-	rendering_unit->depth = DEPTH_WORLD_PROJECTILE + static_cast<float>(rendering_unit->y + rendering_unit->deltaY + rendering_unit->height / 2);
+	rendering_unit->depth = depth_world_projectile + static_cast<float>(rendering_unit->y + rendering_unit->deltaY + rendering_unit->height / 2);
 }
 
 

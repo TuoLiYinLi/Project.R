@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "Defined.h"
 
 #include "SDL.h"
@@ -36,6 +37,8 @@
 #include "idea_facility_dirt_background.h"
 #include "idea_facility_ladder.h"
 #include "idea_monster_slime.h"
+#include "idea_particle_goldust.h"
+#include "idea_particle_poisoned.h"
 #include "idea_projectile_chop.h"
 #include "idea_UI_scope.h"
 #include "idea_UI_inspector.h"
@@ -44,6 +47,8 @@
 #include "idea_UI_speed_controller.h"
 #include "idea_UI_energy.h"
 #include "idea_UI_sizer.h"
+#include "integrate_particles_maker.h"
+#include "Particle.h"
 #include "UIScroll.h"
 
 void test()
@@ -56,29 +61,20 @@ void test_init()
     auto pf2 = idea_monster_slime::createNew();
     pf2->setPosition(7, 7);
 
-    pf2->effect_burning = 600;
-    pf2->effect_blind = 60;
-    pf2->effect_charging = 60;
-    pf2->effect_dizzy = 60;
-    pf2->effect_poisoned = 60;
-    pf2->effect_resistant = 60;
-    pf2->effect_sealed = 60;
-
-    pf2->counting_container->addNumOf(CountingType::corpse, 5);
-    pf2->counting_container->addNumOf(CountingType::food, 5);
-    pf2->counting_container->addNumOf(CountingType::corpse, 5);
-    pf2->counting_container->addNumOf(CountingType::icy, 5);
-    pf2->counting_container->addNumOf(CountingType::fire, 5);
-    pf2->counting_container->addNumOf(CountingType::fire, 5);
-    pf2->counting_container->removeNumOf(CountingType::food);
-
+    //pf2->effect_burning = 600;
+    //pf2->effect_blind = 60;
+    //pf2->effect_charging = 60;
+    //pf2->effect_dizzy = 60;
+    pf2->effect_poisoned = 600;
+    //pf2->effect_resistant = 60;
+    //pf2->effect_sealed = 60;
+    
     pf2 = idea_monster_slime::createNew();
     pf2->setPosition(8, 7);
+    pf2->health = 2;
      
     auto f1 = idea_facility_ladder::createNew();
     f1->setPosition(5, 6);
-    pf2->health = 2;
-    pf2->effect_burning = 600;
     
 
     f1 = idea_facility_ladder::createNew();
@@ -125,7 +121,8 @@ void test_init()
      */
 
     idea_projectile_chop::createNew()->setup(AllyType::monster,7,7,CharaDirection::up, false);
-  
+
+    //auto particle = idea_particle_goldust::createNew();
 }
 
 
@@ -181,7 +178,7 @@ int main(int argc, char** argv) {
     auto const version_mark = RenderingText::createNew();
     version_mark->reference = RenderingReference::window;
 	version_mark->setTexture(L"Goldust Palace DEMO +1 by TheCarmineDepth",1, { 255,255,255,255 });
-    version_mark->depth = DEPTH_EXTRA + 5;
+    version_mark->depth = depth_extra + 5;
     version_mark->x = WINDOW_WIDTH - version_mark->width - 4;
     version_mark->y = WINDOW_HEIGHT - version_mark->height + 6;
 
@@ -200,32 +197,32 @@ int main(int argc, char** argv) {
     //代码测试
     test_init();
 	
-
     SDL_Log(u8"--\t--\t--\t--初始化完成,游戏运行--\t--\t--\t--");
 
     //消息循环
     while (!GlobalData::flag_quit)
     {
+	    //时间系统
+    	{
+    		GlobalData::update_time();
 
-        //时间系统
-        GlobalData::update_time();
+    		//处理输入事件
+    		UISystem::getInstance()->pullEvent();
 
-        //处理输入事件
-        UISystem::getInstance()->pullEvent();
+    		RenderingSystem::getInstance()->renewViewPosition();
 
-	    RenderingSystem::getInstance()->renewViewPosition();
-
-        //UI触发
-        UISystem::getInstance()->trigger_UIObjects();
-        //UI介入游戏逻辑
-        UISystem::getInstance()->controlGame();
+    		//UI触发
+    		UISystem::getInstance()->trigger_UIObjects();
+    		//UI介入游戏逻辑
+    		UISystem::getInstance()->controlGame();
+		}
 
         //每16ms运行一次逻辑帧
         while (GlobalData::getIfLogicGo())
         {
             WorldSystem::getInstance()->logicGo();
             //代码测试
-            //test_physics();
+            test_physics();
         }
 
         //渲染时更新

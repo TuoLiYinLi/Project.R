@@ -153,7 +153,16 @@
     <ClInclude Include="idea_projectile_chop.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="recorder.h">
+    <ClInclude Include="integration_recorder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_particle_goldust.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_particle_poisoned.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="integrate_particles_maker.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -291,6 +300,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_projectile_chop.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_particle_goldust.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_particle_poisoned.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="integrate_particles_maker.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

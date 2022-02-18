@@ -35,12 +35,10 @@ idea_debugger_game_info::idea_debugger_game_info()
 	name = L"游戏信息调试器";
 
 	rendering_unit = RenderingUnit::createNew();
-	rendering_unit->deltaX = 0;
-	rendering_unit->deltaY = 0;
 	rendering_unit->width = WINDOW_WIDTH;
 	rendering_unit->height = WINDOW_HEIGHT;
 	rendering_unit->reference = RenderingReference::window;
-	rendering_unit->depth = DEPTH_EXTRA + 2;
+	rendering_unit->depth = depth_extra + 2;
 
 	create_texture();
 }

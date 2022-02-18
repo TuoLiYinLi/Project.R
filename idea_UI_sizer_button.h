@@ -39,7 +39,7 @@ protected:
     void createTexture();//创建当前状态下对应的材质
     void destroyTexture();//销毁现在使用的材质
 
-    void set_inspector();
+    static void set_inspector();
 
     RenderingText* floating_text;//当有鼠标靠近时会呈现的提示字体
 

@@ -88,14 +88,14 @@ PhysicsProjectileFlying* idea_projectile_chop::getPhysics() const
 	return reinterpret_cast<PhysicsProjectileFlying*>(physics_object);
 }
 
-void idea_projectile_chop::hit_chara(Chara* c) const
+void idea_projectile_chop::hit_chara(Chara* c)
 {
 	c->onHit();
 	c->health -= 2;
 	if (c->health < 0)c->health = 0;
 }
 
-void idea_projectile_chop::hit_facility(Facility* f) const
+void idea_projectile_chop::hit_facility(Facility* f)
 {
 	f->onHit();
 	f->health -= 1;

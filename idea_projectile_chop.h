@@ -21,10 +21,10 @@ protected:
     idea_projectile_chop();
     ~idea_projectile_chop()override;
 
-    recorder<PhysicsChara> recorder_chara;
-    recorder<PhysicsFacility> recorder_facility;
+    integration_recorder<PhysicsChara> recorder_chara;
+    integration_recorder<PhysicsFacility> recorder_facility;
 
-    void hit_chara(Chara* c)const;
-    void hit_facility(Facility* f)const;
+    static void hit_chara(Chara* c);
+    static void hit_facility(Facility* f);
 };
 

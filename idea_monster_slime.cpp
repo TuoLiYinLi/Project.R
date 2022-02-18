@@ -41,7 +41,8 @@ idea_monster_slime::idea_monster_slime()
 		animation_type_skill_special = AnimationType::monster_slime_absorb;
 		animation_type_disturbed = AnimationType::monster_slime_idle;
 		animation_type_dead = AnimationType::monster_slime_dead;
-		
+
+		rendering_unit->deltaY = 8;
 	}
 
 	//ÉèÖÃ½ÇÉ«ÊôĞÔ

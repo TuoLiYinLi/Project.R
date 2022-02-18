@@ -5,6 +5,10 @@
 #include "PhysicsChara.h"
 
 #include "CountingContainer.h"
+#include "idea_particle_poisoned.h"
+
+#include "integrate_particles_maker.h"
+
 //枚举 角色行动状态
 enum class CharaActionType
 {
@@ -131,7 +135,7 @@ protected:
 	void sync_animation();//将动画与数据同步
 	void update_depth()const;//更新动画元件的深度
 	void update_damaged_highlight();//更新受击颜色
-
+	int damaged_highlight;//受伤产生红色高亮
 
 	bool getIfDisturbed() const;//符合被打断状态的条件
 	bool getIfMoving() const;//符合移动状态的条件
@@ -143,7 +147,6 @@ protected:
 	void setAnimationSkillBasic();//设置为普通能力动画
 	void setAnimationDead();//设置为死亡动画
 
-
-	int damaged_highlight;//受伤产生红色高亮
+	integrate_particles_maker<idea_particle_poisoned> pm_poisoned;
 };
 

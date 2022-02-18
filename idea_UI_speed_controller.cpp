@@ -51,9 +51,9 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 	flag_static = false;
 
 	rendering_unit->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::ui_button_controller_mask, 0));
-	rendering_unit->width = 37 * UI_SCALE;
-	rendering_unit->height = 9 * UI_SCALE;
-	rendering_unit->x = static_cast<double>(WINDOW_WIDTH) - rendering_unit->width - 11 * UI_SCALE - 16;
+	rendering_unit->width = 37 * ui_scale;
+	rendering_unit->height = 9 * ui_scale;
+	rendering_unit->x = static_cast<double>(WINDOW_WIDTH) - rendering_unit->width - 11 * ui_scale - 16;
 	rendering_unit->y = 16;
 	update_depth(1);
 
@@ -83,10 +83,10 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 
 	b1 = UIButton::createNew();
 	b1->setPosition(
-		static_cast<int>(rendering_unit->x + UI_SCALE),
-		static_cast<int>(rendering_unit->y + UI_SCALE),
-		static_cast<int>(7 * UI_SCALE),
-		static_cast<int>(7 * UI_SCALE));
+		static_cast<int>(rendering_unit->x + ui_scale),
+		static_cast<int>(rendering_unit->y + ui_scale),
+		static_cast<int>(7 * ui_scale),
+		static_cast<int>(7 * ui_scale));
 	b1->setCallback(set_time_stop);
 
 	b1->texture_default = texture_default;
@@ -95,10 +95,10 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 
 	b2 = UIButton::createNew();
 	b2->setPosition(
-		static_cast<int>(b1->rendering_unit->x + 7 * UI_SCALE),
-		static_cast<int>(rendering_unit->y + UI_SCALE),
-		static_cast<int>(7 * UI_SCALE),
-		static_cast<int>(7 * UI_SCALE));
+		static_cast<int>(b1->rendering_unit->x + 7 * ui_scale),
+		static_cast<int>(rendering_unit->y + ui_scale),
+		static_cast<int>(7 * ui_scale),
+		static_cast<int>(7 * ui_scale));
 	b2->setCallback(set_time_go);
 
 	b2->texture_default = texture_default;
@@ -107,10 +107,10 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 
 	b3 = UIButton::createNew();
 	b3->setPosition(
-		static_cast<int>(b2->rendering_unit->x + 7 * UI_SCALE),
-		static_cast<int>(rendering_unit->y + UI_SCALE),
-		static_cast<int>(7 * UI_SCALE),
-		static_cast<int>(7 * UI_SCALE));
+		static_cast<int>(b2->rendering_unit->x + 7 * ui_scale),
+		static_cast<int>(rendering_unit->y + ui_scale),
+		static_cast<int>(7 * ui_scale),
+		static_cast<int>(7 * ui_scale));
 	b3->setCallback(set_time_speed_1);
 
 	b3->texture_default = texture_default;
@@ -119,10 +119,10 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 
 	b4 = UIButton::createNew();
 	b4->setPosition(
-		static_cast<int>(b3->rendering_unit->x + 7 * UI_SCALE),
-		static_cast<int>(rendering_unit->y + UI_SCALE),
-		static_cast<int>(7 * UI_SCALE),
-		static_cast<int>(7 * UI_SCALE));
+		static_cast<int>(b3->rendering_unit->x + 7 * ui_scale),
+		static_cast<int>(rendering_unit->y + ui_scale),
+		static_cast<int>(7 * ui_scale),
+		static_cast<int>(7 * ui_scale));
 	b4->setCallback(set_time_speed_2);
 
 	b4->texture_default = texture_default;
@@ -131,10 +131,10 @@ idea_UI_speed_controller::idea_UI_speed_controller()
 
 	b5 = UIButton::createNew();
 	b5->setPosition(
-		static_cast<int>(b4->rendering_unit->x + 7 * UI_SCALE),
-		static_cast<int>(rendering_unit->y + UI_SCALE),
-		static_cast<int>(7 * UI_SCALE),
-		static_cast<int>(7 * UI_SCALE));
+		static_cast<int>(b4->rendering_unit->x + 7 * ui_scale),
+		static_cast<int>(rendering_unit->y + ui_scale),
+		static_cast<int>(7 * ui_scale),
+		static_cast<int>(7 * ui_scale));
 	b5->setCallback(set_time_speed_3);
 
 	b5->texture_default = texture_default;

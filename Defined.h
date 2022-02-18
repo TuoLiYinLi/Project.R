@@ -3,8 +3,6 @@
 constexpr int WORLD_WIDTH = 128; //单个的世界的宽度;
 constexpr int WORLD_HEIGHT = 128; //单个的世界的高度;
 
-constexpr float DEPTH_PRECISION = 0.0001f;//动画单元的深度的精确度
-
 constexpr int WINDOW_WIDTH = 1600; //窗口的宽度;
 constexpr int WINDOW_HEIGHT = 900; //窗口的高度;
 
@@ -23,17 +21,18 @@ constexpr double VIEW_ACCELERATE_SPEED_X = 100; //窗口水平速度的减速度;
 constexpr double VIEW_ACCELERATE_SPEED_Y = 100; //窗口竖直速度的减速度;
 constexpr double VIEW_ACCELERATE_SPEED_SCALE = 8; //窗口缩放速度的减速度;
 
-constexpr float DEPTH_WORLD_FACILITY = 1000;//渲染深度设施
-constexpr float DEPTH_WORLD_CHARA = 2000;//渲染深度角色
-constexpr float DEPTH_WORLD_PROJECTILE = 3000;//渲染深度投射物
+constexpr float depth_world_facility = 1000;//渲染深度设施
+constexpr float depth_world_chara = 2000;//渲染深度角色
+constexpr float depth_world_projectile = 3000;//渲染深度投射物
+constexpr float depth_world_particle = 4000;//渲染深度投射物
 
-constexpr float DEPTH_WORLD_UI = 5000;//渲染深度世界UI
-constexpr float DEPTH_FIXED_UI = 6000;//渲染深度固定UI
-constexpr float DEPTH_EXTRA = 10000;//额外信息
+constexpr float depth_world_ui = 5000;//渲染深度世界UI
+constexpr float depth_fixed_ui = 6000;//渲染深度固定UI
+constexpr float depth_extra = 10000;//额外信息
 
-constexpr double GOLDUST_RECOVERY = 0.01;//默认的金沙能量恢复速度
+constexpr double goldust_recovery = 0.01;//默认的金沙能量恢复速度
 
-constexpr double UI_SCALE = 4;//UI放大倍数
+constexpr double ui_scale = 4;//UI放大倍数
 
 //#define SHOW_FPS //将每秒帧数输出到窗口
 //#define SHOW_KEY //将键盘鼠标等输入信息输出到窗口
@@ -82,3 +81,5 @@ constexpr double poisoned_speed = 1.0 / 600;//中毒速度
 constexpr auto wchar_multiply = static_cast<wchar_t>(215);
 
 constexpr auto damaged_highlight_length = 10;//受到攻击时高亮时间
+
+constexpr double pi = 3.14159;

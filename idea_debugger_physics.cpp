@@ -2,8 +2,6 @@
 #include "GlobalData.h"
 #include "Defined.h"
 #include "GameToolkit.h"
-#include "PhysicsFacility.h"
-#include "PhysicsChara.h"
 #include "PhysicsProjectile.h"
 #include "RenderingSystem.h"
 #include "WorldSystem.h"
@@ -143,12 +141,10 @@ idea_debugger_physics::idea_debugger_physics()
     name = L"物理体调试器";
 
 	rendering_unit = RenderingUnit::createNew();
-    rendering_unit->deltaX = 0;
-    rendering_unit->deltaY = 0;
     rendering_unit->width = WINDOW_WIDTH;
     rendering_unit->height = WINDOW_HEIGHT;
     rendering_unit->reference = RenderingReference::window;
-    rendering_unit->depth = DEPTH_FIXED_UI - 2;
+    rendering_unit->depth = depth_fixed_ui - 2;
     create_texture();
     renew_texture();
 }

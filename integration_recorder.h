@@ -5,10 +5,10 @@
 //继承工具类 记录器
 //可以记录某一类型的对象
 template<class T>
-class recorder
+class integration_recorder
 {
 public:
-	recorder(){my_list = std::list<T*>();}
+	integration_recorder(){my_list = std::list<T*>();}
 	bool record(T* target)
 	{
 		if (!check(target))

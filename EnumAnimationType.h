@@ -93,5 +93,7 @@ enum class AnimationType
 	projectile_little_slime_ball,
 	//particle
 	particle_goldust,
+	particle_poisoned,
+
 	size,//末尾，代表了总数量
 };

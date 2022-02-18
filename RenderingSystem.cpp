@@ -151,8 +151,8 @@ void RenderingSystem::renderOneUnit(const RenderingUnit* au) const {
     switch (au->reference)
     {
     case RenderingReference::world:
-        rect.x = static_cast<int>(round(((au->x - viewX) * 32 + au->deltaX * 2) * viewScale - (viewScale - 1) * window_width * 0.5));
-        rect.y = static_cast<int>(round(((au->y - viewY) * 32 + au->deltaY * 2) * viewScale - (viewScale - 1) * window_height * 0.5));
+        rect.x = static_cast<int>(round(((au->x - viewX) * 32 + au->deltaX) * viewScale - (viewScale - 1) * window_width * 0.5));
+        rect.y = static_cast<int>(round(((au->y - viewY) * 32 + au->deltaY) * viewScale - (viewScale - 1) * window_height * 0.5));
         rect.w = static_cast<int>(ceil(au->width * viewScale));
         rect.h = static_cast<int>(ceil(au->height * viewScale));
 
@@ -512,6 +512,10 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
         case AnimationType::particle_goldust:
             file = "./Resource/texture/particle_goldust";
             num = 5;
+            break;
+        case AnimationType::particle_poisoned:
+            file = "./Resource/texture/particle_poisoned";
+            num = 6;
             break;
 
         case AnimationType::size:

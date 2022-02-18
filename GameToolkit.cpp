@@ -1,5 +1,5 @@
 #include "GameToolkit.h"
-
+#include <random>
 #include "Defined.h"
 #include "GlobalData.h"
 #include "RenderingSystem.h"
@@ -132,4 +132,17 @@ std::wstring GameToolkit::double_reserve_decimal(double d, int n)
 	std::wstring s = std::to_wstring(d);
 	const auto find = s.find_first_of(L'.');
 	return s.substr(0, find + n + 1);
+}
+
+double GameToolkit::random(double min, double max)
+{
+	std::random_device rd;
+	return static_cast<double>(rd()) / std::random_device::max() * (max - min) + min;
+}
+
+unsigned GameToolkit::random(unsigned range)
+{
+	if (range == 0)return 0;
+	std::random_device rd;
+	return static_cast<int>(rd()) % range;
 }

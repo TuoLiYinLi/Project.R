@@ -96,6 +96,7 @@ std::wstring CountingContainer::get_name(CountingType type)
 	case CountingType::gems: return L"宝石";
 	case CountingType::fire: return L"火焰";
 	case CountingType::icy: return L"冰霜";
+	case CountingType::growth: return L"成长";
 	}
 #ifdef _DEBUG
 	SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"一个计数物没有对应的中文名称");

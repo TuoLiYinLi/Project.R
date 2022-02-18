@@ -65,8 +65,8 @@ void idea_UI_sizer::enable()
 
 	//设置位置和大小
 
-	int raw_h = (num * 18 + (num - 1)) * static_cast<int>(UI_SCALE);
-	constexpr int raw_w = 18 * static_cast<int>(UI_SCALE);
+	int raw_h = (num * 18 + (num - 1)) * static_cast<int>(ui_scale);
+	constexpr int raw_w = 18 * static_cast<int>(ui_scale);
 	int raw_x = UISystem::getInstance()->mouseX_window - raw_w * 2;
 	int raw_y = UISystem::getInstance()->mouseY_window - raw_w / 2;
 
@@ -90,10 +90,10 @@ void idea_UI_sizer::enable()
 
 	setPosition(raw_x, raw_y, raw_w, raw_h);
 
-	rendering_unit->x -= UI_SCALE;
-	rendering_unit->y -= UI_SCALE;
-	rendering_unit->height += 2 * UI_SCALE;
-	rendering_unit->width += 2 * UI_SCALE;
+	rendering_unit->x -= ui_scale;
+	rendering_unit->y -= ui_scale;
+	rendering_unit->height += 2 * ui_scale;
+	rendering_unit->width += 2 * ui_scale;
 }
 
 void idea_UI_sizer::disable()
@@ -117,13 +117,13 @@ int idea_UI_sizer::setup_buttons(int grid_x, int grid_y)
 	for (auto i = tar_grid->list_physics_chara->begin(); i != tar_grid->list_physics_chara->end(); ++i)
 	{
 		const auto c = reinterpret_cast<Chara*>((*i)->game_object);
-		create_button(count * static_cast<int>(UI_SCALE) * 19, c);
+		create_button(count * static_cast<int>(ui_scale) * 19, c);
 		count++;
 	}
 	for (auto i = tar_grid->list_physics_facility->begin(); i != tar_grid->list_physics_facility->end(); ++i)
 	{
 		const auto f = reinterpret_cast<Facility*>((*i)->game_object);
-		create_button(count * static_cast<int>(UI_SCALE) * 19, f);
+		create_button(count * static_cast<int>(ui_scale) * 19, f);
 		count++;
 	}
 

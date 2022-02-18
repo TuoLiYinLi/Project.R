@@ -1,6 +1,6 @@
 #pragma once
 #include "PhysicsProjectile.h"
-#include "recorder.h"
+#include "integration_recorder.h"
 
 //物理体 飞行投射物
 class PhysicsProjectileFlying :

@@ -28,6 +28,8 @@
     <ClInclude Include="idea_facility_ladder.h" />
     <ClInclude Include="idea_monster_slime.h" />
     <ClInclude Include="idea_debugger_physics.h" />
+    <ClInclude Include="idea_particle_goldust.h" />
+    <ClInclude Include="idea_particle_poisoned.h" />
     <ClInclude Include="idea_projectile_chop.h" />
     <ClInclude Include="idea_UI_sizer.h" />
     <ClInclude Include="idea_UI_inspector_exit.h" />
@@ -37,9 +39,10 @@
     <ClInclude Include="idea_UI_scope.h" />
     <ClInclude Include="idea_UI_sizer_button.h" />
     <ClInclude Include="idea_UI_speed_controller.h" />
+    <ClInclude Include="integrate_particles_maker.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="recorder.h" />
+    <ClInclude Include="integration_recorder.h" />
     <ClInclude Include="RenderingSystem.h" />
     <ClInclude Include="RenderingAnimation.h" />
     <ClInclude Include="Chara.h" />
@@ -77,6 +80,8 @@
     <ClCompile Include="idea_facility_dirt_background.cpp" />
     <ClCompile Include="idea_facility_ladder.cpp" />
     <ClCompile Include="idea_monster_slime.cpp" />
+    <ClCompile Include="idea_particle_goldust.cpp" />
+    <ClCompile Include="idea_particle_poisoned.cpp" />
     <ClCompile Include="idea_projectile_chop.cpp" />
     <ClCompile Include="idea_UI_sizer.cpp" />
     <ClCompile Include="idea_UI_inspector_exit.cpp" />
@@ -86,6 +91,7 @@
     <ClCompile Include="idea_UI_scope.cpp" />
     <ClCompile Include="idea_UI_sizer_button.cpp" />
     <ClCompile Include="idea_UI_speed_controller.cpp" />
+    <ClCompile Include="integrate_particles_maker.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />

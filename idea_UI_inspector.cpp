@@ -26,8 +26,8 @@ void idea_UI_inspector::updateOnRendering()
 			t_main = nullptr;
 		}
 		int w, h;
-		t_main = GameToolkit::createUnicodeText(target->getMainInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(UI_SCALE), &w, &h);
-		s_main->setup(t_main, collider_x + 2 * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
+		t_main = GameToolkit::createUnicodeText(target->getMainInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(ui_scale), &w, &h);
+		s_main->setup(t_main, collider_x + 2 * static_cast<int>(ui_scale), collider_y + 10 * static_cast<int>(ui_scale), w, h, 70 * static_cast<int>(ui_scale),
 			24, 50, 8, 500);
 	}
 	//更新中间的卷轴UI
@@ -38,8 +38,8 @@ void idea_UI_inspector::updateOnRendering()
 			t_data = nullptr;
 		}
 		int w, h;
-		t_data = GameToolkit::createUnicodeText(target->getDataInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(UI_SCALE), &w, &h);
-		s_data->setup(t_data, collider_x + (2 + 49) * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
+		t_data = GameToolkit::createUnicodeText(target->getDataInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(ui_scale), &w, &h);
+		s_data->setup(t_data, collider_x + (2 + 49) * static_cast<int>(ui_scale), collider_y + 10 * static_cast<int>(ui_scale), w, h, 70 * static_cast<int>(ui_scale),
 			24, 50, 8, 500);
 	}
 
@@ -50,8 +50,8 @@ void idea_UI_inspector::updateOnRendering()
 			t_extra = nullptr;
 		}
 		int w, h;
-		t_extra = GameToolkit::createUnicodeText(target->getExtraInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(UI_SCALE), &w, &h);
-		s_extra->setup(t_extra, collider_x + (2 + 98) * static_cast<int>(UI_SCALE), collider_y + 10 * static_cast<int>(UI_SCALE), w, h, 70 * static_cast<int>(UI_SCALE),
+		t_extra = GameToolkit::createUnicodeText(target->getExtraInfo().c_str(), { 255,255,255,255 }, 46 * static_cast<int>(ui_scale), &w, &h);
+		s_extra->setup(t_extra, collider_x + (2 + 98) * static_cast<int>(ui_scale), collider_y + 10 * static_cast<int>(ui_scale), w, h, 70 * static_cast<int>(ui_scale),
 			24, 50, 8, 500);
 	}
 	
@@ -69,19 +69,19 @@ idea_UI_inspector::idea_UI_inspector()
 	rendering_unit->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::ui_inspector_panel, 0));
 
 	setPosition(
-		WINDOW_WIDTH - (4 + 148) * static_cast<int>(UI_SCALE),
-		WINDOW_HEIGHT - (4 + 82) * static_cast<int>(UI_SCALE),
-		148 * static_cast<int>(UI_SCALE),
-		82 * static_cast<int>(UI_SCALE));
+		WINDOW_WIDTH - (4 + 148) * static_cast<int>(ui_scale),
+		WINDOW_HEIGHT - (4 + 82) * static_cast<int>(ui_scale),
+		148 * static_cast<int>(ui_scale),
+		82 * static_cast<int>(ui_scale));
 
-	rendering_unit->depth = DEPTH_FIXED_UI+1;
+	rendering_unit->depth = depth_fixed_ui+1;
 
 	exit_button = idea_UI_inspector_exit::createNew();
 	exit_button->setPosition(
-		WINDOW_WIDTH - (4 + 9) * static_cast<int>(UI_SCALE),
-		WINDOW_HEIGHT - (4 + 82) * static_cast<int>(UI_SCALE),
-		9 * static_cast<int>(UI_SCALE),
-		9 * static_cast<int>(UI_SCALE));
+		WINDOW_WIDTH - (4 + 9) * static_cast<int>(ui_scale),
+		WINDOW_HEIGHT - (4 + 82) * static_cast<int>(ui_scale),
+		9 * static_cast<int>(ui_scale),
+		9 * static_cast<int>(ui_scale));
 	exit_button->update_depth(2);
 
 	t_main = nullptr;

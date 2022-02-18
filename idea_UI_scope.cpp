@@ -37,13 +37,10 @@ idea_UI_scope::idea_UI_scope()
 	name = L"Ñ¡ÖÐ·¶Î§¿ò";
 
 	rendering_unit = RenderingUnit::createNew();
-
-	rendering_unit->deltaX = 0;
-	rendering_unit->deltaY = 0;
-
+	
 	rendering_unit->reference = RenderingReference::window;
 
-	rendering_unit->depth = DEPTH_FIXED_UI - 1;
+	rendering_unit->depth = depth_fixed_ui - 1;
 
 	create_texture();
 }

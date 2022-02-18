@@ -29,5 +29,8 @@ public:
 
 	//保留double后小数n位
 	static std::wstring double_reserve_decimal(double d, int n);
+
+	static double random(double min, double max);
+	static unsigned random(unsigned range);
 };
 

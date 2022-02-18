@@ -127,7 +127,7 @@ std::wstring Chara::getExtraInfo()
 	}
 	if (effect_poisoned > 0)
 	{
-		s_statement += L"\n  <燃烧> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_poisoned) / 60, 1) + L's';
+		s_statement += L"\n  <中毒> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_poisoned) / 60, 1) + L's';
 	}
 	if (effect_resistant > 0)
 	{
@@ -167,6 +167,8 @@ void Chara::update()
 	update_animation();
 	update_damaged_highlight();
 	sync_animation();
+
+	pm_poisoned.update_position(physics_object->X + 0.5, physics_object->Y + 0.5);
 }
 
 void Chara::update_effect()
@@ -194,6 +196,7 @@ void Chara::update_effect()
 	//中毒效果时间
 	if (effect_poisoned > 0)
 	{
+		pm_poisoned.make_particle();
 		effect_poisoned--;
 	}
 	else
@@ -503,7 +506,7 @@ void Chara::sync_animation()
 
 void Chara::update_depth()const
 {
-	rendering_unit->depth = DEPTH_WORLD_CHARA + static_cast<float>(physics_object->Y);
+	rendering_unit->depth = depth_world_chara + static_cast<float>(physics_object->Y);
 }
 
 void Chara::update_damaged_highlight()
@@ -578,6 +581,11 @@ Chara::Chara()
 		animation_type_dead = AnimationType::debug_sequence_black;
 
 		damaged_highlight = 0;
+
+		pm_poisoned.update(
+			1, 20, 10,
+			physics_object->X + 0.5, physics_object->Y + 0.5, 0.15,
+			0.005, 0.02, -0.5 * pi, 0.6);
 	}
 
 	//设置角色属性

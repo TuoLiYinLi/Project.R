@@ -107,7 +107,7 @@ void Facility::update()
 
 void Facility::update_depth()const
 {
-	rendering_unit->depth = DEPTH_WORLD_FACILITY + static_cast<float>(physics_object->Y);
+	rendering_unit->depth = depth_world_facility + static_cast<float>(physics_object->Y);
 
 }
 
