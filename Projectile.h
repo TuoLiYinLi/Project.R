@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+class Chara;
+
 //游戏物体 投射物 不可实例化
 class Projectile:
 	public GameObject
@@ -11,6 +13,13 @@ public:
 	RenderingAnimation* getRenderingAnimation()const;
 	
 	static int getProjectileNum();
+
+	int damage;
+	int effect_burning;
+	int effect_poisoned;
+
+	Chara* owner;
+
 protected:
 	Projectile();
 	~Projectile() override;

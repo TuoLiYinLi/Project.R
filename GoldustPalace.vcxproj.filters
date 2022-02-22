@@ -102,7 +102,7 @@
     <ClInclude Include="idea_UI_scope.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CountingContainer.h">
+    <ClInclude Include="integration_counting_container.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="UIObject.h">
@@ -133,9 +133,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="UIScroll.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Gene.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="idea_UI_sizer.h">
@@ -169,6 +166,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="idea_particle_dizzy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="integration_gene_container.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_particle_healing.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -254,7 +257,7 @@
     <ClCompile Include="idea_UI_scope.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CountingContainer.cpp">
+    <ClCompile Include="integration_counting_container.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="UIObject.cpp">
@@ -290,9 +293,6 @@
     <ClCompile Include="UIScroll.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Gene.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="idea_UI_sizer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -321,6 +321,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_particle_dizzy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="integration_gene_container.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_particle_healing.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

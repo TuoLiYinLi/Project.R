@@ -43,6 +43,11 @@ idea_projectile_chop::idea_projectile_chop()
 	//设置物理
 	physics_object = PhysicsProjectileFlying::createNew();
 
+	//数据
+	damage = 2;
+	effect_burning = 0;
+	effect_poisoned = 0;
+
 	//设置动画
 	animation_type = AnimationType::projectile_chop;
 	animation_progress = 0;
@@ -90,13 +95,11 @@ PhysicsProjectileFlying* idea_projectile_chop::getPhysics() const
 
 void idea_projectile_chop::hit_chara(Chara* c)
 {
-	c->onHit();
-	c->health -= 2;
-	if (c->health < 0)c->health = 0;
+	c->onHit(this);
 }
 
 void idea_projectile_chop::hit_facility(Facility* f)
 {
-	f->onHit();
+	f->onHit(this);
 	f->health -= 1;
 }

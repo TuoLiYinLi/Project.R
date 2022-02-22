@@ -3,7 +3,7 @@
 #include "PhysicsChara.h"
 #include "Defined.h"
 #include "GameToolkit.h"
-#include "idea_UI_inspector.h"
+#include "Projectile.h"
 #include "SDL.h"
 
 
@@ -42,8 +42,8 @@ std::wstring Chara::getMainInfo()
 
 std::wstring Chara::getDataInfo()
 {
-	std::wstring s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(health_max) + L" (+" + std::to_wstring(health_recovery_speed * 60).substr(0, 4) + L"/s)" + L'\n'
-		+ L"[活力] " + std::to_wstring(stamina) + L"/" + std::to_wstring(stamina_max) + L" (+" + std::to_wstring(stamina_recovery_speed * 60).substr(0, 4) + L"/s)" + L'\n'
+	std::wstring s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(real_health_max()) + L" (+" + GameToolkit::double_reserve_decimal(real_health_recovery_speed() * 60,2) + L"/s)" + L'\n'
+		+ L"[活力] " + std::to_wstring(stamina) + L"/" + std::to_wstring(real_stamina_max()) + L" (+" + GameToolkit::double_reserve_decimal(real_stamina_recovery_speed() * 60, 2) + L"/s)" + L'\n'
 		+ L"[氧气] " + std::to_wstring(static_cast<int>(static_cast<double>(oxygen) / oxygen_max * 100)) + L"%" + L'\n'
 		+ L"[位置] " + L"( " + GameToolkit::double_reserve_decimal(physics_object->X, 1) + L" , " + GameToolkit::double_reserve_decimal(physics_object->Y, 1) + L" )" + L'\n'
 		+ L"[大小] " + L"( " + std::to_wstring(physics_object->bodyX) + L" " + wchar_multiply + L" " + std::to_wstring(physics_object->bodyY) + L" )" + L'\n';
@@ -137,18 +137,29 @@ std::wstring Chara::getExtraInfo()
 	{
 		s_statement += L"\n  <封印> " + GameToolkit::double_reserve_decimal(static_cast<double>(effect_sealed) / 60, 1) + L's';
 	}
-	s += s_statement;
+	s += s_statement+L"\n";
 
-	std::wstring s_counting = L"\n[计数物]";
+	std::wstring s_counting = L"[计数物]";
 
-	for (const auto type : counting_container->getAllTypes())
+	for (const auto type : counting_container.getAllTypes())
 	{
-		const auto n = CountingContainer::get_name(type);
+		const auto n = integration_counting_container::getName(type);
 
-		s_counting += L"\n  <" + n + L"> " + std::to_wstring(counting_container->getNumOf(type));
+		s_counting += L"\n  <" + n + L"> " + std::to_wstring(counting_container.getNumOf(type));
 	}
 
 	s += s_counting + L"\n";
+
+	std::wstring s_gene = L"[基因组] "+std::to_wstring(gene_container.getNum())+L"/" + std::to_wstring(gene_container.getCapacity());
+
+	int num = 0;
+	auto gene_names = gene_container.getGeneNameList();
+	for (auto i = gene_names.begin(); i != gene_names.end(); ++i)
+	{
+		num++;
+		s_gene += L"\n  <" + std::to_wstring(num) + L"> " + *i;
+	}
+	s += s_gene + L"\n";
 
 	return s;
 }
@@ -171,6 +182,7 @@ void Chara::update()
 	pm_poisoned.update_position(physics_object->X + 0.5, physics_object->Y + 0.5);
 	pm_burning.update_position(physics_object->X + 0.5, physics_object->Y + 0.75);
 	pm_dizzy.update_position(physics_object->X + 0.5, physics_object->Y + 0.1);
+	pm_healing.update_position(physics_object->X + 0.5, physics_object->Y + 0.75);
 }
 
 void Chara::update_effect()
@@ -251,41 +263,55 @@ void Chara::update_effect()
 void Chara::update_attributes()
 {
 	//燃烧伤害
+	if(getPhysicsChara()->detectLocal(BlockingType::liquid))
+	{
+		//落入水中则灭火
+		effect_burning = 0;
+	}
+
 	if (effect_burning > 0)
 	{
 		onBurning();
-		burning_damage_accumulation += burning_speed;
-		const int delta = static_cast<int>(floor(burning_damage_accumulation));
-		health -= delta;
-		burning_damage_accumulation -= delta;
-		if(health<0)
+		if (checkInjuredOnBurning())
 		{
-			health = 0;
+			burning_damage_accumulation += burning_speed;
+			const int delta = static_cast<int>(floor(burning_damage_accumulation));
+			health -= delta;
+			burning_damage_accumulation -= delta;
+			if(health<0)
+			{
+				health = 0;
+			}
+		}else
+		{
+			burning_damage_accumulation = 0;
 		}
-	}else
-	{
-		burning_damage_accumulation = 0;
 	}
+
 
 	//中毒效果
 	if (effect_poisoned > 0)
 	{
 		onPoisoned();
-		poisoned_damage_accumulation += health * poisoned_speed;
-		const int delta = static_cast<int>(floor(poisoned_damage_accumulation));
-		health -= delta;
-		poisoned_damage_accumulation -= delta;
-		if(health<0)
+		if (checkInjuredOnPoisoned())
 		{
-			health = 0;
+			poisoned_damage_accumulation += health * poisoned_speed;
+			const int delta = static_cast<int>(floor(poisoned_damage_accumulation));
+			health -= delta;
+			poisoned_damage_accumulation -= delta;
+			if (health < 0)
+			{
+				health = 0;
+			}
 		}
-	}else
-	{
-		poisoned_damage_accumulation = 0;
+		else
+		{
+			poisoned_damage_accumulation = 0;
+		}
 	}
 
 	//氧气系统
-	if(getPhysicsChara()->detectSubmersed())
+	if (checkStifled())
 	{
 		//被水淹没
 		oxygen--;
@@ -293,7 +319,7 @@ void Chara::update_attributes()
 		{
 			//缺氧
 			oxygen = 0;
-			oxygen_damage_accumulation += health_max * oxygen_damage;
+			oxygen_damage_accumulation += real_health_max() * oxygen_damage;
 			const int delta = static_cast<int>(floor(oxygen_damage_accumulation));
 			health -= delta;
 			oxygen_damage_accumulation -= delta;
@@ -321,15 +347,31 @@ void Chara::update_attributes()
 	//生命值恢复
 	if (effect_poisoned <= 0)
 	{
-		health_recovery_accumulation += health_recovery_speed;
+		health_recovery_accumulation += real_health_recovery_speed();
 		const int delta = static_cast<int>(floor(health_recovery_accumulation));
 		health += delta;
-		health_recovery_accumulation -= delta;
-		if(health>health_max)
+		for (int i = 0; i < delta; ++i)
 		{
-			health = health_max;
+			pm_healing.make_particle();
+		}
+		health_recovery_accumulation -= delta;
+		if(health>real_health_max())
+		{
+			health = real_health_max();
 		}
 	}
+
+	//活力值恢复
+	
+	stamina_recovery_accumulation += real_stamina_recovery_speed();
+	const int delta = static_cast<int>(floor(stamina_recovery_accumulation));
+	stamina += delta;
+	stamina_recovery_accumulation -= delta;
+	if (stamina > real_stamina_max())
+	{
+		stamina = real_stamina_max();
+	}
+	
 }
 
 void Chara::update_animation() {
@@ -337,7 +379,7 @@ void Chara::update_animation() {
 	//推进动画
 	animation_progress++;
 
-	if (action_type != CharaActionType::disturbed && getIfDisturbed() && action_type != CharaActionType::dead)
+	if (action_type != CharaActionType::disturbed && checkDisturbed() && action_type != CharaActionType::dead)
 	{
 		setAnimationDisturbed();
 	}else if (action_type == CharaActionType::idle)
@@ -363,7 +405,7 @@ void Chara::update_animation() {
 		onMoving();
 		{
 			//主动移动状态
-			if (getIfMoving())
+			if (checkMoving())
 			{
 				//仍然处于运动状态
 				if (animation_progress >= animation_length_moving)
@@ -381,7 +423,7 @@ void Chara::update_animation() {
 	case CharaActionType::disturbed:
 		{
 			//被打断状态
-			if (getIfDisturbed())
+			if (checkDisturbed())
 			{
 				//仍然处于被打断状态
 				if (animation_progress >= animation_length_disturbed)
@@ -432,7 +474,7 @@ void Chara::update_animation() {
 			{
 				animation_progress = animation_length_dead - 1;
 				//已经播放完死亡动画
-				onDead();
+				onVanish();
 				readyToDestroy();
 			}
 		}
@@ -596,7 +638,9 @@ Chara::Chara()
 		pm_dizzy.update(1, 120, 0,
 			physics_object->X + 0.5, physics_object->Y + 0.75, 0,
 			0, 0, -0.5 * pi, 0.5 * pi);
-
+		pm_healing.update(1, 1, 0,
+			physics_object->X + 0.5, physics_object->Y + 0.75, 0.4,
+			0.003, 0.008, -0.5 * pi, 0);
 	}
 
 	//设置角色属性
@@ -616,11 +660,17 @@ Chara::Chara()
 		stamina = 4;
 		stamina_recovery_speed = 0.2/60;
 		stamina_recovery_accumulation = 0;
-		
+
+		water_stifled = true;
 		oxygen = oxygen_max;//氧气值
+
+		injured_on_burning = true;
+		injured_on_poisoned = true;
+		injured_on_impact = true;
 	}
 	//角色计数物
-	counting_container = CountingContainer::createNew();
+	counting_container = integration_counting_container();
+	gene_container = integration_gene_container(this);
 
 	//设置角色效果
 	{
@@ -639,9 +689,6 @@ Chara::~Chara()
 {
 	push_nullptr();
 
-	counting_container->destroy();
-	counting_container = nullptr;
-
 	chara_num--;
 }
 
@@ -653,7 +700,7 @@ void Chara::setAnimationIdle()
 
 void Chara::setAnimationDead()
 {
-	onKill();
+	onDead();
 	action_type = CharaActionType::dead;
 	animation_progress = 0;
 }
@@ -688,25 +735,45 @@ void Chara::setAnimationMoving()
 	animation_progress = 0;
 }
 
-bool Chara::getIfDisturbed() const
+bool Chara::checkDisturbed() const
 {
 	return getPhysicsChara()->getIfFalling() ||
 		getPhysicsChara()->getIfHitBack() ||
 		effect_dizzy > 0;
 }
 
-bool Chara::getIfMoving() const
+bool Chara::checkMoving() const
 {
 	return getPhysicsChara()->getIfMoving()
 		&& !getPhysicsChara()->getIfFalling()
 		&& !getPhysicsChara()->getIfHitBack();
 }
 
+bool Chara::checkStifled()
+{
+	const bool chara_water_stifled = GameToolkit::boolOverride(water_stifled, gene_container.getWaterStifled());
+	return getPhysicsChara()->detectSubmersed() && chara_water_stifled;
+}
+
+bool Chara::checkInjuredOnBurning()
+{
+	return GameToolkit::boolOverride(injured_on_burning, gene_container.getInjuredOnBurning());
+}
+
+bool Chara::checkInjuredOnPoisoned()
+{
+	return GameToolkit::boolOverride(injured_on_poisoned, gene_container.getInjuredOnPoisoned());
+}
+
+bool Chara::checkInjuredOnImpact()
+{
+	return GameToolkit::boolOverride(injured_on_impact, gene_container.getInjuredOnImpact());
+}
+
 bool Chara::setDirection(CharaDirection d) const
 {
 	return getPhysicsChara()->setDirection(d);
 }
-
 void Chara::setPosition(int x, int y)
 {
 	getPhysicsChara()->setPosition(x, y);
@@ -715,75 +782,96 @@ void Chara::setPosition(int x, int y)
 	sync_animation();
 }
 
-
-
 void Chara::actMove(CharaDirection d)
 {
 	if (action_type != CharaActionType::idle)return;
 	setAnimationMoving();
 	getPhysicsChara()->setMotion(d, moving_speed, 1, false);
 }
-
 void Chara::actSkillBasic(CharaDirection d)
 {
 	if (setDirection(d) && action_type == CharaActionType::idle)
 	setAnimationSkillBasic();
 }
-
 void Chara::actSkillSpecial(CharaDirection d)
 {
 	if (setDirection(d)&& action_type == CharaActionType::idle)
 	setAnimationSkillSpecial();
 }
 
+double Chara::real_moving_speed()
+{
+	const auto speed = moving_speed + gene_container.getExtraSpeed();
+	if (low_speed > speed)return low_speed;
+	else return speed;
+}
+int Chara::real_health_max()
+{
+	return health_max + gene_container.getExtraHealth();
+}
+double Chara::real_health_recovery_speed()
+{
+	return health_recovery_speed + gene_container.getExtraHealthRecovery();
+}
+int Chara::real_stamina_max()
+{
+	return stamina_max + gene_container.getExtraStamina();
+}
+double Chara::real_stamina_recovery_speed()
+{
+	return stamina_recovery_speed + gene_container.getExtraStaminaRecovery();
+}
+
 void Chara::onBasicSkill()
 {
-	
+	gene_container.triggerOnBasicSkill();
 }
-
 void Chara::onBurning()
 {
-	
+	gene_container.triggerOnBurning();
 }
-
 void Chara::onDead()
 {
-
+	gene_container.triggerOnDead();
 }
-
-void Chara::onHit()
+void Chara::onVanish()
+{
+	gene_container.triggerOnVanish();
+}
+void Chara::onHit(Projectile* p)
 {
 	damaged_highlight = damaged_highlight_length;
-}
 
+	health -= p->damage;
+
+	if (health <= 0 && p->owner)p->owner->onKill(this);
+
+	effect_burning += p->effect_burning;
+	effect_poisoned += p->effect_poisoned;
+
+	gene_container.triggerOnHit();
+}
 void Chara::onIdle()
 {
-
+	gene_container.triggerOnIdle();
 }
-
 void Chara::onImpact(int _impact)
 {
-	
+	gene_container.triggerOnImpact();
 }
-
-void Chara::onKill()
+void Chara::onKill(Chara* who)
 {
-	
+	gene_container.triggerOnKill();
 }
-
-
 void Chara::onMoving()
 {
-	
+	gene_container.triggerOnMoving();
 }
-
 void Chara::onPoisoned()
 {
-	
+	gene_container.triggerOnPoisoned();
 }
-
 void Chara::onSpecialSkill()
 {
-	
+	gene_container.triggerOnSpecialSkill();
 }
-

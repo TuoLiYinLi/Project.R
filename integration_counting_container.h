@@ -26,13 +26,10 @@ struct CountingObject
 
 //计数物容器
 //有了它就可以附着计数物了
-class CountingContainer
+class integration_counting_container
 {
 public:
-	//创建一组计数物
-	static CountingContainer* createNew();
-	//销毁这一组计数物
-	void destroy()const;
+	integration_counting_container();
 	//查询一种计数物的数量
 	int getNumOf(CountingType ct);
 	//增加一种计数物的数量
@@ -42,11 +39,9 @@ public:
 
 	std::list<CountingType> getAllTypes();
 
-	static std::wstring get_name(CountingType type);
+	static std::wstring getName(CountingType type);
 
 protected:
-	CountingContainer();
-	~CountingContainer();
 
 	//记录有哪些计数物以及它们的数量
 	std::list<CountingObject> list_counting_type;

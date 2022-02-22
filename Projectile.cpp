@@ -74,6 +74,14 @@ Projectile::Projectile()
 
 	type_game_object = GameObjectType::default_projectile;
 
+	//Êý¾Ý
+
+	damage = 0;
+	effect_burning = 0;
+	effect_poisoned = 0;
+
+	owner = nullptr;
+
 	//¶¯»­
 	rendering_unit = RenderingAnimation::createNew();
 	animation_length = 60;

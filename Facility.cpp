@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "PhysicsFacility.h"
 #include "idea_UI_inspector.h"
+#include "Projectile.h"
 
 Facility* Facility::createNew() {
 	return new Facility();
@@ -71,7 +72,7 @@ Facility::Facility() {
 		health = 8;
 		health_max = 8;
 
-		counting_container = CountingContainer::createNew();
+		counting_container = integration_counting_container();
 	}
 
 
@@ -80,9 +81,6 @@ Facility::Facility() {
 
 Facility::~Facility() {
 	push_nullptr();
-
-	counting_container->destroy();
-	counting_container = nullptr;
 
 	facility_num--;
 }
@@ -208,7 +206,7 @@ void Facility::onKill()
 	
 }
 
-void Facility::onHit()
+void Facility::onHit(Projectile* p)
 {
 	damaged_highlight = damaged_highlight_length;
 }
@@ -289,11 +287,11 @@ std::wstring Facility::getExtraInfo()
 
 	std::wstring s_counting = L"[¼ÆÊýÎï]";
 
-	for (const auto type : counting_container->getAllTypes())
+	for (const auto type : counting_container.getAllTypes())
 	{
-		const auto n= CountingContainer::get_name(type);
+		const auto n= integration_counting_container::getName(type);
 
-		s_counting += L"\n  <" + n + L"> " + std::to_wstring(counting_container->getNumOf(type));
+		s_counting += L"\n  <" + n + L"> " + std::to_wstring(counting_container.getNumOf(type));
 	}
 	
 	s += s_counting + L"\n";

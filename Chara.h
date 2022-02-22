@@ -4,12 +4,16 @@
 
 #include "PhysicsChara.h"
 
-#include "CountingContainer.h"
 #include "idea_particle_dizzy.h"
 #include "idea_particle_flame.h"
+#include "idea_particle_healing.h"
 #include "idea_particle_poisoned.h"
 
 #include "integrate_particles_maker.h"
+#include "integration_counting_container.h"
+#include "integration_gene_container.h"
+
+class Projectile;
 
 //枚举 角色行动状态
 enum class CharaActionType
@@ -30,24 +34,83 @@ public:
 	static Chara* createNew();
 	void update() override;
 
+	//外部调用接口
+
 	std::wstring getBrief() override;
 	SDL_Texture* getThumbnail() override;
-
 	std::wstring getMainInfo() override;
 	std::wstring getDataInfo() override;
 	std::wstring getExtraInfo() override;
-	
+
+	virtual void onHit(Projectile* p);//当受到投射物直接伤害时 单刻触发
+	virtual void onKill(Chara* who);//当击投射物成功杀敌人时 单刻触发
+
+	bool setDirection(CharaDirection d) const;//设置角色方向
+	void setPosition(int x, int y);//传送角色到坐标位置
+
+	void actMove(CharaDirection d); //进行移动
+	virtual void actSkillSpecial(CharaDirection d);//使用特殊能力
+	virtual void actSkillBasic(CharaDirection d);//使用基本能力
+
+	//角色的属性
+
+	double moving_speed;//角色移动速度
+	double real_moving_speed();//角色移动速度
+
+	int health_max;//最大生命值
+	int real_health_max();//最大生命值
+
+	int health;//生命值
+	double health_recovery_speed;//生命值恢复速度
+	double real_health_recovery_speed();//生命值恢复速度
+	double health_recovery_accumulation;//生命值恢复积累量
+
+	double burning_damage_accumulation;//燃烧产生的累积伤害
+	double poisoned_damage_accumulation;//中毒产生的累积伤害
+	double oxygen_damage_accumulation;//缺氧产生累积伤害
+
+	int stamina_max;//最大活力值
+	int real_stamina_max();//最大活力值
+	int stamina;//活力值
+	double stamina_recovery_speed;//活力值恢复速度
+	double real_stamina_recovery_speed();//活力值恢复速度
+	double stamina_recovery_accumulation;//活力值累积量
+
+	bool water_stifled;//是否在水下窒息
+	int oxygen;//氧气值
+
+	bool injured_on_burning;//燃烧时是否受伤
+	bool injured_on_impact;//受到冲击时是否受伤
+	bool injured_on_poisoned;//中毒时是否受伤
+
+	//角色效果
+
+	int effect_charging;// 充能效果时间
+	int effect_resistant;// 抵抗效果时间
+	int effect_poisoned;// 中毒效果时间
+	int effect_burning;// 燃烧效果时间
+	int effect_sealed;// 封印效果时间
+	int effect_blind;// 盲目效果时间
+	int effect_dizzy;// 眩晕效果时间
+	integration_counting_container counting_container;//计数物容器
+	integration_gene_container gene_container;//基因容器
+
+	static int getCharaNum();//获取活跃角色数量
+
 protected:
-	std::wstring science_name;//学名
-	std::wstring introduction;//介绍信息
+	Chara();
+	~Chara() override;
 
 	PhysicsChara* getPhysicsChara() const;
 	RenderingAnimation* getRenderingAnimation()const;
 
-protected:
-	CharaActionType action_type;//正在使用的动画类型
+	std::wstring science_name;//学名
+	std::wstring introduction;//介绍信息
 
 	//角色的动画
+	
+	CharaActionType action_type;//正在使用的动画类型
+
 	int animation_progress;//当前动画进度
 	int animation_length_idle;//停滞动画总时长,0代表没有动画
 	int animation_length_moving;//激活动画总时长,0代表没有动画
@@ -66,70 +129,29 @@ protected:
 	AnimationType animation_type_skill_special;//特殊技能动画
 	AnimationType animation_type_dead;//死亡动画
 
-public:
-	//角色的属性
-
-	double moving_speed;
-
-	int health_max;//最大生命值
-	int health;//生命值
-	double health_recovery_speed;//生命值恢复速度
-	double health_recovery_accumulation;//生命值恢复积累量
-
-	double burning_damage_accumulation;//燃烧产生的累积伤害
-	double poisoned_damage_accumulation;//中毒产生的累积伤害
-	double oxygen_damage_accumulation;//缺氧产生累积伤害
-
-	int stamina_max;//最大活力值
-	int stamina;//活力值
-	double stamina_recovery_speed;//活力值恢复速度
-	double stamina_recovery_accumulation;//活力值累积量
-	
-	int oxygen;//氧气值
-
-	//角色的计数物
-	CountingContainer* counting_container;//计数物容器
-
-
-	//角色效果
-	int effect_charging;// 充能效果时间
-	int effect_resistant;// 抵抗效果时间
-	int effect_poisoned;// 中毒效果时间
-	int effect_burning;// 燃烧效果时间
-	int effect_sealed;// 封印效果时间
-	int effect_blind;// 盲目效果时间
-	int effect_dizzy;// 眩晕效果时间
-
-	bool setDirection(CharaDirection d) const;//设置角色方向
-	void setPosition(int x, int y);//传送角色到坐标位置
-
-	void actMove(CharaDirection d); //进行移动
-	virtual void actSkillSpecial(CharaDirection d);//使用特殊能力
-	virtual void actSkillBasic(CharaDirection d);//使用基本能力
-
-protected:
 	//触发接口
+
 	virtual void onIdle();//当闲置状态时 每帧触发
 	virtual void onMoving();//当移动状态时 每帧触发
 	virtual void onBasicSkill();//当基础能力被使用时 单刻触发
 	virtual void onSpecialSkill();//当特殊能力被使用时 单刻触发
-	virtual void onKill();//当生命值归零时 单刻触发
-	virtual void onDead();//当死亡并消失时 单刻触发
+	virtual void onDead();//当生命值归零时 单刻触发
+	virtual void onVanish();//当死亡并消失时 单刻触发
 	virtual void onImpact(int _impact);//当受到外部冲击时 单刻触发
 	virtual void onBurning();//当自己燃烧时 每帧触发
 	virtual void onPoisoned();//当自己中毒时 每帧触发
-	//角色控制接口
 	virtual void decide_action();//当角色闲置时,直接决定下一个动作
-public:
-	virtual void onHit();//当受到投射物直接伤害时 单刻触发
-public:
-	static int getCharaNum();
 
-protected:
-	Chara();
-	~Chara() override;
+	//判定条件
 
-	static int chara_num;
+	bool checkDisturbed() const;//符合被打断状态的条件
+	bool checkMoving() const;//符合移动状态的条件
+	bool checkStifled();//是否被窒息
+	bool checkInjuredOnBurning();//检查是否因为燃烧而受到伤害
+	bool checkInjuredOnPoisoned();//检查是否因为中毒而受到伤害
+	bool checkInjuredOnImpact();//检查是否因为冲击而受到伤害
+
+	//动画更新
 
 	void update_attributes();//更新属性数据
 	void update_effect();//更新效果
@@ -139,9 +161,6 @@ protected:
 	void update_damaged_highlight();//更新受击颜色
 	int damaged_highlight;//受伤产生红色高亮
 
-	bool getIfDisturbed() const;//符合被打断状态的条件
-	bool getIfMoving() const;//符合移动状态的条件
-
 	void setAnimationIdle();//设置为闲置动画
 	void setAnimationMoving();//设置为移动动画
 	void setAnimationDisturbed();//设置为掉落动画
@@ -149,8 +168,13 @@ protected:
 	void setAnimationSkillBasic();//设置为普通能力动画
 	void setAnimationDead();//设置为死亡动画
 
+	//粒子生成器
+
 	integrate_particles_maker<idea_particle_poisoned> pm_poisoned;
 	integrate_particles_maker<idea_particle_flame> pm_burning;
 	integrate_particles_maker<idea_particle_dizzy> pm_dizzy;
+	integrate_particles_maker<idea_particle_healing> pm_healing;
+	
+	static int chara_num;
 };
 

@@ -146,3 +146,17 @@ unsigned GameToolkit::random(unsigned range)
 	std::random_device rd;
 	return static_cast<int>(rd()) % range;
 }
+
+bool GameToolkit::boolOverride(bool ori, OverrideOperation operation)
+{
+	switch (operation) {
+	case OverrideOperation::override_false: return false;
+	case OverrideOperation::override_true: return true;
+	case OverrideOperation::stay_original: return ori;
+	}
+
+#ifdef _DEBUG
+	SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"boolOverride发生不可思议");
+	return false;
+#endif
+}

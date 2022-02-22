@@ -41,9 +41,9 @@ void Monster::onDead()
 	Chara::onDead();
 }
 
-void Monster::onHit()
+void Monster::onHit(Projectile* p)
 {
-	Chara::onHit();
+	Chara::onHit(p);
 }
 
 void Monster::onIdle()
@@ -56,9 +56,9 @@ void Monster::onImpact(int _impact)
 	Chara::onImpact(_impact);
 }
 
-void Monster::onKill()
+void Monster::onKill(Chara* who)
 {
-	Chara::onKill();
+	Chara::onKill(who);
 }
 
 void Monster::onMoving()

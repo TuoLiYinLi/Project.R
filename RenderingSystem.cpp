@@ -525,6 +525,10 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             file = "./Resource/texture/particle_dizzy";
             num = 8;
             break;
+        case AnimationType::particle_healing:
+            file = "./Resource/texture/particle_healing";
+            num = 5;
+            break;
 
         case AnimationType::size:
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"不能加载AnimationType::size");
@@ -545,9 +549,6 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             }
             auto c_fullFile = fullFile.c_str();
             SDL_Texture* texture = IMG_LoadTexture(GlobalData::sdl_renderer, c_fullFile);
-            //SDL_BlendMode a;
-            //SDL_GetTextureBlendMode(texture, &a);
-            //SDL_Log("BlendMode %d", a);
 
 #ifdef _DEBUG
             texture == nullptr ? SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"加载错误%s", c_fullFile) : SDL_Log(u8"成功加载%s", c_fullFile);

@@ -8,11 +8,16 @@ class Particle :
 public:
     static Particle* createNew();
 	void update() override;
+
+    //动画
+
     int animation_length;
     int animation_progress;
     AnimationType animation;
     int life_time;
-    
+
+    //运动和大小
+
     double x_v;
     double y_v;
     double width;

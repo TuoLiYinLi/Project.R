@@ -1,18 +1,8 @@
-#include "CountingContainer.h"
+#include "integration_counting_container.h"
 
 #include <SDL_log.h>
 
-CountingContainer* CountingContainer::createNew()
-{
-	return new CountingContainer();
-}
-
-void CountingContainer::destroy()const
-{
-	delete this;
-}
-
-int CountingContainer::getNumOf(CountingType ct)
+int integration_counting_container::getNumOf(CountingType ct)
 {
 	for (auto it = list_counting_type.begin(); it != list_counting_type.end(); ++it)
 	{
@@ -24,7 +14,7 @@ int CountingContainer::getNumOf(CountingType ct)
 	return 0;
 }
 
-void CountingContainer::addNumOf(CountingType ct, int num)
+void integration_counting_container::addNumOf(CountingType ct, int num)
 {
 	for (auto it = list_counting_type.begin(); it != list_counting_type.end(); ++it)
 	{
@@ -44,7 +34,7 @@ void CountingContainer::addNumOf(CountingType ct, int num)
 	}
 }
 
-void CountingContainer::removeNumOf(CountingType ct)
+void integration_counting_container::removeNumOf(CountingType ct)
 {
 	for (auto it = list_counting_type.begin(); it != list_counting_type.end(); ++it)
 	{
@@ -56,13 +46,9 @@ void CountingContainer::removeNumOf(CountingType ct)
 	}
 }
 
-CountingContainer::CountingContainer()
+integration_counting_container::integration_counting_container()
 {
 	list_counting_type = std::list<CountingObject>();
-}
-
-CountingContainer::~CountingContainer()
-{
 }
 
 CountingObject::CountingObject(CountingType _type, int _num)
@@ -71,7 +57,7 @@ CountingObject::CountingObject(CountingType _type, int _num)
 	num = _num;
 }
 
-std::list<CountingType> CountingContainer::getAllTypes()
+std::list<CountingType> integration_counting_container::getAllTypes()
 {
 	std::list<CountingType> list_all_types = std::list<CountingType>();
 	for (auto i = list_counting_type.begin(); i !=list_counting_type.end(); ++i)
@@ -84,7 +70,7 @@ std::list<CountingType> CountingContainer::getAllTypes()
 	return list_all_types;
 }
 
-std::wstring CountingContainer::get_name(CountingType type)
+std::wstring integration_counting_container::getName(CountingType type)
 {
 	switch (type)
 	{

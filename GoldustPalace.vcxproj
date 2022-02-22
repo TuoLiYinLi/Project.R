@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CountingContainer.h" />
+    <ClInclude Include="idea_particle_healing.h" />
+    <ClInclude Include="integration_counting_container.h" />
     <ClInclude Include="FacilityVarious.h" />
     <ClInclude Include="GameToolkit.h" />
-    <ClInclude Include="Gene.h" />
     <ClInclude Include="idea_debugger_game_info.h" />
     <ClInclude Include="idea_facility_dirt_background.h" />
     <ClInclude Include="idea_facility_ladder.h" />
@@ -42,6 +42,7 @@
     <ClInclude Include="idea_UI_sizer_button.h" />
     <ClInclude Include="idea_UI_speed_controller.h" />
     <ClInclude Include="integrate_particles_maker.h" />
+    <ClInclude Include="integration_gene_container.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="integration_recorder.h" />
@@ -73,10 +74,10 @@
     <ClInclude Include="WorldSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CountingContainer.cpp" />
+    <ClCompile Include="idea_particle_healing.cpp" />
+    <ClCompile Include="integration_counting_container.cpp" />
     <ClCompile Include="FacilityVarious.cpp" />
     <ClCompile Include="GameToolkit.cpp" />
-    <ClCompile Include="Gene.cpp" />
     <ClCompile Include="idea_debugger_game_info.cpp" />
     <ClCompile Include="idea_debugger_physics.cpp" />
     <ClCompile Include="idea_facility_dirt_background.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="idea_UI_sizer_button.cpp" />
     <ClCompile Include="idea_UI_speed_controller.cpp" />
     <ClCompile Include="integrate_particles_maker.cpp" />
+    <ClCompile Include="integration_gene_container.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />

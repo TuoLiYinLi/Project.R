@@ -101,9 +101,9 @@ void idea_monster_slime::onDead()
 	Monster::onDead();
 }
 
-void idea_monster_slime::onHit()
+void idea_monster_slime::onHit(Projectile* p)
 {
-	Monster::onHit();
+	Monster::onHit(p);
 }
 
 void idea_monster_slime::onIdle()
@@ -116,9 +116,9 @@ void idea_monster_slime::onImpact(int _impact)
 	Monster::onImpact(_impact);
 }
 
-void idea_monster_slime::onKill()
+void idea_monster_slime::onKill(Chara* who)
 {
-	Monster::onKill();
+	Monster::onKill(who);
 }
 
 void idea_monster_slime::onMoving()

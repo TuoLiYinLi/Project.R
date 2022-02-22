@@ -35,9 +35,9 @@ void Warrior::onDead()
 	Chara::onDead();
 }
 
-void Warrior::onHit()
+void Warrior::onHit(Projectile* p)
 {
-	Chara::onHit();
+	Chara::onHit(p);
 }
 
 void Warrior::onIdle()
@@ -50,9 +50,9 @@ void Warrior::onImpact(int _impact)
 	Chara::onImpact(_impact);
 }
 
-void Warrior::onKill()
+void Warrior::onKill(Chara* who)
 {
-	Chara::onKill();
+	Chara::onKill(who);
 }
 
 void Warrior::onMoving()

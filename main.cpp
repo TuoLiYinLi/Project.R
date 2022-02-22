@@ -61,9 +61,29 @@ void test()
 void test_init()
 {
     auto pf2 = idea_monster_slime::createNew();
-    pf2->setPosition(7, 7);
+    pf2->setPosition(6, 2);
 
-    //pf2->effect_burning = 600;
+    auto test_gene = Gene::CreateNew();
+    test_gene->extra_health = 2;
+    pf2->gene_container.addGene(test_gene);
+    test_gene = Gene::CreateNew();
+    test_gene->extra_health = 2;
+    pf2->gene_container.addGene(test_gene);
+    test_gene = Gene::CreateNew();
+    test_gene->extra_health = 2;
+    pf2->gene_container.addGene(test_gene);
+    test_gene = Gene::CreateNew();
+    test_gene->extra_health = 2;
+    pf2->gene_container.addGene(test_gene);
+    test_gene = Gene::CreateNew();
+    test_gene->extra_health = 2;
+    pf2->gene_container.addGene(test_gene);
+    test_gene = Gene::CreateNew();
+    test_gene->extra_health = 2;
+    pf2->gene_container.addGene(test_gene);
+    test_gene->water_stifled = OverrideOperation::stay_original;
+
+    pf2->effect_burning = 1200;
     //pf2->effect_blind = 60;
     //pf2->effect_charging = 6000;
     //pf2->effect_dizzy = 6000;
@@ -85,6 +105,18 @@ void test_init()
     f1 = idea_facility_ladder::createNew();
     f1->setPosition(7, 7);
 
+    auto f2 = PhysicsFacility::createNew();
+    f2->setFacilityType(BlockingType::liquid);
+    f2->bodyY = 4;
+    f2->bodyX = 10;
+    f2->setPosition(0, 10);
+
+
+    f2 = PhysicsFacility::createNew();
+    f2->setFacilityType(BlockingType::solid);
+    f2->bodyY = 4;
+    f2->bodyX = 10;
+    f2->setPosition(0, 14);
     /*
     //UIObject²âÊÔ
     UIObject::createNew();
@@ -122,7 +154,7 @@ void test_init()
     scroll->enable();
      */
 
-    idea_projectile_chop::createNew()->setup(AllyType::monster,7,7,CharaDirection::right, false);
+    idea_projectile_chop::createNew()->setup(AllyType::warrior,7,7,CharaDirection::right, false);
 
     //auto particle = idea_particle_goldust::createNew();
 }

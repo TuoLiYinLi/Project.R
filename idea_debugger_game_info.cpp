@@ -91,7 +91,7 @@ std::wstring idea_debugger_game_info::create_text() const
 		+ L"> <Character:" + std::to_wstring(PhysicsChara::getPhysicsCharaNum())
 		+ L"> <Facility:" + std::to_wstring(PhysicsFacility::getPhysicsFacilityNum())
 		+ L"> <Projectile:" + std::to_wstring(PhysicsProjectile::getPhysicsProjectileNum())
-		+ L">";
+		+ L">\n<Gene:" + std::to_wstring(Gene::getGeneNum()) + L">";
 
 	//grid info
 	const int grid_x = static_cast<int>(floor(UISystem::getInstance()->mouseX_world));

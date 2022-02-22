@@ -2,6 +2,7 @@
 #include <string>
 #include <SDL.h>
 #include "PhysicsObject.h"
+#include "integration_gene_container.h"
 
 //静态工具类
 class GameToolkit
@@ -30,7 +31,13 @@ public:
 	//保留double后小数n位
 	static std::wstring double_reserve_decimal(double d, int n);
 
+	//产生随机数在min与max之间
 	static double random(double min, double max);
+
+	//产生0到range的随机自然数
 	static unsigned random(unsigned range);
+
+	//对原来的bool值进行覆盖操作
+	static bool boolOverride(bool ori,OverrideOperation operation);
 };
 

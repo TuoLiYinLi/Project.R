@@ -96,6 +96,7 @@ enum class AnimationType
 	particle_poisoned,
 	particle_flame,
 	particle_dizzy,
+	particle_healing,
 
 	size,//末尾，代表了总数量
 };

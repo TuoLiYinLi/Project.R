@@ -24,7 +24,7 @@ protected:
     integration_recorder<PhysicsChara> recorder_chara;
     integration_recorder<PhysicsFacility> recorder_facility;
 
-    static void hit_chara(Chara* c);
-    static void hit_facility(Facility* f);
+    void hit_chara(Chara* c);
+    void hit_facility(Facility* f);
 };
 
