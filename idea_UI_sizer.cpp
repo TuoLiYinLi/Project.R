@@ -117,12 +117,14 @@ int idea_UI_sizer::setup_buttons(int grid_x, int grid_y)
 	for (auto i = tar_grid->list_physics_chara->begin(); i != tar_grid->list_physics_chara->end(); ++i)
 	{
 		const auto c = reinterpret_cast<Chara*>((*i)->game_object);
+		if(!c)continue;
 		create_button(count * static_cast<int>(ui_scale) * 19, c);
 		count++;
 	}
 	for (auto i = tar_grid->list_physics_facility->begin(); i != tar_grid->list_physics_facility->end(); ++i)
 	{
 		const auto f = reinterpret_cast<Facility*>((*i)->game_object);
+		if(!f)continue;
 		create_button(count * static_cast<int>(ui_scale) * 19, f);
 		count++;
 	}

@@ -74,16 +74,16 @@ std::wstring Chara::getDataInfo()
 	case CharaActionType::moving:
 		switch (getPhysicsChara()->getDirection())
 		{
-		case CharaDirection::up:
+		case PhysicsDirection::up:
 			s_action += L"向上移动";
 			break;
-		case CharaDirection::down:
+		case PhysicsDirection::down:
 			s_action += L"向下移动";
 			break;
-		case CharaDirection::left:
+		case PhysicsDirection::left:
 			s_action += L"向左移动";
 			break;
-		case CharaDirection::right:
+		case PhysicsDirection::right:
 			s_action += L"向右移动";
 			break;
 		}
@@ -276,6 +276,7 @@ void Chara::update_attributes()
 		{
 			burning_damage_accumulation += burning_speed;
 			const int delta = static_cast<int>(floor(burning_damage_accumulation));
+			if(delta)damaged_highlight = damaged_highlight_length;
 			health -= delta;
 			burning_damage_accumulation -= delta;
 			if(health<0)
@@ -296,7 +297,9 @@ void Chara::update_attributes()
 		if (checkInjuredOnPoisoned())
 		{
 			poisoned_damage_accumulation += health * poisoned_speed;
+
 			const int delta = static_cast<int>(floor(poisoned_damage_accumulation));
+			if (delta)damaged_highlight = damaged_highlight_length;
 			health -= delta;
 			poisoned_damage_accumulation -= delta;
 			if (health < 0)
@@ -321,6 +324,7 @@ void Chara::update_attributes()
 			oxygen = 0;
 			oxygen_damage_accumulation += real_health_max() * oxygen_damage;
 			const int delta = static_cast<int>(floor(oxygen_damage_accumulation));
+			if (delta)damaged_highlight = damaged_highlight_length;
 			health -= delta;
 			oxygen_damage_accumulation -= delta;
 			if (health < 0)
@@ -350,14 +354,14 @@ void Chara::update_attributes()
 		health_recovery_accumulation += real_health_recovery_speed();
 		const int delta = static_cast<int>(floor(health_recovery_accumulation));
 		health += delta;
-		for (int i = 0; i < delta; ++i)
-		{
-			pm_healing.make_particle();
-		}
 		health_recovery_accumulation -= delta;
 		if(health>real_health_max())
 		{
 			health = real_health_max();
+		}else
+		for (int i = 0; i < delta; ++i)
+		{
+			pm_healing.make_particle();
 		}
 	}
 
@@ -531,11 +535,11 @@ void Chara::sync_animation()
 	}
 
 	//刷新角色朝向
-	if (getPhysicsChara()->getDirection() == CharaDirection::right)
+	if (getPhysicsChara()->getDirection() == PhysicsDirection::right)
 	{
 		getRenderingAnimation()->setFlip(false);
 	}
-	else if (getPhysicsChara()->getDirection() == CharaDirection::left)
+	else if (getPhysicsChara()->getDirection() == PhysicsDirection::left)
 	{
 		getRenderingAnimation()->setFlip(true);
 	}
@@ -543,8 +547,6 @@ void Chara::sync_animation()
 	//刷新角色位置
 	getRenderingAnimation()->x = getPhysicsChara()->X;
 	getRenderingAnimation()->y = getPhysicsChara()->Y;
-	getRenderingAnimation()->width = getPhysicsChara()->bodyX * PIXEL_RATE;
-	getRenderingAnimation()->height = getPhysicsChara()->bodyY * PIXEL_RATE;
 
 	//刷新深度
 	update_depth();
@@ -604,6 +606,9 @@ Chara::Chara()
 	//设置角色动画
 	{
 		rendering_unit = RenderingAnimation::createNew();
+
+		rendering_unit->width = 1 * PIXEL_RATE;
+		rendering_unit->height = 1 * PIXEL_RATE;
 
 		sync_animation();
 
@@ -770,7 +775,7 @@ bool Chara::checkInjuredOnImpact()
 	return GameToolkit::boolOverride(injured_on_impact, gene_container.getInjuredOnImpact());
 }
 
-bool Chara::setDirection(CharaDirection d) const
+bool Chara::setDirection(PhysicsDirection d) const
 {
 	return getPhysicsChara()->setDirection(d);
 }
@@ -782,18 +787,18 @@ void Chara::setPosition(int x, int y)
 	sync_animation();
 }
 
-void Chara::actMove(CharaDirection d)
+void Chara::actMove(PhysicsDirection d)
 {
 	if (action_type != CharaActionType::idle)return;
 	setAnimationMoving();
 	getPhysicsChara()->setMotion(d, moving_speed, 1, false);
 }
-void Chara::actSkillBasic(CharaDirection d)
+void Chara::actSkillBasic(PhysicsDirection d)
 {
 	if (setDirection(d) && action_type == CharaActionType::idle)
 	setAnimationSkillBasic();
 }
-void Chara::actSkillSpecial(CharaDirection d)
+void Chara::actSkillSpecial(PhysicsDirection d)
 {
 	if (setDirection(d)&& action_type == CharaActionType::idle)
 	setAnimationSkillSpecial();
@@ -857,6 +862,11 @@ void Chara::onIdle()
 }
 void Chara::onImpact(int _impact)
 {
+	if(GameToolkit::boolOverride(injured_on_impact,gene_container.getInjuredOnImpact()))
+	{
+		health -= _impact;
+		damaged_highlight = damaged_highlight_length;
+	}
 	gene_container.triggerOnImpact();
 }
 void Chara::onKill(Chara* who)

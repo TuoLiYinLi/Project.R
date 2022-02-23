@@ -20,7 +20,7 @@ void idea_projectile_chop::update()
 		if (GameToolkit::checkIfHostile(physics_object->type_ally, element->type_ally) && recorder_chara.record(element))
 		{
 			const auto c = reinterpret_cast<Chara*>(element->game_object);
-			hit_chara(c);
+			c->onHit(this);
 		}
 	}
 
@@ -29,7 +29,7 @@ void idea_projectile_chop::update()
 		if (GameToolkit::checkIfHostile(physics_object->type_ally, element->type_ally) && recorder_facility.record(element))
 		{
 			const auto f = reinterpret_cast<Facility*>(element->game_object);
-			hit_facility(f);
+			f->onHit(this);
 		}
 	}
 }
@@ -62,7 +62,7 @@ idea_projectile_chop::~idea_projectile_chop()
 	
 }
 
-void idea_projectile_chop::setup(AllyType _ally, int _position_x, int _position_y, CharaDirection direction, bool _flip)
+void idea_projectile_chop::setup(AllyType _ally, int _position_x, int _position_y, PhysicsDirection direction, bool _flip)
 {
 	flag_static = false;
 
@@ -70,16 +70,16 @@ void idea_projectile_chop::setup(AllyType _ally, int _position_x, int _position_
 
 	physics_object->setPosition(_position_x, _position_y);
 
-	switch (direction) { case CharaDirection::right:
+	switch (direction) { case PhysicsDirection::right:
 		getPhysics()->setup(1.0 / 450, 0, 0, 1);
 		break;
-	case CharaDirection::up:
+	case PhysicsDirection::up:
 		getPhysics()->setup(0, -1.0 / 450, 0, 1);
 		break;
-	case CharaDirection::left:
+	case PhysicsDirection::left:
 		getPhysics()->setup(-1.0 / 450, 0, 0, 1);
 		break;
-	case CharaDirection::down:
+	case PhysicsDirection::down:
 		getPhysics()->setup(0, 1.0 / 450, 0, 1);
 		break;
 	}
@@ -93,13 +93,3 @@ PhysicsProjectileFlying* idea_projectile_chop::getPhysics() const
 	return reinterpret_cast<PhysicsProjectileFlying*>(physics_object);
 }
 
-void idea_projectile_chop::hit_chara(Chara* c)
-{
-	c->onHit(this);
-}
-
-void idea_projectile_chop::hit_facility(Facility* f)
-{
-	f->onHit(this);
-	f->health -= 1;
-}

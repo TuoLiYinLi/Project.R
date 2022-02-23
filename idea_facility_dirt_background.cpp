@@ -8,10 +8,10 @@ idea_facility_dirt_background* idea_facility_dirt_background::createNew()
 idea_facility_dirt_background::idea_facility_dirt_background()
 {
 	name = L"ÄàÍÁ±³¾°";
-	science_name = L"ÄàÍÁ";
+	science_name = L"ÄàÍÁ±³¾°";
 	introduction = L"Äà°Í¡¢Ê¯Í·¡­¡­";
 
-	getPhysics()->setFacilityType(BlockingType::solid);
+	getPhysics()->setFacilityType(BlockingType::air);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_1);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_2);
 	list_various_texture->push_back(AnimationType::facility_dirt_background_3);

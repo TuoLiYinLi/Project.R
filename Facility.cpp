@@ -4,7 +4,6 @@
 #include "GameToolkit.h"
 #include "SDL.h"
 #include "PhysicsFacility.h"
-#include "idea_UI_inspector.h"
 #include "Projectile.h"
 
 Facility* Facility::createNew() {
@@ -45,6 +44,7 @@ Facility::Facility() {
 	//设施的动画
 	{
 		rendering_unit = RenderingAnimation::createNew();
+		extra_depth = 0;
 
 		state = FacilityState::idle;
 		animation_progress = 0;
@@ -87,7 +87,7 @@ Facility::~Facility() {
 
 std::wstring Facility::getBrief()
 {
-	return name;
+	return science_name;
 }
 
 SDL_Texture* Facility::getThumbnail()
@@ -105,7 +105,7 @@ void Facility::update()
 
 void Facility::update_depth()const
 {
-	rendering_unit->depth = depth_world_facility + static_cast<float>(physics_object->Y);
+	rendering_unit->depth = depth_world_facility + static_cast<float>(physics_object->Y) + extra_depth;
 
 }
 
@@ -208,6 +208,8 @@ void Facility::onKill()
 
 void Facility::onHit(Projectile* p)
 {
+	if(p->damage)
+	health --;
 	damaged_highlight = damaged_highlight_length;
 }
 
@@ -248,7 +250,14 @@ void Facility::setAnimationDead()
 
 std::wstring Facility::getDataInfo()
 {
-	std::wstring s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(health_max) + L"\n"
+	std::wstring s;
+	if (getPhysics()->type_ally == AllyType::peace)
+		s = std::wstring(L"[生命] 不可破坏\n")
+		+ L"[位置] " + L"( " + std::to_wstring(static_cast<int>(physics_object->X)) + L" , " + std::to_wstring(static_cast<int>(physics_object->Y)) + L" )" + L'\n'
+		+ L"[大小] " + L"( " + std::to_wstring(physics_object->bodyX) + L" " + wchar_multiply + L" " + std::to_wstring(physics_object->bodyY) + L" )" + L'\n';
+
+	else
+		s = L"[生命] " + std::to_wstring(health) + L"/" + std::to_wstring(health_max) + L"\n"
 		+ L"[位置] " + L"( " + std::to_wstring(static_cast<int>(physics_object->X)) + L" , " + std::to_wstring(static_cast<int>(physics_object->Y)) + L" )" + L'\n'
 		+ L"[大小] " + L"( " + std::to_wstring(physics_object->bodyX) + L" " + wchar_multiply + L" " + std::to_wstring(physics_object->bodyY) + L" )" + L'\n';
 		
@@ -312,7 +321,7 @@ void Facility::update_damaged_highlight()
 	{
 		damaged_highlight--;
 
-		rendering_unit->blend_color.b = 0;
+		rendering_unit->blend_color.b = 64;
 		rendering_unit->blend_color.g = 0;
 	}
 	else

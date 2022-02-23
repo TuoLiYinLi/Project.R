@@ -10,7 +10,7 @@ idea_monster_slime* idea_monster_slime::createNew()
 idea_monster_slime::idea_monster_slime()
 {
 	name = L"史莱姆";
-	introduction = L"软泥组成的怪物，脆弱但廉价。";
+	introduction = L"软泥组成的怪物，脆弱但廉价。\n*不会受到冲击伤害。";
 	science_name = L"史莱姆";
 
 	//设定物理体
@@ -62,6 +62,8 @@ idea_monster_slime::idea_monster_slime()
 		stamina = 4;
 		stamina_recovery_speed = 0.2 / 60;
 		stamina_recovery_accumulation = 0;
+
+		injured_on_impact = false;
 	}
 
 	//设置角色效果
@@ -76,66 +78,7 @@ idea_monster_slime::idea_monster_slime()
 	}
 }
 
-idea_monster_slime::~idea_monster_slime()
-{
-	
-}
-
-void idea_monster_slime::update()
-{
-	Monster::update();
-}
-
-void idea_monster_slime::onBasicSkill()
-{
-	Monster::onBasicSkill();
-}
-
-void idea_monster_slime::onBurning()
-{
-	Monster::onBurning();
-}
-
-void idea_monster_slime::onDead()
-{
-	Monster::onDead();
-}
-
-void idea_monster_slime::onHit(Projectile* p)
-{
-	Monster::onHit(p);
-}
-
-void idea_monster_slime::onIdle()
-{
-	Monster::onIdle();
-}
-
-void idea_monster_slime::onImpact(int _impact)
-{
-	Monster::onImpact(_impact);
-}
-
-void idea_monster_slime::onKill(Chara* who)
-{
-	Monster::onKill(who);
-}
-
-void idea_monster_slime::onMoving()
-{
-	Monster::onMoving();
-}
-
-void idea_monster_slime::onPoisoned()
-{
-	Monster::onPoisoned();
-}
-
-void idea_monster_slime::onSpecialSkill()
-{
-	Monster::onSpecialSkill();
-}
-
 void idea_monster_slime::decide_action()
 {
+	
 }

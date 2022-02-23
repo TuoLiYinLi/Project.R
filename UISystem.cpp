@@ -191,7 +191,7 @@ void UISystem::pullEvent()
 	}
 
 	//处理左键
-	if(mouse_left_last&&!mouse_left_state)
+	if (mouse_left_last && !mouse_left_state)
 	{
 		mouse_left_release = true;
 	}else
@@ -218,7 +218,7 @@ void UISystem::pullEvent()
 		mouse_middle_release = false;
 	}
 
-	if (!mouse_middle_last && mouse_middle_last)
+	if (!mouse_middle_last && mouse_middle_state)
 	{
 		mouse_middle_press = true;
 	}
@@ -237,7 +237,7 @@ void UISystem::pullEvent()
 		mouse_right_release = false;
 	}
 
-	if (!mouse_right_last && mouse_right_last)
+	if (!mouse_right_last && mouse_right_state)
 	{
 		mouse_right_press = true;
 	}
@@ -247,7 +247,7 @@ void UISystem::pullEvent()
 	}
 
 	//处理空格键
-	if(key_space_state&&!key_space_last)
+	if (key_space_state && !key_space_last)
 	{
 		key_space_press = true;
 	}else
@@ -427,6 +427,14 @@ void UISystem::controlGame() const
 			GlobalData::ui_sizer->disable();
 		}
 		GlobalData::ui_sizer->enable();
+	}
+	//关闭筛选器
+	if (mouse_right_press && last_tar == nullptr)
+	{
+		if (GlobalData::ui_sizer->flag_enabled)
+		{
+			GlobalData::ui_sizer->disable();
+		}
 	}
 }
 

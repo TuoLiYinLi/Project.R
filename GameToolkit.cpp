@@ -60,9 +60,6 @@ SDL_Texture* GameToolkit::createUnicodeText(const wchar_t* unicode_str, SDL_Colo
 {
 	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
 
-	//int extent;
-	//TTF_MeasureUNICODE(RenderingSystem::getInstance()->font_grey, str, wrapLength, &extent,nullptr);
-
 	SDL_Surface* surface = TTF_RenderUNICODE_Solid_Wrapped(RenderingSystem::getInstance()->font_grey, str, color, wrapLength);
 
 	if (w)*w = surface->w;
@@ -77,9 +74,6 @@ SDL_Texture* GameToolkit::createUnicodeText(const wchar_t* unicode_str, SDL_Colo
 SDL_Texture* GameToolkit::createUnicodeText(const wchar_t* unicode_str, SDL_Color color, SDL_Color bg_color, int wrapLength, int* w, int* h)
 {
 	const auto str = reinterpret_cast<Uint16*>(const_cast<wchar_t*>(unicode_str));
-
-	//int extent;
-	//TTF_MeasureUNICODE(RenderingSystem::getInstance()->font_grey, str, wrapLength, &extent, nullptr);
 
 	SDL_Surface* surface = TTF_RenderUNICODE_Shaded_Wrapped(RenderingSystem::getInstance()->font_grey, str, color, bg_color, wrapLength);
 

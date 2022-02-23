@@ -76,8 +76,11 @@ void PhysicsProjectile::renewSignedGrids()
 		for (int j = y_start; j <= y_end; j++)
 		{
 			Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
-			grid->list_physics_projectile->push_back(this);
-			list_grid_signed->push_back(grid);
+			if(grid)
+			{
+				grid->list_physics_projectile->push_back(this);
+				list_grid_signed->push_back(grid);
+			}
 		}
 	}
 
@@ -101,6 +104,7 @@ void PhysicsProjectile::renewHitCharas() const
 		for (int y = up; y <= down; ++y)
 		{
 			Grid* g = WorldSystem::getInstance()->getGrid(x, y);
+			if(!g)return;
 			for (auto i = g->list_physics_chara->begin(); i != g->list_physics_chara->end(); ++i)
 			{
 				hit_charas->push_front(*i);
@@ -124,6 +128,7 @@ void PhysicsProjectile::renewHitFacilities() const
 		for (int y = up; y <= down; ++y)
 		{
 			Grid* g = WorldSystem::getInstance()->getGrid(x, y);
+			if (!g)return;
 			for (auto i = g->list_physics_facility->begin(); i != g->list_physics_facility->end(); ++i)
 			{
 				hit_facilities->push_front(*i);
@@ -146,6 +151,7 @@ void PhysicsProjectile::renewHitProjectiles() const
 		for (int y = up; y <= down; ++y)
 		{
 			Grid* g = WorldSystem::getInstance()->getGrid(x, y);
+			if (!g)return;
 			for (auto i = g->list_physics_projectile->begin(); i != g->list_physics_projectile->end(); ++i)
 			{
 				if(*i!=this)
@@ -169,6 +175,18 @@ std::list<PhysicsFacility*>* PhysicsProjectile::getHitFacilities() const
 std::list<PhysicsProjectile*>* PhysicsProjectile::getHitProjectiles() const
 {
 	return hit_projectiles;
+}
+
+bool PhysicsProjectile::detectLocal(BlockingType blocking)
+{
+	for (auto i = list_grid_signed->begin(); i != list_grid_signed->end(); ++i)
+	{
+		if ((*i)->getBlockingType(blocking))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void PhysicsProjectile::move(double _dx, double _dy)

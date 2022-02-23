@@ -39,5 +39,6 @@ public:
 
 	//对原来的bool值进行覆盖操作
 	static bool boolOverride(bool ori,OverrideOperation operation);
+
 };
 

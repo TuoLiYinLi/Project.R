@@ -35,13 +35,17 @@
 #include "idea_debugger_physics.h"
 #include "idea_debugger_game_info.h"
 #include "idea_facility_dirt_background.h"
+#include "idea_facility_dirt_cracked.h"
+#include "idea_facility_dirt_solid.h"
 #include "idea_facility_ladder.h"
+#include "idea_facility_water_clean.h"
 #include "idea_monster_slime.h"
 #include "idea_particle_dizzy.h"
 #include "idea_particle_flame.h"
 #include "idea_particle_goldust.h"
 #include "idea_particle_poisoned.h"
 #include "idea_projectile_chop.h"
+#include "idea_projectile_little_slime_ball.h"
 #include "idea_UI_scope.h"
 #include "idea_UI_inspector.h"
 #include "idea_UI_inspector_exit.h"
@@ -49,9 +53,112 @@
 #include "idea_UI_speed_controller.h"
 #include "idea_UI_energy.h"
 #include "idea_UI_sizer.h"
+#include "idea_warrior_miner.h"
 #include "integrate_particles_maker.h"
 #include "Particle.h"
 #include "UIScroll.h"
+
+void test_map()
+{
+    //生成背景
+	for (int x = 0; x < 32; ++x)
+	{
+		for (int y = 0; y < 32; ++y)
+		{
+            const auto bg = idea_facility_dirt_background::createNew();
+            bg->setPosition(x, y);
+		}
+	}
+    for (int x = 0; x < 32; ++x)
+    {
+        const auto d = idea_facility_dirt_solid::createNew();
+        d->setPosition(x, 31);
+    }
+
+    for (int y = 0; y < 31; ++y)
+    {
+        auto d = idea_facility_dirt_solid::createNew();
+        d->setPosition(0, y);
+    	d = idea_facility_dirt_solid::createNew();
+        d->setPosition(31, y);
+    }
+    for (int x = 1; x < 3; ++x)
+    {
+        for (int y = 9; y < 12; ++y)
+        {
+            const auto dc = idea_facility_dirt_cracked::createNew();
+            dc->setPosition(x, y);
+        }
+    }
+    for (int x = 2; x < 7; ++x)
+    {
+	    for (int y = 8; y < 13; ++y)
+	    {
+            const auto dc = idea_facility_dirt_solid::createNew();
+            dc->setPosition(x, y);
+	    }
+    }
+    for (int x = 9; x < 12; ++x)
+    {
+        for (int y = 11; y < 31; ++y)
+        {
+            if (y == 24)continue;
+            const auto dc = idea_facility_dirt_solid::createNew();
+            dc->setPosition(x, y);
+        }
+    }
+    for (int x = 12; x < 14; ++x)
+    {
+        for (int y = 14; y < 31; ++y)
+        {
+            if (y == 24)continue;
+            const auto dc = idea_facility_dirt_solid::createNew();
+            dc->setPosition(x, y);
+        }
+    }
+    for (int x = 1; x < 9; ++x)
+    {
+        for (int y = 25; y < 31; ++y)
+        {
+            const auto w = idea_facility_water_clean::createNew();
+            if (y == 25)w->setWaterTop();
+            w->setPosition(x, y);
+        }
+    }
+    for (int x = 14; x < 17; ++x)
+    {
+        for (int y = 17; y <21; ++y)
+        {
+            const auto dc = idea_facility_dirt_solid::createNew();
+            dc->setPosition(x, y);
+        }
+    }
+    
+    for (int y = 17; y < 31; ++y)
+    {
+        const auto dc = idea_facility_ladder::createNew();
+        dc->setPosition(17, y);
+    }
+
+    for (int x = 18; x < 30; ++x)
+    {
+        for (int y = 22; y < 24; ++y)
+        {
+            const auto dc = idea_facility_dirt_cracked::createNew();
+            dc->setPosition(x, y);
+        }
+    }
+    for (int y = 11; y < 14; ++y)
+    {
+        const auto dc = idea_facility_ladder::createNew();
+        dc->setPosition(12, y);
+    }
+    for (int y = 14; y < 17; ++y)
+    {
+        const auto dc = idea_facility_ladder::createNew();
+        dc->setPosition(14, y);
+    }
+}
 
 void test()
 {
@@ -61,102 +168,28 @@ void test()
 void test_init()
 {
     auto pf2 = idea_monster_slime::createNew();
-    pf2->setPosition(6, 2);
+    pf2->setPosition(22, 5);
 
     auto test_gene = Gene::CreateNew();
     test_gene->extra_health = 2;
-    pf2->gene_container.addGene(test_gene);
-    test_gene = Gene::CreateNew();
-    test_gene->extra_health = 2;
-    pf2->gene_container.addGene(test_gene);
-    test_gene = Gene::CreateNew();
-    test_gene->extra_health = 2;
-    pf2->gene_container.addGene(test_gene);
-    test_gene = Gene::CreateNew();
-    test_gene->extra_health = 2;
-    pf2->gene_container.addGene(test_gene);
-    test_gene = Gene::CreateNew();
-    test_gene->extra_health = 2;
-    pf2->gene_container.addGene(test_gene);
-    test_gene = Gene::CreateNew();
-    test_gene->extra_health = 2;
-    pf2->gene_container.addGene(test_gene);
+    test_gene->extra_health_recovery = 0.001;
     test_gene->water_stifled = OverrideOperation::stay_original;
+    test_gene->name = L"史莱姆基因";
+    pf2->gene_container.addGene(test_gene);
 
-    pf2->effect_burning = 1200;
+    pf2->effect_poisoned = 600;
+    //pf2->effect_burning = 300;
     //pf2->effect_blind = 60;
     //pf2->effect_charging = 6000;
     //pf2->effect_dizzy = 6000;
     //pf2->effect_poisoned = 600;
     //pf2->effect_resistant = 60;
     //pf2->effect_sealed = 60;
-    
-    pf2 = idea_monster_slime::createNew();
-    pf2->setPosition(8, 7);
-    pf2->health = 2;
-     
-    auto f1 = idea_facility_ladder::createNew();
-    f1->setPosition(5, 6);
+
+    auto pf1 = idea_warrior_miner::createNew();
+    pf1->setPosition(5, 2);
     
 
-    f1 = idea_facility_ladder::createNew();
-    f1->setPosition(8, 6);
-
-    f1 = idea_facility_ladder::createNew();
-    f1->setPosition(7, 7);
-
-    auto f2 = PhysicsFacility::createNew();
-    f2->setFacilityType(BlockingType::liquid);
-    f2->bodyY = 4;
-    f2->bodyX = 10;
-    f2->setPosition(0, 10);
-
-
-    f2 = PhysicsFacility::createNew();
-    f2->setFacilityType(BlockingType::solid);
-    f2->bodyY = 4;
-    f2->bodyX = 10;
-    f2->setPosition(0, 14);
-    /*
-    //UIObject测试
-    UIObject::createNew();
-
-    auto r= RenderingUnit::createNew();
-
-    r->x = 200;
-    r->y = 200;
-    r->width = 200;
-    r->height = 100;
-    r->setTexture(RenderingSystem::getInstance()->getAnimation(AnimationType::debug_sequence_white, 1));
-    r->flag_enable = true;
-    r->reference = RenderingReference::window;
-
-    const auto test_button2 = idea_UI_speed_controller::createNew();
-    
-
-    //泥土
-    for (int x = 0; x < 5; ++x)
-    {
-	    for (int y = 0; y < 4; ++y)
-	    {
-            auto f2 = idea_facility_dirt_background::createNew();
-            f2->setPosition(8 + x, 8 + y);
-	    }
-    }
-
-    //测试scroll
-
-    auto scroll= UIScroll::createNew();
-    int w, h;
-    auto text0 = GameToolkit::createUnicodeText(L"测试一下我的卷轴中文排版是否存在一些问题是否需要改变间距", { 255,255,255,150 }, 60, &w, &h);
-
-    scroll->setup(text0, 500, 400, w, h, 100, 30, 50, 8, 500);
-    scroll->enable();
-     */
-
-    idea_projectile_chop::createNew()->setup(AllyType::warrior,7,7,CharaDirection::right, false);
-
-    //auto particle = idea_particle_goldust::createNew();
 }
 
 
@@ -229,11 +262,8 @@ int main(int argc, char** argv) {
     GlobalData::ui_sizer = idea_UI_sizer::createNew();
 
     //代码测试
+    test_map();
     test_init();
-	
-    auto pm = integrate_particles_maker<idea_particle_dizzy>();
-    pm.update(1, 120, 0, 0.5, 0.5, 0, 0, 0, -0.5 * pi,0.5*pi);
-
 	SDL_Log(u8"--\t--\t--\t--初始化完成,游戏运行--\t--\t--\t--");
 
     //消息循环
@@ -260,7 +290,6 @@ int main(int argc, char** argv) {
             WorldSystem::getInstance()->logicGo();
             //代码测试
             test_physics();
-            pm.make_particle();
         }
 
         //渲染时更新

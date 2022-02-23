@@ -45,12 +45,12 @@ public:
 	virtual void onHit(Projectile* p);//当受到投射物直接伤害时 单刻触发
 	virtual void onKill(Chara* who);//当击投射物成功杀敌人时 单刻触发
 
-	bool setDirection(CharaDirection d) const;//设置角色方向
+	bool setDirection(PhysicsDirection d) const;//设置角色方向
 	void setPosition(int x, int y);//传送角色到坐标位置
 
-	void actMove(CharaDirection d); //进行移动
-	virtual void actSkillSpecial(CharaDirection d);//使用特殊能力
-	virtual void actSkillBasic(CharaDirection d);//使用基本能力
+	void actMove(PhysicsDirection d); //进行移动
+	virtual void actSkillSpecial(PhysicsDirection d);//使用特殊能力
+	virtual void actSkillBasic(PhysicsDirection d);//使用基本能力
 
 	//角色的属性
 

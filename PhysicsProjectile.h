@@ -31,6 +31,8 @@ public:
     std::list<PhysicsFacility*>* getHitFacilities() const;//获取碰撞到的设施
     std::list<PhysicsProjectile*>* getHitProjectiles() const;//获取碰撞到的投射物
 
+    bool detectLocal(BlockingType blocking)override;//检测当前占用位置是否具有某种类型的阻挡
+
     double x_v;
     double y_v;
 

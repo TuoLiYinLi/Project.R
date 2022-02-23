@@ -174,6 +174,24 @@
     <ClInclude Include="idea_particle_healing.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="idea_facility_water_clean.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_facility_dirt_solid.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_facility_dirt_cracked.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_projectile_little_slime_ball.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_warrior_miner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="idea_facility_corpse.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -327,6 +345,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="idea_particle_healing.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_facility_water_clean.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_facility_dirt_solid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_facility_dirt_cracked.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_projectile_little_slime_ball.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_warrior_miner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="idea_facility_corpse.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

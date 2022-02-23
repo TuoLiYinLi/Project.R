@@ -1,6 +1,8 @@
 #include "PhysicsObject.h"
 
+#include "Defined.h"
 #include "GameObject.h"
+#include "WorldSystem.h"
 
 void PhysicsObject::destroy()
 {
@@ -45,6 +47,96 @@ void PhysicsObject::setPosition(int x, int y)
 	Y = y;
 	renewSignedGrids();
 }
+
+bool PhysicsObject::detectForward(PhysicsDirection direction, BlockingType blocking) const
+{
+	int x_start = 0, x_end = 0,
+		y_start = 0, y_end = 0;
+	switch (direction)
+	{
+	case PhysicsDirection::right:
+		x_start = getRightGrid() + 1;
+		x_end = x_start;
+		y_start = getTopGrid();
+		y_end = getBottomGrid();
+		break;
+	case PhysicsDirection::up:
+		x_start = getLeftGrid();
+		x_end = getRightGrid();
+		y_start = getTopGrid() - 1;
+		y_end = y_start;
+		break;
+	case PhysicsDirection::left:
+		x_start = getLeftGrid() - 1;
+		x_end = x_start;
+		y_start = getTopGrid();
+		y_end = getBottomGrid();
+		break;
+	case PhysicsDirection::down:
+		x_start = getLeftGrid();
+		x_end = getRightGrid();
+		y_start = getBottomGrid() + 1;
+		y_end = y_start;
+		break;
+	}
+
+	if (detectBorder(direction))
+	{
+		return true;
+	}
+
+	for (int i = x_start; i <= x_end; i++)
+	{
+		for (int j = y_start; j <= y_end; j++)
+		{
+			const Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
+			if (grid->getBlockingType(blocking))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool PhysicsObject::detectBorder(PhysicsDirection direction) const
+{
+	switch (direction)
+	{
+	case PhysicsDirection::right:
+		return getRightGrid() + 1 >= static_cast<int>(WORLD_WIDTH);
+	case PhysicsDirection::up:
+		return getTopGrid() - 1 < 0;
+	case PhysicsDirection::left:
+		return getLeftGrid() - 1 < 0;
+	case PhysicsDirection::down:
+		return getBottomGrid() + 1 >= static_cast<int>(WORLD_HEIGHT);
+	}
+
+	return false;
+}
+
+bool PhysicsObject::detectLocal(BlockingType blocking)
+{
+	const int x_start = getLeftGrid();
+	const int x_end = getRightGrid();
+	const int y_start = getTopGrid();
+	const int y_end = getBottomGrid();
+
+	for (int i = x_start; i <= x_end; i++)
+	{
+		for (int j = y_start; j <= y_end; j++)
+		{
+			const Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
+			if(grid->getBlockingType(blocking))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 
 PhysicsType PhysicsObject::getPhysicsType() const
 {

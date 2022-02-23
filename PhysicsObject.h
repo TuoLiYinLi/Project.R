@@ -1,4 +1,13 @@
 #pragma once
+//物理方向
+enum class PhysicsDirection
+{
+	right,//右
+	up,//上
+	left,//左
+	down//下
+};
+
 class GameObject;
 
 enum class PhysicsType
@@ -51,6 +60,11 @@ public:
 	int getRightGrid() const;	//获取右部占据的网格
 
 	virtual void setPosition(int x, int y);//设置(传送)位置
+
+	bool detectForward(PhysicsDirection direction, BlockingType blocking) const;//检测某个方向上是否有某种类型的阻挡
+	virtual bool detectLocal(BlockingType blocking);//检测当前占用位置是否具有某种类型的阻挡
+	bool detectBorder(PhysicsDirection direction) const;//检查某个方向是否到达地图边际
+
 
 	virtual void renewSignedGrids()=0;	//对地图签入自己的位置
 

@@ -26,7 +26,7 @@ PhysicsChara::PhysicsChara()
 	steady = false;
 
 	moving_speed = 0;
-	moving_direction = CharaDirection::right;
+	moving_direction = PhysicsDirection::right;
 	moving_inertia = 0;
 
 	falling_count = 0;
@@ -96,12 +96,12 @@ void PhysicsChara::update()
 	{
 		if(detectFalling())
 		{
-			if(detectForward(CharaDirection::down,BlockingType::liquid))
+			if(detectForward(PhysicsDirection::down,BlockingType::liquid))
 			{
-				setMotion(CharaDirection::down, low_speed, 1, false);
+				setMotion(PhysicsDirection::down, low_speed, 1, false);
 			}else
 			{
-				setMotion(CharaDirection::down, falling_speed, 1, false);
+				setMotion(PhysicsDirection::down, falling_speed, 1, false);
 			}
 		}
 	}
@@ -169,16 +169,16 @@ void PhysicsChara::stepForward()
 
 		switch (moving_direction)
 		{
-		case CharaDirection::right:
+		case PhysicsDirection::right:
 			X += step;
 			break;
-		case CharaDirection::up:
+		case PhysicsDirection::up:
 			Y -= step;
 			break;
-		case CharaDirection::left:
+		case PhysicsDirection::left:
 			X -= step;
 			break;
-		case CharaDirection::down:
+		case PhysicsDirection::down:
 			Y += step;
 			break;
 		}
@@ -215,7 +215,7 @@ bool PhysicsChara::detectSubmersed() const
 	return true;
 }
 
-bool PhysicsChara::detectFalling() const
+bool PhysicsChara::detectFalling()
 {
 	if(can_fly)
 	{
@@ -223,8 +223,8 @@ bool PhysicsChara::detectFalling() const
 	}else
 	{
 		if(detectLocal(BlockingType::support)||
-			detectForward(CharaDirection::down,BlockingType::support)||
-			detectForward(CharaDirection::down,BlockingType::solid))
+			detectForward(PhysicsDirection::down,BlockingType::support)||
+			detectForward(PhysicsDirection::down,BlockingType::solid))
 		{
 			return false;
 		}else
@@ -246,75 +246,8 @@ bool PhysicsChara::detectFalling() const
 	}
 }
 
-bool PhysicsChara::detectForward(CharaDirection direction, BlockingType blocking) const
-{
-	int x_start=0, x_end=0,
-		y_start=0, y_end=0;
-	switch (direction)
-	{
-	case CharaDirection::right:
-		x_start = getRightGrid() + 1;
-		x_end = x_start;
-		y_start = getTopGrid();
-		y_end = getBottomGrid();
-		break;
-	case CharaDirection::up:
-		x_start = getLeftGrid();
-		x_end = getRightGrid();
-		y_start = getTopGrid() - 1;
-		y_end = y_start;
-		break;
-	case CharaDirection::left:
-		x_start = getLeftGrid() - 1;
-		x_end = x_start;
-		y_start = getTopGrid();
-		y_end = getBottomGrid();
-		break;
-	case CharaDirection::down:
-		x_start = getLeftGrid();
-		x_end = getRightGrid();
-		y_start = getBottomGrid() + 1;
-		y_end = y_start;
-		break;
-	}
 
-	if(detectBorder(direction))
-	{
-		return true;
-	}
-
-	for (int i = x_start; i <= x_end; i++)
-	{
-		for (int j = y_start; j <= y_end; j++)
-		{
-			const Grid* grid = WorldSystem::getInstance()->getGrid(i, j);
-			if(grid->getBlockingType(blocking))
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool PhysicsChara::detectBorder(CharaDirection direction) const
-{
-	switch (direction)
-	{
-	case CharaDirection::right:
-		return getRightGrid() + 1 >= static_cast<int>(WORLD_WIDTH);
-	case CharaDirection::up:
-		return getTopGrid() - 1 < 0;
-	case CharaDirection::left:
-		return getLeftGrid() - 1 < 0;
-	case CharaDirection::down:
-		return getBottomGrid() + 1 >= static_cast<int>(WORLD_HEIGHT);
-	}
-
-	return false;
-}
-
-bool PhysicsChara::detectLocal(BlockingType blocking) const
+bool PhysicsChara::detectLocal(BlockingType blocking)
 {
 	for (auto i = list_grid_signed->begin(); i != list_grid_signed->end(); ++i)
 	{
@@ -326,14 +259,14 @@ bool PhysicsChara::detectLocal(BlockingType blocking) const
 	return false;
 }
 
-bool PhysicsChara::detectMoving(CharaDirection direction) const
+bool PhysicsChara::detectMoving(PhysicsDirection direction)
 {
 	if(detectForward(direction,BlockingType::solid))
 	{
 		return false;
 	}
 
-	if (direction == CharaDirection::up)
+	if (direction == PhysicsDirection::up)
 	{
 		if (can_fly)
 		{
@@ -347,7 +280,7 @@ bool PhysicsChara::detectMoving(CharaDirection direction) const
 			}
 			else
 			{
-				if (detectForward(CharaDirection::up, BlockingType::liquid))
+				if (detectForward(PhysicsDirection::up, BlockingType::liquid))
 				{
 					return can_swim;
 				}
@@ -362,7 +295,7 @@ bool PhysicsChara::detectMoving(CharaDirection direction) const
 }
 
 
-void PhysicsChara::setMotion(CharaDirection direction, double speed, double inertia, bool _hit_back)
+void PhysicsChara::setMotion(PhysicsDirection direction, double speed, double inertia, bool _hit_back)
 {
 #ifdef _DEBUG
 	if(inertia<0)
@@ -440,19 +373,19 @@ void PhysicsChara::setMotion(CharaDirection direction, double speed, double iner
 
 					switch (moving_direction)
 					{
-					case CharaDirection::right:
+					case PhysicsDirection::right:
 						X += decimal_part;
 						moving_inertia = 0;
 						break;
-					case CharaDirection::up:
+					case PhysicsDirection::up:
 						Y -= decimal_part;
 						moving_inertia = 0;
 						break;
-					case CharaDirection::left:
+					case PhysicsDirection::left:
 						X -= decimal_part;
 						moving_inertia = 0;
 						break;
-					case CharaDirection::down:
+					case PhysicsDirection::down:
 						Y += decimal_part;
 						moving_inertia = 0;
 						break;
@@ -477,7 +410,7 @@ void PhysicsChara::setPosition(int x, int y)
 
 	moving_speed = 0;
 	moving_inertia = 0;
-	moving_direction = CharaDirection::right;
+	moving_direction = PhysicsDirection::right;
 
 	impact = 0;
 	falling_count = 0;
@@ -486,7 +419,7 @@ void PhysicsChara::setPosition(int x, int y)
 }
 
 
-bool PhysicsChara::setDirection(CharaDirection direction)
+bool PhysicsChara::setDirection(PhysicsDirection direction)
 {
 	if (moving)return false;
 	else
@@ -497,7 +430,7 @@ bool PhysicsChara::setDirection(CharaDirection direction)
 }
 
 
-CharaDirection PhysicsChara::getDirection()const
+PhysicsDirection PhysicsChara::getDirection()const
 {
 	return moving_direction;
 }

@@ -26,57 +26,8 @@ void Monster::update()
 	Chara::update();
 }
 
-void Monster::onBasicSkill()
-{
-	Chara::onBasicSkill();
-}
-
-void Monster::onBurning()
-{
-	Chara::onBurning();
-}
-
-void Monster::onDead()
-{
-	Chara::onDead();
-}
-
-void Monster::onHit(Projectile* p)
-{
-	Chara::onHit(p);
-}
-
-void Monster::onIdle()
-{
-	Chara::onIdle();
-}
-
-void Monster::onImpact(int _impact)
-{
-	Chara::onImpact(_impact);
-}
-
-void Monster::onKill(Chara* who)
-{
-	Chara::onKill(who);
-}
-
-void Monster::onMoving()
-{
-	Chara::onMoving();
-}
-
-void Monster::onPoisoned()
-{
-	Chara::onPoisoned();
-}
-
-void Monster::onSpecialSkill()
-{
-	Chara::onSpecialSkill();
-}
-
 int Monster::monster_num = 0;
+
 int Monster::getMonsterNum()
 {
 	return monster_num;

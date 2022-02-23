@@ -41,6 +41,8 @@ public:
 	int health_max;//设施的最大生命值
 	integration_counting_container counting_container;//计数物容器
 
+	float extra_depth;
+
 	static int getFacilityNum();
 
 protected:
