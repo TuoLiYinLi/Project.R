@@ -5,7 +5,7 @@
 enum class CountingType
 {
 	food,//食物计数物
-	slimeGlue,//史莱姆凝胶计数物
+	slime,//史莱姆凝胶计数物
 	corpse,//尸体计数物
 	energy,//能量计数物
 	corruption,//腐化计数物

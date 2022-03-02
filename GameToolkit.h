@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <SDL.h>
+
+#include "Facility.h"
 #include "PhysicsObject.h"
 #include "integration_gene_container.h"
 
@@ -34,11 +36,29 @@ public:
 	//产生随机数在min与max之间
 	static double random(double min, double max);
 
-	//产生0到range的随机自然数
+	//产生0到range的随机自然数(不包含range)
 	static unsigned random(unsigned range);
 
 	//对原来的bool值进行覆盖操作
 	static bool boolOverride(bool ori,OverrideOperation operation);
+
+	//查找角色函数
+	static std::list<Chara*> findCharaIn(AllyType ally, int x, int y);
+	//范围查找角色函数
+	static  std::list<Chara*> findCharaInArea(AllyType ally, int x, int y, int w, int h);
+
+	//查找设施函数
+	static std::list<Facility*> findFacilityIn(FacilityType type, int x, int y);
+	//范围查找设施函数
+	static  std::list<Facility*> findFacilityInArea(FacilityType type, int x, int y, int w, int h);
+
+	//查找阻挡状态函数
+	static bool findBlockingIn(BlockingType blocking, int x, int y);
+	//范围查找阻挡状态函数
+	static bool findBlockingInArea(BlockingType blocking, int x, int y, int w, int h);
+
+	//计算两个物理体的距离
+	static double getDistance(PhysicsObject* p1, PhysicsObject* p2);
 
 };
 

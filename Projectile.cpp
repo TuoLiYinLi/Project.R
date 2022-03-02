@@ -4,6 +4,13 @@
 
 void Projectile::update()
 {
+#ifdef _DEBUG
+	if(owner==nullptr)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"projectile缺少owner");
+	}
+#endif
+
 	//推进动画
 	animation_progress++;
 	if (animation_progress >= animation_length)

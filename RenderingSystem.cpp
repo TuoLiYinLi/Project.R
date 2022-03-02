@@ -468,6 +468,13 @@ void RenderingSystem::loadAnimation(AnimationType antp)const {
             num = 1;
             break;
 
+
+        case AnimationType::facility_mucus:
+            file = "./Resource/texture/facility_mucus";
+            num = 1;
+            break;
+
+
         case AnimationType::facility_ladder_wooden_1:
             file = "./Resource/texture/facility_ladder_wooden_1";
             num = 1;

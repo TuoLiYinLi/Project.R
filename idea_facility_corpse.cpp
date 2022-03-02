@@ -7,5 +7,5 @@ idea_facility_corpse* idea_facility_corpse::createNew()
 
 idea_facility_corpse::idea_facility_corpse()
 {
-	
+	type_facility = FacilityType::corpse;
 }

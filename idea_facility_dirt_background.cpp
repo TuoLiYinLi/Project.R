@@ -7,6 +7,8 @@ idea_facility_dirt_background* idea_facility_dirt_background::createNew()
 
 idea_facility_dirt_background::idea_facility_dirt_background()
 {
+	type_facility = FacilityType::dirt_background;
+
 	name = L"ÄàÍÁ±³¾°";
 	science_name = L"ÄàÍÁ±³¾°";
 	introduction = L"Äà°Í¡¢Ê¯Í·¡­¡­";

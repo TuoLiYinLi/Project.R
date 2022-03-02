@@ -49,13 +49,13 @@ public:
 	GameObject* game_object;	//绑定的游戏对象
 	PhysicsType getPhysicsType() const;	//获取物理种类
 
-	double getTop() const;	//获取顶部高度
-	double getBottom() const;	//获取底部坐标
+	double getUp() const;	//获取顶部高度
+	double getDown() const;	//获取底部坐标
 	double getLeft() const;	//获取左边坐标
 	double getRight() const;	//获取右边坐标
 
-	int getTopGrid() const;	//获取顶部占据的网格
-	int getBottomGrid() const;	//获取底部占据的网格
+	int getUpGrid() const;	//获取顶部占据的网格
+	int getDownGrid() const;	//获取底部占据的网格
 	int getLeftGrid() const;	//获取左部占据的网格
 	int getRightGrid() const;	//获取右部占据的网格
 

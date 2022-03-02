@@ -59,8 +59,8 @@ void PhysicsFacility::renewSignedGrids()
 
 	const int x_start = getLeftGrid();
 	const int x_end = getRightGrid();
-	const int y_start = getTopGrid();
-	const int y_end = getBottomGrid();
+	const int y_start = getUpGrid();
+	const int y_end = getDownGrid();
 
 	for (int i = x_start; i <= x_end; i++)
 	{

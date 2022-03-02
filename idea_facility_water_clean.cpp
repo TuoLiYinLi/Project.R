@@ -17,6 +17,8 @@ void idea_facility_water_clean::setWater()
 
 idea_facility_water_clean::idea_facility_water_clean()
 {
+	type_facility = FacilityType::water_clean;
+
 	name = L"水体";
 	science_name = L"清水";
 	introduction = L"清澈的水，但不会游泳的话小心点。";

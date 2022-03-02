@@ -75,7 +75,7 @@ std::wstring integration_counting_container::getName(CountingType type)
 	switch (type)
 	{
 	case CountingType::food: return L"食物";
-	case CountingType::slimeGlue: return L"粘液";
+	case CountingType::slime: return L"史莱姆";
 	case CountingType::corpse: return L"尸体";
 	case CountingType::energy: return L"能量";
 	case CountingType::corruption: return L"腐化";

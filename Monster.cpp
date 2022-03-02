@@ -10,6 +10,8 @@ Monster* Monster::createNew()
 Monster::Monster()
 {
 	monster_num++;
+
+	type_monster = MonsterType::default_monster;
 	
 	name = L"default_monster";
 	physics_object->type_ally = AllyType::monster;

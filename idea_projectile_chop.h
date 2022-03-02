@@ -19,7 +19,6 @@ public:
     PhysicsProjectileFlying* getPhysics() const;
 protected:
     idea_projectile_chop();
-    ~idea_projectile_chop()override;
 
     integration_recorder<PhysicsChara> recorder_chara;
     integration_recorder<PhysicsFacility> recorder_facility;

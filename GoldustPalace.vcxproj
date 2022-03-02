@@ -22,6 +22,7 @@
     <ClInclude Include="idea_facility_corpse.h" />
     <ClInclude Include="idea_facility_dirt_cracked.h" />
     <ClInclude Include="idea_facility_dirt_solid.h" />
+    <ClInclude Include="idea_facility_mucus.h" />
     <ClInclude Include="idea_facility_water_clean.h" />
     <ClInclude Include="idea_particle_healing.h" />
     <ClInclude Include="idea_projectile_little_slime_ball.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="idea_facility_corpse.cpp" />
     <ClCompile Include="idea_facility_dirt_cracked.cpp" />
     <ClCompile Include="idea_facility_dirt_solid.cpp" />
+    <ClCompile Include="idea_facility_mucus.cpp" />
     <ClCompile Include="idea_facility_water_clean.cpp" />
     <ClCompile Include="idea_particle_healing.cpp" />
     <ClCompile Include="idea_projectile_little_slime_ball.cpp" />

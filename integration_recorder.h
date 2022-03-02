@@ -9,6 +9,7 @@ class integration_recorder
 {
 public:
 	integration_recorder(){my_list = std::list<T*>();}
+	//尝试记录目标,如果已经记录则返回false,如果未记录则将其记录并返回真
 	bool record(T* target)
 	{
 		if (!check(target))

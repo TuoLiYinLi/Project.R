@@ -25,6 +25,7 @@ Facility::Facility() {
 	introduction = L"默认介绍";
 
 	type_game_object = GameObjectType::default_facility;
+	type_facility = FacilityType::default_facility;
 
 	flag_static = true;
 
@@ -117,10 +118,12 @@ void Facility::update_animation()
 	case FacilityState::idle:
 		{
 			//激活设施
-			activate_CD++;
-			if (activate_CD >= activate_length)
-			{
-				setAnimationActivate();
+			if(activate_length>0){
+				activate_CD++;
+				if (activate_CD >= activate_length)
+				{
+					setAnimationActivate();
+				}
 			}
 
 			if (animation_progress >= animation_length_idle)
@@ -211,6 +214,10 @@ void Facility::onHit(Projectile* p)
 	if(p->damage)
 	health --;
 	damaged_highlight = damaged_highlight_length;
+	if(health<=0)
+	{
+		readyToDestroy();
+	}
 }
 
 void Facility::onDead()

@@ -68,8 +68,8 @@ void PhysicsProjectile::renewSignedGrids()
 
 	const int x_start = getLeftGrid();
 	const int x_end = getRightGrid();
-	const int y_start = getTopGrid();
-	const int y_end = getBottomGrid();
+	const int y_start = getUpGrid();
+	const int y_end = getDownGrid();
 
 	for (int i = x_start; i <= x_end; i++)
 	{
@@ -94,8 +94,8 @@ void PhysicsProjectile::renewHitCharas() const
 {
 	hit_charas->clear();
 
-	const int up = getTopGrid();
-	const int down = getBottomGrid();
+	const int up = getUpGrid();
+	const int down = getDownGrid();
 	const int left = getLeftGrid();
 	const int right = getRightGrid();
 
@@ -118,8 +118,8 @@ void PhysicsProjectile::renewHitFacilities() const
 {
 	hit_facilities->clear();
 
-	const int up = getTopGrid();
-	const int down = getBottomGrid();
+	const int up = getUpGrid();
+	const int down = getDownGrid();
 	const int left = getLeftGrid();
 	const int right = getRightGrid();
 
@@ -141,8 +141,8 @@ void PhysicsProjectile::renewHitProjectiles() const
 {
 	hit_projectiles->clear();
 
-	const int up = getTopGrid();
-	const int down = getBottomGrid();
+	const int up = getUpGrid();
+	const int down = getDownGrid();
 	const int left = getLeftGrid();
 	const int right = getRightGrid();
 

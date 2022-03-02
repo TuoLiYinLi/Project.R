@@ -57,11 +57,6 @@ idea_projectile_chop::idea_projectile_chop()
 	life_time = 30;
 }
 
-idea_projectile_chop::~idea_projectile_chop()
-{
-	
-}
-
 void idea_projectile_chop::setup(AllyType _ally, int _position_x, int _position_y, PhysicsDirection direction, bool _flip)
 {
 	flag_static = false;

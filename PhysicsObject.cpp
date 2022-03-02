@@ -57,25 +57,25 @@ bool PhysicsObject::detectForward(PhysicsDirection direction, BlockingType block
 	case PhysicsDirection::right:
 		x_start = getRightGrid() + 1;
 		x_end = x_start;
-		y_start = getTopGrid();
-		y_end = getBottomGrid();
+		y_start = getUpGrid();
+		y_end = getDownGrid();
 		break;
 	case PhysicsDirection::up:
 		x_start = getLeftGrid();
 		x_end = getRightGrid();
-		y_start = getTopGrid() - 1;
+		y_start = getUpGrid() - 1;
 		y_end = y_start;
 		break;
 	case PhysicsDirection::left:
 		x_start = getLeftGrid() - 1;
 		x_end = x_start;
-		y_start = getTopGrid();
-		y_end = getBottomGrid();
+		y_start = getUpGrid();
+		y_end = getDownGrid();
 		break;
 	case PhysicsDirection::down:
 		x_start = getLeftGrid();
 		x_end = getRightGrid();
-		y_start = getBottomGrid() + 1;
+		y_start = getDownGrid() + 1;
 		y_end = y_start;
 		break;
 	}
@@ -106,11 +106,11 @@ bool PhysicsObject::detectBorder(PhysicsDirection direction) const
 	case PhysicsDirection::right:
 		return getRightGrid() + 1 >= static_cast<int>(WORLD_WIDTH);
 	case PhysicsDirection::up:
-		return getTopGrid() - 1 < 0;
+		return getUpGrid() - 1 < 0;
 	case PhysicsDirection::left:
 		return getLeftGrid() - 1 < 0;
 	case PhysicsDirection::down:
-		return getBottomGrid() + 1 >= static_cast<int>(WORLD_HEIGHT);
+		return getDownGrid() + 1 >= static_cast<int>(WORLD_HEIGHT);
 	}
 
 	return false;
@@ -120,8 +120,8 @@ bool PhysicsObject::detectLocal(BlockingType blocking)
 {
 	const int x_start = getLeftGrid();
 	const int x_end = getRightGrid();
-	const int y_start = getTopGrid();
-	const int y_end = getBottomGrid();
+	const int y_start = getUpGrid();
+	const int y_end = getDownGrid();
 
 	for (int i = x_start; i <= x_end; i++)
 	{
@@ -143,11 +143,11 @@ PhysicsType PhysicsObject::getPhysicsType() const
 	return type_physics;
 }
 
-double PhysicsObject::getTop() const
+double PhysicsObject::getUp() const
 {
 	return Y;
 }
-double PhysicsObject::getBottom() const
+double PhysicsObject::getDown() const
 {
 	return Y + bodyY;
 }
@@ -160,14 +160,14 @@ double PhysicsObject::getRight() const
 	return X + bodyX;
 }
 
-int PhysicsObject::getTopGrid() const
+int PhysicsObject::getUpGrid() const
 {
-	const double top = getTop();
+	const double top = getUp();
 	return static_cast<int>(ceil(top - 0.5));
 }
-int PhysicsObject::getBottomGrid() const
+int PhysicsObject::getDownGrid() const
 {
-	const double bottom = getBottom();
+	const double bottom = getDown();
 	return static_cast<int>(floor(bottom - 0.5));
 }
 int PhysicsObject::getLeftGrid() const

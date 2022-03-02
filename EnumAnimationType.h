@@ -80,6 +80,8 @@ enum class AnimationType
 	facility_water_swamp,
 	facility_water_swamp_top,
 
+	facility_mucus,
+
 	facility_ladder_wooden_1,
 	facility_ladder_wooden_2,
 	facility_ladder_wooden_3,

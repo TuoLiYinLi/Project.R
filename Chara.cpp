@@ -12,7 +12,7 @@ Chara* Chara::createNew()
 	return new Chara();
 }
 
-PhysicsChara* Chara::getPhysicsChara() const
+PhysicsChara* Chara::getPhysics() const
 {
 	return dynamic_cast<PhysicsChara*>(physics_object);
 }
@@ -64,15 +64,15 @@ std::wstring Chara::getDataInfo()
 		s_action += L"死亡";
 		break;
 	case CharaActionType::disturbed:
-		if (getPhysicsChara()->getIfHitBack())
+		if (getPhysics()->getIfHitBack())
 			s_action += L"被击退";
-		else if (getPhysicsChara()->getIfFalling())
+		else if (getPhysics()->getIfFalling())
 			s_action += L"坠落";
 		else
 			s_action += L"被干扰";
 		break;
 	case CharaActionType::moving:
-		switch (getPhysicsChara()->getDirection())
+		switch (getPhysics()->getDirection())
 		{
 		case PhysicsDirection::up:
 			s_action += L"向上移动";
@@ -170,7 +170,7 @@ void Chara::update()
 	//调用父级函数
 	GameObject::update();
 	//触发onImpact
-	const int _impact = getPhysicsChara()->getImpact();
+	const int _impact = getPhysics()->getImpact();
 	if(_impact>0)onImpact(_impact);
 
 	update_effect();
@@ -263,7 +263,7 @@ void Chara::update_effect()
 void Chara::update_attributes()
 {
 	//燃烧伤害
-	if(getPhysicsChara()->detectLocal(BlockingType::liquid))
+	if(getPhysics()->detectLocal(BlockingType::liquid))
 	{
 		//落入水中则灭火
 		effect_burning = 0;
@@ -349,7 +349,7 @@ void Chara::update_attributes()
 	}
 
 	//生命值恢复
-	if (effect_poisoned <= 0)
+	if (effect_poisoned <= 0&&health<real_health_max())
 	{
 		health_recovery_accumulation += real_health_recovery_speed();
 		const int delta = static_cast<int>(floor(health_recovery_accumulation));
@@ -364,21 +364,32 @@ void Chara::update_attributes()
 			pm_healing.make_particle();
 		}
 	}
+	else
+	{
+		health_recovery_accumulation = 0;
+	}
 
 	//活力值恢复
-	
-	stamina_recovery_accumulation += real_stamina_recovery_speed();
-	const int delta = static_cast<int>(floor(stamina_recovery_accumulation));
-	stamina += delta;
-	stamina_recovery_accumulation -= delta;
-	if (stamina > real_stamina_max())
+	if (stamina < real_stamina_max()) {
+		stamina_recovery_accumulation += real_stamina_recovery_speed();
+		const int delta = static_cast<int>(floor(stamina_recovery_accumulation));
+		stamina += delta;
+		stamina_recovery_accumulation -= delta;
+		if (stamina > real_stamina_max())
+		{
+			stamina = real_stamina_max();
+		}
+	}
+	else
 	{
-		stamina = real_stamina_max();
+		stamina_recovery_accumulation = 0;
 	}
 	
 }
 
 void Chara::update_animation() {
+
+	onEveryTime();
 
 	//推进动画
 	animation_progress++;
@@ -535,18 +546,18 @@ void Chara::sync_animation()
 	}
 
 	//刷新角色朝向
-	if (getPhysicsChara()->getDirection() == PhysicsDirection::right)
+	if (getPhysics()->getDirection() == PhysicsDirection::right)
 	{
 		getRenderingAnimation()->setFlip(false);
 	}
-	else if (getPhysicsChara()->getDirection() == PhysicsDirection::left)
+	else if (getPhysics()->getDirection() == PhysicsDirection::left)
 	{
 		getRenderingAnimation()->setFlip(true);
 	}
 
 	//刷新角色位置
-	getRenderingAnimation()->x = getPhysicsChara()->X;
-	getRenderingAnimation()->y = getPhysicsChara()->Y;
+	getRenderingAnimation()->x = getPhysics()->X;
+	getRenderingAnimation()->y = getPhysics()->Y;
 
 	//刷新深度
 	update_depth();
@@ -595,12 +606,12 @@ Chara::Chara()
 
 		physics_object->type_ally = AllyType::neutral;
 
-		getPhysicsChara()->bodyX = 1;
-		getPhysicsChara()->bodyY = 1;
+		getPhysics()->bodyX = 1;
+		getPhysics()->bodyY = 1;
 
-		getPhysicsChara()->can_fly = false;
-		getPhysicsChara()->can_swim = false;
-		getPhysicsChara()->steady = false;
+		getPhysics()->can_fly = false;
+		getPhysics()->can_swim = false;
+		getPhysics()->steady = false;
 	}
 
 	//设置角色动画
@@ -665,6 +676,9 @@ Chara::Chara()
 		stamina = 4;
 		stamina_recovery_speed = 0.2/60;
 		stamina_recovery_accumulation = 0;
+
+		skill_basic_cost = 1;
+		skill_special_cost = 2;
 
 		water_stifled = true;
 		oxygen = oxygen_max;//氧气值
@@ -742,22 +756,22 @@ void Chara::setAnimationMoving()
 
 bool Chara::checkDisturbed() const
 {
-	return getPhysicsChara()->getIfFalling() ||
-		getPhysicsChara()->getIfHitBack() ||
+	return getPhysics()->getIfFalling() ||
+		getPhysics()->getIfHitBack() ||
 		effect_dizzy > 0;
 }
 
 bool Chara::checkMoving() const
 {
-	return getPhysicsChara()->getIfMoving()
-		&& !getPhysicsChara()->getIfFalling()
-		&& !getPhysicsChara()->getIfHitBack();
+	return getPhysics()->getIfMoving()
+		&& !getPhysics()->getIfFalling()
+		&& !getPhysics()->getIfHitBack();
 }
 
 bool Chara::checkStifled()
 {
 	const bool chara_water_stifled = GameToolkit::boolOverride(water_stifled, gene_container.getWaterStifled());
-	return getPhysicsChara()->detectSubmersed() && chara_water_stifled;
+	return getPhysics()->detectSubmersed() && chara_water_stifled;
 }
 
 bool Chara::checkInjuredOnBurning()
@@ -777,11 +791,11 @@ bool Chara::checkInjuredOnImpact()
 
 bool Chara::setDirection(PhysicsDirection d) const
 {
-	return getPhysicsChara()->setDirection(d);
+	return getPhysics()->setDirection(d);
 }
 void Chara::setPosition(int x, int y)
 {
-	getPhysicsChara()->setPosition(x, y);
+	getPhysics()->setPosition(x, y);
 	//设置动画
 	this->setAnimationIdle();
 	sync_animation();
@@ -791,15 +805,26 @@ void Chara::actMove(PhysicsDirection d)
 {
 	if (action_type != CharaActionType::idle)return;
 	setAnimationMoving();
-	getPhysicsChara()->setMotion(d, moving_speed, 1, false);
+	getPhysics()->setMotion(d, moving_speed, 1, false);
 }
 void Chara::actSkillBasic(PhysicsDirection d)
 {
+	if(stamina>=skill_basic_cost)
+	{
+		stamina -= skill_basic_cost;
+	}else return;
+
 	if (setDirection(d) && action_type == CharaActionType::idle)
 	setAnimationSkillBasic();
 }
 void Chara::actSkillSpecial(PhysicsDirection d)
 {
+	if (stamina >= skill_special_cost)
+	{
+		stamina -= skill_special_cost;
+	}
+	else return;
+
 	if (setDirection(d)&& action_type == CharaActionType::idle)
 	setAnimationSkillSpecial();
 }
@@ -848,6 +873,7 @@ void Chara::onHit(Projectile* p)
 	damaged_highlight = damaged_highlight_length;
 
 	health -= p->damage;
+	if (health < 0)health = 0;
 
 	if (health <= 0 && p->owner)p->owner->onKill(this);
 
@@ -855,6 +881,10 @@ void Chara::onHit(Projectile* p)
 	effect_poisoned += p->effect_poisoned;
 
 	gene_container.triggerOnHit();
+}
+void Chara::onEveryTime()
+{
+	gene_container.triggerOnEveryTime();
 }
 void Chara::onIdle()
 {

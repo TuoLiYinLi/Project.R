@@ -7,6 +7,8 @@ idea_facility_dirt_solid* idea_facility_dirt_solid::createNew()
 
 idea_facility_dirt_solid::idea_facility_dirt_solid()
 {
+	type_facility = FacilityType::dirt_solid;
+
 	name = L"泥土";
 	science_name = L"泥土";
 	introduction = L"坚硬的泥土表面";

@@ -2,8 +2,11 @@
 #include <random>
 #include "Defined.h"
 #include "GlobalData.h"
+#include "PhysicsChara.h"
 #include "RenderingSystem.h"
 #include "UISystem.h"
+#include "WorldSystem.h"
+#include "PhysicsFacility.h"
 
 void GameToolkit::transPositionWorldToWindow(double x_world, double y_world, double* x_window, double* y_window)
 {
@@ -123,7 +126,7 @@ bool GameToolkit::checkMouseInRange(int _x1, int _y1, int _x2, int _y2)
 
 std::wstring GameToolkit::double_reserve_decimal(double d, int n)
 {
-	std::wstring s = std::to_wstring(d);
+	const std::wstring s = std::to_wstring(d);
 	const auto find = s.find_first_of(L'.');
 	return s.substr(0, find + n + 1);
 }
@@ -153,4 +156,120 @@ bool GameToolkit::boolOverride(bool ori, OverrideOperation operation)
 	SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"boolOverride发生不可思议");
 	return false;
 #endif
+}
+
+std::list<Chara*> GameToolkit::findCharaIn(AllyType ally, int x, int y)
+{
+	auto out = std::list<Chara*>();
+	const auto g = WorldSystem::getInstance()->getGrid(x, y);
+	if (!g)return out;
+	for (auto i = g->list_physics_chara->begin(); i !=g->list_physics_chara->end(); ++i)
+	{
+		if((*i)->type_ally==ally)
+		{
+			out.push_back(reinterpret_cast<Chara*>((*i)->game_object));
+		}
+	}
+	return out;
+}
+
+std::list<Chara*> GameToolkit::findCharaInArea(AllyType ally, int x, int y, int w, int h)
+{
+	auto out = std::list<Chara*>();
+
+	for (int X = x; X < x + w; ++X)
+	{
+		for (int Y = y; Y < y + h; ++Y)
+		{
+			out.splice(out.end(), findCharaIn(ally, X, Y));
+		}
+	}
+	return out;
+}
+
+std::list<Facility*> GameToolkit::findFacilityIn(FacilityType type, int x, int y)
+{
+	auto out = std::list<Facility*>();
+	const auto g = WorldSystem::getInstance()->getGrid(x, y);
+	if (!g)return out;
+	for (auto i = g->list_physics_facility->begin(); i != g->list_physics_facility->end(); ++i)
+	{
+		auto f = reinterpret_cast<Facility*>((*i)->game_object);
+		if (f->type_facility==type)
+		{
+			out.push_back(f);
+		}
+	}
+	return out;
+}
+
+std::list<Facility*> GameToolkit::findFacilityInArea(FacilityType type, int x, int y, int w, int h)
+{
+	auto out = std::list<Facility*>();
+
+	for (int X = x; X <= x + w; ++X)
+	{
+		for (int Y = y; Y <= y + h; ++Y)
+		{
+			out.splice(out.end(), findFacilityIn(type, X, Y));
+		}
+	}
+	return out;
+}
+
+bool GameToolkit::findBlockingIn(BlockingType blocking, int x, int y)
+{
+	const auto g = WorldSystem::getInstance()->getGrid(x, y);
+	if (!g)return false;
+	return g->getBlockingType(blocking);
+}
+
+bool GameToolkit::findBlockingInArea(BlockingType blocking, int x, int y, int w, int h)
+{
+	for (int X = x; X < x + w; ++X)
+	{
+		for (int Y = y; Y < y + h; ++Y)
+		{
+			if(findBlockingIn(blocking, X, Y))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+double GameToolkit::getDistance(PhysicsObject* p1, PhysicsObject* p2)
+{
+	double x_distance;
+	if (p1->X + p1->bodyX * 0.5 > p2->X + p2->bodyX * 0.5)
+	{
+		x_distance = p1->getLeft() - p2->getRight();
+	}
+	else
+	{
+		x_distance = p2->getLeft() - p1->getRight();
+	}
+
+	if (x_distance<0)
+	{
+		x_distance = 0;
+	}
+
+	double y_distance;
+	if (p1->Y + p1->bodyY * 0.5 > p2->Y + p2->bodyY * 0.5)
+	{
+		y_distance = p2->getUp() - p1->getDown();
+	}
+	else
+	{
+		y_distance = p1->getUp() - p2->getDown();
+	}
+
+	if(y_distance<0)
+	{
+		y_distance = 0;
+	}
+
+	return x_distance + y_distance;
 }

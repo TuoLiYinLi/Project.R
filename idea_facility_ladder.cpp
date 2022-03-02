@@ -7,6 +7,8 @@ idea_facility_ladder* idea_facility_ladder::createNew()
 
 idea_facility_ladder::idea_facility_ladder()
 {
+	type_facility = FacilityType::ladder;
+
 	name = L"ÅÀÌÝ";
 	science_name = L"Ä¾ÅÀÌÝ";
 	introduction = L"·½±ãÓÚ´¹Ö±ÒÆ¶¯µÄÌÝ×Ó£¬ÆÆÆÆÀÃÀÃµÄ¡£";
@@ -19,8 +21,4 @@ idea_facility_ladder::idea_facility_ladder()
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_5);
 	list_various_texture->push_back(AnimationType::facility_ladder_wooden_6);
 	setVariousTexture();
-}
-
-idea_facility_ladder::~idea_facility_ladder()
-{
 }

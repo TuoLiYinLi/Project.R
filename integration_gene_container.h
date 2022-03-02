@@ -6,9 +6,19 @@ class Chara;
 
 enum class GeneTag
 {
-	component_slime,//史莱姆组件
-	component_minotaur,//牛头人组件
-	component_bones,//骨头组件
+	double_health,//双倍生命
+	double_health_recovery,//双倍愈合
+	double_stamina,//双倍活力
+	double_attack,//双倍攻击力
+	double_growth,//双倍成长
+	corruption_disease,//腐化顽疾
+	projectile_copy,//复制投射物
+
+	sludge_essence,//淤泥精髓
+	corrupted_content,//腐化内容物
+	slime_glue,//史莱姆胶
+	slime_recombination_core,//史莱姆重组核
+	slime_corruption_core,//史莱姆腐化核
 };
 
 enum class OverrideOperation
@@ -44,6 +54,7 @@ public:
 
 	//触发效果部分
 
+	void trigger_onEveryTime(Chara* chara)const;
 	void trigger_onIdle(Chara* chara) const;
 	void trigger_onMoving(Chara* chara) const;
 	void trigger_onBasicSkill(Chara* chara) const;
@@ -58,6 +69,7 @@ public:
 
 	//可重组的回调函数
 
+	void(*callback_onEveryTime)(Chara* chara);
 	void(*callback_onIdle)(Chara* chara);
 	void(*callback_onMoving)(Chara* chara);
 	void(*callback_onBasicSkill)(Chara* chara);
@@ -82,9 +94,33 @@ protected:
 public:
 	//静态可重组的触发函数
 
+	//恢复1生命值
+	static void recover1HP(Chara* chara);
+	//产生一个腐化爆炸
+	static void projectileCorruptionBurst(Chara* chara);
+	//靠近粘液额外恢复st
+	static void recoverSTNearMucus(Chara* chara);
+	//敌人胶水,附近敌人减少st
+	static void enemySTGlue(Chara* chara);
+	
+};
 
+
+class GeneMaker
+{
+public:
+	
+	static Gene* random_slime_related();
+
+	static Gene* sludge_essence();
+	static Gene* slime_inhabit();
+	static Gene* slime_glue();
+	static Gene* slime_recombination_core();
+	static Gene* slime_corruption_core();
+	static Gene* corruption_enchantment();
 
 };
+
 
 //聚合类 基因容器类
 class integration_gene_container
@@ -125,6 +161,7 @@ public:
 
 	//触发效果
 
+	void triggerOnEveryTime();
 	void triggerOnIdle();
 	void triggerOnMoving();
 	void triggerOnBasicSkill();

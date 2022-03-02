@@ -1,6 +1,16 @@
 #pragma once
 #include "Chara.h"
 
+enum class MonsterType
+{
+	default_monster,
+	slime,
+	slime_medium,
+	slime_corrupt,
+	slime_recombinant
+};
+
+
 //游戏物体 怪物
 //我们的主角
 class Monster :
@@ -8,6 +18,8 @@ class Monster :
 {
 public:
 	static Monster* createNew();//创建新的怪物
+
+	MonsterType type_monster;
 
 	void update() override;
 

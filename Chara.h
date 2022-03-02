@@ -34,6 +34,8 @@ public:
 	static Chara* createNew();
 	void update() override;
 
+	PhysicsChara* getPhysics() const;
+	RenderingAnimation* getRenderingAnimation()const;
 	//外部调用接口
 
 	std::wstring getBrief() override;
@@ -76,6 +78,9 @@ public:
 	double real_stamina_recovery_speed();//活力值恢复速度
 	double stamina_recovery_accumulation;//活力值累积量
 
+	int skill_basic_cost;//基本能力的st消耗
+	int skill_special_cost;//特殊能力的st消耗
+
 	bool water_stifled;//是否在水下窒息
 	int oxygen;//氧气值
 
@@ -100,9 +105,6 @@ public:
 protected:
 	Chara();
 	~Chara() override;
-
-	PhysicsChara* getPhysicsChara() const;
-	RenderingAnimation* getRenderingAnimation()const;
 
 	std::wstring science_name;//学名
 	std::wstring introduction;//介绍信息
@@ -131,6 +133,7 @@ protected:
 
 	//触发接口
 
+	virtual void onEveryTime();//任何时候每帧触发
 	virtual void onIdle();//当闲置状态时 每帧触发
 	virtual void onMoving();//当移动状态时 每帧触发
 	virtual void onBasicSkill();//当基础能力被使用时 单刻触发

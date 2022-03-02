@@ -7,6 +7,8 @@ idea_facility_dirt_cracked* idea_facility_dirt_cracked::createNew()
 
 idea_facility_dirt_cracked::idea_facility_dirt_cracked()
 {
+	type_facility = FacilityType::dirt_cracked;
+
 	name = L"泥土";
 	science_name = L"碎裂的泥土";
 	introduction = L"这里的泥土看上去不太牢固，稍微留意一下。";

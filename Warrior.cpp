@@ -7,6 +7,11 @@ Warrior* Warrior::createNew()
 Warrior::Warrior()
 {
 	warrior_num++;
+
+	name = L"default_warrior";
+
+	type_warrior = WarriorType::default_warrior;
+	physics_object->type_ally = AllyType::warrior;
 }
 
 Warrior::~Warrior()

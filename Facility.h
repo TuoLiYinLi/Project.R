@@ -14,6 +14,18 @@ enum class FacilityState
 	dead
 };
 
+enum class FacilityType
+{
+	default_facility,
+	corpse,
+	ladder,
+	dirt_solid,
+	dirt_cracked,
+	dirt_background,
+	water_clean,
+	mucus,
+};
+
 //游戏物体 设施
 class Facility :
 	public GameObject,public abstract_inspect_target
@@ -22,6 +34,8 @@ public:
 	static Facility* createNew();
 
 	void update() override;
+
+	FacilityType type_facility;
 
 	//外部调用接口
 

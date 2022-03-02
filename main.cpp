@@ -38,6 +38,7 @@
 #include "idea_facility_dirt_cracked.h"
 #include "idea_facility_dirt_solid.h"
 #include "idea_facility_ladder.h"
+#include "idea_facility_mucus.h"
 #include "idea_facility_water_clean.h"
 #include "idea_monster_slime.h"
 #include "idea_particle_dizzy.h"
@@ -158,6 +159,12 @@ void test_map()
         const auto dc = idea_facility_ladder::createNew();
         dc->setPosition(14, y);
     }
+
+	{
+		const auto m = idea_facility_mucus::createNew();
+        m->setPosition(21, 21);
+        m->counting_container.addNumOf(CountingType::slime, 8);
+	}
 }
 
 void test()
@@ -167,17 +174,14 @@ void test()
 
 void test_init()
 {
-    auto pf2 = idea_monster_slime::createNew();
-    pf2->setPosition(22, 5);
-
-    auto test_gene = Gene::CreateNew();
-    test_gene->extra_health = 2;
-    test_gene->extra_health_recovery = 0.001;
-    test_gene->water_stifled = OverrideOperation::stay_original;
-    test_gene->name = L"Ê·À³Ä·»ùÒò";
-    pf2->gene_container.addGene(test_gene);
-
+	auto pf2 = idea_monster_slime::createNew();
+    pf2->setPosition(23, 5);
     pf2->effect_poisoned = 600;
+    pf2->gene_container.addGene(GeneMaker::slime_glue());
+
+    pf2 = idea_monster_slime::createNew();
+    pf2->setPosition(20, 5);
+
     //pf2->effect_burning = 300;
     //pf2->effect_blind = 60;
     //pf2->effect_charging = 6000;
@@ -186,8 +190,8 @@ void test_init()
     //pf2->effect_resistant = 60;
     //pf2->effect_sealed = 60;
 
-    auto pf1 = idea_warrior_miner::createNew();
-    pf1->setPosition(5, 2);
+	const auto pf1 = idea_warrior_miner::createNew();
+    pf1->setPosition(22, 20);
     
 
 }

@@ -1,5 +1,6 @@
 #include "integration_gene_container.h"
 #include "Chara.h"
+#include "integration_recorder.h"
 
 //Gene部分
 
@@ -28,6 +29,7 @@ Gene::Gene()
 
 	tags = std::list<GeneTag>();
 
+	callback_onEveryTime = nullptr;
 	callback_onBasicSkill = nullptr;
 	callback_onBurning = nullptr;
 	callback_onDead=nullptr;
@@ -48,6 +50,116 @@ Gene::~Gene()
 	gene_num--;
 }
 
+void Gene::recover1HP(Chara* chara)
+{
+	chara->health += 1;
+	if (chara->health > chara->real_health_max())
+	{
+		chara->health = chara->real_health_max();
+	}
+}
+
+void Gene::projectileCorruptionBurst(Chara* chara)
+{
+}
+
+void Gene::recoverSTNearMucus(Chara* chara)
+{
+	if(!GameToolkit::findFacilityInArea(FacilityType::mucus,
+		chara->getPhysics()->getLeftGrid(),chara->getPhysics()->getUpGrid(),
+		chara->physics_object->bodyX,chara->physics_object->bodyY).empty())
+	{
+		chara->stamina_recovery_accumulation += 0.005;
+	}
+}
+
+void Gene::enemySTGlue(Chara* chara)
+{
+	const auto x = chara->getPhysics()->getLeftGrid()-1;
+	const auto y = chara->getPhysics()->getUpGrid()-1;
+	const auto w = static_cast<int>(chara->getPhysics()->bodyX)+2;
+	const auto h = static_cast<int>(chara->getPhysics()->bodyY)+2;
+	integration_recorder<Chara> recorder;
+	for (const auto enemy : GameToolkit::findCharaInArea(AllyType::warrior, x, y, w, h))
+	{
+		if(recorder.record(enemy))
+		{
+			SDL_LogError(SDL_LOG_CATEGORY_ERROR, u8"st reduce");
+			enemy->stamina -= 1;
+			if (enemy->stamina < 0)enemy->stamina = 0;
+		}
+	}
+}
+
+Gene* GeneMaker::random_slime_related()
+{
+	const auto r = GameToolkit::random(10000);
+
+	if(r<5000)
+	{
+		return sludge_essence();
+	}else
+	{
+		return slime_inhabit();
+	}
+}
+
+Gene* GeneMaker::sludge_essence()
+{
+	const auto gene = Gene::CreateNew();
+	gene->name = L"淤泥精华";
+	gene->tags.push_back(GeneTag::sludge_essence);
+	gene->extra_health = 2 - static_cast<int>(log2(static_cast<double>(1) + GameToolkit::random(7)));
+	return gene;
+}
+
+Gene* GeneMaker::slime_inhabit()
+{
+	const auto gene = Gene::CreateNew();
+	gene->name = L"史莱姆栖息";
+	gene->tags.push_back(GeneTag::slime_glue);
+	gene->callback_onEveryTime = Gene::recoverSTNearMucus;
+	return gene;
+}
+
+Gene* GeneMaker::slime_glue()
+{
+	const auto gene = Gene::CreateNew();
+	gene->name = L"史莱姆胶";
+	gene->callback_onHit = Gene::enemySTGlue;
+
+	return gene;
+}
+
+Gene* GeneMaker::slime_recombination_core()
+{
+	const auto gene = Gene::CreateNew();
+	gene->name = L"史莱重组核";
+	gene->tags.push_back(GeneTag::slime_recombination_core);
+	return gene;
+}
+
+Gene* GeneMaker::slime_corruption_core()
+{
+	const auto gene = Gene::CreateNew();
+	gene->name = L"史莱腐化核";
+	gene->tags.push_back(GeneTag::slime_corruption_core);
+	return gene;
+}
+
+Gene* GeneMaker::corruption_enchantment()
+{
+	const auto gene = Gene::CreateNew();
+	gene->name = L"腐化附加";
+	return gene;
+}
+
+
+void Gene::trigger_onEveryTime(Chara* chara) const
+{
+	if (callback_onEveryTime)
+		callback_onEveryTime(chara);
+}
 
 void Gene::trigger_onIdle(Chara* chara) const
 {
@@ -411,6 +523,16 @@ OverrideOperation integration_gene_container::getInjuredOnPoisoned()
 
 	return out;
 
+}
+
+void integration_gene_container::triggerOnEveryTime()
+{
+	if (!host)return;
+
+	for (auto i = contents.begin(); i != contents.end(); ++i)
+	{
+		(*i)->trigger_onEveryTime(host);
+	}
 }
 
 void integration_gene_container::triggerOnIdle()

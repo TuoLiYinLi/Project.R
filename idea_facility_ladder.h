@@ -8,6 +8,5 @@ public:
 	static idea_facility_ladder* createNew();
 private:
 	idea_facility_ladder();
-	~idea_facility_ladder()override;
 };
 
